@@ -1,0 +1,6 @@
+.output
+node_modules
+pnpm-lock.yaml
+*.min.js
+playwright-report
+test-results
