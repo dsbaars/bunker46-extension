@@ -24,9 +24,7 @@ test('Connection tab shows bunker URI input and Connect button when disconnected
   await page.goto(`chrome-extension://${extensionId}/popup.html`);
   await expect(page.getByRole('button', { name: 'Connection' })).toBeVisible();
   await expect(page.getByPlaceholder(/bunker:\/\/\.\.\./)).toBeVisible();
-  await expect(
-    page.getByRole('button', { name: 'Connect', exact: true }),
-  ).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Connect', exact: true })).toBeVisible();
 });
 
 test('connect with invalid bunker URI shows error', async ({ page, extensionId }) => {
@@ -40,7 +38,7 @@ test('window.nostr is present on a web page and exposes NIP-07 methods', async (
   await page.goto('https://example.com');
   await page.waitForFunction(
     () => typeof (window as unknown as { nostr?: unknown }).nostr !== 'undefined',
-    { timeout: 10000 },
+    { timeout: 10000 }
   );
   const nip07 = await page.evaluate(() => {
     const n = (window as unknown as { nostr?: { getPublicKey?: unknown; signEvent?: unknown } })
