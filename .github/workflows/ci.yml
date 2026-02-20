@@ -125,10 +125,11 @@ jobs:
           node-version: '22'
           cache: 'pnpm'
 
-      - name: Compute version (YYYY.MM.DD.run_number)
+      # YYYY.M.D.run_number — no leading zeros so Firefox manifest/AMO accept it (same as Chrome)
+      - name: Compute version (YYYY.M.D.run_number)
         id: ver
         run: |
-          DATE=$(date -u +%Y.%m.%d)
+          DATE=$(date -u +%Y.%-m.%-d)
           VERSION="${DATE}.${{ github.run_number }}"
           echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "tag=v${VERSION}" >> "$GITHUB_OUTPUT"
