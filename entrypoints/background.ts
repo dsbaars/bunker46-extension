@@ -16,6 +16,8 @@ const STORAGE_KEY_SESSION = 'nip46_session';
 type Session = {
   signerPubkey: string;
   relays: string[];
+  /** Optional: original bunker URI for reconnection (may include one-time secret). */
+  bunkerUri?: string;
 };
 
 type PendingPermission = {
@@ -86,6 +88,37 @@ function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promi
   ]);
 }
 
+/** Reconnect to the bunker using stored session (e.g. after service worker restarted). */
+async function reconnectFromSession(): Promise<boolean> {
+  if (!session?.signerPubkey || !session.relays?.length) return false;
+  try {
+    let bp: { pubkey: string; relays: string[]; secret: string | null };
+    if (session.bunkerUri) {
+      const parsed = await parseBunkerInput(session.bunkerUri);
+      if (!parsed) return false;
+      bp = parsed;
+    } else {
+      bp = {
+        pubkey: session.signerPubkey,
+        relays: session.relays,
+        secret: null,
+      };
+    }
+    const secret = await getOrCreateClientKey();
+    const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
+    const signer = BunkerSigner.fromBunker(secret, bp, { pool });
+    await withTimeout(
+      signer.connect(),
+      BUNKER_CONNECT_TIMEOUT_MS,
+      'Reconnection timed out.'
+    );
+    bunkerSigner = signer;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 async function connectWithBunkerUri(
   uri: string
 ): Promise<{ success: boolean; signerPubkey?: string; error?: string }> {
@@ -107,7 +140,11 @@ async function connectWithBunkerUri(
     );
     const signerPubkey = await signer.getPublicKey();
     bunkerSigner = signer;
-    await persistSession({ signerPubkey, relays: bp.relays });
+    await persistSession({
+      signerPubkey,
+      relays: bp.relays,
+      bunkerUri: uri,
+    });
     return { success: true, signerPubkey };
   } catch (e) {
     const message =
@@ -244,6 +281,7 @@ chrome.runtime.onMessage.addListener(
       // --- Popup management messages ---
       if (msg.type === 'GET_SESSION') {
         await loadSessionFromStorage();
+        if (session && !bunkerSigner) await reconnectFromSession();
         if (bunkerSigner && session)
           return {
             connected: true,
@@ -299,6 +337,8 @@ chrome.runtime.onMessage.addListener(
       // --- NIP-07 from content script (NIP-07 compliant: getPublicKey, signEvent, optional nip04/nip44/getRelays) ---
       const nip07Method = NIP07_METHOD_MAP[msg.type];
       if (nip07Method) {
+        await loadSessionFromStorage();
+        if (session && !bunkerSigner) await reconnectFromSession();
         if (!bunkerSigner || !session) {
           return { error: 'Not connected to signer. Connect in the extension popup.' };
         }
@@ -402,6 +442,7 @@ chrome.windows.onRemoved.addListener((windowId: number) => {
   }
 });
 
-export default defineBackground(() => {
-  loadSessionFromStorage();
+export default defineBackground(async () => {
+  await loadSessionFromStorage();
+  if (session && !bunkerSigner) void reconnectFromSession();
 });
