@@ -10,6 +10,8 @@ lerna-debug.log*
 node_modules
 .output
 stats.html
+test-results
+playwright-report
 stats-*.json
 .wxt
 web-ext.config.ts
