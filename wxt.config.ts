@@ -12,7 +12,7 @@ export default defineConfig({
       port: 3456,
     },
   },
-  manifest: {
+  manifest: ({ browser }) => ({
     name: 'Bunker46',
     description: 'NIP-07 remote signer via NIP-46 / Bunker46',
     permissions: ['storage'],
@@ -22,5 +22,16 @@ export default defineConfig({
         matches: ['<all_urls>'],
       },
     ],
-  },
+    ...(browser === 'firefox' && {
+      browser_specific_settings: {
+        gecko: {
+          id: '@bunker46-extension',
+          data_collection_permissions: {
+            required: ['none'],
+            optional: [],
+          },
+        },
+      },
+    }),
+  }),
 });
