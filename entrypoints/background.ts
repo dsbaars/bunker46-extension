@@ -92,10 +92,7 @@ type RelayEntry = [string, { read: boolean; write: boolean }];
  * Fetch the user's NIP-65 relay list (kind 10002) from relays and return entries
  * in getRelays format. Returns null on failure or if no event found.
  */
-async function fetchNip65RelayList(
-  pubkey: string,
-  relays: string[]
-): Promise<RelayEntry[] | null> {
+async function fetchNip65RelayList(pubkey: string, relays: string[]): Promise<RelayEntry[] | null> {
   if (!relays.length) return null;
   const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
   try {
@@ -158,11 +155,7 @@ async function reconnectFromSession(): Promise<boolean> {
     const secret = await getOrCreateClientKey();
     const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
     const signer = BunkerSigner.fromBunker(secret, bp, { pool });
-    await withTimeout(
-      signer.connect(),
-      BUNKER_CONNECT_TIMEOUT_MS,
-      'Reconnection timed out.'
-    );
+    await withTimeout(signer.connect(), BUNKER_CONNECT_TIMEOUT_MS, 'Reconnection timed out.');
     bunkerSigner = signer;
     return true;
   } catch {
@@ -420,9 +413,7 @@ chrome.runtime.onMessage.addListener(
           // NIP-65 (kind 10002) is preferred; fall back to session.relays from bunker connection
           const pubkey = await bunkerSigner.getPublicKey();
           const nip65 =
-            session.relays.length > 0
-              ? await fetchNip65RelayList(pubkey, session.relays)
-              : null;
+            session.relays.length > 0 ? await fetchNip65RelayList(pubkey, session.relays) : null;
           const list: RelayEntry[] =
             nip65 && nip65.length > 0
               ? nip65
