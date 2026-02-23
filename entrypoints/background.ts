@@ -81,6 +81,57 @@ async function clearSession(): Promise<void> {
 
 const BUNKER_CONNECT_TIMEOUT_MS = 30_000;
 
+/** NIP-65 relay list metadata (kind 10002) */
+const NIP65_KIND_RELAY_LIST = 10002;
+
+const NIP65_FETCH_TIMEOUT_MS = 8_000;
+
+type RelayEntry = [string, { read: boolean; write: boolean }];
+
+/**
+ * Fetch the user's NIP-65 relay list (kind 10002) from relays and return entries
+ * in getRelays format. Returns null on failure or if no event found.
+ */
+async function fetchNip65RelayList(
+  pubkey: string,
+  relays: string[]
+): Promise<RelayEntry[] | null> {
+  if (!relays.length) return null;
+  const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
+  try {
+    const event = await withTimeout(
+      pool.get(
+        relays,
+        { kinds: [NIP65_KIND_RELAY_LIST], authors: [pubkey] },
+        { maxWait: NIP65_FETCH_TIMEOUT_MS }
+      ),
+      NIP65_FETCH_TIMEOUT_MS + 2_000,
+      'NIP-65 relay list fetch timed out'
+    );
+    pool.close(relays);
+    if (!event?.tags?.length) return null;
+    const byUrl = new Map<string, { read: boolean; write: boolean }>();
+    for (const tag of event.tags) {
+      if (tag[0] !== 'r' || typeof tag[1] !== 'string') continue;
+      const url = tag[1].trim();
+      if (!url) continue;
+      const marker = typeof tag[2] === 'string' ? tag[2].toLowerCase() : undefined;
+      const read = marker === undefined || marker === 'read';
+      const write = marker === undefined || marker === 'write';
+      const existing = byUrl.get(url);
+      byUrl.set(url, {
+        read: existing ? existing.read || read : read,
+        write: existing ? existing.write || write : write,
+      });
+    }
+    if (byUrl.size === 0) return null;
+    return Array.from(byUrl.entries(), ([u, rw]) => [u, rw] as RelayEntry);
+  } catch {
+    pool.close(relays);
+    return null;
+  }
+}
+
 function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promise<T> {
   return Promise.race([
     promise,
@@ -366,9 +417,17 @@ chrome.runtime.onMessage.addListener(
         }
 
         if (msg.type === 'NIP07_GET_RELAYS') {
-          return {
-            result: session.relays.map((r) => [r, { read: true, write: true }]),
-          };
+          // NIP-65 (kind 10002) is preferred; fall back to session.relays from bunker connection
+          const pubkey = await bunkerSigner.getPublicKey();
+          const nip65 =
+            session.relays.length > 0
+              ? await fetchNip65RelayList(pubkey, session.relays)
+              : null;
+          const list: RelayEntry[] =
+            nip65 && nip65.length > 0
+              ? nip65
+              : session.relays.map((r) => [r, { read: true, write: true }] as RelayEntry);
+          return { result: list };
         }
 
         if (
