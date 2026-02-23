@@ -5,7 +5,7 @@
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?logo=googlechrome&logoColor=white)](https://chrome.google.com/webstore)
 [![Firefox Add-on](https://img.shields.io/badge/Firefox-Add--on-FF7139?logo=firefoxbrowser&logoColor=white)](https://addons.mozilla.org/)
 
-A **NIP-07 compliant** browser extension that exposes `window.nostr` to web pages. Instead of storing private keys in the browser, it forwards every signing request to a remote [NIP-46](https://nips.nostr.com/46) signer (such as [Bunker46](https://github.com/paulmillr/bunker46)) over Nostr relays.
+A **NIP-07 compliant** browser extension that exposes `window.nostr` to web pages. Instead of storing private keys in the browser, it forwards every signing request to a remote [NIP-46](https://nips.nostr.com/46) signer (such as [Bunker46](https://github.com/dsbaars/bunker46)) over Nostr relays.
 
 ## What it does
 
@@ -40,7 +40,6 @@ Load the relevant `.output/<target>/` directory (or the zip) as an unpacked exte
 - `public/` — Injected NIP-07 provider script and extension icons.
 - `lib/` — Permissions storage, NIP-07 types, hex helpers.
 - `components/ui/` — Vue UI components (shadcn-style).
-- `docs/DESIGN.md` — Design and behaviour details.
 
 ## License
 
