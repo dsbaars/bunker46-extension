@@ -133,7 +133,7 @@ async function updateBadgeForTabsWithHost(host: string): Promise<void> {
     shouldExposeNostrForHost(host),
   ]);
   const count = inject ? countAllowedPermissions(policies, host) : 0;
-  let tabs: { id?: number; url?: string }[] = [];
+  let tabs: { id?: number; url?: string }[];
   try {
     tabs = await new Promise((resolve) => {
       chrome.tabs.query({}, (result: { id?: number; url?: string }[]) =>
@@ -158,7 +158,7 @@ async function updateBadgeForTabsWithHost(host: string): Promise<void> {
 }
 
 async function clearBadgeForTabsWithHost(host: string): Promise<void> {
-  let tabs: { id?: number; url?: string }[] = [];
+  let tabs: { id?: number; url?: string }[];
   try {
     tabs = await new Promise((resolve) => {
       chrome.tabs.query({}, (result: { id?: number; url?: string }[]) =>
@@ -183,7 +183,7 @@ async function clearBadgeForTabsWithHost(host: string): Promise<void> {
 }
 
 async function clearAllBadges(): Promise<void> {
-  let tabs: { id?: number }[] = [];
+  let tabs: { id?: number }[];
   try {
     tabs = await new Promise((resolve) => {
       chrome.tabs.query({}, (result: { id?: number }[]) => resolve(result ?? []));
