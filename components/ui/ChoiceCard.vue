@@ -20,7 +20,7 @@ const switchId = useId();
   <div
     :class="
       cn(
-        'rounded-xl border border-border bg-card px-4 py-3 shadow-sm transition-colors focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background'
+        'min-w-0 rounded-xl border border-border bg-card px-4 py-3 shadow-sm transition-colors focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 focus-within:ring-offset-background'
       )
     "
   >
@@ -30,7 +30,10 @@ const switchId = useId();
     >
       <div class="min-w-0 flex-1">
         <span v-if="label" class="text-sm font-medium leading-none">{{ label }}</span>
-        <p v-if="description" class="mt-1.5 text-xs text-muted-foreground">
+        <p
+          v-if="description"
+          class="mt-1.5 text-xs text-muted-foreground break-words"
+        >
           {{ description }}
         </p>
       </div>

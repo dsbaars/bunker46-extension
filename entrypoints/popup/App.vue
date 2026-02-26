@@ -464,7 +464,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col bg-background text-foreground">
+  <div class="flex min-w-0 flex-col overflow-x-hidden bg-background text-foreground">
     <Toaster
       theme="dark"
       position="bottom-center"
@@ -679,7 +679,7 @@ onUnmounted(() => {
 
     <!-- SETTINGS TAB -->
     <template v-if="activeTab === 'settings'">
-      <div class="flex flex-col gap-4 p-5">
+      <div class="flex min-w-0 flex-col gap-4 overflow-x-hidden p-5">
         <ChoiceCard
           v-model="privacyMode"
           :label="t('privacyMode')"

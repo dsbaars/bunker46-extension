@@ -63,8 +63,11 @@
 
 body {
   margin: 0;
+  overflow-x: hidden;
 }
 
 #app {
   width: 360px;
+  min-width: 0;
+  overflow-x: hidden;
 }
