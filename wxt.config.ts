@@ -13,8 +13,12 @@ export default defineConfig({
     },
   },
   manifest: ({ browser }) => ({
-    name: 'Bunker46',
-    description: 'NIP-07 remote signer via NIP-46 / Bunker46',
+    name: '__MSG_extName__',
+    description: '__MSG_extDescription__',
+    default_locale: 'en',
+    action: {
+      default_title: '__MSG_extName__',
+    },
     permissions: ['storage', 'tabs'],
     web_accessible_resources: [
       {

@@ -38,6 +38,7 @@ import {
   Search,
   Plus,
 } from 'lucide-vue-next';
+import { t, getMethodLabel } from '@/lib/i18n';
 
 type PermissionEntry = {
   decision: 'allow' | 'deny';
@@ -72,16 +73,6 @@ const nostrConnectUri = ref('');
 const nostrConnectQrDataUrl = ref('');
 const nostrConnectWaiting = ref(false);
 let nostrConnectPollTimer: ReturnType<typeof setInterval> | null = null;
-
-const METHOD_LABELS: Record<string, string> = {
-  getPublicKey: 'Get Public Key',
-  signEvent: 'Sign Event',
-  getRelays: 'Get Relays',
-  nip04_encrypt: 'NIP-04 Encrypt',
-  nip04_decrypt: 'NIP-04 Decrypt',
-  nip44_encrypt: 'NIP-44 Encrypt',
-  nip44_decrypt: 'NIP-44 Decrypt',
-};
 
 const nostrWhitelist = ref<string[]>([]);
 const currentTabDomain = ref('');
@@ -201,7 +192,7 @@ async function fetchCurrentTabDomain() {
 async function connectWithBunkerUri() {
   const uri = bunkerUriInput.value.trim();
   if (!uri) {
-    errorMessage.value = 'Paste a bunker:// URI above';
+    errorMessage.value = t('errorPasteUri');
     return;
   }
   connecting.value = true;
@@ -219,10 +210,10 @@ async function connectWithBunkerUri() {
       signerRelays.value = (sessionRes as { relays?: string[] })?.relays ?? [];
       bunkerUriInput.value = '';
     } else {
-      errorMessage.value = res?.error || 'Connection failed';
+      errorMessage.value = res?.error || t('errorConnectionFailed');
     }
   } catch (e) {
-    errorMessage.value = e instanceof Error ? e.message : 'Connection failed';
+    errorMessage.value = e instanceof Error ? e.message : t('errorConnectionFailed');
   } finally {
     connecting.value = false;
   }
@@ -238,27 +229,27 @@ async function doFullLogout() {
     nostrWhitelist.value = [];
     errorMessage.value = '';
     showLogoutConfirm.value = false;
-    toast.success('Logged out');
+    toast.success(t('toastLoggedOut'));
   } catch {
-    toast.error('Log out failed');
+    toast.error(t('toastLogoutFailed'));
   }
 }
 
 async function saveBaseUrl() {
   await chrome.storage.local.set({ bunker46BaseUrl: baseUrl.value });
-  toast.success('Settings saved');
+  toast.success(t('toastSettingsSaved'));
 }
 
 async function setPrivacyModeEnabled() {
   const enabled = privacyMode.value;
   await chrome.storage.local.set({ privacyMode: enabled });
-  toast.success(enabled ? 'Privacy mode on' : 'Privacy mode off');
+  toast.success(enabled ? t('toastPrivacyModeOn') : t('toastPrivacyModeOff'));
 }
 
 async function setShowNostrBadgeEnabled() {
   const enabled = showNostrBadge.value;
   await chrome.runtime.sendMessage({ type: 'SET_SHOW_NOSTR_BADGE', enabled });
-  toast.success(enabled ? 'Badge shown' : 'Badge hidden');
+  toast.success(enabled ? t('toastBadgeShown') : t('toastBadgeHidden'));
 }
 
 async function copyPubkey() {
@@ -266,9 +257,9 @@ async function copyPubkey() {
   if (!value) return;
   try {
     await navigator.clipboard.writeText(value);
-    toast.success('Copied to clipboard');
+    toast.success(t('toastCopied'));
   } catch {
-    toast.error('Failed to copy');
+    toast.error(t('toastCopyFailed'));
   }
 }
 
@@ -305,7 +296,7 @@ async function startNostrConnect() {
     }
     const uri = res?.uri ?? '';
     if (!uri) {
-      errorMessage.value = 'Failed to generate connection URI';
+      errorMessage.value = t('errorGenerateUri');
       return;
     }
     nostrConnectUri.value = uri;
@@ -327,7 +318,7 @@ async function startNostrConnect() {
       }
     }, 1500);
   } catch (e) {
-    errorMessage.value = e instanceof Error ? e.message : 'Failed to start connection';
+    errorMessage.value = e instanceof Error ? e.message : t('errorStartConnection');
   }
 }
 
@@ -345,9 +336,9 @@ async function copyNostrConnectUri() {
   if (!uri) return;
   try {
     await navigator.clipboard.writeText(uri);
-    toast.success('Copied to clipboard');
+    toast.success(t('toastCopied'));
   } catch {
-    toast.error('Failed to copy');
+    toast.error(t('toastCopyFailed'));
   }
 }
 
@@ -366,9 +357,9 @@ async function revokePermission(host: string, method: string) {
         delete permissions.value[host];
       }
     }
-    toast.success('Permission removed');
+    toast.success(t('toastPermissionRemoved'));
   } catch {
-    toast.error('Failed to remove permission');
+    toast.error(t('toastPermissionRemoveFailed'));
   }
 }
 
@@ -376,9 +367,9 @@ async function revokeDomain(host: string) {
   try {
     await chrome.runtime.sendMessage({ type: 'REMOVE_DOMAIN_PERMISSIONS', host });
     delete permissions.value[host];
-    toast.success('Domain permissions removed');
+    toast.success(t('toastDomainRemoved'));
   } catch {
-    toast.error('Failed to remove domain');
+    toast.error(t('toastDomainRemoveFailed'));
   }
 }
 
@@ -386,7 +377,7 @@ async function addCurrentTabToWhitelist() {
   if (!currentTabDomain.value) await fetchCurrentTabDomain();
   const host = currentTabDomain.value;
   if (!host) {
-    toast.error('No active tab or URL');
+    toast.error(t('toastNoActiveTab'));
     return;
   }
   try {
@@ -395,9 +386,9 @@ async function addCurrentTabToWhitelist() {
       (h, i, a) => a.indexOf(h) === i
     ).sort();
     nostrWhitelist.value = list;
-    toast.success(`Added ${host} to whitelist. Reload the tab to use nostr.`);
+    toast.success(t('toastAddedToWhitelist', host));
   } catch (e) {
-    toast.error(e instanceof Error ? e.message : 'Failed to add domain');
+    toast.error(e instanceof Error ? e.message : t('toastAddDomainFailed'));
   }
 }
 
@@ -407,9 +398,9 @@ async function removeFromWhitelist(host: string) {
     nostrWhitelist.value = nostrWhitelist.value.filter(
       (h) => h !== host.toLowerCase()
     );
-    toast.success('Removed from whitelist');
+    toast.success(t('toastRemovedFromWhitelist'));
   } catch {
-    toast.error('Failed to remove from whitelist');
+    toast.error(t('toastRemoveFromWhitelistFailed'));
   }
 }
 
@@ -448,15 +439,15 @@ onUnmounted(() => {
       <div class="flex items-center gap-2.5">
         <img :src="extensionIconUrl" alt="" class="size-8 rounded-lg object-contain" />
         <div>
-          <h1 class="text-sm font-semibold leading-tight">Bunker46</h1>
-          <p class="text-xs text-muted-foreground leading-tight">NIP-07 Remote Signer</p>
+          <h1 class="text-sm font-semibold leading-tight">{{ t('extName') }}</h1>
+          <p class="text-xs text-muted-foreground leading-tight">{{ t('appSubtitle') }}</p>
         </div>
       </div>
       <Badge :variant="connected ? 'success' : 'secondary'">
         <span
           :class="['size-1.5 rounded-full', connected ? 'bg-success' : 'bg-muted-foreground']"
         />
-        {{ connected ? 'Connected' : 'Offline' }}
+        {{ connected ? t('connected') : t('offline') }}
       </Badge>
     </header>
 
@@ -471,7 +462,7 @@ onUnmounted(() => {
         ]"
         @click="switchTab('connection')"
       >
-        Connection
+        {{ t('tabConnection') }}
       </button>
       <button
         :class="[
@@ -482,7 +473,7 @@ onUnmounted(() => {
         ]"
         @click="switchTab('permissions')"
       >
-        Permissions
+        {{ t('tabPermissions') }}
       </button>
       <button
         :class="[
@@ -493,7 +484,7 @@ onUnmounted(() => {
         ]"
         @click="switchTab('settings')"
       >
-        Settings
+        {{ t('tabSettings') }}
       </button>
     </div>
 
@@ -518,7 +509,7 @@ onUnmounted(() => {
                   <KeyRound class="size-5 text-success" />
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm font-medium">Signer Key</p>
+                  <p class="text-sm font-medium">{{ t('signerKey') }}</p>
                   <div class="flex items-center gap-2">
                     <button
                       class="text-xs text-muted-foreground font-mono truncate block max-w-full hover:text-foreground transition-colors cursor-pointer text-left flex-1 min-w-0"
@@ -531,7 +522,7 @@ onUnmounted(() => {
                       variant="ghost"
                       size="icon"
                       class="size-7 shrink-0 text-muted-foreground hover:text-foreground"
-                      title="Copy"
+                      :title="t('copyTitle')"
                       @click="copyPubkey"
                     >
                       <Copy class="size-3.5" />
@@ -540,7 +531,7 @@ onUnmounted(() => {
                       variant="ghost"
                       size="icon"
                       class="size-7 shrink-0 text-muted-foreground hover:text-foreground"
-                      title="Show QR code"
+                      :title="t('showQrTitle')"
                       @click="openQrModal"
                     >
                       <QrCode class="size-3.5" />
@@ -552,8 +543,7 @@ onUnmounted(() => {
               <Separator />
 
               <p class="text-xs text-muted-foreground leading-relaxed">
-                All NIP-07 requests from web pages are forwarded to this remote signer via NIP-46.
-                No private keys are stored in the extension.
+                {{ t('signerDescription') }}
               </p>
             </div>
           </CardContent>
@@ -561,7 +551,7 @@ onUnmounted(() => {
 
         <Button variant="outline" class="w-full" @click="showLogoutConfirm = true">
           <Unplug class="size-4" />
-          Disconnect
+          {{ t('disconnect') }}
         </Button>
 
         <!-- Log out confirmation (disconnect + clear permissions + whitelist) -->
@@ -574,14 +564,14 @@ onUnmounted(() => {
               class="fixed left-1/2 top-1/2 z-50 w-full max-w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-4 shadow-xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
             >
               <AlertDialogTitle class="text-sm font-semibold">
-                Log out completely?
+                {{ t('logoutConfirmTitle') }}
               </AlertDialogTitle>
               <AlertDialogDescription class="mt-2 text-xs text-muted-foreground">
-                This will disconnect from your signer and clear all permissions and the privacy-mode whitelist. You’ll need to reconnect and re-allow sites.
+                {{ t('logoutConfirmDescription') }}
               </AlertDialogDescription>
               <div class="mt-4 flex justify-end gap-2">
                 <AlertDialogCancel as-child>
-                  <Button variant="outline" size="sm"> Cancel </Button>
+                  <Button variant="outline" size="sm"> {{ t('cancel') }} </Button>
                 </AlertDialogCancel>
                 <AlertDialogAction as-child>
                   <Button
@@ -589,7 +579,7 @@ onUnmounted(() => {
                     size="sm"
                     @click="doFullLogout"
                   >
-                    Log out
+                    {{ t('logOut') }}
                   </Button>
                 </AlertDialogAction>
               </div>
@@ -604,17 +594,17 @@ onUnmounted(() => {
           <CardHeader>
             <div class="flex items-center gap-2">
               <Link2 class="size-4 text-primary" />
-              <CardTitle>Connect via Bunker URI</CardTitle>
+              <CardTitle>{{ t('connectViaBunkerUri') }}</CardTitle>
             </div>
             <CardDescription>
-              Paste a bunker:// URI from your remote signer to connect
+              {{ t('connectViaBunkerUriDesc') }}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div class="flex flex-col gap-3">
               <Input
                 v-model="bunkerUriInput"
-                placeholder="bunker://..."
+                :placeholder="t('placeholderBunkerUri')"
                 :disabled="connecting"
                 class="font-mono text-xs"
                 @keydown.enter="connectWithBunkerUri"
@@ -626,25 +616,25 @@ onUnmounted(() => {
               >
                 <Loader2 v-if="connecting" class="size-4 animate-spin" />
                 <Link2 v-else class="size-4" />
-                {{ connecting ? 'Connecting...' : 'Connect' }}
+                {{ connecting ? t('connecting') : t('connect') }}
               </Button>
 
-              <Separator label="or" />
+              <Separator :label="t('separatorOr')" />
 
               <Button variant="outline" class="w-full" @click="openBunker46">
                 <ExternalLink class="size-4" />
-                Get URI from Bunker46
+                {{ t('getUriFromBunker46') }}
               </Button>
 
-              <Separator label="or" />
+              <Separator :label="t('separatorOr')" />
 
               <div class="flex flex-col gap-3">
                 <p class="text-xs text-muted-foreground">
-                  Connect via Nostrconnect: show a QR and URI for your bunker app to scan.
+                  {{ t('nostrConnectDesc') }}
                 </p>
                 <Button variant="outline" class="w-full" @click="startNostrConnect">
                   <QrCode class="size-4" />
-                  Show QR & connection URI
+                  {{ t('showQrConnectionUri') }}
                 </Button>
               </div>
             </div>
@@ -658,11 +648,11 @@ onUnmounted(() => {
       <div class="flex flex-col gap-4 p-5">
         <div class="flex flex-col gap-3">
           <div class="flex flex-col gap-1.5">
-            <Label>Bunker46 URL</Label>
-            <Input v-model="baseUrl" placeholder="http://localhost:5173" class="text-xs" />
-            <p class="text-xs text-muted-foreground">Base URL of your Bunker46 instance</p>
+            <Label>{{ t('settingsBunkerUrl') }}</Label>
+            <Input v-model="baseUrl" :placeholder="t('settingsBunkerUrlPlaceholder')" class="text-xs" />
+            <p class="text-xs text-muted-foreground">{{ t('settingsBunkerUrlHint') }}</p>
           </div>
-          <Button size="sm" @click="saveBaseUrl"> Save </Button>
+          <Button size="sm" @click="saveBaseUrl"> {{ t('save') }} </Button>
         </div>
         <div class="flex flex-col gap-3">
           <label
@@ -674,13 +664,13 @@ onUnmounted(() => {
               class="rounded border-input"
               @change="setPrivacyModeEnabled()"
             />
-            Privacy mode
+            {{ t('privacyMode') }}
           </label>
           <p class="text-xs text-muted-foreground">
-            When on, window.nostr is only exposed on domains you’ve added to the whitelist (via the Permissions tab), reducing fingerprinting.
+            {{ t('privacyModeHint') }}
           </p>
           <p class="text-xs text-muted-foreground">
-            Sites can't detect the extension, so some may not show "Sign in with Nostr" until you add them in Permissions.
+            {{ t('privacyModeSitesHint') }}
           </p>
         </div>
         <div class="flex flex-col gap-3">
@@ -693,10 +683,10 @@ onUnmounted(() => {
               class="rounded border-input"
               @change="setShowNostrBadgeEnabled()"
             />
-            Show badge on extension icon
+            {{ t('showBadge') }}
           </label>
           <p class="text-xs text-muted-foreground">
-            When on, the icon shows the number of granted permissions for the current tab (e.g. 1, 2).
+            {{ t('showBadgeHint') }}
           </p>
         </div>
       </div>
@@ -711,22 +701,22 @@ onUnmounted(() => {
           variant="outline"
           size="sm"
           class="w-full shrink-0"
-          :title="`Add ${currentTabDomain} to whitelist`"
+          :title="t('addToWhitelistTitle', currentTabDomain)"
           @click="addCurrentTabToWhitelist"
         >
           <Plus class="size-3.5" />
-          Add {{ currentTabDomain }} to whitelist
+          {{ t('addToWhitelistButton', currentTabDomain) }}
         </Button>
         <Button
           v-else-if="privacyMode && currentTabDomain && currentTabIsWhitelisted"
           variant="outline"
           size="sm"
           class="w-full shrink-0 border-destructive/50 text-destructive hover:bg-destructive/10 hover:border-destructive"
-          :title="`Remove ${currentTabDomain} from whitelist`"
+          :title="t('removeFromWhitelistTitle', currentTabDomain)"
           @click="removeFromWhitelist(currentTabDomain)"
         >
           <Trash2 class="size-3.5" />
-          Remove {{ currentTabDomain }} from whitelist
+          {{ t('removeFromWhitelistButton', currentTabDomain) }}
         </Button>
         <!-- Search -->
         <div class="relative shrink-0">
@@ -737,7 +727,7 @@ onUnmounted(() => {
           <Input
             v-model="permissionSearchQuery"
             type="text"
-            placeholder="Search domains..."
+            :placeholder="t('searchDomainsPlaceholder')"
             class="pl-8 text-xs h-8"
           />
         </div>
@@ -749,9 +739,9 @@ onUnmounted(() => {
             class="flex flex-col items-center justify-center py-10 text-center"
           >
             <ShieldCheck class="size-10 text-muted-foreground/50 mb-3" />
-            <p class="text-sm font-medium text-muted-foreground">No permissions yet</p>
+            <p class="text-sm font-medium text-muted-foreground">{{ t('noPermissionsYet') }}</p>
             <p class="text-xs text-muted-foreground/70 mt-1 max-w-[250px]">
-              When websites request access to your Nostr identity, you'll see them here.
+              {{ t('noPermissionsHint') }}
             </p>
           </div>
 
@@ -760,7 +750,7 @@ onUnmounted(() => {
             v-else-if="filteredPermissionDomains.length === 0"
             class="flex flex-col items-center justify-center py-8 text-center"
           >
-            <p class="text-sm font-medium text-muted-foreground">No domains match your search</p>
+            <p class="text-sm font-medium text-muted-foreground">{{ t('noDomainsMatch') }}</p>
           </div>
 
           <!-- Domain list -->
@@ -776,7 +766,7 @@ onUnmounted(() => {
                   variant="ghost"
                   size="icon"
                   class="size-7 shrink-0 text-muted-foreground hover:text-destructive"
-                  title="Revoke all permissions for this domain"
+                  :title="t('revokeAllPermissionsTitle')"
                   @click="revokeDomain(host)"
                 >
                   <Trash2 class="size-3.5" />
@@ -789,7 +779,7 @@ onUnmounted(() => {
                 v-if="isWhitelistOnly(host)"
                 class="py-1.5 text-xs text-muted-foreground"
               >
-                Whitelisted for nostr (no permissions yet)
+                {{ t('whitelistedNoPermissions') }}
               </div>
               <!-- Has permission entries -->
               <div v-else class="flex flex-col gap-1.5">
@@ -799,18 +789,18 @@ onUnmounted(() => {
                   class="flex items-center justify-between py-1"
                 >
                   <span class="text-xs text-muted-foreground">
-                    {{ METHOD_LABELS[method as string] ?? method }}
+                    {{ getMethodLabel(method as string) }}
                   </span>
                   <div class="flex items-center gap-2">
                     <Badge
                       :variant="entry.decision === 'allow' ? 'success' : 'destructive'"
                       class="text-[10px] px-1.5 py-0"
                     >
-                      {{ entry.decision === 'allow' ? 'Allowed' : 'Denied' }}
+                      {{ entry.decision === 'allow' ? t('allowed') : t('denied') }}
                     </Badge>
                     <button
                       class="text-muted-foreground hover:text-destructive transition-colors cursor-pointer"
-                      title="Revoke"
+                      :title="t('revokeTitle')"
                       @click="revokePermission(host, method as string)"
                     >
                       <Trash2 class="size-3" />
@@ -823,11 +813,11 @@ onUnmounted(() => {
                 variant="outline"
                 size="sm"
                 class="mt-2 w-full text-xs border-destructive/50 text-destructive hover:bg-destructive/10 hover:border-destructive h-7"
-                title="Remove from whitelist"
+                :title="t('removeFromWhitelist')"
                 @click="removeFromWhitelist(host)"
               >
                 <Trash2 class="size-3" />
-                Remove from whitelist
+                {{ t('removeFromWhitelist') }}
               </Button>
             </CardContent>
           </Card>
@@ -845,17 +835,17 @@ onUnmounted(() => {
         class="rounded-lg border border-border bg-card p-4 shadow-xl flex flex-col items-center gap-3"
       >
         <p class="text-xs font-medium text-muted-foreground">
-          {{ pubkeyDisplayMode }} (scan to use)
+          {{ t('qrScanToUse', pubkeyDisplayMode) }}
         </p>
         <img
           v-if="qrDataUrl"
           :src="qrDataUrl"
-          alt="QR code"
+          :alt="t('qrCodeAlt')"
           class="rounded border border-border bg-white"
           width="220"
           height="220"
         />
-        <Button size="sm" variant="outline" @click="closeQrModal"> Close </Button>
+        <Button size="sm" variant="outline" @click="closeQrModal"> {{ t('close') }} </Button>
       </div>
     </div>
 
@@ -869,12 +859,12 @@ onUnmounted(() => {
         class="rounded-lg border border-border bg-card p-4 shadow-xl flex flex-col items-center gap-3 max-w-[280px]"
       >
         <p class="text-xs font-medium text-muted-foreground text-center">
-          Scan with your bunker app or copy the URI
+          {{ t('nostrConnectModalHint') }}
         </p>
         <img
           v-if="nostrConnectQrDataUrl"
           :src="nostrConnectQrDataUrl"
-          alt="Nostrconnect QR code"
+          :alt="t('nostrConnectQrAlt')"
           class="rounded border border-border bg-white shrink-0"
           width="220"
           height="220"
@@ -886,16 +876,16 @@ onUnmounted(() => {
           @click="copyNostrConnectUri"
         >
           <Copy class="size-3.5" />
-          Copy URI
+          {{ t('copyUri') }}
         </Button>
         <p
           v-if="nostrConnectWaiting"
           class="text-xs text-muted-foreground text-center"
         >
-          Waiting for bunker to connect…
+          {{ t('waitingForBunker') }}
         </p>
         <Button size="sm" variant="ghost" class="w-full" @click="closeNostrConnectModal">
-          Cancel
+          {{ t('cancel') }}
         </Button>
       </div>
     </div>

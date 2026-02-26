@@ -3,16 +3,7 @@ import { ref, onMounted, computed } from 'vue';
 import Button from '@/components/ui/Button.vue';
 import Separator from '@/components/ui/Separator.vue';
 import { ShieldAlert, Globe, FileSignature, ChevronDown, ChevronUp } from 'lucide-vue-next';
-
-const METHOD_LABELS: Record<string, string> = {
-  getPublicKey: 'Get Public Key',
-  signEvent: 'Sign Event',
-  getRelays: 'Get Relays',
-  nip04_encrypt: 'NIP-04 Encrypt',
-  nip04_decrypt: 'NIP-04 Decrypt',
-  nip44_encrypt: 'NIP-44 Encrypt',
-  nip44_decrypt: 'NIP-44 Decrypt',
-};
+import { t, getMethodLabel } from '@/lib/i18n';
 
 const requestId = ref('');
 const host = ref('');
@@ -68,7 +59,7 @@ function respond(decision: string) {
       <div class="flex items-center justify-center size-10 rounded-full bg-primary/15">
         <ShieldAlert class="size-5 text-primary" />
       </div>
-      <h1 class="text-sm font-semibold">Permission Request</h1>
+      <h1 class="text-sm font-semibold">{{ t('promptPermissionRequest') }}</h1>
     </div>
 
     <!-- Domain -->
@@ -80,16 +71,16 @@ function respond(decision: string) {
         <span class="text-sm font-medium truncate">{{ host }}</span>
       </div>
 
-      <p class="text-xs text-muted-foreground text-center">wants to access your Nostr identity</p>
+      <p class="text-xs text-muted-foreground text-center">{{ t('promptWantsAccess') }}</p>
     </div>
 
     <!-- Method info -->
     <div class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-secondary/50 w-full min-h-0">
       <FileSignature class="size-4 text-muted-foreground shrink-0" />
       <div class="flex flex-col gap-0.5 min-w-0">
-        <span class="text-sm font-medium">{{ METHOD_LABELS[method] ?? method }}</span>
+        <span class="text-sm font-medium">{{ getMethodLabel(method) }}</span>
         <span v-if="eventKind !== null" class="text-xs text-muted-foreground">
-          Event kind {{ eventKind }}
+          {{ t('promptEventKind', String(eventKind)) }}
         </span>
       </div>
     </div>
@@ -102,7 +93,7 @@ function respond(decision: string) {
         class="w-full justify-between h-8 text-xs text-muted-foreground hover:text-foreground"
         @click="rawMessageExpanded = !rawMessageExpanded"
       >
-        <span>{{ rawMessageExpanded ? 'Hide raw message' : 'View raw message' }}</span>
+        <span>{{ rawMessageExpanded ? t('promptHideRawMessage') : t('promptViewRawMessage') }}</span>
         <ChevronDown v-if="!rawMessageExpanded" class="size-3.5 shrink-0" />
         <ChevronUp v-else class="size-3.5 shrink-0" />
       </Button>
@@ -121,12 +112,12 @@ function respond(decision: string) {
     <!-- Decision buttons -->
     <div class="grid grid-cols-2 gap-2 w-full shrink-0">
       <Button variant="default" class="w-full" @click="respond('allow_always')">
-        Allow Always
+        {{ t('promptAllowAlways') }}
       </Button>
-      <Button variant="outline" class="w-full" @click="respond('allow_once')"> Allow Once </Button>
-      <Button variant="outline" class="w-full" @click="respond('deny_once')"> Deny </Button>
+      <Button variant="outline" class="w-full" @click="respond('allow_once')"> {{ t('promptAllowOnce') }} </Button>
+      <Button variant="outline" class="w-full" @click="respond('deny_once')"> {{ t('promptDenyOnce') }} </Button>
       <Button variant="destructive" class="w-full" @click="respond('deny_always')">
-        Deny Always
+        {{ t('promptDenyAlways') }}
       </Button>
     </div>
   </div>
