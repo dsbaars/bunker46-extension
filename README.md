@@ -10,8 +10,11 @@ A **NIP-07 compliant** browser extension that exposes `window.nostr` to web page
 ## What it does
 
 - **NIP-07 provider** — Injects `window.nostr` (getPublicKey, signEvent, getRelays, nip04/nip44) so Nostr apps can request signatures without holding keys locally.
-- **Remote signer** — You connect once with a `bunker://` URI from your Bunker46 (or other NIP-46) instance; the extension keeps a session and proxies all allowed requests to it.
-- **Per-domain permissions** — Each site must be allowed (once or always) before it can use your Nostr identity; you can revoke domains or individual methods from the popup.
+- **Remote signer** — Connect with a `bunker://` URI or via **nostrconnect**: the extension shows a QR and copyable URI for your bunker app to scan; once connected, the session is saved so you stay connected after restart.
+- **Per-domain permissions** — Each site must be allowed (once or always) before it can use your Nostr identity; you can revoke domains or individual methods from the Permissions tab.
+- **Privacy mode** — When enabled (Settings), `window.nostr` is only exposed on domains you add to a whitelist, reducing fingerprinting; add or remove domains from the Permissions tab.
+- **Extension icon badge** — Optional (Settings): show the number of granted permissions for the current tab on the extension icon.
+- **Full logout** — Disconnect asks for confirmation and then disconnects, clears all permissions, and clears the privacy whitelist in one step.
 - **nostrconnect:// links** — Clicking nostrconnect links opens your configured Bunker46 instance so you can add or manage connections there.
 - **Chrome & Firefox** — Built with [WXT](https://wxt.dev); Chrome and Firefox (MV3) builds are supported.
 
@@ -38,7 +41,7 @@ Load the relevant `.output/<target>/` directory (or the zip) as an unpacked exte
 
 - `entrypoints/` — Background script, content script (NIP-07 bridge + nostrconnect), popup, permission prompt, redirect page.
 - `public/` — Injected NIP-07 provider script and extension icons.
-- `lib/` — Permissions storage, NIP-07 types, hex helpers.
+- `lib/` — Permissions storage, privacy-mode whitelist, NIP-07 types, hex helpers.
 - `components/ui/` — Vue UI components (shadcn-style).
 
 ## License

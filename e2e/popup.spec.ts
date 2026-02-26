@@ -7,13 +7,13 @@ test('popup opens and shows Bunker46 heading', async ({ page, extensionId }) => 
 
 test('popup has Connection and Permissions tabs', async ({ page, extensionId }) => {
   await page.goto(`chrome-extension://${extensionId}/popup.html`);
-  await expect(page.getByRole('button', { name: 'Connection' })).toBeVisible();
-  await expect(page.getByRole('button', { name: 'Permissions' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Connection', exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Permissions', exact: true })).toBeVisible();
 });
 
 test('Permissions tab shows empty state when no permissions', async ({ page, extensionId }) => {
   await page.goto(`chrome-extension://${extensionId}/popup.html`);
-  await page.getByRole('button', { name: 'Permissions' }).click();
+  await page.getByRole('button', { name: 'Permissions', exact: true }).click();
   await expect(page.getByText(/No permissions yet/i)).toBeVisible();
 });
 
@@ -22,7 +22,7 @@ test('Connection tab shows bunker URI input and Connect button when disconnected
   extensionId,
 }) => {
   await page.goto(`chrome-extension://${extensionId}/popup.html`);
-  await expect(page.getByRole('button', { name: 'Connection' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Connection', exact: true })).toBeVisible();
   await expect(page.getByPlaceholder(/bunker:\/\/\.\.\./)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Connect', exact: true })).toBeVisible();
 });
