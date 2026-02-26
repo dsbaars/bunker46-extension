@@ -25,7 +25,19 @@ const NOSTRCONNECT_PREFIX = 'nostrconnect:';
 export default defineContentScript({
   matches: ['<all_urls>'],
   runAt: 'document_start',
-  main(ctx) {
+  async main(ctx) {
+    const host =
+      typeof document?.location?.hostname === 'string' ? document.location.hostname : '';
+    let injectNostr = true;
+    if (host) {
+      try {
+        const res = await chrome.runtime.sendMessage({ type: 'SHOULD_INJECT_NOSTR', host });
+        injectNostr = res?.inject === true;
+      } catch {
+        injectNostr = false;
+      }
+    }
+
     document.addEventListener(
       'click',
       (e: MouseEvent) => {
@@ -44,41 +56,43 @@ export default defineContentScript({
       true
     );
 
-    document.addEventListener(EVENT_REQUEST, async (e: Event) => {
-      const ev = e as CustomEvent<{ id: string; method: string; params?: unknown[] }>;
-      const { id, method, params } = ev.detail ?? {};
-      if (!id || !method) return;
-      const type = METHOD_TO_TYPE[method];
-      function sendResponse(payload: { id: string; error?: string; result?: unknown }) {
-        window.postMessage({ type: 'nip07-response', payload }, '*');
-      }
-      if (!type) {
-        sendResponse({ id, error: 'Unknown NIP-07 method' });
-        return;
-      }
-      try {
-        const res = await chrome.runtime.sendMessage({
-          type,
-          params: params ?? [],
-        });
-        if (!ctx.isValid) return;
-        if (res?.error) {
-          sendResponse({ id, error: res.error });
-        } else {
-          sendResponse({ id, result: res?.result });
+    if (injectNostr) {
+      document.addEventListener(EVENT_REQUEST, async (e: Event) => {
+        const ev = e as CustomEvent<{ id: string; method: string; params?: unknown[] }>;
+        const { id, method, params } = ev.detail ?? {};
+        if (!id || !method) return;
+        const type = METHOD_TO_TYPE[method];
+        function sendResponse(payload: { id: string; error?: string; result?: unknown }) {
+          window.postMessage({ type: 'nip07-response', payload }, '*');
         }
-      } catch (err) {
-        if (!ctx.isValid) return;
-        sendResponse({
-          id,
-          error: err instanceof Error ? err.message : 'Unknown error',
-        });
-      }
-    });
+        if (!type) {
+          sendResponse({ id, error: 'Unknown NIP-07 method' });
+          return;
+        }
+        try {
+          const res = await chrome.runtime.sendMessage({
+            type,
+            params: params ?? [],
+          });
+          if (!ctx.isValid) return;
+          if (res?.error) {
+            sendResponse({ id, error: res.error });
+          } else {
+            sendResponse({ id, result: res?.result });
+          }
+        } catch (err) {
+          if (!ctx.isValid) return;
+          sendResponse({
+            id,
+            error: err instanceof Error ? err.message : 'Unknown error',
+          });
+        }
+      });
 
-    const script = document.createElement('script');
-    script.src = chrome.runtime.getURL(PROVIDER_SCRIPT_URL);
-    script.onload = () => script.remove();
-    (document.documentElement || document.head).appendChild(script);
+      const script = document.createElement('script');
+      script.src = chrome.runtime.getURL(PROVIDER_SCRIPT_URL);
+      script.onload = () => script.remove();
+      (document.documentElement || document.head).appendChild(script);
+    }
   },
 });

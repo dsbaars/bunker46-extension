@@ -15,7 +15,7 @@ export default defineConfig({
   manifest: ({ browser }) => ({
     name: 'Bunker46',
     description: 'NIP-07 remote signer via NIP-46 / Bunker46',
-    permissions: ['storage'],
+    permissions: ['storage', 'tabs'],
     web_accessible_resources: [
       {
         resources: ['nostr-provider.js'],

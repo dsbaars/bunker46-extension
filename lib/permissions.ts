@@ -54,3 +54,7 @@ export async function removeDomainPermissions(host: string): Promise<void> {
   delete policies[host];
   await savePermissions(policies);
 }
+
+export async function clearAllPermissions(): Promise<void> {
+  await chrome.storage.local.set({ [STORAGE_KEY]: {} });
+}

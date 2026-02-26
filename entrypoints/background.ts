@@ -13,7 +13,16 @@ import {
   getPermissions,
   removePermission,
   removeDomainPermissions,
+  clearAllPermissions,
 } from '@/lib/permissions';
+import type { DomainPolicies } from '@/lib/permissions';
+import {
+  shouldExposeNostrForHost,
+  addToNostrWhitelist,
+  removeFromNostrWhitelist,
+  getNostrWhitelist,
+  clearNostrWhitelist,
+} from '@/lib/privacy-mode';
 import type { NIP07SignEventInput } from '@/lib/nip07/types';
 
 const STORAGE_KEY_CLIENT_SECRET = 'nip46_client_secret_hex';
@@ -86,6 +95,106 @@ async function clearSession(): Promise<void> {
 }
 
 const BUNKER_CONNECT_TIMEOUT_MS = 30_000;
+
+const STORAGE_KEY_SHOW_BADGE = 'showNostrBadge';
+const NOSTR_BADGE_COLOR = '#a855f7';
+
+async function getShowNostrBadge(): Promise<boolean> {
+  const raw = await chrome.storage.local.get(STORAGE_KEY_SHOW_BADGE);
+  return raw[STORAGE_KEY_SHOW_BADGE] !== false;
+}
+
+function setBadgeForTab(tabId: number, count: number): void {
+  try {
+    const text = count > 0 ? (count > 9 ? '9+' : String(count)) : '';
+    chrome.action.setBadgeText({ tabId, text });
+    if (count > 0) {
+      chrome.action.setBadgeBackgroundColor({ tabId, color: NOSTR_BADGE_COLOR });
+    }
+  } catch {
+    /* ignore e.g. invalid tabId */
+  }
+}
+
+function countAllowedPermissions(policies: DomainPolicies, host: string): number {
+  const hostPolicies = policies[host];
+  if (!hostPolicies) return 0;
+  return Object.values(hostPolicies).filter((p) => p.decision === 'allow').length;
+}
+
+async function updateBadgeForTabsWithHost(host: string): Promise<void> {
+  const showBadge = await getShowNostrBadge();
+  if (!showBadge) {
+    await clearBadgeForTabsWithHost(host);
+    return;
+  }
+  const [policies, inject] = await Promise.all([
+    getPermissions(),
+    shouldExposeNostrForHost(host),
+  ]);
+  const count = inject ? countAllowedPermissions(policies, host) : 0;
+  let tabs: { id?: number; url?: string }[] = [];
+  try {
+    tabs = await new Promise((resolve) => {
+      chrome.tabs.query({}, (result: { id?: number; url?: string }[]) =>
+        resolve(result ?? [])
+      );
+    });
+  } catch {
+    return;
+  }
+  const normalizedHost = host.trim().toLowerCase();
+  for (const tab of tabs) {
+    if (tab.id == null || !tab.url) continue;
+    try {
+      const tabHost = new URL(tab.url).hostname.toLowerCase();
+      if (tabHost === normalizedHost) {
+        setBadgeForTab(tab.id, count);
+      }
+    } catch {
+      /* ignore invalid URL */
+    }
+  }
+}
+
+async function clearBadgeForTabsWithHost(host: string): Promise<void> {
+  let tabs: { id?: number; url?: string }[] = [];
+  try {
+    tabs = await new Promise((resolve) => {
+      chrome.tabs.query({}, (result: { id?: number; url?: string }[]) =>
+        resolve(result ?? [])
+      );
+    });
+  } catch {
+    return;
+  }
+  const normalizedHost = host.trim().toLowerCase();
+  for (const tab of tabs) {
+    if (tab.id == null || !tab.url) continue;
+    try {
+      const tabHost = new URL(tab.url).hostname.toLowerCase();
+      if (tabHost === normalizedHost) {
+        setBadgeForTab(tab.id, 0);
+      }
+    } catch {
+      /* ignore */
+    }
+  }
+}
+
+async function clearAllBadges(): Promise<void> {
+  let tabs: { id?: number }[] = [];
+  try {
+    tabs = await new Promise((resolve) => {
+      chrome.tabs.query({}, (result: { id?: number }[]) => resolve(result ?? []));
+    });
+  } catch {
+    return;
+  }
+  for (const tab of tabs) {
+    if (tab.id != null) setBadgeForTab(tab.id, 0);
+  }
+}
 
 /** NIP-65 relay list metadata (kind 10002) */
 const NIP65_KIND_RELAY_LIST = 10002;
@@ -331,8 +440,9 @@ chrome.runtime.onMessage.addListener(
       host?: string;
       requestId?: string;
       decision?: string;
+      enabled?: boolean;
     },
-    sender: { url?: string },
+    sender: { url?: string; tab?: { id?: number } },
     sendResponse: (response: unknown) => void
   ) => {
     (async () => {
@@ -358,9 +468,11 @@ chrome.runtime.onMessage.addListener(
 
         if (msg.decision === 'allow_always') {
           if (host && method) await setPermission(host, method, 'allow');
+          if (host) void updateBadgeForTabsWithHost(host);
           pending.resolve(true);
         } else if (msg.decision === 'deny_always') {
           if (host && method) await setPermission(host, method, 'deny');
+          if (host) void updateBadgeForTabsWithHost(host);
           pending.resolve(false);
         } else if (msg.decision === 'allow_once') {
           pending.resolve(true);
@@ -391,6 +503,43 @@ chrome.runtime.onMessage.addListener(
         return await startNostrConnectConnection();
       }
 
+      if (msg.type === 'SHOULD_INJECT_NOSTR' && typeof msg.host === 'string') {
+        const host = msg.host;
+        const [inject, policies, showBadge] = await Promise.all([
+          shouldExposeNostrForHost(host),
+          getPermissions(),
+          getShowNostrBadge(),
+        ]);
+        const count =
+          showBadge && inject ? countAllowedPermissions(policies, host) : 0;
+        const tabId = sender.tab?.id;
+        if (tabId !== undefined) {
+          setBadgeForTab(tabId, count);
+        }
+        return { inject };
+      }
+
+      if (msg.type === 'ADD_TO_NOSTR_WHITELIST' && typeof msg.host === 'string') {
+        await addToNostrWhitelist(msg.host);
+        return {};
+      }
+
+      if (msg.type === 'GET_NOSTR_WHITELIST') {
+        return { whitelist: await getNostrWhitelist() };
+      }
+
+      if (msg.type === 'REMOVE_FROM_NOSTR_WHITELIST' && typeof msg.host === 'string') {
+        await removeFromNostrWhitelist(msg.host);
+        void updateBadgeForTabsWithHost(msg.host);
+        return {};
+      }
+
+      if (msg.type === 'SET_SHOW_NOSTR_BADGE' && typeof msg.enabled === 'boolean') {
+        await chrome.storage.local.set({ [STORAGE_KEY_SHOW_BADGE]: msg.enabled });
+        if (!msg.enabled) await clearAllBadges();
+        return {};
+      }
+
       // Open nostrconnect URI in Bunker46 (avoids loading extension page in tab — often blocked by ad blockers)
       if (msg.type === 'OPEN_NOSTRCONNECT_URI' && msg.uri) {
         const data = await chrome.storage.local.get('bunker46BaseUrl');
@@ -411,6 +560,19 @@ chrome.runtime.onMessage.addListener(
         return {};
       }
 
+      if (msg.type === 'FULL_LOGOUT') {
+        if (bunkerSigner) {
+          try {
+            await bunkerSigner.close();
+          } catch {}
+        }
+        await clearSession();
+        await clearAllPermissions();
+        await clearNostrWhitelist();
+        await clearAllBadges();
+        return {};
+      }
+
       if (msg.type === 'GET_RAW_EVENT' && msg.requestId) {
         return { event: pendingRawEvents.get(msg.requestId) ?? null };
       }
@@ -422,11 +584,13 @@ chrome.runtime.onMessage.addListener(
 
       if (msg.type === 'REMOVE_PERMISSION' && msg.host && msg.method) {
         await removePermission(msg.host, msg.method);
+        void updateBadgeForTabsWithHost(msg.host);
         return {};
       }
 
       if (msg.type === 'REMOVE_DOMAIN_PERMISSIONS' && msg.host) {
         await removeDomainPermissions(msg.host);
+        void updateBadgeForTabsWithHost(msg.host);
         return {};
       }
 

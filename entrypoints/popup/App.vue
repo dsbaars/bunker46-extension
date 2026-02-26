@@ -15,12 +15,19 @@ import 'vue-sonner/style.css';
 import { nip19 } from 'nostr-tools';
 import QRCode from 'qrcode';
 import {
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  AlertDialogRoot,
+  AlertDialogTitle,
+} from 'reka-ui';
+import {
   Link2,
   Unplug,
-  Settings2,
   Loader2,
-  ChevronDown,
-  ChevronUp,
   ExternalLink,
   KeyRound,
   ShieldCheck,
@@ -29,6 +36,7 @@ import {
   QrCode,
   Copy,
   Search,
+  Plus,
 } from 'lucide-vue-next';
 
 type PermissionEntry = {
@@ -42,21 +50,23 @@ type DomainPolicies = {
   };
 };
 
-const activeTab = ref<'connection' | 'permissions'>('connection');
+const activeTab = ref<'connection' | 'permissions' | 'settings'>('connection');
 const connected = ref(false);
 const signerPubkey = ref('');
 const signerRelays = ref<string[]>([]);
 const baseUrl = ref('http://localhost:5173');
+const privacyMode = ref(false);
+const showNostrBadge = ref(true);
 type PubkeyFormat = 'npub' | 'hex' | 'nprofile';
 const pubkeyDisplayMode = ref<PubkeyFormat>('npub');
 const showQrModal = ref(false);
 const qrDataUrl = ref('');
 const bunkerUriInput = ref('');
-const showSettings = ref(false);
 const connecting = ref(false);
 const errorMessage = ref('');
 const permissions = ref<DomainPolicies>({});
 
+const showLogoutConfirm = ref(false);
 const showNostrConnectModal = ref(false);
 const nostrConnectUri = ref('');
 const nostrConnectQrDataUrl = ref('');
@@ -73,13 +83,33 @@ const METHOD_LABELS: Record<string, string> = {
   nip44_decrypt: 'NIP-44 Decrypt',
 };
 
-const permissionDomains = computed(() => Object.keys(permissions.value).sort());
+const nostrWhitelist = ref<string[]>([]);
+const currentTabDomain = ref('');
+
+const permissionDomains = computed(() => {
+  const fromPerms = Object.keys(permissions.value);
+  const fromWhitelist = nostrWhitelist.value;
+  return [...new Set([...fromPerms, ...fromWhitelist])].sort();
+});
 const permissionSearchQuery = ref('');
 const filteredPermissionDomains = computed(() => {
   const q = permissionSearchQuery.value.trim().toLowerCase();
   if (!q) return permissionDomains.value;
   return permissionDomains.value.filter((host) => host.toLowerCase().includes(q));
 });
+
+function isWhitelistOnly(host: string): boolean {
+  return (
+    nostrWhitelist.value.includes(host.toLowerCase()) &&
+    (!permissions.value[host] || Object.keys(permissions.value[host]).length === 0)
+  );
+}
+
+const currentTabIsWhitelisted = computed(() =>
+  currentTabDomain.value
+    ? nostrWhitelist.value.includes(currentTabDomain.value.toLowerCase())
+    : false
+);
 const extensionIconUrl = chrome.runtime.getURL('icon/48.png');
 
 const pubkeyFormats = computed(() => {
@@ -126,8 +156,14 @@ async function loadState() {
       signerPubkey.value = res.signerPubkey ?? '';
       signerRelays.value = res.relays ?? [];
     }
-    const stored = await chrome.storage.local.get('bunker46BaseUrl');
+    const stored = await chrome.storage.local.get([
+      'bunker46BaseUrl',
+      'privacyMode',
+      'showNostrBadge',
+    ]);
     if (stored.bunker46BaseUrl) baseUrl.value = stored.bunker46BaseUrl as string;
+    privacyMode.value = stored.privacyMode === true;
+    showNostrBadge.value = stored.showNostrBadge !== false;
   } catch {
     /* background may not be ready */
   }
@@ -135,10 +171,28 @@ async function loadState() {
 
 async function loadPermissions() {
   try {
-    const res: { permissions?: DomainPolicies } = await chrome.runtime.sendMessage({
-      type: 'GET_PERMISSIONS',
-    });
-    if (res?.permissions) permissions.value = res.permissions;
+    const [permRes, whitelistRes] = await Promise.all([
+      chrome.runtime.sendMessage({ type: 'GET_PERMISSIONS' }),
+      chrome.runtime.sendMessage({ type: 'GET_NOSTR_WHITELIST' }),
+    ]);
+    if ((permRes as { permissions?: DomainPolicies })?.permissions)
+      permissions.value = (permRes as { permissions: DomainPolicies }).permissions;
+    if ((whitelistRes as { whitelist?: string[] })?.whitelist)
+      nostrWhitelist.value = (whitelistRes as { whitelist: string[] }).whitelist;
+  } catch {
+    /* ignore */
+  }
+}
+
+async function fetchCurrentTabDomain() {
+  currentTabDomain.value = '';
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+    if (tab?.url) {
+      const host = new URL(tab.url).hostname;
+      if (host && !host.startsWith('chrome') && !host.startsWith('edge'))
+        currentTabDomain.value = host;
+    }
   } catch {
     /* ignore */
   }
@@ -174,22 +228,37 @@ async function connectWithBunkerUri() {
   }
 }
 
-async function disconnect() {
+async function doFullLogout() {
   try {
-    await chrome.runtime.sendMessage({ type: 'DISCONNECT' });
+    await chrome.runtime.sendMessage({ type: 'FULL_LOGOUT' });
     connected.value = false;
     signerPubkey.value = '';
     signerRelays.value = [];
+    permissions.value = {};
+    nostrWhitelist.value = [];
     errorMessage.value = '';
+    showLogoutConfirm.value = false;
+    toast.success('Logged out');
   } catch {
-    errorMessage.value = 'Disconnect failed';
+    toast.error('Log out failed');
   }
 }
 
 async function saveBaseUrl() {
   await chrome.storage.local.set({ bunker46BaseUrl: baseUrl.value });
-  showSettings.value = false;
   toast.success('Settings saved');
+}
+
+async function setPrivacyModeEnabled() {
+  const enabled = privacyMode.value;
+  await chrome.storage.local.set({ privacyMode: enabled });
+  toast.success(enabled ? 'Privacy mode on' : 'Privacy mode off');
+}
+
+async function setShowNostrBadgeEnabled() {
+  const enabled = showNostrBadge.value;
+  await chrome.runtime.sendMessage({ type: 'SET_SHOW_NOSTR_BADGE', enabled });
+  toast.success(enabled ? 'Badge shown' : 'Badge hidden');
 }
 
 async function copyPubkey() {
@@ -313,9 +382,43 @@ async function revokeDomain(host: string) {
   }
 }
 
-function switchTab(tab: 'connection' | 'permissions') {
+async function addCurrentTabToWhitelist() {
+  if (!currentTabDomain.value) await fetchCurrentTabDomain();
+  const host = currentTabDomain.value;
+  if (!host) {
+    toast.error('No active tab or URL');
+    return;
+  }
+  try {
+    await chrome.runtime.sendMessage({ type: 'ADD_TO_NOSTR_WHITELIST', host });
+    const list = [...nostrWhitelist.value, host.toLowerCase()].filter(
+      (h, i, a) => a.indexOf(h) === i
+    ).sort();
+    nostrWhitelist.value = list;
+    toast.success(`Added ${host} to whitelist. Reload the tab to use nostr.`);
+  } catch (e) {
+    toast.error(e instanceof Error ? e.message : 'Failed to add domain');
+  }
+}
+
+async function removeFromWhitelist(host: string) {
+  try {
+    await chrome.runtime.sendMessage({ type: 'REMOVE_FROM_NOSTR_WHITELIST', host });
+    nostrWhitelist.value = nostrWhitelist.value.filter(
+      (h) => h !== host.toLowerCase()
+    );
+    toast.success('Removed from whitelist');
+  } catch {
+    toast.error('Failed to remove from whitelist');
+  }
+}
+
+function switchTab(tab: 'connection' | 'permissions' | 'settings') {
   activeTab.value = tab;
-  if (tab === 'permissions') loadPermissions();
+  if (tab === 'permissions') {
+    loadPermissions();
+    if (privacyMode.value) void fetchCurrentTabDomain();
+  }
 }
 
 onMounted(() => {
@@ -381,6 +484,17 @@ onUnmounted(() => {
       >
         Permissions
       </button>
+      <button
+        :class="[
+          'flex-1 px-4 py-2.5 text-xs font-medium transition-colors cursor-pointer',
+          activeTab === 'settings'
+            ? 'text-foreground border-b-2 border-primary'
+            : 'text-muted-foreground hover:text-foreground',
+        ]"
+        @click="switchTab('settings')"
+      >
+        Settings
+      </button>
     </div>
 
     <!-- Error banner -->
@@ -445,10 +559,43 @@ onUnmounted(() => {
           </CardContent>
         </Card>
 
-        <Button variant="outline" class="w-full" @click="disconnect">
+        <Button variant="outline" class="w-full" @click="showLogoutConfirm = true">
           <Unplug class="size-4" />
           Disconnect
         </Button>
+
+        <!-- Log out confirmation (disconnect + clear permissions + whitelist) -->
+        <AlertDialogRoot v-model:open="showLogoutConfirm">
+          <AlertDialogPortal>
+            <AlertDialogOverlay
+              class="fixed inset-0 z-50 bg-black/70 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+            />
+            <AlertDialogContent
+              class="fixed left-1/2 top-1/2 z-50 w-full max-w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-4 shadow-xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
+            >
+              <AlertDialogTitle class="text-sm font-semibold">
+                Log out completely?
+              </AlertDialogTitle>
+              <AlertDialogDescription class="mt-2 text-xs text-muted-foreground">
+                This will disconnect from your signer and clear all permissions and the privacy-mode whitelist. You’ll need to reconnect and re-allow sites.
+              </AlertDialogDescription>
+              <div class="mt-4 flex justify-end gap-2">
+                <AlertDialogCancel as-child>
+                  <Button variant="outline" size="sm"> Cancel </Button>
+                </AlertDialogCancel>
+                <AlertDialogAction as-child>
+                  <Button
+                    variant="destructive"
+                    size="sm"
+                    @click="doFullLogout"
+                  >
+                    Log out
+                  </Button>
+                </AlertDialogAction>
+              </div>
+            </AlertDialogContent>
+          </AlertDialogPortal>
+        </AlertDialogRoot>
       </div>
 
       <!-- Disconnected state -->
@@ -504,21 +651,12 @@ onUnmounted(() => {
           </CardContent>
         </Card>
       </div>
+    </template>
 
-      <!-- Footer / Settings -->
-      <div class="mt-auto border-t border-border">
-        <button
-          class="flex w-full items-center justify-between px-5 py-3 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-          @click="showSettings = !showSettings"
-        >
-          <span class="flex items-center gap-2">
-            <Settings2 class="size-3.5" />
-            Settings
-          </span>
-          <ChevronUp v-if="showSettings" class="size-3.5" />
-          <ChevronDown v-else class="size-3.5" />
-        </button>
-        <div v-if="showSettings" class="border-t border-border px-5 py-4 flex flex-col gap-3">
+    <!-- SETTINGS TAB -->
+    <template v-if="activeTab === 'settings'">
+      <div class="flex flex-col gap-4 p-5">
+        <div class="flex flex-col gap-3">
           <div class="flex flex-col gap-1.5">
             <Label>Bunker46 URL</Label>
             <Input v-model="baseUrl" placeholder="http://localhost:5173" class="text-xs" />
@@ -526,12 +664,70 @@ onUnmounted(() => {
           </div>
           <Button size="sm" @click="saveBaseUrl"> Save </Button>
         </div>
+        <div class="flex flex-col gap-3">
+          <label
+            class="flex items-center gap-2.5 cursor-pointer text-sm font-medium"
+          >
+            <input
+              v-model="privacyMode"
+              type="checkbox"
+              class="rounded border-input"
+              @change="setPrivacyModeEnabled()"
+            />
+            Privacy mode
+          </label>
+          <p class="text-xs text-muted-foreground">
+            When on, window.nostr is only exposed on domains you’ve added to the whitelist (via the Permissions tab), reducing fingerprinting.
+          </p>
+          <p class="text-xs text-muted-foreground">
+            Sites can't detect the extension, so some may not show "Sign in with Nostr" until you add them in Permissions.
+          </p>
+        </div>
+        <div class="flex flex-col gap-3">
+          <label
+            class="flex items-center gap-2.5 cursor-pointer text-sm font-medium"
+          >
+            <input
+              v-model="showNostrBadge"
+              type="checkbox"
+              class="rounded border-input"
+              @change="setShowNostrBadgeEnabled()"
+            />
+            Show badge on extension icon
+          </label>
+          <p class="text-xs text-muted-foreground">
+            When on, the icon shows the number of granted permissions for the current tab (e.g. 1, 2).
+          </p>
+        </div>
       </div>
     </template>
 
     <!-- PERMISSIONS TAB -->
     <template v-if="activeTab === 'permissions'">
       <div class="flex flex-col gap-3 p-5 max-h-[400px] overflow-hidden min-h-0">
+        <!-- Add or remove current tab from whitelist (when privacy mode on) -->
+        <Button
+          v-if="privacyMode && currentTabDomain && !currentTabIsWhitelisted"
+          variant="outline"
+          size="sm"
+          class="w-full shrink-0"
+          :title="`Add ${currentTabDomain} to whitelist`"
+          @click="addCurrentTabToWhitelist"
+        >
+          <Plus class="size-3.5" />
+          Add {{ currentTabDomain }} to whitelist
+        </Button>
+        <Button
+          v-else-if="privacyMode && currentTabDomain && currentTabIsWhitelisted"
+          variant="outline"
+          size="sm"
+          class="w-full shrink-0 border-destructive/50 text-destructive hover:bg-destructive/10 hover:border-destructive"
+          :title="`Remove ${currentTabDomain} from whitelist`"
+          @click="removeFromWhitelist(currentTabDomain)"
+        >
+          <Trash2 class="size-3.5" />
+          Remove {{ currentTabDomain }} from whitelist
+        </Button>
         <!-- Search -->
         <div class="relative shrink-0">
           <Search
@@ -576,9 +772,10 @@ onUnmounted(() => {
                   <span class="text-sm font-medium truncate">{{ host }}</span>
                 </div>
                 <Button
+                  v-if="permissions[host] && Object.keys(permissions[host]).length > 0"
                   variant="ghost"
                   size="icon"
-                  class="size-7 text-muted-foreground hover:text-destructive"
+                  class="size-7 shrink-0 text-muted-foreground hover:text-destructive"
                   title="Revoke all permissions for this domain"
                   @click="revokeDomain(host)"
                 >
@@ -587,7 +784,15 @@ onUnmounted(() => {
               </div>
             </CardHeader>
             <CardContent class="pt-0">
-              <div class="flex flex-col gap-1.5">
+              <!-- Whitelist-only: no permission entries yet -->
+              <div
+                v-if="isWhitelistOnly(host)"
+                class="py-1.5 text-xs text-muted-foreground"
+              >
+                Whitelisted for nostr (no permissions yet)
+              </div>
+              <!-- Has permission entries -->
+              <div v-else class="flex flex-col gap-1.5">
                 <div
                   v-for="(entry, method) in permissions[host]"
                   :key="method"
@@ -613,6 +818,17 @@ onUnmounted(() => {
                   </div>
                 </div>
               </div>
+              <Button
+                v-if="nostrWhitelist.includes(host.toLowerCase())"
+                variant="outline"
+                size="sm"
+                class="mt-2 w-full text-xs border-destructive/50 text-destructive hover:bg-destructive/10 hover:border-destructive h-7"
+                title="Remove from whitelist"
+                @click="removeFromWhitelist(host)"
+              >
+                <Trash2 class="size-3" />
+                Remove from whitelist
+              </Button>
             </CardContent>
           </Card>
         </div>
