@@ -28,7 +28,9 @@
   "toastDomainRemoved": { "message": "Permisos del dominio eliminados" },
   "toastDomainRemoveFailed": { "message": "Error al eliminar el dominio" },
   "toastNoActiveTab": { "message": "No hay pestaña activa ni URL" },
-  "toastAddedToWhitelist": { "message": "$1 añadido a la lista blanca. Recarga la pestaña para usar nostr." },
+  "toastAddedToWhitelist": {
+    "message": "$1 añadido a la lista blanca. Recarga la pestaña para usar nostr."
+  },
   "toastAddDomainFailed": { "message": "Error al añadir el dominio" },
   "toastRemovedFromWhitelist": { "message": "Eliminado de la lista blanca" },
   "toastRemoveFromWhitelistFailed": { "message": "Error al eliminar de la lista blanca" },
@@ -36,21 +38,29 @@
   "signerKey": { "message": "Clave del firmante" },
   "copyTitle": { "message": "Copiar" },
   "showQrTitle": { "message": "Mostrar código QR" },
-  "signerDescription": { "message": "Todas las peticiones NIP-07 de las páginas web se reenvían a este firmante remoto vía NIP-46. No se almacenan claves privadas en la extensión." },
+  "signerDescription": {
+    "message": "Todas las peticiones NIP-07 de las páginas web se reenvían a este firmante remoto vía NIP-46. No se almacenan claves privadas en la extensión."
+  },
   "disconnect": { "message": "Desconectar" },
   "logoutConfirmTitle": { "message": "¿Cerrar sesión por completo?" },
-  "logoutConfirmDescription": { "message": "Esto desconectará de tu firmante y borrará todos los permisos y la lista blanca del modo privacidad. Tendrás que volver a conectar y autorizar los sitios de nuevo." },
+  "logoutConfirmDescription": {
+    "message": "Esto desconectará de tu firmante y borrará todos los permisos y la lista blanca del modo privacidad. Tendrás que volver a conectar y autorizar los sitios de nuevo."
+  },
   "cancel": { "message": "Cancelar" },
   "logOut": { "message": "Cerrar sesión" },
 
   "connectViaBunkerUri": { "message": "Conectar mediante URI Bunker" },
-  "connectViaBunkerUriDesc": { "message": "Pega una URI bunker:// de tu firmante remoto para conectar" },
+  "connectViaBunkerUriDesc": {
+    "message": "Pega una URI bunker:// de tu firmante remoto para conectar"
+  },
   "placeholderBunkerUri": { "message": "bunker://..." },
   "connecting": { "message": "Conectando…" },
   "connect": { "message": "Conectar" },
   "separatorOr": { "message": "o" },
   "getUriFromBunker46": { "message": "Obtener URI desde Bunker46" },
-  "nostrConnectDesc": { "message": "Conectar vía Nostrconnect: muestra un QR y una URI para que los escanee tu app bunker." },
+  "nostrConnectDesc": {
+    "message": "Conectar vía Nostrconnect: muestra un QR y una URI para que los escanee tu app bunker."
+  },
   "showQrConnectionUri": { "message": "Mostrar QR y URI de conexión" },
 
   "settingsBunkerUrl": { "message": "URL de Bunker46" },
@@ -58,10 +68,16 @@
   "settingsBunkerUrlHint": { "message": "URL base de tu instancia Bunker46" },
   "save": { "message": "Guardar" },
   "privacyMode": { "message": "Modo privacidad" },
-  "privacyModeHint": { "message": "Cuando está activo, window.nostr solo se expone en los dominios que hayas añadido a la lista blanca (en la pestaña Permisos), reduciendo el fingerprinting." },
-  "privacyModeSitesHint": { "message": "Los sitios no pueden detectar la extensión, así que algunos no mostrarán \"Iniciar sesión con Nostr\" hasta que los añadas en Permisos." },
+  "privacyModeHint": {
+    "message": "Cuando está activo, window.nostr solo se expone en los dominios que hayas añadido a la lista blanca (en la pestaña Permisos), reduciendo el fingerprinting."
+  },
+  "privacyModeSitesHint": {
+    "message": "Los sitios no pueden detectar la extensión, así que algunos no mostrarán \"Iniciar sesión con Nostr\" hasta que los añadas en Permisos."
+  },
   "showBadge": { "message": "Mostrar insignia en el icono de la extensión" },
-  "showBadgeHint": { "message": "Cuando está activo, el icono muestra el número de permisos concedidos para la pestaña actual (p. ej. 1, 2)." },
+  "showBadgeHint": {
+    "message": "Cuando está activo, el icono muestra el número de permisos concedidos para la pestaña actual (p. ej. 1, 2)."
+  },
 
   "addToWhitelistTitle": { "message": "Añadir $1 a la lista blanca" },
   "addToWhitelistButton": { "message": "Añadir $1 a la lista blanca" },
@@ -69,7 +85,9 @@
   "removeFromWhitelistButton": { "message": "Quitar $1 de la lista blanca" },
   "searchDomainsPlaceholder": { "message": "Buscar dominios…" },
   "noPermissionsYet": { "message": "Aún no hay permisos" },
-  "noPermissionsHint": { "message": "Cuando los sitios web pidan acceso a tu identidad Nostr, aparecerán aquí." },
+  "noPermissionsHint": {
+    "message": "Cuando los sitios web pidan acceso a tu identidad Nostr, aparecerán aquí."
+  },
   "noDomainsMatch": { "message": "Ningún dominio coincide con tu búsqueda" },
   "revokeAllPermissionsTitle": { "message": "Revocar todos los permisos de este dominio" },
   "whitelistedNoPermissions": { "message": "En lista blanca para nostr (aún sin permisos)" },

@@ -128,17 +128,12 @@ async function updateBadgeForTabsWithHost(host: string): Promise<void> {
     await clearBadgeForTabsWithHost(host);
     return;
   }
-  const [policies, inject] = await Promise.all([
-    getPermissions(),
-    shouldExposeNostrForHost(host),
-  ]);
+  const [policies, inject] = await Promise.all([getPermissions(), shouldExposeNostrForHost(host)]);
   const count = inject ? countAllowedPermissions(policies, host) : 0;
   let tabs: { id?: number; url?: string }[];
   try {
     tabs = await new Promise((resolve) => {
-      chrome.tabs.query({}, (result: { id?: number; url?: string }[]) =>
-        resolve(result ?? [])
-      );
+      chrome.tabs.query({}, (result: { id?: number; url?: string }[]) => resolve(result ?? []));
     });
   } catch {
     return;
@@ -161,9 +156,7 @@ async function clearBadgeForTabsWithHost(host: string): Promise<void> {
   let tabs: { id?: number; url?: string }[];
   try {
     tabs = await new Promise((resolve) => {
-      chrome.tabs.query({}, (result: { id?: number; url?: string }[]) =>
-        resolve(result ?? [])
-      );
+      chrome.tabs.query({}, (result: { id?: number; url?: string }[]) => resolve(result ?? []));
     });
   } catch {
     return;
@@ -510,8 +503,7 @@ chrome.runtime.onMessage.addListener(
           getPermissions(),
           getShowNostrBadge(),
         ]);
-        const count =
-          showBadge && inject ? countAllowedPermissions(policies, host) : 0;
+        const count = showBadge && inject ? countAllowedPermissions(policies, host) : 0;
         const tabId = sender.tab?.id;
         if (tabId !== undefined) {
           setBadgeForTab(tabId, count);

@@ -36,21 +36,29 @@
   "signerKey": { "message": "Signer Key" },
   "copyTitle": { "message": "Copy" },
   "showQrTitle": { "message": "Show QR code" },
-  "signerDescription": { "message": "All NIP-07 requests from web pages are forwarded to this remote signer via NIP-46. No private keys are stored in the extension." },
+  "signerDescription": {
+    "message": "All NIP-07 requests from web pages are forwarded to this remote signer via NIP-46. No private keys are stored in the extension."
+  },
   "disconnect": { "message": "Disconnect" },
   "logoutConfirmTitle": { "message": "Log out completely?" },
-  "logoutConfirmDescription": { "message": "This will disconnect from your signer and clear all permissions and the privacy-mode whitelist. You'll need to reconnect and re-allow sites." },
+  "logoutConfirmDescription": {
+    "message": "This will disconnect from your signer and clear all permissions and the privacy-mode whitelist. You'll need to reconnect and re-allow sites."
+  },
   "cancel": { "message": "Cancel" },
   "logOut": { "message": "Log out" },
 
   "connectViaBunkerUri": { "message": "Connect via Bunker URI" },
-  "connectViaBunkerUriDesc": { "message": "Paste a bunker:// URI from your remote signer to connect" },
+  "connectViaBunkerUriDesc": {
+    "message": "Paste a bunker:// URI from your remote signer to connect"
+  },
   "placeholderBunkerUri": { "message": "bunker://..." },
   "connecting": { "message": "Connecting..." },
   "connect": { "message": "Connect" },
   "separatorOr": { "message": "or" },
   "getUriFromBunker46": { "message": "Get URI from Bunker46" },
-  "nostrConnectDesc": { "message": "Connect via Nostrconnect: show a QR and URI for your bunker app to scan." },
+  "nostrConnectDesc": {
+    "message": "Connect via Nostrconnect: show a QR and URI for your bunker app to scan."
+  },
   "showQrConnectionUri": { "message": "Show QR & connection URI" },
 
   "settingsBunkerUrl": { "message": "Bunker46 URL" },
@@ -58,10 +66,16 @@
   "settingsBunkerUrlHint": { "message": "Base URL of your Bunker46 instance" },
   "save": { "message": "Save" },
   "privacyMode": { "message": "Privacy mode" },
-  "privacyModeHint": { "message": "When on, window.nostr is only exposed on domains you've added to the whitelist (via the Permissions tab), reducing fingerprinting." },
-  "privacyModeSitesHint": { "message": "Sites can't detect the extension, so some may not show \"Sign in with Nostr\" until you add them in Permissions." },
+  "privacyModeHint": {
+    "message": "When on, window.nostr is only exposed on domains you've added to the whitelist (via the Permissions tab), reducing fingerprinting."
+  },
+  "privacyModeSitesHint": {
+    "message": "Sites can't detect the extension, so some may not show \"Sign in with Nostr\" until you add them in Permissions."
+  },
   "showBadge": { "message": "Show badge on extension icon" },
-  "showBadgeHint": { "message": "When on, the icon shows the number of granted permissions for the current tab (e.g. 1, 2)." },
+  "showBadgeHint": {
+    "message": "When on, the icon shows the number of granted permissions for the current tab (e.g. 1, 2)."
+  },
 
   "addToWhitelistTitle": { "message": "Add $1 to whitelist" },
   "addToWhitelistButton": { "message": "Add $1 to whitelist" },
@@ -69,7 +83,9 @@
   "removeFromWhitelistButton": { "message": "Remove $1 from whitelist" },
   "searchDomainsPlaceholder": { "message": "Search domains..." },
   "noPermissionsYet": { "message": "No permissions yet" },
-  "noPermissionsHint": { "message": "When websites request access to your Nostr identity, you'll see them here." },
+  "noPermissionsHint": {
+    "message": "When websites request access to your Nostr identity, you'll see them here."
+  },
   "noDomainsMatch": { "message": "No domains match your search" },
   "revokeAllPermissionsTitle": { "message": "Revoke all permissions for this domain" },
   "whitelistedNoPermissions": { "message": "Whitelisted for nostr (no permissions yet)" },

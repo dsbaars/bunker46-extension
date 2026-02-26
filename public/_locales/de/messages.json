@@ -28,7 +28,9 @@
   "toastDomainRemoved": { "message": "Domain-Berechtigungen entfernt" },
   "toastDomainRemoveFailed": { "message": "Domain konnte nicht entfernt werden" },
   "toastNoActiveTab": { "message": "Kein aktiver Tab oder keine URL" },
-  "toastAddedToWhitelist": { "message": "$1 zur Whitelist hinzugefügt. Tab neu laden, um Nostr zu nutzen." },
+  "toastAddedToWhitelist": {
+    "message": "$1 zur Whitelist hinzugefügt. Tab neu laden, um Nostr zu nutzen."
+  },
   "toastAddDomainFailed": { "message": "Domain konnte nicht hinzugefügt werden" },
   "toastRemovedFromWhitelist": { "message": "Von Whitelist entfernt" },
   "toastRemoveFromWhitelistFailed": { "message": "Von Whitelist konnte nicht entfernt werden" },
@@ -36,21 +38,29 @@
   "signerKey": { "message": "Signer-Schlüssel" },
   "copyTitle": { "message": "Kopieren" },
   "showQrTitle": { "message": "QR-Code anzeigen" },
-  "signerDescription": { "message": "Alle NIP-07-Anfragen von Webseiten werden über NIP-46 an diesen Remote-Signer weitergeleitet. Keine privaten Schlüssel werden in der Erweiterung gespeichert." },
+  "signerDescription": {
+    "message": "Alle NIP-07-Anfragen von Webseiten werden über NIP-46 an diesen Remote-Signer weitergeleitet. Keine privaten Schlüssel werden in der Erweiterung gespeichert."
+  },
   "disconnect": { "message": "Trennen" },
   "logoutConfirmTitle": { "message": "Vollständig abmelden?" },
-  "logoutConfirmDescription": { "message": "Dies trennt die Verbindung zu Ihrem Signer und löscht alle Berechtigungen sowie die Whitelist des Datenschutzmodus. Sie müssen sich neu verbinden und Seiten erneut erlauben." },
+  "logoutConfirmDescription": {
+    "message": "Dies trennt die Verbindung zu Ihrem Signer und löscht alle Berechtigungen sowie die Whitelist des Datenschutzmodus. Sie müssen sich neu verbinden und Seiten erneut erlauben."
+  },
   "cancel": { "message": "Abbrechen" },
   "logOut": { "message": "Abmelden" },
 
   "connectViaBunkerUri": { "message": "Über Bunker-URI verbinden" },
-  "connectViaBunkerUriDesc": { "message": "Bunker://-URI Ihres Remote-Signers einfügen, um zu verbinden" },
+  "connectViaBunkerUriDesc": {
+    "message": "Bunker://-URI Ihres Remote-Signers einfügen, um zu verbinden"
+  },
   "placeholderBunkerUri": { "message": "bunker://..." },
   "connecting": { "message": "Verbinde…" },
   "connect": { "message": "Verbinden" },
   "separatorOr": { "message": "oder" },
   "getUriFromBunker46": { "message": "URI von Bunker46 abrufen" },
-  "nostrConnectDesc": { "message": "Über Nostrconnect verbinden: QR-Code und URI anzeigen, die Ihre Bunker-App scannen kann." },
+  "nostrConnectDesc": {
+    "message": "Über Nostrconnect verbinden: QR-Code und URI anzeigen, die Ihre Bunker-App scannen kann."
+  },
   "showQrConnectionUri": { "message": "QR-Code und Verbindungs-URI anzeigen" },
 
   "settingsBunkerUrl": { "message": "Bunker46-URL" },
@@ -58,10 +68,16 @@
   "settingsBunkerUrlHint": { "message": "Basis-URL Ihrer Bunker46-Instanz" },
   "save": { "message": "Speichern" },
   "privacyMode": { "message": "Datenschutzmodus" },
-  "privacyModeHint": { "message": "Wenn aktiv, ist window.nostr nur auf Domains verfügbar, die Sie in der Whitelist (über den Tab Berechtigungen) eingetragen haben – reduziert Fingerprinting." },
-  "privacyModeSitesHint": { "message": "Seiten können die Erweiterung nicht erkennen; einige zeigen „Mit Nostr anmelden“ erst, wenn Sie sie unter Berechtigungen hinzugefügt haben." },
+  "privacyModeHint": {
+    "message": "Wenn aktiv, ist window.nostr nur auf Domains verfügbar, die Sie in der Whitelist (über den Tab Berechtigungen) eingetragen haben – reduziert Fingerprinting."
+  },
+  "privacyModeSitesHint": {
+    "message": "Seiten können die Erweiterung nicht erkennen; einige zeigen „Mit Nostr anmelden“ erst, wenn Sie sie unter Berechtigungen hinzugefügt haben."
+  },
   "showBadge": { "message": "Badge am Erweiterungssymbol anzeigen" },
-  "showBadgeHint": { "message": "Wenn aktiv, zeigt das Symbol die Anzahl der erteilten Berechtigungen für den aktuellen Tab (z. B. 1, 2)." },
+  "showBadgeHint": {
+    "message": "Wenn aktiv, zeigt das Symbol die Anzahl der erteilten Berechtigungen für den aktuellen Tab (z. B. 1, 2)."
+  },
 
   "addToWhitelistTitle": { "message": "$1 zur Whitelist hinzufügen" },
   "addToWhitelistButton": { "message": "$1 zur Whitelist hinzufügen" },
@@ -69,7 +85,9 @@
   "removeFromWhitelistButton": { "message": "$1 von Whitelist entfernen" },
   "searchDomainsPlaceholder": { "message": "Domains suchen…" },
   "noPermissionsYet": { "message": "Noch keine Berechtigungen" },
-  "noPermissionsHint": { "message": "Wenn Webseiten Zugriff auf Ihre Nostr-Identität anfordern, erscheinen sie hier." },
+  "noPermissionsHint": {
+    "message": "Wenn Webseiten Zugriff auf Ihre Nostr-Identität anfordern, erscheinen sie hier."
+  },
   "noDomainsMatch": { "message": "Keine Domains entsprechen Ihrer Suche" },
   "revokeAllPermissionsTitle": { "message": "Alle Berechtigungen für diese Domain widerrufen" },
   "whitelistedNoPermissions": { "message": "In Whitelist für Nostr (noch keine Berechtigungen)" },

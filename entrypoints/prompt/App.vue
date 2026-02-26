@@ -93,7 +93,9 @@ function respond(decision: string) {
         class="w-full justify-between h-8 text-xs text-muted-foreground hover:text-foreground"
         @click="rawMessageExpanded = !rawMessageExpanded"
       >
-        <span>{{ rawMessageExpanded ? t('promptHideRawMessage') : t('promptViewRawMessage') }}</span>
+        <span>{{
+          rawMessageExpanded ? t('promptHideRawMessage') : t('promptViewRawMessage')
+        }}</span>
         <ChevronDown v-if="!rawMessageExpanded" class="size-3.5 shrink-0" />
         <ChevronUp v-else class="size-3.5 shrink-0" />
       </Button>
@@ -114,8 +116,12 @@ function respond(decision: string) {
       <Button variant="default" class="w-full" @click="respond('allow_always')">
         {{ t('promptAllowAlways') }}
       </Button>
-      <Button variant="outline" class="w-full" @click="respond('allow_once')"> {{ t('promptAllowOnce') }} </Button>
-      <Button variant="outline" class="w-full" @click="respond('deny_once')"> {{ t('promptDenyOnce') }} </Button>
+      <Button variant="outline" class="w-full" @click="respond('allow_once')">
+        {{ t('promptAllowOnce') }}
+      </Button>
+      <Button variant="outline" class="w-full" @click="respond('deny_once')">
+        {{ t('promptDenyOnce') }}
+      </Button>
       <Button variant="destructive" class="w-full" @click="respond('deny_always')">
         {{ t('promptDenyAlways') }}
       </Button>

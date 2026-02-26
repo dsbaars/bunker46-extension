@@ -382,9 +382,9 @@ async function addCurrentTabToWhitelist() {
   }
   try {
     await chrome.runtime.sendMessage({ type: 'ADD_TO_NOSTR_WHITELIST', host });
-    const list = [...nostrWhitelist.value, host.toLowerCase()].filter(
-      (h, i, a) => a.indexOf(h) === i
-    ).sort();
+    const list = [...nostrWhitelist.value, host.toLowerCase()]
+      .filter((h, i, a) => a.indexOf(h) === i)
+      .sort();
     nostrWhitelist.value = list;
     toast.success(t('toastAddedToWhitelist', host));
   } catch (e) {
@@ -395,9 +395,7 @@ async function addCurrentTabToWhitelist() {
 async function removeFromWhitelist(host: string) {
   try {
     await chrome.runtime.sendMessage({ type: 'REMOVE_FROM_NOSTR_WHITELIST', host });
-    nostrWhitelist.value = nostrWhitelist.value.filter(
-      (h) => h !== host.toLowerCase()
-    );
+    nostrWhitelist.value = nostrWhitelist.value.filter((h) => h !== host.toLowerCase());
     toast.success(t('toastRemovedFromWhitelist'));
   } catch {
     toast.error(t('toastRemoveFromWhitelistFailed'));
@@ -574,11 +572,7 @@ onUnmounted(() => {
                   <Button variant="outline" size="sm"> {{ t('cancel') }} </Button>
                 </AlertDialogCancel>
                 <AlertDialogAction as-child>
-                  <Button
-                    variant="destructive"
-                    size="sm"
-                    @click="doFullLogout"
-                  >
+                  <Button variant="destructive" size="sm" @click="doFullLogout">
                     {{ t('logOut') }}
                   </Button>
                 </AlertDialogAction>
@@ -649,15 +643,17 @@ onUnmounted(() => {
         <div class="flex flex-col gap-3">
           <div class="flex flex-col gap-1.5">
             <Label>{{ t('settingsBunkerUrl') }}</Label>
-            <Input v-model="baseUrl" :placeholder="t('settingsBunkerUrlPlaceholder')" class="text-xs" />
+            <Input
+              v-model="baseUrl"
+              :placeholder="t('settingsBunkerUrlPlaceholder')"
+              class="text-xs"
+            />
             <p class="text-xs text-muted-foreground">{{ t('settingsBunkerUrlHint') }}</p>
           </div>
           <Button size="sm" @click="saveBaseUrl"> {{ t('save') }} </Button>
         </div>
         <div class="flex flex-col gap-3">
-          <label
-            class="flex items-center gap-2.5 cursor-pointer text-sm font-medium"
-          >
+          <label class="flex items-center gap-2.5 cursor-pointer text-sm font-medium">
             <input
               v-model="privacyMode"
               type="checkbox"
@@ -674,9 +670,7 @@ onUnmounted(() => {
           </p>
         </div>
         <div class="flex flex-col gap-3">
-          <label
-            class="flex items-center gap-2.5 cursor-pointer text-sm font-medium"
-          >
+          <label class="flex items-center gap-2.5 cursor-pointer text-sm font-medium">
             <input
               v-model="showNostrBadge"
               type="checkbox"
@@ -775,10 +769,7 @@ onUnmounted(() => {
             </CardHeader>
             <CardContent class="pt-0">
               <!-- Whitelist-only: no permission entries yet -->
-              <div
-                v-if="isWhitelistOnly(host)"
-                class="py-1.5 text-xs text-muted-foreground"
-              >
+              <div v-if="isWhitelistOnly(host)" class="py-1.5 text-xs text-muted-foreground">
                 {{ t('whitelistedNoPermissions') }}
               </div>
               <!-- Has permission entries -->
@@ -869,19 +860,11 @@ onUnmounted(() => {
           width="220"
           height="220"
         />
-        <Button
-          variant="outline"
-          size="sm"
-          class="w-full"
-          @click="copyNostrConnectUri"
-        >
+        <Button variant="outline" size="sm" class="w-full" @click="copyNostrConnectUri">
           <Copy class="size-3.5" />
           {{ t('copyUri') }}
         </Button>
-        <p
-          v-if="nostrConnectWaiting"
-          class="text-xs text-muted-foreground text-center"
-        >
+        <p v-if="nostrConnectWaiting" class="text-xs text-muted-foreground text-center">
           {{ t('waitingForBunker') }}
         </p>
         <Button size="sm" variant="ghost" class="w-full" @click="closeNostrConnectModal">

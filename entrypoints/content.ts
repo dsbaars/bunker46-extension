@@ -26,8 +26,7 @@ export default defineContentScript({
   matches: ['<all_urls>'],
   runAt: 'document_start',
   async main(ctx) {
-    const host =
-      typeof document?.location?.hostname === 'string' ? document.location.hostname : '';
+    const host = typeof document?.location?.hostname === 'string' ? document.location.hostname : '';
     let injectNostr = true;
     if (host) {
       try {
