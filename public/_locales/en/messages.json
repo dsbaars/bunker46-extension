@@ -64,6 +64,11 @@
   "settingsBunkerUrl": { "message": "Bunker46 URL" },
   "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
   "settingsBunkerUrlHint": { "message": "Base URL of your Bunker46 instance" },
+  "settingsNostrConnectRelays": { "message": "Nostr Connect relays" },
+  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelaysHint": {
+    "message": "One relay URL per line (or comma-separated). Used when generating the QR/URI for connecting via Nostrconnect."
+  },
   "save": { "message": "Save" },
   "privacyMode": { "message": "Privacy mode" },
   "privacyModeHint": {

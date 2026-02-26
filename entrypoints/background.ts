@@ -6,7 +6,7 @@ import {
   toBunkerURL,
 } from 'nostr-tools/nip46';
 import { bytesToHex, hexToBytes } from '@/lib/hex';
-import { DEFAULT_RELAYS, NIP46_APP_NAME } from '@/lib/constants';
+import { DEFAULT_NOSTRCONNECT_RELAYS, NIP46_APP_NAME } from '@/lib/constants';
 import {
   checkPermission,
   setPermission,
@@ -27,6 +27,7 @@ import type { NIP07SignEventInput } from '@/lib/nip07/types';
 
 const STORAGE_KEY_CLIENT_SECRET = 'nip46_client_secret_hex';
 const STORAGE_KEY_SESSION = 'nip46_session';
+const STORAGE_KEY_NOSTRCONNECT_RELAYS = 'nostrConnectRelays';
 
 type Session = {
   signerPubkey: string;
@@ -313,6 +314,7 @@ function randomNostrConnectSecret(): string {
 /**
  * Start connecting via nostrconnect: generate a URI for the client (extension), show it as QR/copy;
  * wait for bunker to connect in the background and persist session when done.
+ * Uses relays from storage (nostrConnectRelays) or DEFAULT_NOSTRCONNECT_RELAYS.
  */
 function startNostrConnectConnection(): Promise<{ uri: string }> {
   return (async () => {
@@ -320,10 +322,17 @@ function startNostrConnectConnection(): Promise<{ uri: string }> {
     const clientPubkey = getPublicKey(secret);
     const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
 
+    const data = await chrome.storage.local.get(STORAGE_KEY_NOSTRCONNECT_RELAYS);
+    const stored = data[STORAGE_KEY_NOSTRCONNECT_RELAYS] as string[] | undefined;
+    const relays =
+      Array.isArray(stored) && stored.length > 0
+        ? stored.map((r) => String(r).trim()).filter((r) => r.length > 0)
+        : DEFAULT_NOSTRCONNECT_RELAYS;
+
     const oneTimeSecret = randomNostrConnectSecret();
     const uri = createNostrConnectURI({
       clientPubkey,
-      relays: DEFAULT_RELAYS,
+      relays,
       secret: oneTimeSecret,
       name: NIP46_APP_NAME,
     });

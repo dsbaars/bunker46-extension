@@ -18,7 +18,8 @@ test.describe('i18n', () => {
     await page.goto(`chrome-extension://${extensionId}/popup.html`);
     await page.getByRole('button', { name: 'Settings', exact: true }).click();
     await expect(page.getByText('Bunker46 URL')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Save', exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Save' }).first()).toBeVisible();
+    await expect(page.getByText('Nostr Connect relays')).toBeVisible();
     await expect(page.getByText('Privacy mode')).toBeVisible();
   });
 

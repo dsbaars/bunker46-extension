@@ -56,6 +56,7 @@ const connected = ref(false);
 const signerPubkey = ref('');
 const signerRelays = ref<string[]>([]);
 const baseUrl = ref('http://localhost:5173');
+const nostrConnectRelaysInput = ref('wss://relay.nsec.app');
 const privacyMode = ref(false);
 const showNostrBadge = ref(true);
 type PubkeyFormat = 'npub' | 'hex' | 'nprofile';
@@ -149,10 +150,17 @@ async function loadState() {
     }
     const stored = await chrome.storage.local.get([
       'bunker46BaseUrl',
+      'nostrConnectRelays',
       'privacyMode',
       'showNostrBadge',
     ]);
     if (stored.bunker46BaseUrl) baseUrl.value = stored.bunker46BaseUrl as string;
+    const relays = stored.nostrConnectRelays as string[] | undefined;
+    if (Array.isArray(relays) && relays.length > 0) {
+      nostrConnectRelaysInput.value = relays.join('\n');
+    } else {
+      nostrConnectRelaysInput.value = 'wss://relay.nsec.app';
+    }
     privacyMode.value = stored.privacyMode === true;
     showNostrBadge.value = stored.showNostrBadge !== false;
   } catch {
@@ -237,6 +245,19 @@ async function doFullLogout() {
 
 async function saveBaseUrl() {
   await chrome.storage.local.set({ bunker46BaseUrl: baseUrl.value });
+  toast.success(t('toastSettingsSaved'));
+}
+
+function parseRelaysInput(text: string): string[] {
+  return text
+    .split(/[\n,]/)
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+}
+
+async function saveNostrConnectRelays() {
+  const relays = parseRelaysInput(nostrConnectRelaysInput.value);
+  await chrome.storage.local.set({ nostrConnectRelays: relays });
   toast.success(t('toastSettingsSaved'));
 }
 
@@ -651,6 +672,21 @@ onUnmounted(() => {
             <p class="text-xs text-muted-foreground">{{ t('settingsBunkerUrlHint') }}</p>
           </div>
           <Button size="sm" @click="saveBaseUrl"> {{ t('save') }} </Button>
+        </div>
+        <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-1.5">
+            <Label>{{ t('settingsNostrConnectRelays') }}</Label>
+            <textarea
+              v-model="nostrConnectRelaysInput"
+              :placeholder="t('settingsNostrConnectRelaysPlaceholder')"
+              rows="3"
+              class="w-full rounded-md border border-input bg-background px-3 py-2 text-xs font-mono ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            />
+            <p class="text-xs text-muted-foreground">
+              {{ t('settingsNostrConnectRelaysHint') }}
+            </p>
+          </div>
+          <Button size="sm" @click="saveNostrConnectRelays"> {{ t('save') }} </Button>
         </div>
         <div class="flex flex-col gap-3">
           <label class="flex items-center gap-2.5 cursor-pointer text-sm font-medium">
