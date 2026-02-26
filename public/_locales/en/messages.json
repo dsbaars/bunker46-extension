@@ -61,18 +61,28 @@
   },
   "showQrConnectionUri": { "message": "Show QR & connection URI" },
 
+  "settingsUseBunker46": { "message": "Use Bunker46" },
+  "settingsUseBunker46Hint": {
+    "message": "Handle nostrconnect: links and redirect to your Bunker46 instance."
+  },
   "settingsBunkerUrl": { "message": "Bunker46 URL" },
   "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
   "settingsBunkerUrlHint": { "message": "Base URL of your Bunker46 instance" },
+  "settingsSpecifyNostrConnectRelays": { "message": "Specify nostrconnect relays" },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Set custom relay URLs for the Nostrconnect QR/URI."
+  },
   "settingsNostrConnectRelays": { "message": "Nostr Connect relays" },
   "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
   "settingsNostrConnectRelaysHint": {
     "message": "One relay URL per line (or comma-separated). Used when generating the QR/URI for connecting via Nostrconnect."
   },
+  "choiceOn": { "message": "On" },
+  "choiceOff": { "message": "Off" },
   "save": { "message": "Save" },
   "privacyMode": { "message": "Privacy mode" },
   "privacyModeHint": {
-    "message": "When on, window.nostr is only exposed on domains you've added to the whitelist (via the Permissions tab), reducing fingerprinting."
+    "message": "Only expose window.nostr on whitelisted domains (Permissions tab); reduces fingerprinting."
   },
   "privacyModeSitesHint": {
     "message": "Sites can't detect the extension, so some may not show \"Sign in with Nostr\" until you add them in Permissions."
@@ -109,6 +119,7 @@
 
   "method_getPublicKey": { "message": "Get Public Key" },
   "method_signEvent": { "message": "Sign Event" },
+  "method_signEvent_kind": { "message": "Sign event (kind $1)" },
   "method_getRelays": { "message": "Get Relays" },
   "method_nip04_encrypt": { "message": "NIP-04 Encrypt" },
   "method_nip04_decrypt": { "message": "NIP-04 Decrypt" },
@@ -121,6 +132,7 @@
   "promptViewRawMessage": { "message": "View raw message" },
   "promptHideRawMessage": { "message": "Hide raw message" },
   "promptAllowAlways": { "message": "Allow Always" },
+  "promptAllowAlwaysForKindHint": { "message": "Applies to this event kind only" },
   "promptAllowOnce": { "message": "Allow Once" },
   "promptDenyOnce": { "message": "Deny" },
   "promptDenyAlways": { "message": "Deny Always" }

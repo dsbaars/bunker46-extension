@@ -10,6 +10,7 @@ import Input from '@/components/ui/Input.vue';
 import Badge from '@/components/ui/Badge.vue';
 import Separator from '@/components/ui/Separator.vue';
 import Label from '@/components/ui/Label.vue';
+import ChoiceCard from '@/components/ui/ChoiceCard.vue';
 import { Toaster, toast } from 'vue-sonner';
 import 'vue-sonner/style.css';
 import { nip19 } from 'nostr-tools';
@@ -59,6 +60,8 @@ const baseUrl = ref('http://localhost:5173');
 const nostrConnectRelaysInput = ref('wss://relay.nsec.app');
 const privacyMode = ref(false);
 const showNostrBadge = ref(true);
+const useBunker46 = ref(false);
+const specifyNostrConnectRelays = ref(false);
 type PubkeyFormat = 'npub' | 'hex' | 'nprofile';
 const pubkeyDisplayMode = ref<PubkeyFormat>('npub');
 const showQrModal = ref(false);
@@ -150,11 +153,15 @@ async function loadState() {
     }
     const stored = await chrome.storage.local.get([
       'bunker46BaseUrl',
+      'useBunker46',
+      'specifyNostrConnectRelays',
       'nostrConnectRelays',
       'privacyMode',
       'showNostrBadge',
     ]);
     if (stored.bunker46BaseUrl) baseUrl.value = stored.bunker46BaseUrl as string;
+    useBunker46.value = stored.useBunker46 === true;
+    specifyNostrConnectRelays.value = stored.specifyNostrConnectRelays === true;
     const relays = stored.nostrConnectRelays as string[] | undefined;
     if (Array.isArray(relays) && relays.length > 0) {
       nostrConnectRelaysInput.value = relays.join('\n');
@@ -271,6 +278,18 @@ async function setShowNostrBadgeEnabled() {
   const enabled = showNostrBadge.value;
   await chrome.runtime.sendMessage({ type: 'SET_SHOW_NOSTR_BADGE', enabled });
   toast.success(enabled ? t('toastBadgeShown') : t('toastBadgeHidden'));
+}
+
+async function setUseBunker46Enabled() {
+  const enabled = useBunker46.value;
+  await chrome.storage.local.set({ useBunker46: enabled });
+  toast.success(t('toastSettingsSaved'));
+}
+
+async function setSpecifyNostrConnectRelaysEnabled() {
+  const enabled = specifyNostrConnectRelays.value;
+  await chrome.storage.local.set({ specifyNostrConnectRelays: enabled });
+  toast.success(t('toastSettingsSaved'));
 }
 
 async function copyPubkey() {
@@ -661,64 +680,61 @@ onUnmounted(() => {
     <!-- SETTINGS TAB -->
     <template v-if="activeTab === 'settings'">
       <div class="flex flex-col gap-4 p-5">
-        <div class="flex flex-col gap-3">
-          <div class="flex flex-col gap-1.5">
-            <Label>{{ t('settingsBunkerUrl') }}</Label>
+        <ChoiceCard
+          v-model="privacyMode"
+          :label="t('privacyMode')"
+          :description="t('privacyModeHint') + ' ' + t('privacyModeSitesHint')"
+          @update:model-value="setPrivacyModeEnabled()"
+        />
+        <ChoiceCard
+          v-model="showNostrBadge"
+          :label="t('showBadge')"
+          :description="t('showBadgeHint')"
+          @update:model-value="setShowNostrBadgeEnabled()"
+        />
+        <ChoiceCard
+          v-model="useBunker46"
+          :label="t('settingsUseBunker46')"
+          :description="t('settingsUseBunker46Hint')"
+          @update:model-value="setUseBunker46Enabled()"
+        >
+          <div class="flex flex-col gap-2">
+            <Label class="text-xs">{{ t('settingsBunkerUrl') }}</Label>
             <Input
               v-model="baseUrl"
               :placeholder="t('settingsBunkerUrlPlaceholder')"
               class="text-xs"
+              @click.stop
             />
             <p class="text-xs text-muted-foreground">{{ t('settingsBunkerUrlHint') }}</p>
+            <Button size="sm" class="w-fit" @click.stop="saveBaseUrl">
+              {{ t('save') }}
+            </Button>
           </div>
-          <Button size="sm" @click="saveBaseUrl"> {{ t('save') }} </Button>
-        </div>
-        <div class="flex flex-col gap-3">
-          <div class="flex flex-col gap-1.5">
-            <Label>{{ t('settingsNostrConnectRelays') }}</Label>
+        </ChoiceCard>
+        <ChoiceCard
+          v-model="specifyNostrConnectRelays"
+          :label="t('settingsSpecifyNostrConnectRelays')"
+          :description="t('settingsSpecifyNostrConnectRelaysHint')"
+          @update:model-value="setSpecifyNostrConnectRelaysEnabled()"
+        >
+          <div class="flex flex-col gap-2">
+            <Label class="text-xs">{{ t('settingsNostrConnectRelays') }}</Label>
             <textarea
               v-model="nostrConnectRelaysInput"
               :placeholder="t('settingsNostrConnectRelaysPlaceholder')"
               rows="3"
               class="w-full rounded-md border border-input bg-background px-3 py-2 text-xs font-mono ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              @click.stop
             />
             <p class="text-xs text-muted-foreground">
               {{ t('settingsNostrConnectRelaysHint') }}
             </p>
+            <Button size="sm" class="w-fit" @click.stop="saveNostrConnectRelays">
+              {{ t('save') }}
+            </Button>
           </div>
-          <Button size="sm" @click="saveNostrConnectRelays"> {{ t('save') }} </Button>
-        </div>
-        <div class="flex flex-col gap-3">
-          <label class="flex items-center gap-2.5 cursor-pointer text-sm font-medium">
-            <input
-              v-model="privacyMode"
-              type="checkbox"
-              class="rounded border-input"
-              @change="setPrivacyModeEnabled()"
-            />
-            {{ t('privacyMode') }}
-          </label>
-          <p class="text-xs text-muted-foreground">
-            {{ t('privacyModeHint') }}
-          </p>
-          <p class="text-xs text-muted-foreground">
-            {{ t('privacyModeSitesHint') }}
-          </p>
-        </div>
-        <div class="flex flex-col gap-3">
-          <label class="flex items-center gap-2.5 cursor-pointer text-sm font-medium">
-            <input
-              v-model="showNostrBadge"
-              type="checkbox"
-              class="rounded border-input"
-              @change="setShowNostrBadgeEnabled()"
-            />
-            {{ t('showBadge') }}
-          </label>
-          <p class="text-xs text-muted-foreground">
-            {{ t('showBadgeHint') }}
-          </p>
-        </div>
+        </ChoiceCard>
       </div>
     </template>
 

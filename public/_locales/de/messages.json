@@ -63,18 +63,28 @@
   },
   "showQrConnectionUri": { "message": "QR-Code und Verbindungs-URI anzeigen" },
 
+  "settingsUseBunker46": { "message": "Bunker46 verwenden" },
+  "settingsUseBunker46Hint": {
+    "message": "nostrconnect:-Links verarbeiten und zu Ihrer Bunker46-Instanz weiterleiten."
+  },
   "settingsBunkerUrl": { "message": "Bunker46-URL" },
   "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
   "settingsBunkerUrlHint": { "message": "Basis-URL Ihrer Bunker46-Instanz" },
+  "settingsSpecifyNostrConnectRelays": { "message": "Nostrconnect-Relays angeben" },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Eigene Relay-URLs für den Nostrconnect-QR/URI festlegen."
+  },
   "settingsNostrConnectRelays": { "message": "Nostr-Connect-Relays" },
   "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
   "settingsNostrConnectRelaysHint": {
     "message": "Eine Relay-URL pro Zeile (oder kommagetrennt). Wird beim Erzeugen des QR/URI für die Verbindung über Nostrconnect verwendet."
   },
+  "choiceOn": { "message": "An" },
+  "choiceOff": { "message": "Aus" },
   "save": { "message": "Speichern" },
   "privacyMode": { "message": "Datenschutzmodus" },
   "privacyModeHint": {
-    "message": "Wenn aktiv, ist window.nostr nur auf Domains verfügbar, die Sie in der Whitelist (über den Tab Berechtigungen) eingetragen haben – reduziert Fingerprinting."
+    "message": "window.nostr nur auf Whitelist-Domains (Tab Berechtigungen); reduziert Fingerprinting."
   },
   "privacyModeSitesHint": {
     "message": "Seiten können die Erweiterung nicht erkennen; einige zeigen „Mit Nostr anmelden“ erst, wenn Sie sie unter Berechtigungen hinzugefügt haben."
@@ -111,6 +121,7 @@
 
   "method_getPublicKey": { "message": "Öffentlichen Schlüssel abrufen" },
   "method_signEvent": { "message": "Event signieren" },
+  "method_signEvent_kind": { "message": "Event signieren (Typ $1)" },
   "method_getRelays": { "message": "Relays abrufen" },
   "method_nip04_encrypt": { "message": "NIP-04 verschlüsseln" },
   "method_nip04_decrypt": { "message": "NIP-04 entschlüsseln" },
@@ -123,6 +134,7 @@
   "promptViewRawMessage": { "message": "Rohe Nachricht anzeigen" },
   "promptHideRawMessage": { "message": "Rohe Nachricht ausblenden" },
   "promptAllowAlways": { "message": "Immer erlauben" },
+  "promptAllowAlwaysForKindHint": { "message": "Gilt nur für diesen Event-Typ" },
   "promptAllowOnce": { "message": "Einmal erlauben" },
   "promptDenyOnce": { "message": "Ablehnen" },
   "promptDenyAlways": { "message": "Immer ablehnen" }

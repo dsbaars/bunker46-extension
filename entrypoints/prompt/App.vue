@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, nextTick, watch } from 'vue';
 import Button from '@/components/ui/Button.vue';
 import Separator from '@/components/ui/Separator.vue';
 import { ShieldAlert, Globe, FileSignature, ChevronDown, ChevronUp } from 'lucide-vue-next';
 import { t, getMethodLabel } from '@/lib/i18n';
+import { tokenizeJson } from '@/lib/json-highlight';
 
 const requestId = ref('');
 const host = ref('');
@@ -14,9 +15,11 @@ const rawEvent = ref<unknown>(null);
 const rawMessageExpanded = ref(false);
 
 const isSignEvent = computed(() => method.value === 'signEvent');
-const rawEventJson = computed(() =>
-  rawEvent.value != null ? JSON.stringify(rawEvent.value, null, 2) : ''
-);
+const rawEventJson = computed(() => {
+  if (rawEvent.value == null) return '';
+  return JSON.stringify(rawEvent.value, null, 2).trim();
+});
+const rawEventTokens = computed(() => (rawEventJson.value ? tokenizeJson(rawEventJson.value) : []));
 
 onMounted(async () => {
   const params = new URLSearchParams(window.location.search);
@@ -38,6 +41,27 @@ onMounted(async () => {
       /* ignore */
     }
   }
+
+  await nextTick();
+  resizeWindowToContent();
+});
+
+/** Resize the prompt window to fit content (no scrollbar). */
+function resizeWindowToContent(): void {
+  try {
+    const frameHeight = window.outerHeight - window.innerHeight;
+    const contentHeight = document.documentElement.scrollHeight;
+    const newHeight = Math.min(Math.max(contentHeight + frameHeight, 280), 600);
+    chrome.windows?.getCurrent?.((win: { id?: number } | null) => {
+      if (win?.id != null) chrome.windows.update(win.id, { height: Math.round(newHeight) });
+    });
+  } catch {
+    /* ignore */
+  }
+}
+
+watch([rawEvent, rawMessageExpanded], () => {
+  nextTick(() => resizeWindowToContent());
 });
 
 function respond(decision: string) {
@@ -101,11 +125,13 @@ function respond(decision: string) {
       </Button>
       <div
         v-show="rawMessageExpanded"
-        class="rounded-lg border border-border bg-card overflow-auto max-h-32 min-h-0"
+        class="rounded-lg border border-border bg-card overflow-auto max-h-32 min-h-0 json-pre"
       >
-        <pre class="p-3 text-xs text-muted-foreground whitespace-pre-wrap wrap-break-word m-0">{{
-          rawEventJson
-        }}</pre>
+        <pre class="p-3 text-xs whitespace-pre-wrap wrap-break-word m-0"><span
+          v-for="(tok, i) in rawEventTokens"
+          :key="i"
+          :class="'json-' + tok.type"
+        >{{ tok.text }}</span></pre>
       </div>
     </div>
 
@@ -126,5 +152,11 @@ function respond(decision: string) {
         {{ t('promptDenyAlways') }}
       </Button>
     </div>
+    <p
+      v-if="isSignEvent && eventKind !== null"
+      class="text-[10px] text-muted-foreground text-center w-full shrink-0"
+    >
+      {{ t('promptAllowAlwaysForKindHint') }}
+    </p>
   </div>
 </template>

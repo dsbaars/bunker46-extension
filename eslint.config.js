@@ -5,7 +5,19 @@ import globals from 'globals';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 export default tseslint.config(
-  { ignores: ['.output/**', 'node_modules/**', 'public/**', '*.min.js', '.wxt/**', 'scripts/**'] },
+  {
+    ignores: [
+      '.output/**',
+      'node_modules/**',
+      'public/**',
+      '*.min.js',
+      '.wxt/**',
+      'scripts/**',
+      'playwright-report/**',
+      'test-results/**',
+      '.cursor/**',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...pluginVue.configs['flat/recommended'],

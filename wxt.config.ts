@@ -19,7 +19,7 @@ export default defineConfig({
     action: {
       default_title: '__MSG_extName__',
     },
-    permissions: ['storage', 'tabs'],
+    permissions: ['storage', 'tabs', 'windows'],
     web_accessible_resources: [
       {
         resources: ['nostr-provider.js'],

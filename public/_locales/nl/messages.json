@@ -63,18 +63,28 @@
   },
   "showQrConnectionUri": { "message": "QR en verbindings-URI tonen" },
 
+  "settingsUseBunker46": { "message": "Bunker46 gebruiken" },
+  "settingsUseBunker46Hint": {
+    "message": "nostrconnect:-links afhandelen en doorsturen naar uw Bunker46-installatie."
+  },
   "settingsBunkerUrl": { "message": "Bunker46-URL" },
   "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
   "settingsBunkerUrlHint": { "message": "Basis-URL van uw Bunker46-installatie" },
+  "settingsSpecifyNostrConnectRelays": { "message": "Nostrconnect-relays opgeven" },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Aangepaste relay-URL's instellen voor de Nostrconnect-QR/URI."
+  },
   "settingsNostrConnectRelays": { "message": "Nostr Connect-relays" },
   "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
   "settingsNostrConnectRelaysHint": {
     "message": "Eén relay-URL per regel (of gescheiden door komma's). Gebruikt bij het genereren van de QR/URI om via Nostrconnect te verbinden."
   },
+  "choiceOn": { "message": "Aan" },
+  "choiceOff": { "message": "Uit" },
   "save": { "message": "Opslaan" },
   "privacyMode": { "message": "Privacymodus" },
   "privacyModeHint": {
-    "message": "Wanneer aan: window.nostr is alleen beschikbaar op domeinen die u aan de whitelist hebt toegevoegd (via het tabblad Machtigingen), wat fingerprinting vermindert."
+    "message": "window.nostr alleen op whitelist-domeinen (tabblad Machtigingen); vermindert fingerprinting."
   },
   "privacyModeSitesHint": {
     "message": "Sites kunnen de extensie niet detecteren; sommige tonen pas \"Inloggen met Nostr\" als u ze in Machtigingen hebt toegevoegd."
@@ -111,6 +121,7 @@
 
   "method_getPublicKey": { "message": "Publieke sleutel ophalen" },
   "method_signEvent": { "message": "Event ondertekenen" },
+  "method_signEvent_kind": { "message": "Event ondertekenen (type $1)" },
   "method_getRelays": { "message": "Relays ophalen" },
   "method_nip04_encrypt": { "message": "NIP-04 versleutelen" },
   "method_nip04_decrypt": { "message": "NIP-04 ontsleutelen" },
@@ -123,6 +134,7 @@
   "promptViewRawMessage": { "message": "Ruwe bericht bekijken" },
   "promptHideRawMessage": { "message": "Ruwe bericht verbergen" },
   "promptAllowAlways": { "message": "Altijd toestaan" },
+  "promptAllowAlwaysForKindHint": { "message": "Alleen voor dit eventtype" },
   "promptAllowOnce": { "message": "Eenmalig toestaan" },
   "promptDenyOnce": { "message": "Weigeren" },
   "promptDenyAlways": { "message": "Altijd weigeren" }

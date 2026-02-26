@@ -7,6 +7,9 @@
   --color-card: oklch(0.17 0 0);
   --color-card-foreground: oklch(0.985 0 0);
 
+  --color-popover: oklch(0.17 0 0);
+  --color-popover-foreground: oklch(0.985 0 0);
+
   --color-primary: oklch(0.61 0.19 264);
   --color-primary-foreground: oklch(0.985 0 0);
 
@@ -58,35 +61,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html,
 body {
   margin: 0;
-  overflow: auto;
-  min-height: 0;
+  min-height: 100vh;
 }
 
+/* Full-page options layout: same max width as popup, centered */
 #app {
   width: 100%;
-  min-height: 0;
-  overflow: auto;
-}
-
-/* Simple JSON syntax highlighting in raw event viewer */
-.json-pre .json-key {
-  color: oklch(0.75 0.15 250);
-}
-.json-pre .json-string {
-  color: oklch(0.7 0.12 145);
-}
-.json-pre .json-number {
-  color: oklch(0.8 0.15 85);
-}
-.json-pre .json-boolean {
-  color: oklch(0.65 0.2 290);
-}
-.json-pre .json-null {
-  color: oklch(0.5 0.02 286);
-}
-.json-pre .json-punctuation {
-  color: var(--color-muted-foreground);
+  max-width: 360px;
+  margin: 0 auto;
+  min-height: 100vh;
 }

@@ -23,6 +23,7 @@ declare const chrome: typeof globalThis.chrome & {
       top?: number;
       focused?: boolean;
     }) => Promise<{ id?: number }>;
+    getCurrent: (callback?: (win: { id?: number } | null) => void) => void;
     getLastFocused: () => Promise<{
       id?: number;
       left?: number;
@@ -30,6 +31,7 @@ declare const chrome: typeof globalThis.chrome & {
       width?: number;
       height?: number;
     }>;
+    update: (windowId: number, updateInfo: { height?: number }) => void;
     onRemoved: {
       addListener: (callback: (windowId: number) => void) => void;
     };

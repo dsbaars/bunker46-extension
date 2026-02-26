@@ -407,6 +407,38 @@ async function requestPermission(
   });
 }
 
+/** Message types that may only be sent from extension pages (popup, prompt, options), not content scripts. */
+const PRIVILEGED_MESSAGE_TYPES = new Set([
+  'PERMISSION_RESPONSE',
+  'GET_SESSION',
+  'CONNECT_BUNKER_URI',
+  'CONNECT_VIA_NOSTRCONNECT',
+  'ADD_TO_NOSTR_WHITELIST',
+  'GET_NOSTR_WHITELIST',
+  'REMOVE_FROM_NOSTR_WHITELIST',
+  'SET_SHOW_NOSTR_BADGE',
+  'DISCONNECT',
+  'FULL_LOGOUT',
+  'GET_RAW_EVENT',
+  'GET_PERMISSIONS',
+  'REMOVE_PERMISSION',
+  'REMOVE_DOMAIN_PERMISSIONS',
+]);
+
+function isExtensionPage(sender: { url?: string }): boolean {
+  if (!sender?.url) return false;
+  const base = chrome.runtime.getURL('');
+  return sender.url === base || sender.url.startsWith(base);
+}
+
+function isPromptPage(sender: { url?: string }): boolean {
+  return Boolean(sender?.url?.includes('prompt.html'));
+}
+
+function validateNip04Nip44Params(params: unknown[]): params is [string, string] {
+  return params.length >= 2 && typeof params[0] === 'string' && typeof params[1] === 'string';
+}
+
 async function enforcePermission(
   senderUrl: string | undefined,
   msgType: string,
@@ -424,7 +456,9 @@ async function enforcePermission(
     return { allowed: false, error: 'Invalid origin' };
   }
 
-  const decision = await checkPermission(host, method);
+  const kind =
+    method === 'signEvent' ? (params?.[0] as { kind?: number } | undefined)?.kind : undefined;
+  const decision = await checkPermission(host, method, kind);
   if (decision === 'allow') return { allowed: true };
   if (decision === 'deny') return { allowed: false, error: 'Permission denied' };
 
@@ -448,6 +482,15 @@ chrome.runtime.onMessage.addListener(
     sendResponse: (response: unknown) => void
   ) => {
     (async () => {
+      // Restrict privileged messages to extension pages only (defense-in-depth).
+      if (PRIVILEGED_MESSAGE_TYPES.has(msg.type)) {
+        if (msg.type === 'GET_RAW_EVENT') {
+          if (!isPromptPage(sender)) return { error: 'Unauthorized' };
+        } else if (!isExtensionPage(sender)) {
+          return { error: 'Unauthorized' };
+        }
+      }
+
       // --- Prompt window responses ---
       if (msg.type === 'PERMISSION_RESPONSE' && msg.requestId && msg.decision) {
         const pending = pendingPermissions.get(msg.requestId);
@@ -455,25 +498,43 @@ chrome.runtime.onMessage.addListener(
         pendingRawEvents.delete(msg.requestId);
         pendingPermissions.delete(msg.requestId);
 
-        // Host and method are in the prompt page URL (sender.url)
+        // Host and method are in the prompt page URL (sender.url); eventKind for per-kind signEvent
         let host = '';
         let method = '';
+        let eventKind: number | undefined;
         if (sender?.url) {
           try {
             const params = new URL(sender.url).searchParams;
             host = params.get('host') ?? '';
             method = params.get('method') ?? '';
+            const kindParam = params.get('eventKind');
+            if (kindParam !== null && kindParam !== '') {
+              const n = parseInt(kindParam, 10);
+              if (!Number.isNaN(n) && n >= 0) eventKind = n;
+            }
           } catch {
             /* ignore */
           }
         }
 
         if (msg.decision === 'allow_always') {
-          if (host && method) await setPermission(host, method, 'allow');
+          if (host && method)
+            await setPermission(
+              host,
+              method,
+              'allow',
+              method === 'signEvent' ? eventKind : undefined
+            );
           if (host) void updateBadgeForTabsWithHost(host);
           pending.resolve(true);
         } else if (msg.decision === 'deny_always') {
-          if (host && method) await setPermission(host, method, 'deny');
+          if (host && method)
+            await setPermission(
+              host,
+              method,
+              'deny',
+              method === 'signEvent' ? eventKind : undefined
+            );
           if (host) void updateBadgeForTabsWithHost(host);
           pending.resolve(false);
         } else if (msg.decision === 'allow_once') {
@@ -541,9 +602,10 @@ chrome.runtime.onMessage.addListener(
         return {};
       }
 
-      // Open nostrconnect URI in Bunker46 (avoids loading extension page in tab — often blocked by ad blockers)
+      // Open nostrconnect URI in Bunker46 (only when "Use bunker46" is enabled)
       if (msg.type === 'OPEN_NOSTRCONNECT_URI' && msg.uri) {
-        const data = await chrome.storage.local.get('bunker46BaseUrl');
+        const data = await chrome.storage.local.get(['useBunker46', 'bunker46BaseUrl']);
+        if (data.useBunker46 !== true) return {};
         const baseUrl = (data.bunker46BaseUrl as string) || 'http://localhost:5173';
         const base = baseUrl.replace(/\/+$/, '');
         const target = `${base}/connections?import=${encodeURIComponent(msg.uri)}`;
@@ -638,56 +700,35 @@ chrome.runtime.onMessage.addListener(
           return { result: list };
         }
 
-        if (
-          msg.type === 'NIP04_ENCRYPT' &&
-          msg.params?.[0] !== undefined &&
-          msg.params?.[1] !== undefined
-        ) {
+        const nip44Params = msg.params ?? [];
+        if (msg.type === 'NIP04_ENCRYPT' && validateNip04Nip44Params(nip44Params)) {
           return {
-            result: await bunkerSigner.nip04Encrypt(
-              msg.params[0] as string,
-              msg.params[1] as string
-            ),
+            result: await bunkerSigner.nip04Encrypt(nip44Params[0], nip44Params[1]),
+          };
+        }
+
+        if (msg.type === 'NIP04_DECRYPT' && validateNip04Nip44Params(nip44Params)) {
+          return {
+            result: await bunkerSigner.nip04Decrypt(nip44Params[0], nip44Params[1]),
+          };
+        }
+
+        if (msg.type === 'NIP44_ENCRYPT' && validateNip04Nip44Params(nip44Params)) {
+          return {
+            result: await bunkerSigner.nip44Encrypt(nip44Params[0], nip44Params[1]),
+          };
+        }
+
+        if (msg.type === 'NIP44_DECRYPT' && validateNip04Nip44Params(nip44Params)) {
+          return {
+            result: await bunkerSigner.nip44Decrypt(nip44Params[0], nip44Params[1]),
           };
         }
 
         if (
-          msg.type === 'NIP04_DECRYPT' &&
-          msg.params?.[0] !== undefined &&
-          msg.params?.[1] !== undefined
+          ['NIP04_ENCRYPT', 'NIP04_DECRYPT', 'NIP44_ENCRYPT', 'NIP44_DECRYPT'].includes(msg.type)
         ) {
-          return {
-            result: await bunkerSigner.nip04Decrypt(
-              msg.params[0] as string,
-              msg.params[1] as string
-            ),
-          };
-        }
-
-        if (
-          msg.type === 'NIP44_ENCRYPT' &&
-          msg.params?.[0] !== undefined &&
-          msg.params?.[1] !== undefined
-        ) {
-          return {
-            result: await bunkerSigner.nip44Encrypt(
-              msg.params[0] as string,
-              msg.params[1] as string
-            ),
-          };
-        }
-
-        if (
-          msg.type === 'NIP44_DECRYPT' &&
-          msg.params?.[0] !== undefined &&
-          msg.params?.[1] !== undefined
-        ) {
-          return {
-            result: await bunkerSigner.nip44Decrypt(
-              msg.params[0] as string,
-              msg.params[1] as string
-            ),
-          };
+          return { error: 'Invalid params: NIP-04/NIP-44 methods require two string arguments' };
         }
       }
 

@@ -1,4 +1,11 @@
+import { NIP07_METHODS } from '@/lib/nip07/types';
+
 const STORAGE_KEY = 'domain_policies';
+
+/** Reserved keys that must not be used as host or method (prototype pollution / reserved). */
+const RESERVED_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
+
+const VALID_METHODS = new Set<string>(Object.values(NIP07_METHODS));
 
 export type PermissionDecision = 'allow' | 'deny';
 
@@ -13,6 +20,37 @@ export type DomainPolicies = {
   };
 };
 
+function isSafeHost(host: string): boolean {
+  if (typeof host !== 'string' || !host.trim()) return false;
+  const normalized = host.trim().toLowerCase();
+  if (RESERVED_KEYS.has(normalized)) return false;
+  // Reject obvious non-hostnames (e.g. script payloads)
+  if (normalized.length > 253) return false;
+  if (/[\s<>"']/.test(normalized)) return false;
+  return true;
+}
+
+function isSafeMethod(method: string): boolean {
+  return typeof method === 'string' && method.length > 0 && VALID_METHODS.has(method);
+}
+
+/** Storage key for signEvent can be "signEvent" (all kinds) or "signEvent:<kind>" (per-kind). */
+function isSafeMethodKey(key: string): boolean {
+  if (typeof key !== 'string' || !key.length) return false;
+  if (VALID_METHODS.has(key)) return true;
+  if (key.startsWith('signEvent:')) {
+    const kindPart = key.slice('signEvent:'.length);
+    return /^\d+$/.test(kindPart) && kindPart.length <= 10;
+  }
+  return false;
+}
+
+function methodKey(method: string, kind?: number): string {
+  if (method.startsWith('signEvent:') && /^signEvent:\d+$/.test(method)) return method;
+  if (method === 'signEvent' && kind !== undefined) return `signEvent:${kind}`;
+  return method;
+}
+
 export async function getPermissions(): Promise<DomainPolicies> {
   const raw = await chrome.storage.local.get(STORAGE_KEY);
   return (raw[STORAGE_KEY] as DomainPolicies) ?? {};
@@ -22,34 +60,66 @@ async function savePermissions(policies: DomainPolicies): Promise<void> {
   await chrome.storage.local.set({ [STORAGE_KEY]: policies });
 }
 
+/**
+ * Check permission for (host, method). For signEvent, pass kind to check per-kind first, then fallback to "signEvent" (all kinds).
+ */
 export async function checkPermission(
   host: string,
-  method: string
+  method: string,
+  kind?: number
 ): Promise<PermissionDecision | null> {
+  if (!isSafeHost(host)) return null;
+  if (method !== 'signEvent' && !isSafeMethod(method)) return null;
+  if (method === 'signEvent' && kind !== undefined && (typeof kind !== 'number' || kind < 0))
+    return null;
+
   const policies = await getPermissions();
-  return policies[host]?.[method]?.decision ?? null;
+  const hostPolicies = policies[host];
+  if (!hostPolicies) return null;
+
+  if (method === 'signEvent' && kind !== undefined) {
+    const kindKey = `signEvent:${kind}`;
+    const kindDecision = hostPolicies[kindKey]?.decision;
+    if (kindDecision !== undefined && kindDecision !== null) return kindDecision;
+    return hostPolicies['signEvent']?.decision ?? null;
+  }
+
+  return hostPolicies[method]?.decision ?? null;
 }
 
+/**
+ * Set permission. For signEvent, pass kind to allow/deny that kind only; otherwise "signEvent" applies to all kinds.
+ */
 export async function setPermission(
   host: string,
   method: string,
-  decision: PermissionDecision
+  decision: PermissionDecision,
+  kind?: number
 ): Promise<void> {
+  if (!isSafeHost(host)) return;
+  const key = methodKey(method, kind);
+  if (!isSafeMethodKey(key)) return;
+
   const policies = await getPermissions();
   if (!policies[host]) policies[host] = {};
-  policies[host][method] = { decision, created_at: Date.now() };
+  policies[host][key] = { decision, created_at: Date.now() };
   await savePermissions(policies);
 }
 
-export async function removePermission(host: string, method: string): Promise<void> {
+export async function removePermission(host: string, method: string, kind?: number): Promise<void> {
+  if (!isSafeHost(host)) return;
+  const key = methodKey(method, kind);
+  if (!isSafeMethodKey(key)) return;
+
   const policies = await getPermissions();
   if (!policies[host]) return;
-  delete policies[host][method];
+  delete policies[host][key];
   if (Object.keys(policies[host]).length === 0) delete policies[host];
   await savePermissions(policies);
 }
 
 export async function removeDomainPermissions(host: string): Promise<void> {
+  if (!isSafeHost(host)) return;
   const policies = await getPermissions();
   delete policies[host];
   await savePermissions(policies);

@@ -17,6 +17,11 @@ export function methodLabelKey(method: string): string {
 
 /** Get translated method label, falling back to raw method name if no translation */
 export function getMethodLabel(method: string): string {
+  if (method.startsWith('signEvent:')) {
+    const kind = method.slice('signEvent:'.length);
+    const msg = t('method_signEvent_kind', kind);
+    return msg !== 'method_signEvent_kind' ? msg : `Sign event (kind ${kind})`;
+  }
   const key = methodLabelKey(method);
   const msg = t(key);
   return msg !== key ? msg : method;

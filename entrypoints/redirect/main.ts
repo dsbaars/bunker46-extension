@@ -1,25 +1,35 @@
 /**
  * Redirect page for nostrconnect:// URIs.
- * Open with ?uri=<encoded-nostrconnect-uri>; reads bunker46BaseUrl from storage
- * and redirects to {baseUrl}/connections?import={uri}.
+ * Open with ?uri=<encoded-nostrconnect-uri>; reads useBunker46 and bunker46BaseUrl from storage.
+ * Only redirects when "Use bunker46" is enabled.
  */
 
 const params = new URLSearchParams(window.location.search);
 const uri = params.get('uri') || params.get('nostrconnect') || '';
 
-if (!uri) {
+function showMessage(text: string): void {
+  document.body.innerHTML = '';
   const p = document.createElement('p');
-  p.append(
-    document.createTextNode('Missing '),
-    Object.assign(document.createElement('code'), { textContent: '?uri=' }),
-    document.createTextNode(' parameter.')
-  );
+  p.textContent = text;
   document.body.append(p);
+}
+
+if (!uri) {
+  showMessage('Missing ?uri= parameter.');
 } else {
-  chrome.storage.local.get('bunker46BaseUrl', (data: { bunker46BaseUrl?: string }) => {
-    const baseUrl = (data.bunker46BaseUrl as string) || 'http://localhost:5173';
-    const base = baseUrl.replace(/\/+$/, '');
-    const target = `${base}/connections?import=${encodeURIComponent(uri)}`;
-    window.location.href = target;
-  });
+  chrome.storage.local.get(
+    ['useBunker46', 'bunker46BaseUrl'],
+    (data: { useBunker46?: boolean; bunker46BaseUrl?: string }) => {
+      if (data.useBunker46 !== true) {
+        showMessage(
+          'Enable "Use bunker46" in the extension Settings to handle nostrconnect links.'
+        );
+        return;
+      }
+      const baseUrl = (data.bunker46BaseUrl as string) || 'http://localhost:5173';
+      const base = baseUrl.replace(/\/+$/, '');
+      const target = `${base}/connections?import=${encodeURIComponent(uri)}`;
+      window.location.href = target;
+    }
+  );
 }
