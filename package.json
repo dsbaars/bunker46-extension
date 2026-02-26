@@ -29,7 +29,7 @@
     "lucide-vue-next": "^0.575.0",
     "nostr-tools": "^2.23.1",
     "qrcode": "^1.5.4",
-    "radix-vue": "^1.9.17",
+    "reka-ui": "^2.8.2",
     "tailwind-merge": "^3.5.0",
     "vue": "^3.5.27",
     "vue-sonner": "^2.0.9"

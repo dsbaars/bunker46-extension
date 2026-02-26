@@ -1,6 +1,12 @@
-import { generateSecretKey, SimplePool } from 'nostr-tools';
-import { BunkerSigner, parseBunkerInput } from 'nostr-tools/nip46';
+import { generateSecretKey, getPublicKey, SimplePool } from 'nostr-tools';
+import {
+  BunkerSigner,
+  createNostrConnectURI,
+  parseBunkerInput,
+  toBunkerURL,
+} from 'nostr-tools/nip46';
 import { bytesToHex, hexToBytes } from '@/lib/hex';
+import { DEFAULT_RELAYS, NIP46_APP_NAME } from '@/lib/constants';
 import {
   checkPermission,
   setPermission,
@@ -197,6 +203,48 @@ async function connectWithBunkerUri(
   }
 }
 
+/** One-time secret for nostrconnect URI (bunker echoes it back to confirm). */
+function randomNostrConnectSecret(): string {
+  return bytesToHex(generateSecretKey());
+}
+
+/**
+ * Start connecting via nostrconnect: generate a URI for the client (extension), show it as QR/copy;
+ * wait for bunker to connect in the background and persist session when done.
+ */
+function startNostrConnectConnection(): Promise<{ uri: string }> {
+  return (async () => {
+    const secret = await getOrCreateClientKey();
+    const clientPubkey = getPublicKey(secret);
+    const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
+
+    const oneTimeSecret = randomNostrConnectSecret();
+    const uri = createNostrConnectURI({
+      clientPubkey,
+      relays: DEFAULT_RELAYS,
+      secret: oneTimeSecret,
+      name: NIP46_APP_NAME,
+    });
+
+    // Wait for bunker to connect in the background; persist session when done
+    BunkerSigner.fromURI(secret, uri, { pool }, BUNKER_CONNECT_TIMEOUT_MS)
+      .then(async (signer) => {
+        const signerPubkey = await signer.getPublicKey();
+        bunkerSigner = signer;
+        await persistSession({
+          signerPubkey,
+          relays: signer.bp.relays,
+          bunkerUri: toBunkerURL(signer.bp),
+        });
+      })
+      .catch(() => {
+        // Popup may poll GET_SESSION; no need to surface timeout here
+      });
+
+    return { uri };
+  })();
+}
+
 async function requestPermission(
   host: string,
   method: string,
@@ -337,6 +385,10 @@ chrome.runtime.onMessage.addListener(
 
       if (msg.type === 'CONNECT_BUNKER_URI' && msg.uri) {
         return await connectWithBunkerUri(msg.uri);
+      }
+
+      if (msg.type === 'CONNECT_VIA_NOSTRCONNECT') {
+        return await startNostrConnectConnection();
       }
 
       // Open nostrconnect URI in Bunker46 (avoids loading extension page in tab — often blocked by ad blockers)

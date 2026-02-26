@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import Button from '@/components/ui/Button.vue';
 import Card from '@/components/ui/Card.vue';
 import CardHeader from '@/components/ui/CardHeader.vue';
@@ -56,6 +56,12 @@ const showSettings = ref(false);
 const connecting = ref(false);
 const errorMessage = ref('');
 const permissions = ref<DomainPolicies>({});
+
+const showNostrConnectModal = ref(false);
+const nostrConnectUri = ref('');
+const nostrConnectQrDataUrl = ref('');
+const nostrConnectWaiting = ref(false);
+let nostrConnectPollTimer: ReturnType<typeof setInterval> | null = null;
 
 const METHOD_LABELS: Record<string, string> = {
   getPublicKey: 'Get Public Key',
@@ -216,6 +222,66 @@ function closeQrModal() {
   showQrModal.value = false;
 }
 
+async function startNostrConnect() {
+  nostrConnectUri.value = '';
+  nostrConnectQrDataUrl.value = '';
+  errorMessage.value = '';
+  try {
+    const res: { uri?: string; error?: string } = await chrome.runtime.sendMessage({
+      type: 'CONNECT_VIA_NOSTRCONNECT',
+    });
+    if (res?.error) {
+      errorMessage.value = res.error;
+      return;
+    }
+    const uri = res?.uri ?? '';
+    if (!uri) {
+      errorMessage.value = 'Failed to generate connection URI';
+      return;
+    }
+    nostrConnectUri.value = uri;
+    nostrConnectQrDataUrl.value = await QRCode.toDataURL(uri, {
+      width: 220,
+      margin: 1,
+      color: { dark: '#0d0d0d', light: '#ffffff' },
+    });
+    showNostrConnectModal.value = true;
+    nostrConnectWaiting.value = true;
+    nostrConnectPollTimer = setInterval(async () => {
+      const s: { connected?: boolean } = await chrome.runtime.sendMessage({ type: 'GET_SESSION' });
+      if (s?.connected) {
+        if (nostrConnectPollTimer) clearInterval(nostrConnectPollTimer);
+        nostrConnectPollTimer = null;
+        nostrConnectWaiting.value = false;
+        showNostrConnectModal.value = false;
+        await loadState();
+      }
+    }, 1500);
+  } catch (e) {
+    errorMessage.value = e instanceof Error ? e.message : 'Failed to start connection';
+  }
+}
+
+function closeNostrConnectModal() {
+  showNostrConnectModal.value = false;
+  nostrConnectWaiting.value = false;
+  if (nostrConnectPollTimer) {
+    clearInterval(nostrConnectPollTimer);
+    nostrConnectPollTimer = null;
+  }
+}
+
+async function copyNostrConnectUri() {
+  const uri = nostrConnectUri.value;
+  if (!uri) return;
+  try {
+    await navigator.clipboard.writeText(uri);
+    toast.success('Copied to clipboard');
+  } catch {
+    toast.error('Failed to copy');
+  }
+}
+
 function openBunker46() {
   const url = baseUrl.value.replace(/\/+$/, '') + '/connections';
   chrome.tabs.create({ url });
@@ -255,6 +321,13 @@ function switchTab(tab: 'connection' | 'permissions') {
 onMounted(() => {
   loadState();
   loadPermissions();
+});
+
+onUnmounted(() => {
+  if (nostrConnectPollTimer) {
+    clearInterval(nostrConnectPollTimer);
+    nostrConnectPollTimer = null;
+  }
 });
 </script>
 
@@ -415,6 +488,18 @@ onMounted(() => {
                 <ExternalLink class="size-4" />
                 Get URI from Bunker46
               </Button>
+
+              <Separator label="or" />
+
+              <div class="flex flex-col gap-3">
+                <p class="text-xs text-muted-foreground">
+                  Connect via Nostrconnect: show a QR and URI for your bunker app to scan.
+                </p>
+                <Button variant="outline" class="w-full" @click="startNostrConnect">
+                  <QrCode class="size-4" />
+                  Show QR & connection URI
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -534,7 +619,7 @@ onMounted(() => {
       </div>
     </template>
 
-    <!-- QR code modal -->
+    <!-- QR code modal (signer pubkey) -->
     <div
       v-if="showQrModal"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
@@ -555,6 +640,47 @@ onMounted(() => {
           height="220"
         />
         <Button size="sm" variant="outline" @click="closeQrModal"> Close </Button>
+      </div>
+    </div>
+
+    <!-- Nostrconnect connection modal (QR + copy, waiting for bunker) -->
+    <div
+      v-if="showNostrConnectModal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+      @click.self="closeNostrConnectModal"
+    >
+      <div
+        class="rounded-lg border border-border bg-card p-4 shadow-xl flex flex-col items-center gap-3 max-w-[280px]"
+      >
+        <p class="text-xs font-medium text-muted-foreground text-center">
+          Scan with your bunker app or copy the URI
+        </p>
+        <img
+          v-if="nostrConnectQrDataUrl"
+          :src="nostrConnectQrDataUrl"
+          alt="Nostrconnect QR code"
+          class="rounded border border-border bg-white shrink-0"
+          width="220"
+          height="220"
+        />
+        <Button
+          variant="outline"
+          size="sm"
+          class="w-full"
+          @click="copyNostrConnectUri"
+        >
+          <Copy class="size-3.5" />
+          Copy URI
+        </Button>
+        <p
+          v-if="nostrConnectWaiting"
+          class="text-xs text-muted-foreground text-center"
+        >
+          Waiting for bunker to connect…
+        </p>
+        <Button size="sm" variant="ghost" class="w-full" @click="closeNostrConnectModal">
+          Cancel
+        </Button>
       </div>
     </div>
   </div>
