@@ -187,8 +187,8 @@ async function main() {
   await promptPage.waitForTimeout(400);
 
   await promptPage.evaluate((html) => {
-    const btn = Array.from(document.querySelectorAll('button')).find(
-      (b) => b.textContent?.includes('Allow always')
+    const btn = Array.from(document.querySelectorAll('button')).find((b) =>
+      b.textContent?.includes('Allow always')
     );
     const grid = btn?.closest('.grid') ?? btn?.parentElement;
     if (!grid?.parentElement) return;
