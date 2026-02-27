@@ -653,12 +653,13 @@ onUnmounted(() => {
                 {{ connecting ? t('connecting') : t('connect') }}
               </Button>
 
-              <Separator :label="t('separatorOr')" />
-
-              <Button variant="outline" class="w-full" @click="openBunker46">
-                <ExternalLink class="size-4" />
-                {{ t('getUriFromBunker46') }}
-              </Button>
+              <template v-if="useBunker46">
+                <Separator :label="t('separatorOr')" />
+                <Button variant="outline" class="w-full" @click="openBunker46">
+                  <ExternalLink class="size-4" />
+                  {{ t('getUriFromBunker46') }}
+                </Button>
+              </template>
 
               <Separator :label="t('separatorOr')" />
 
