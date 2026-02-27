@@ -21,6 +21,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "screenshots": "node scripts/screenshot-popup-tabs.mjs",
+    "screenshots:capture": "node scripts/capture-screenshot-snapshot.mjs",
     "postinstall": "wxt prepare"
   },
   "dependencies": {

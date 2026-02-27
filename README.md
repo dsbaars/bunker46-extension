@@ -18,6 +18,12 @@ A **NIP-07 compliant** browser extension that exposes `window.nostr` to web page
 - **nostrconnect:// links** — Clicking nostrconnect links opens your configured Bunker46 instance so you can add or manage connections there.
 - **Chrome & Firefox** — Built with [WXT](https://wxt.dev); Chrome and Firefox (MV3) builds are supported.
 
+## Screenshots
+
+| Connection                                                                                        | Permissions                                                                                          | Settings                                                                                    |
+| ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| [![Connection tab](docs/screenshots/popup-connection.png)](docs/screenshots/popup-connection.png) | [![Permissions tab](docs/screenshots/popup-permissions.png)](docs/screenshots/popup-permissions.png) | [![Settings tab](docs/screenshots/popup-settings.png)](docs/screenshots/popup-settings.png) |
+
 ## Development
 
 ```bash

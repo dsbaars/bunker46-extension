@@ -1,0 +1,50 @@
+{
+  "bunker46BaseUrl": "http://localhost:5173",
+  "domain_policies": {
+    "app.getalby.com": {
+      "getPublicKey": {
+        "created_at": 1700000002000,
+        "decision": "allow"
+      },
+      "signEvent": {
+        "created_at": 1700000002000,
+        "decision": "allow"
+      }
+    },
+    "example.com": {
+      "getPublicKey": {
+        "created_at": 1700000000000,
+        "decision": "allow"
+      },
+      "getRelays": {
+        "created_at": 1700000000000,
+        "decision": "allow"
+      },
+      "signEvent": {
+        "created_at": 1700000000000,
+        "decision": "allow"
+      }
+    },
+    "nostr.example.org": {
+      "getPublicKey": {
+        "created_at": 1700000001000,
+        "decision": "allow"
+      },
+      "signEvent": {
+        "created_at": 1700000001000,
+        "decision": "allow"
+      }
+    }
+  },
+  "nip46_client_secret_hex": "eef6f8229f1fc41efbe40bd472ff2fc7502601293fc84712a7358cd8980d031c",
+  "nip46_session": {
+    "bunkerUri": "bunker://52bc9087706bc8c318e50fb5a87e8868a0f0551e6254d6275ff64b4f99c8ad73?relay=wss%3A%2F%2Frelay.nsec.app&relay=wss%3A%2F%2Frelay.damus.io&relay=wss%3A%2F%2Fnos.lol&secret=34f0835bed08100ca2a966d3909df1e6",
+    "relays": ["wss://relay.nsec.app", "wss://relay.damus.io", "wss://nos.lol"],
+    "signerPubkey": "52bc9087706bc8c318e50fb5a87e8868a0f0551e6254d6275ff64b4f99c8ad73"
+  },
+  "nostrConnectRelays": ["wss://relay.nsec.app"],
+  "privacyMode": false,
+  "showNostrBadge": true,
+  "specifyNostrConnectRelays": false,
+  "useBunker46": false
+}
