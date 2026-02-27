@@ -24,6 +24,10 @@ A **NIP-07 compliant** browser extension that exposes `window.nostr` to web page
 | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | [![Connection tab](docs/screenshots/popup-connection.png)](docs/screenshots/popup-connection.png) | [![Permissions tab](docs/screenshots/popup-permissions.png)](docs/screenshots/popup-permissions.png) | [![Settings tab](docs/screenshots/popup-settings.png)](docs/screenshots/popup-settings.png) |
 
+**Permission prompt** (when a site requests NIP-07 access):
+
+[![Permission prompt](docs/screenshots/prompt-permission.png)](docs/screenshots/prompt-permission.png)
+
 ## Development
 
 ```bash
