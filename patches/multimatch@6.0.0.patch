@@ -1,0 +1,19 @@
+diff --git a/index.js b/index.js
+index c13842ecbe4c0355b1180ba82a18a988543d1632..ebb7df697e6bf50e079faec21a7c74341e5e7dad 100644
+--- a/index.js
++++ b/index.js
+@@ -1,4 +1,4 @@
+-import minimatch from 'minimatch';
++import { match } from 'minimatch';
+ import arrayUnion from 'array-union';
+ import arrayDiffer from 'array-differ';
+ 
+@@ -20,7 +20,7 @@ export default function multimatch(list, patterns, options = {}) {
+ 				process = arrayDiffer;
+ 			}
+ 
+-			result = process(result, minimatch.match([item], pattern, options));
++			result = process(result, match([item], pattern, options));
+ 		}
+ 	}
+ 

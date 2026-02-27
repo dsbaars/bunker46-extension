@@ -5,6 +5,7 @@
   "appSubtitle": { "message": "NIP-07 externe ondertekenaar" },
   "connected": { "message": "Verbonden" },
   "offline": { "message": "Offline" },
+  "loading": { "message": "Laden…" },
   "tabConnection": { "message": "Verbinding" },
   "tabPermissions": { "message": "Machtigingen" },
   "tabSettings": { "message": "Instellingen" },

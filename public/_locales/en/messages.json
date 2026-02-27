@@ -5,6 +5,7 @@
   "appSubtitle": { "message": "NIP-07 Remote Signer" },
   "connected": { "message": "Connected" },
   "offline": { "message": "Offline" },
+  "loading": { "message": "Loading…" },
   "tabConnection": { "message": "Connection" },
   "tabPermissions": { "message": "Permissions" },
   "tabSettings": { "message": "Settings" },

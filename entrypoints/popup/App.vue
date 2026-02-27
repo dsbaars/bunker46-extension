@@ -68,6 +68,7 @@ const showQrModal = ref(false);
 const qrDataUrl = ref('');
 const bunkerUriInput = ref('');
 const connecting = ref(false);
+const connectionStateLoaded = ref(false);
 const errorMessage = ref('');
 const permissions = ref<DomainPolicies>({});
 
@@ -172,6 +173,8 @@ async function loadState() {
     showNostrBadge.value = stored.showNostrBadge !== false;
   } catch {
     /* background may not be ready */
+  } finally {
+    connectionStateLoaded.value = true;
   }
 }
 
@@ -537,8 +540,16 @@ onUnmounted(() => {
 
     <!-- CONNECTION TAB -->
     <template v-if="activeTab === 'connection'">
+      <!-- Loading: avoid flashing connect form when already connected -->
+      <div
+        v-if="!connectionStateLoaded"
+        class="flex flex-col items-center justify-center gap-2 p-8 text-muted-foreground"
+      >
+        <Loader2 class="size-5 animate-spin" />
+        <span class="text-xs">{{ t('loading') }}</span>
+      </div>
       <!-- Connected state -->
-      <div v-if="connected" class="flex flex-col gap-4 p-5">
+      <div v-else-if="connected" class="flex flex-col gap-4 p-5">
         <Card>
           <CardContent class="pt-5">
             <div class="flex flex-col gap-4">

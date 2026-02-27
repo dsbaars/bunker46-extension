@@ -8,6 +8,11 @@ overrides:
   minimatch: '>=10.2.3'
   rollup@4.58.0: 4.59.0
 
+patchedDependencies:
+  multimatch@6.0.0:
+    hash: 5cfc39b869d649107eed82d5709199937eb256e6c9ee5edf877f9be1f5228b6b
+    path: patches/multimatch@6.0.0.patch
+
 importers:
 
   .:
@@ -4506,7 +4511,7 @@ snapshots:
 
   muggle-string@0.4.1: {}
 
-  multimatch@6.0.0:
+  multimatch@6.0.0(patch_hash=5cfc39b869d649107eed82d5709199937eb256e6c9ee5edf877f9be1f5228b6b):
     dependencies:
       '@types/minimatch': 3.0.5
       array-differ: 4.0.0
@@ -5241,7 +5246,7 @@ snapshots:
       es6-error: 4.1.1
       firefox-profile: 4.7.0
       fx-runner: 1.4.0
-      multimatch: 6.0.0
+      multimatch: 6.0.0(patch_hash=5cfc39b869d649107eed82d5709199937eb256e6c9ee5edf877f9be1f5228b6b)
       node-notifier: 10.0.1
       parse-json: 7.1.1
       pino: 9.7.0
