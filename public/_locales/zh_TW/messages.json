@@ -1,0 +1,140 @@
+{
+  "extName": { "message": "Bunker46" },
+  "extDescription": { "message": "透過 NIP-46 / Bunker46 的 NIP-07 遠端簽署者" },
+
+  "appSubtitle": { "message": "NIP-07 遠端簽署者" },
+  "connected": { "message": "已連線" },
+  "offline": { "message": "離線" },
+  "loading": { "message": "載入中…" },
+  "tabConnection": { "message": "連線" },
+  "tabPermissions": { "message": "權限" },
+  "tabSettings": { "message": "設定" },
+
+  "errorPasteUri": { "message": "請在上方貼上 bunker:// URI" },
+  "errorConnectionFailed": { "message": "連線失敗" },
+  "errorGenerateUri": { "message": "產生連線 URI 失敗" },
+  "errorStartConnection": { "message": "啟動連線失敗" },
+
+  "toastLoggedOut": { "message": "已登出" },
+  "toastLogoutFailed": { "message": "登出失敗" },
+  "toastSettingsSaved": { "message": "設定已儲存" },
+  "toastPrivacyModeOn": { "message": "隱私模式已開啟" },
+  "toastPrivacyModeOff": { "message": "隱私模式已關閉" },
+  "toastBadgeShown": { "message": "徽章已顯示" },
+  "toastBadgeHidden": { "message": "徽章已隱藏" },
+  "toastCopied": { "message": "已複製到剪貼簿" },
+  "toastCopyFailed": { "message": "複製失敗" },
+  "toastPermissionRemoved": { "message": "權限已移除" },
+  "toastPermissionRemoveFailed": { "message": "移除權限失敗" },
+  "toastDomainRemoved": { "message": "網域權限已移除" },
+  "toastDomainRemoveFailed": { "message": "移除網域失敗" },
+  "toastNoActiveTab": { "message": "沒有活動的分頁或 URL" },
+  "toastAddedToWhitelist": { "message": "已將 $1 加入白名單。請重新載入分頁以使用 Nostr。" },
+  "toastAddDomainFailed": { "message": "新增網域失敗" },
+  "toastRemovedFromWhitelist": { "message": "已從白名單移除" },
+  "toastRemoveFromWhitelistFailed": { "message": "從白名單移除失敗" },
+
+  "signerKey": { "message": "簽署者金鑰" },
+  "copyTitle": { "message": "複製" },
+  "showQrTitle": { "message": "顯示 QR 碼" },
+  "signerDescription": {
+    "message": "網頁的所有 NIP-07 請求均透過 NIP-46 轉發至此遠端簽署者。擴充功能中不儲存任何私鑰。"
+  },
+  "disconnect": { "message": "中斷連線" },
+  "logoutConfirmTitle": { "message": "完全登出？" },
+  "logoutConfirmDescription": {
+    "message": "此操作將中斷與簽署者的連線，並清除所有權限及隱私模式白名單。您需要重新連線並重新授權網站。"
+  },
+  "cancel": { "message": "取消" },
+  "logOut": { "message": "登出" },
+
+  "connectViaBunkerUri": { "message": "透過 Bunker URI 連線" },
+  "connectViaBunkerUriDesc": {
+    "message": "貼上遠端簽署者的 bunker:// URI 以連線"
+  },
+  "placeholderBunkerUri": { "message": "bunker://..." },
+  "connecting": { "message": "連線中..." },
+  "connect": { "message": "連線" },
+  "separatorOr": { "message": "或" },
+  "getUriFromBunker46": { "message": "從 Bunker46 取得 URI" },
+  "nostrConnectDesc": {
+    "message": "透過 Nostrconnect 連線：顯示 QR 碼和 URI 供您的 bunker 應用程式掃描。"
+  },
+  "showQrConnectionUri": { "message": "顯示 QR 碼和連線 URI" },
+
+  "settingsUseBunker46": { "message": "使用 Bunker46" },
+  "settingsUseBunker46Hint": {
+    "message": "處理 nostrconnect: 連結並重新導向至您的 Bunker46 執行個體。"
+  },
+  "settingsBunkerUrl": { "message": "Bunker46 URL" },
+  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
+  "settingsBunkerUrlHint": { "message": "您的 Bunker46 執行個體的基礎 URL" },
+  "settingsSpecifyNostrConnectRelays": { "message": "指定 Nostrconnect 中繼器" },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "為 Nostrconnect QR/URI 設定自訂中繼器 URL。"
+  },
+  "settingsNostrConnectRelays": { "message": "Nostr 連線中繼器" },
+  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelaysHint": {
+    "message": "每行一個中繼器 URL（或以逗號分隔）。用於產生透過 Nostrconnect 連線的 QR/URI。"
+  },
+  "choiceOn": { "message": "開啟" },
+  "choiceOff": { "message": "關閉" },
+  "save": { "message": "儲存" },
+  "privacyMode": { "message": "隱私模式" },
+  "privacyModeHint": {
+    "message": "僅在白名單網域上公開 window.nostr（權限分頁）；減少瀏覽器指紋識別。"
+  },
+  "privacyModeSitesHint": {
+    "message": "網站無法偵測擴充功能，因此某些網站可能不會顯示「使用 Nostr 登入」，直到您在權限中新增它們。"
+  },
+  "showBadge": { "message": "在擴充功能圖示上顯示徽章" },
+  "showBadgeHint": {
+    "message": "開啟時，圖示顯示目前分頁已授予的權限數量（如 1、2）。"
+  },
+
+  "addToWhitelistTitle": { "message": "將 $1 加入白名單" },
+  "addToWhitelistButton": { "message": "將 $1 加入白名單" },
+  "removeFromWhitelistTitle": { "message": "將 $1 從白名單移除" },
+  "removeFromWhitelistButton": { "message": "將 $1 從白名單移除" },
+  "searchDomainsPlaceholder": { "message": "搜尋網域..." },
+  "noPermissionsYet": { "message": "尚無權限" },
+  "noPermissionsHint": {
+    "message": "當網站請求存取您的 Nostr 身份時，將顯示在此處。"
+  },
+  "noDomainsMatch": { "message": "沒有符合搜尋的網域" },
+  "revokeAllPermissionsTitle": { "message": "撤銷此網域的所有權限" },
+  "whitelistedNoPermissions": { "message": "已加入 Nostr 白名單（尚無權限）" },
+  "allowed": { "message": "已允許" },
+  "denied": { "message": "已拒絕" },
+  "revokeTitle": { "message": "撤銷" },
+  "removeFromWhitelist": { "message": "從白名單移除" },
+
+  "qrScanToUse": { "message": "$1（掃描使用）" },
+  "qrCodeAlt": { "message": "QR 碼" },
+  "close": { "message": "關閉" },
+  "nostrConnectModalHint": { "message": "使用 bunker 應用程式掃描或複製 URI" },
+  "nostrConnectQrAlt": { "message": "Nostrconnect QR 碼" },
+  "copyUri": { "message": "複製 URI" },
+  "waitingForBunker": { "message": "等待 bunker 連線…" },
+
+  "method_getPublicKey": { "message": "取得公鑰" },
+  "method_signEvent": { "message": "簽署事件" },
+  "method_signEvent_kind": { "message": "簽署事件（類型 $1）" },
+  "method_getRelays": { "message": "取得中繼器" },
+  "method_nip04_encrypt": { "message": "NIP-04 加密" },
+  "method_nip04_decrypt": { "message": "NIP-04 解密" },
+  "method_nip44_encrypt": { "message": "NIP-44 加密" },
+  "method_nip44_decrypt": { "message": "NIP-44 解密" },
+
+  "promptPermissionRequest": { "message": "權限請求" },
+  "promptWantsAccess": { "message": "想要存取您的 Nostr 身份" },
+  "promptEventKind": { "message": "事件類型 $1" },
+  "promptViewRawMessage": { "message": "查看原始訊息" },
+  "promptHideRawMessage": { "message": "隱藏原始訊息" },
+  "promptAllowAlways": { "message": "永遠允許" },
+  "promptAllowAlwaysForKindHint": { "message": "僅適用於此事件類型" },
+  "promptAllowOnce": { "message": "允許一次" },
+  "promptDenyOnce": { "message": "拒絕" },
+  "promptDenyAlways": { "message": "永遠拒絕" }
+}

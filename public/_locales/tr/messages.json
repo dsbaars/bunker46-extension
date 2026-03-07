@@ -1,0 +1,140 @@
+{
+  "extName": { "message": "Bunker46" },
+  "extDescription": { "message": "NIP-46 / Bunker46 üzerinden NIP-07 uzak imzalayıcı" },
+
+  "appSubtitle": { "message": "NIP-07 Uzak İmzalayıcı" },
+  "connected": { "message": "Bağlı" },
+  "offline": { "message": "Çevrimdışı" },
+  "loading": { "message": "Yükleniyor…" },
+  "tabConnection": { "message": "Bağlantı" },
+  "tabPermissions": { "message": "İzinler" },
+  "tabSettings": { "message": "Ayarlar" },
+
+  "errorPasteUri": { "message": "Yukarıya bir bunker:// URI yapıştırın" },
+  "errorConnectionFailed": { "message": "Bağlantı başarısız" },
+  "errorGenerateUri": { "message": "Bağlantı URI'si oluşturulamadı" },
+  "errorStartConnection": { "message": "Bağlantı başlatılamadı" },
+
+  "toastLoggedOut": { "message": "Çıkış yapıldı" },
+  "toastLogoutFailed": { "message": "Çıkış başarısız" },
+  "toastSettingsSaved": { "message": "Ayarlar kaydedildi" },
+  "toastPrivacyModeOn": { "message": "Gizlilik modu açık" },
+  "toastPrivacyModeOff": { "message": "Gizlilik modu kapalı" },
+  "toastBadgeShown": { "message": "Rozet gösteriliyor" },
+  "toastBadgeHidden": { "message": "Rozet gizlendi" },
+  "toastCopied": { "message": "Panoya kopyalandı" },
+  "toastCopyFailed": { "message": "Kopyalama başarısız" },
+  "toastPermissionRemoved": { "message": "İzin kaldırıldı" },
+  "toastPermissionRemoveFailed": { "message": "İzin kaldırılamadı" },
+  "toastDomainRemoved": { "message": "Alan adı izinleri kaldırıldı" },
+  "toastDomainRemoveFailed": { "message": "Alan adı kaldırılamadı" },
+  "toastNoActiveTab": { "message": "Aktif sekme veya URL yok" },
+  "toastAddedToWhitelist": { "message": "$1 izin listesine eklendi. Nostr'u kullanmak için sekmeyi yenileyin." },
+  "toastAddDomainFailed": { "message": "Alan adı eklenemedi" },
+  "toastRemovedFromWhitelist": { "message": "İzin listesinden kaldırıldı" },
+  "toastRemoveFromWhitelistFailed": { "message": "İzin listesinden kaldırılamadı" },
+
+  "signerKey": { "message": "İmzalayıcı Anahtarı" },
+  "copyTitle": { "message": "Kopyala" },
+  "showQrTitle": { "message": "QR kodu göster" },
+  "signerDescription": {
+    "message": "Web sayfalarından gelen tüm NIP-07 istekleri, NIP-46 üzerinden bu uzak imzalayıcıya iletilir. Uzantıda özel anahtar saklanmaz."
+  },
+  "disconnect": { "message": "Bağlantıyı kes" },
+  "logoutConfirmTitle": { "message": "Tamamen çıkış yapılsın mı?" },
+  "logoutConfirmDescription": {
+    "message": "Bu işlem imzalayıcınızı bağlantısını kesecek ve tüm izinleri ile gizlilik modu izin listesini temizleyecektir. Yeniden bağlanmanız ve sitelere tekrar izin vermeniz gerekecektir."
+  },
+  "cancel": { "message": "İptal" },
+  "logOut": { "message": "Çıkış yap" },
+
+  "connectViaBunkerUri": { "message": "Bunker URI ile bağlan" },
+  "connectViaBunkerUriDesc": {
+    "message": "Bağlanmak için uzak imzalayıcınızdan bir bunker:// URI yapıştırın"
+  },
+  "placeholderBunkerUri": { "message": "bunker://..." },
+  "connecting": { "message": "Bağlanıyor..." },
+  "connect": { "message": "Bağlan" },
+  "separatorOr": { "message": "veya" },
+  "getUriFromBunker46": { "message": "Bunker46'dan URI al" },
+  "nostrConnectDesc": {
+    "message": "Nostrconnect üzerinden bağlan: bunker uygulamanızın tarayabileceği bir QR kodu ve URI gösterir."
+  },
+  "showQrConnectionUri": { "message": "QR ve bağlantı URI'sini göster" },
+
+  "settingsUseBunker46": { "message": "Bunker46 kullan" },
+  "settingsUseBunker46Hint": {
+    "message": "nostrconnect: bağlantılarını yönet ve Bunker46 örneğinize yönlendir."
+  },
+  "settingsBunkerUrl": { "message": "Bunker46 URL'si" },
+  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
+  "settingsBunkerUrlHint": { "message": "Bunker46 örneğinizin temel URL'si" },
+  "settingsSpecifyNostrConnectRelays": { "message": "Nostrconnect aktarıcılarını belirtin" },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Nostrconnect QR/URI için özel aktarıcı URL'leri belirleyin."
+  },
+  "settingsNostrConnectRelays": { "message": "Nostr bağlantı aktarıcıları" },
+  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelaysHint": {
+    "message": "Her satıra bir aktarıcı URL'si (veya virgülle ayrılmış). Nostrconnect üzerinden bağlantı için QR/URI oluştururken kullanılır."
+  },
+  "choiceOn": { "message": "Açık" },
+  "choiceOff": { "message": "Kapalı" },
+  "save": { "message": "Kaydet" },
+  "privacyMode": { "message": "Gizlilik modu" },
+  "privacyModeHint": {
+    "message": "window.nostr'u yalnızca izin listesindeki alan adlarında gösterir (İzinler sekmesi); parmak izi izlemeyi azaltır."
+  },
+  "privacyModeSitesHint": {
+    "message": "Siteler uzantıyı tespit edemez, bu nedenle bazıları İzinler'e eklenmeden 'Nostr ile giriş yap' seçeneğini göstermeyebilir."
+  },
+  "showBadge": { "message": "Uzantı simgesinde rozet göster" },
+  "showBadgeHint": {
+    "message": "Açık olduğunda, simge geçerli sekme için verilen izin sayısını gösterir (örn. 1, 2)."
+  },
+
+  "addToWhitelistTitle": { "message": "$1'i izin listesine ekle" },
+  "addToWhitelistButton": { "message": "$1'i izin listesine ekle" },
+  "removeFromWhitelistTitle": { "message": "$1'i izin listesinden kaldır" },
+  "removeFromWhitelistButton": { "message": "$1'i izin listesinden kaldır" },
+  "searchDomainsPlaceholder": { "message": "Alan adı ara..." },
+  "noPermissionsYet": { "message": "Henüz izin yok" },
+  "noPermissionsHint": {
+    "message": "Web siteleri Nostr kimliğinize erişim istediğinde burada görünecekler."
+  },
+  "noDomainsMatch": { "message": "Aramanızla eşleşen alan adı yok" },
+  "revokeAllPermissionsTitle": { "message": "Bu alan adının tüm izinlerini iptal et" },
+  "whitelistedNoPermissions": { "message": "Nostr için izin listesinde (henüz izin yok)" },
+  "allowed": { "message": "İzin verildi" },
+  "denied": { "message": "Reddedildi" },
+  "revokeTitle": { "message": "İptal et" },
+  "removeFromWhitelist": { "message": "İzin listesinden kaldır" },
+
+  "qrScanToUse": { "message": "$1 (kullanmak için tarayın)" },
+  "qrCodeAlt": { "message": "QR kodu" },
+  "close": { "message": "Kapat" },
+  "nostrConnectModalHint": { "message": "Bunker uygulamanızla tarayın veya URI'yi kopyalayın" },
+  "nostrConnectQrAlt": { "message": "Nostrconnect QR kodu" },
+  "copyUri": { "message": "URI'yi kopyala" },
+  "waitingForBunker": { "message": "Bunker bağlantısı bekleniyor…" },
+
+  "method_getPublicKey": { "message": "Açık Anahtarı Al" },
+  "method_signEvent": { "message": "Olayı İmzala" },
+  "method_signEvent_kind": { "message": "Olayı imzala (tür $1)" },
+  "method_getRelays": { "message": "Aktarıcıları Al" },
+  "method_nip04_encrypt": { "message": "NIP-04 Şifrele" },
+  "method_nip04_decrypt": { "message": "NIP-04 Çöz" },
+  "method_nip44_encrypt": { "message": "NIP-44 Şifrele" },
+  "method_nip44_decrypt": { "message": "NIP-44 Çöz" },
+
+  "promptPermissionRequest": { "message": "İzin İsteği" },
+  "promptWantsAccess": { "message": "Nostr kimliğinize erişmek istiyor" },
+  "promptEventKind": { "message": "Olay türü $1" },
+  "promptViewRawMessage": { "message": "Ham mesajı görüntüle" },
+  "promptHideRawMessage": { "message": "Ham mesajı gizle" },
+  "promptAllowAlways": { "message": "Her Zaman İzin Ver" },
+  "promptAllowAlwaysForKindHint": { "message": "Yalnızca bu olay türü için geçerlidir" },
+  "promptAllowOnce": { "message": "Bir Kez İzin Ver" },
+  "promptDenyOnce": { "message": "Reddet" },
+  "promptDenyAlways": { "message": "Her Zaman Reddet" }
+}
