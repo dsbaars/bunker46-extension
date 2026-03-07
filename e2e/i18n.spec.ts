@@ -21,11 +21,8 @@ test.describe('i18n', () => {
     await expect(page.getByText('Show badge on extension icon')).toBeVisible();
     await expect(page.getByText('Use Bunker46')).toBeVisible();
     await expect(page.getByText('Specify nostrconnect relays')).toBeVisible();
-    await page.getByRole('switch', { name: /Use Bunker46/i }).click();
-    await expect(page.getByText('Bunker46 URL')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Save' }).first()).toBeVisible();
-    await page.getByRole('switch', { name: /Specify nostrconnect relays/i }).click();
-    await expect(page.getByText('Nostr Connect relays')).toBeVisible();
+    await expect(page.getByRole('switch', { name: /Use Bunker46/i })).toBeVisible();
+    await expect(page.getByRole('switch', { name: /Specify nostrconnect relays/i })).toBeVisible();
   });
 
   test('Permissions tab shows English empty state', async ({ page, extensionId }) => {

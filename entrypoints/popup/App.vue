@@ -1304,12 +1304,13 @@ onUnmounted(() => {
           :description="t('settingsUseBunker46Hint')"
           @update:model-value="setUseBunker46Enabled()"
         >
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2" data-testid="settings-bunker46-url-section">
             <Label class="text-xs">{{ t('settingsBunkerUrl') }}</Label>
             <Input
               v-model="baseUrl"
               :placeholder="t('settingsBunkerUrlPlaceholder')"
               class="text-xs"
+              data-testid="settings-bunker46-url-input"
               @click.stop
             />
             <p class="text-xs text-muted-foreground">{{ t('settingsBunkerUrlHint') }}</p>

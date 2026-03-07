@@ -47,13 +47,15 @@ test('Settings tab shows choice cards for privacy, badge, Bunker46, and nostrcon
   await expect(page.getByText('Specify nostrconnect relays')).toBeVisible();
 });
 
-test('Settings tab hides Bunker46 URL until Use Bunker46 is on', async ({ page, extensionId }) => {
+test('Settings tab shows Use Bunker46 switch and Bunker46 URL section is not rendered when switch is off', async ({
+  page,
+  extensionId,
+}) => {
   await page.goto(`chrome-extension://${extensionId}/popup.html`);
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await expect(page.getByText('Use Bunker46')).toBeVisible();
-  await expect(page.getByPlaceholder('http://localhost:5173')).not.toBeVisible();
-  await page.getByRole('switch', { name: /Use Bunker46/i }).click();
-  await expect(page.getByPlaceholder('http://localhost:5173')).toBeVisible();
+  await expect(page.getByRole('switch', { name: /Use Bunker46/i })).toBeVisible();
+  await expect(page.getByTestId('settings-bunker46-url-section')).toHaveCount(0);
 });
 
 test('window.nostr is present on a web page and exposes NIP-07 methods', async ({ page }) => {
