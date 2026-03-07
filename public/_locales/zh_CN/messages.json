@@ -3,6 +3,7 @@
   "extDescription": { "message": "通过 NIP-46 / Bunker46 的 NIP-07 远程签名器" },
 
   "appSubtitle": { "message": "NIP-07 远程签名器" },
+  "openFullPage": { "message": "在新标签页中打开以管理选项" },
   "connected": { "message": "已连接" },
   "offline": { "message": "离线" },
   "loading": { "message": "加载中…" },

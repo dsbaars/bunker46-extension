@@ -3,6 +3,7 @@
   "extDescription": { "message": "NIP-07-Remote-Signer über NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "NIP-07 Remote-Signer" },
+  "openFullPage": { "message": "In neuem Tab öffnen, um Optionen zu verwalten" },
   "connected": { "message": "Verbunden" },
   "offline": { "message": "Offline" },
   "loading": { "message": "Laden…" },

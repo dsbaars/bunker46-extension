@@ -3,6 +3,7 @@
   "extDescription": { "message": "Fjärr-NIP-07-signerare via NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "Fjärr-NIP-07-signerare" },
+  "openFullPage": { "message": "Öppna i ny flik för att hantera alternativ" },
   "connected": { "message": "Ansluten" },
   "offline": { "message": "Offline" },
   "loading": { "message": "Laddar…" },

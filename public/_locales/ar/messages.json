@@ -3,6 +3,7 @@
   "extDescription": { "message": "موقّع بعيد NIP-07 عبر NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "موقّع بعيد NIP-07" },
+  "openFullPage": { "message": "فتح في علامة تبويب جديدة لإدارة الخيارات" },
   "connected": { "message": "متصل" },
   "offline": { "message": "غير متصل" },
   "loading": { "message": "جارٍ التحميل…" },

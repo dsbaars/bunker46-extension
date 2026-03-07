@@ -3,6 +3,7 @@
   "extDescription": { "message": "Assinador remoto NIP-07 via NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "Assinador Remoto NIP-07" },
+  "openFullPage": { "message": "Abrir em nova aba para gerir opções" },
   "connected": { "message": "Conectado" },
   "offline": { "message": "Offline" },
   "loading": { "message": "Carregando…" },

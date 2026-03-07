@@ -3,6 +3,7 @@
   "extDescription": { "message": "Zdalny podpisujący NIP-07 przez NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "Zdalny podpisujący NIP-07" },
+  "openFullPage": { "message": "Otwórz w nowej karcie, aby zarządzać opcjami" },
   "connected": { "message": "Połączono" },
   "offline": { "message": "Offline" },
   "loading": { "message": "Ładowanie…" },

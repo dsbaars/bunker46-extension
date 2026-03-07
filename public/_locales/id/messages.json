@@ -3,6 +3,7 @@
   "extDescription": { "message": "Penanda tangan jarak jauh NIP-07 melalui NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "Penanda Tangan Jarak Jauh NIP-07" },
+  "openFullPage": { "message": "Buka di tab baru untuk mengelola opsi" },
   "connected": { "message": "Terhubung" },
   "offline": { "message": "Offline" },
   "loading": { "message": "Memuat…" },

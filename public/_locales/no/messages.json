@@ -3,6 +3,7 @@
   "extDescription": { "message": "Ekstern NIP-07-signerer via NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "Ekstern NIP-07-signerer" },
+  "openFullPage": { "message": "Åpne i ny fane for å administrere alternativer" },
   "connected": { "message": "Tilkoblet" },
   "offline": { "message": "Frakoblet" },
   "loading": { "message": "Laster…" },

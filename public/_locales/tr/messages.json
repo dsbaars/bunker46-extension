@@ -3,6 +3,7 @@
   "extDescription": { "message": "NIP-46 / Bunker46 üzerinden NIP-07 uzak imzalayıcı" },
 
   "appSubtitle": { "message": "NIP-07 Uzak İmzalayıcı" },
+  "openFullPage": { "message": "Seçenekleri yönetmek için yeni sekmede aç" },
   "connected": { "message": "Bağlı" },
   "offline": { "message": "Çevrimdışı" },
   "loading": { "message": "Yükleniyor…" },

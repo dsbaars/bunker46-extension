@@ -3,6 +3,7 @@
   "extDescription": { "message": "NIP-07 externe ondertekenaar via NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "NIP-07 externe ondertekenaar" },
+  "openFullPage": { "message": "Open in nieuw tabblad om opties te beheren" },
   "connected": { "message": "Verbonden" },
   "offline": { "message": "Offline" },
   "loading": { "message": "Laden…" },

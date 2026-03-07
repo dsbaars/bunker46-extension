@@ -3,6 +3,7 @@
   "extDescription": { "message": "Etä-NIP-07-allekirjoittaja NIP-46:n / Bunker46:n kautta" },
 
   "appSubtitle": { "message": "Etä-NIP-07-allekirjoittaja" },
+  "openFullPage": { "message": "Avaa uudessa välilehdessä asetusten hallintaa varten" },
   "connected": { "message": "Yhdistetty" },
   "offline": { "message": "Offline" },
   "loading": { "message": "Ladataan…" },

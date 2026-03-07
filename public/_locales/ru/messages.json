@@ -3,6 +3,7 @@
   "extDescription": { "message": "Удалённый подписант NIP-07 через NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "Удалённый подписант NIP-07" },
+  "openFullPage": { "message": "Открыть в новой вкладке для управления настройками" },
   "connected": { "message": "Подключено" },
   "offline": { "message": "Не в сети" },
   "loading": { "message": "Загрузка…" },

@@ -3,6 +3,7 @@
   "extDescription": { "message": "NIP-46 / Bunker46를 통한 NIP-07 원격 서명자" },
 
   "appSubtitle": { "message": "NIP-07 원격 서명자" },
+  "openFullPage": { "message": "새 탭에서 열어 옵션 관리" },
   "connected": { "message": "연결됨" },
   "offline": { "message": "오프라인" },
   "loading": { "message": "로딩 중…" },

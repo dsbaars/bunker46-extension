@@ -38,6 +38,7 @@ import {
   Copy,
   Search,
   Plus,
+  Maximize2,
 } from 'lucide-vue-next';
 import { t, getMethodLabel } from '@/lib/i18n';
 
@@ -107,6 +108,10 @@ const currentTabIsWhitelisted = computed(() =>
     : false
 );
 const extensionIconUrl = chrome.runtime.getURL('icon/48.png');
+
+/** True when running in the popup (or extension dialog), false when already on the full options tab. */
+const showOpenFullPageButton =
+  typeof window !== 'undefined' && !window.location.pathname.includes('options.html');
 
 const pubkeyFormats = computed(() => {
   const hex = signerPubkey.value;
@@ -453,6 +458,11 @@ function switchTab(tab: 'connection' | 'permissions' | 'settings') {
   }
 }
 
+function openFullPage() {
+  const url = chrome.runtime.getURL('options.html');
+  chrome.tabs.create({ url });
+}
+
 onMounted(() => {
   loadState();
   loadPermissions();
@@ -484,12 +494,24 @@ onUnmounted(() => {
           <p class="text-xs text-muted-foreground leading-tight">{{ t('appSubtitle') }}</p>
         </div>
       </div>
-      <Badge :variant="connected ? 'success' : 'secondary'">
+      <div class="flex items-center gap-2">
+        <Button
+          v-if="showOpenFullPageButton"
+          variant="ghost"
+          size="icon"
+          class="size-8 shrink-0 text-muted-foreground hover:text-foreground"
+          :title="t('openFullPage')"
+          @click="openFullPage"
+        >
+          <Maximize2 class="size-4" />
+        </Button>
+        <Badge :variant="connected ? 'success' : 'secondary'">
         <span
           :class="['size-1.5 rounded-full', connected ? 'bg-success' : 'bg-muted-foreground']"
         />
         {{ connected ? t('connected') : t('offline') }}
       </Badge>
+      </div>
     </header>
 
     <!-- Tabs -->

@@ -3,6 +3,7 @@
   "extDescription": { "message": "Firmatario remoto NIP-07 tramite NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "Firmatario remoto NIP-07" },
+  "openFullPage": { "message": "Apri in nuova scheda per gestire le opzioni" },
   "connected": { "message": "Connesso" },
   "offline": { "message": "Non in linea" },
   "loading": { "message": "Caricamento…" },

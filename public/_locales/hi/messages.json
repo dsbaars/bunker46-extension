@@ -3,6 +3,7 @@
   "extDescription": { "message": "NIP-46 / Bunker46 के ज़रिए NIP-07 रिमोट साइनर" },
 
   "appSubtitle": { "message": "NIP-07 रिमोट साइनर" },
+  "openFullPage": { "message": "विकल्प प्रबंधित करने के लिए नए टैब में खोलें" },
   "connected": { "message": "कनेक्टेड" },
   "offline": { "message": "ऑफ़लाइन" },
   "loading": { "message": "लोड हो रहा है…" },

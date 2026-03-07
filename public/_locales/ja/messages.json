@@ -3,6 +3,7 @@
   "extDescription": { "message": "NIP-46 / Bunker46 経由の NIP-07 リモート署名者" },
 
   "appSubtitle": { "message": "NIP-07 リモート署名者" },
+  "openFullPage": { "message": "新しいタブで開いてオプションを管理" },
   "connected": { "message": "接続済み" },
   "offline": { "message": "オフライン" },
   "loading": { "message": "読み込み中…" },

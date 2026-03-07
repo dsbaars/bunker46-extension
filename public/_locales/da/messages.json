@@ -3,6 +3,7 @@
   "extDescription": { "message": "Fjern NIP-07-underskriver via NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "Fjern NIP-07-underskriver" },
+  "openFullPage": { "message": "Åbn i ny fane for at administrere indstillinger" },
   "connected": { "message": "Forbundet" },
   "offline": { "message": "Offline" },
   "loading": { "message": "Indlæser…" },

@@ -3,6 +3,7 @@
   "extDescription": { "message": "Signataire distant NIP-07 via NIP-46 / Bunker46" },
 
   "appSubtitle": { "message": "Signataire distant NIP-07" },
+  "openFullPage": { "message": "Ouvrir dans un nouvel onglet pour gérer les options" },
   "connected": { "message": "Connecté" },
   "offline": { "message": "Hors ligne" },
   "loading": { "message": "Chargement…" },

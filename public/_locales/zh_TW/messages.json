@@ -3,6 +3,7 @@
   "extDescription": { "message": "透過 NIP-46 / Bunker46 的 NIP-07 遠端簽署者" },
 
   "appSubtitle": { "message": "NIP-07 遠端簽署者" },
+  "openFullPage": { "message": "在新分頁中開啟以管理選項" },
   "connected": { "message": "已連線" },
   "offline": { "message": "離線" },
   "loading": { "message": "載入中…" },
