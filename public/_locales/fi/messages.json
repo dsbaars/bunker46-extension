@@ -73,14 +73,14 @@
   "settingsBunkerUrl": { "message": "Bunker46-URL" },
   "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
   "settingsBunkerUrlHint": { "message": "Bunker46-instanssisi perus-URL" },
-  "settingsSpecifyNostrConnectRelays": { "message": "Määritä Nostrconnect-välittimet" },
+  "settingsSpecifyNostrConnectRelays": { "message": "Määritä Nostrconnect-välittäjät" },
   "settingsSpecifyNostrConnectRelaysHint": {
-    "message": "Aseta mukautetut välittin-URL:t Nostrconnect QR/URI:lle."
+    "message": "Aseta mukautetut välittäjä-URL:t Nostrconnect QR/URI:lle."
   },
-  "settingsNostrConnectRelays": { "message": "Nostr-yhteysvälittimet" },
+  "settingsNostrConnectRelays": { "message": "Nostr-yhteysvälittäjät" },
   "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
   "settingsNostrConnectRelaysHint": {
-    "message": "Yksi välittin-URL per rivi (tai pilkulla erotettu). Käytetään QR/URI:n luomiseen Nostrconnect-yhteyttä varten."
+    "message": "Yksi välittäjä-URL per rivi (tai pilkulla erotettu). Käytetään QR/URI:n luomiseen Nostrconnect-yhteyttä varten."
   },
   "choiceOn": { "message": "Käytössä" },
   "choiceOff": { "message": "Ei käytössä" },
@@ -127,7 +127,7 @@
   "method_getPublicKey": { "message": "Hae julkinen avain" },
   "method_signEvent": { "message": "Allekirjoita tapahtuma" },
   "method_signEvent_kind": { "message": "Allekirjoita tapahtuma (tyyppi $1)" },
-  "method_getRelays": { "message": "Hae välittimet" },
+  "method_getRelays": { "message": "Hae välittäjät" },
   "method_nip04_encrypt": { "message": "NIP-04-salaus" },
   "method_nip04_decrypt": { "message": "NIP-04-purku" },
   "method_nip44_encrypt": { "message": "NIP-44-salaus" },

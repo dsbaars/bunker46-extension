@@ -30,12 +30,12 @@
   "toastDomainRemoveFailed": { "message": "Kunne ikke fjerne domene" },
   "toastNoActiveTab": { "message": "Ingen aktiv fane eller URL" },
   "toastAddedToWhitelist": {
-    "message": "$1 lagt til i tillatelselisten. Last inn fanen på nytt for å bruke Nostr."
+    "message": "$1 lagt til i tillatelseslisten. Last inn fanen på nytt for å bruke Nostr."
   },
   "toastAddDomainFailed": { "message": "Kunne ikke legge til domene" },
-  "toastRemovedFromWhitelist": { "message": "Fjernet fra tillatelselisten" },
+  "toastRemovedFromWhitelist": { "message": "Fjernet fra tillatelseslisten" },
   "toastRemoveFromWhitelistFailed": {
-    "message": "Kunne ikke fjerne fra tillatelselisten"
+    "message": "Kunne ikke fjerne fra tillatelseslisten"
   },
 
   "signerKey": { "message": "Signeringsnøkkel" },
@@ -47,7 +47,7 @@
   "disconnect": { "message": "Koble fra" },
   "logoutConfirmTitle": { "message": "Logg ut fullstendig?" },
   "logoutConfirmDescription": {
-    "message": "Dette kobler fra signereren og sletter alle tillatelser og tillatelselisten for personvernmodus. Du må koble til igjen og godkjenne nettsteder på nytt."
+    "message": "Dette kobler fra signereren og sletter alle tillatelser og tillatelseslisten for personvernmodus. Du må koble til igjen og godkjenne nettsteder på nytt."
   },
   "cancel": { "message": "Avbryt" },
   "logOut": { "message": "Logg ut" },
@@ -87,7 +87,7 @@
   "save": { "message": "Lagre" },
   "privacyMode": { "message": "Personvernmodus" },
   "privacyModeHint": {
-    "message": "Eksponerer window.nostr kun på domener på tillatelselisten (fanen Tillatelser); reduserer fingeravtrykk-sporing."
+    "message": "Eksponerer window.nostr kun på domener i tillatelseslisten (fanen Tillatelser); reduserer fingeravtrykk-sporing."
   },
   "privacyModeSitesHint": {
     "message": "Nettsteder kan ikke oppdage utvidelsen, så noen viser kanskje ikke «Logg inn med Nostr» før du legger dem til under Tillatelser."
@@ -97,10 +97,10 @@
     "message": "Når aktivert viser ikonet antall innvilgede tillatelser for gjeldende fane (f.eks. 1, 2)."
   },
 
-  "addToWhitelistTitle": { "message": "Legg til $1 i tillatelselisten" },
-  "addToWhitelistButton": { "message": "Legg til $1 i tillatelselisten" },
-  "removeFromWhitelistTitle": { "message": "Fjern $1 fra tillatelselisten" },
-  "removeFromWhitelistButton": { "message": "Fjern $1 fra tillatelselisten" },
+  "addToWhitelistTitle": { "message": "Legg til $1 i tillatelseslisten" },
+  "addToWhitelistButton": { "message": "Legg til $1 i tillatelseslisten" },
+  "removeFromWhitelistTitle": { "message": "Fjern $1 fra tillatelseslisten" },
+  "removeFromWhitelistButton": { "message": "Fjern $1 fra tillatelseslisten" },
   "searchDomainsPlaceholder": { "message": "Søk i domener..." },
   "noPermissionsYet": { "message": "Ingen tillatelser ennå" },
   "noPermissionsHint": {
@@ -109,12 +109,12 @@
   "noDomainsMatch": { "message": "Ingen domener samsvarer med søket" },
   "revokeAllPermissionsTitle": { "message": "Tilbakekall alle tillatelser for dette domenet" },
   "whitelistedNoPermissions": {
-    "message": "På tillatelselisten for Nostr (ingen tillatelser ennå)"
+    "message": "På tillatelseslisten for Nostr (ingen tillatelser ennå)"
   },
   "allowed": { "message": "Tillatt" },
   "denied": { "message": "Avvist" },
   "revokeTitle": { "message": "Tilbakekall" },
-  "removeFromWhitelist": { "message": "Fjern fra tillatelselisten" },
+  "removeFromWhitelist": { "message": "Fjern fra tillatelseslisten" },
 
   "qrScanToUse": { "message": "$1 (skann for å bruke)" },
   "qrCodeAlt": { "message": "QR-kode" },
