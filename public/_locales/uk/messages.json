@@ -1,8 +1,8 @@
 {
   "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "Віддалений підписувач NIP-07 через NIP-46 / Bunker46" },
+  "extDescription": { "message": "Віддалений підписант NIP-07 через NIP-46 / Bunker46" },
 
-  "appSubtitle": { "message": "Віддалений підписувач NIP-07" },
+  "appSubtitle": { "message": "Віддалений підписант NIP-07" },
   "connected": { "message": "Підключено" },
   "offline": { "message": "Не в мережі" },
   "loading": { "message": "Завантаження…" },
@@ -34,23 +34,23 @@
   "toastRemovedFromWhitelist": { "message": "Видалено з білого списку" },
   "toastRemoveFromWhitelistFailed": { "message": "Не вдалося видалити з білого списку" },
 
-  "signerKey": { "message": "Ключ підписувача" },
+  "signerKey": { "message": "Ключ підписанта" },
   "copyTitle": { "message": "Копіювати" },
   "showQrTitle": { "message": "Показати QR-код" },
   "signerDescription": {
-    "message": "Усі запити NIP-07 від веб-сторінок перенаправляються до цього віддаленого підписувача через NIP-46. Приватні ключі не зберігаються в розширенні."
+    "message": "Усі запити NIP-07 від веб-сторінок перенаправляються до цього віддаленого підписанта через NIP-46. Приватні ключі не зберігаються в розширенні."
   },
   "disconnect": { "message": "Відключити" },
   "logoutConfirmTitle": { "message": "Повністю вийти?" },
   "logoutConfirmDescription": {
-    "message": "Це відключить вашого підписувача та очистить усі дозволи і білий список режиму конфіденційності. Вам потрібно буде перепідключитися та повторно дозволити сайти."
+    "message": "Це відключить вашого підписанта та очистить усі дозволи і білий список режиму конфіденційності. Вам потрібно буде перепідключитися та повторно дозволити сайти."
   },
   "cancel": { "message": "Скасувати" },
   "logOut": { "message": "Вийти" },
 
   "connectViaBunkerUri": { "message": "Підключити через URI Bunker" },
   "connectViaBunkerUriDesc": {
-    "message": "Вставте URI bunker:// від вашого віддаленого підписувача для підключення"
+    "message": "Вставте URI bunker:// від вашого віддаленого підписанта для підключення"
   },
   "placeholderBunkerUri": { "message": "bunker://..." },
   "connecting": { "message": "Підключення..." },

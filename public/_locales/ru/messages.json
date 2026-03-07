@@ -1,8 +1,8 @@
 {
   "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "Удалённый подписчик NIP-07 через NIP-46 / Bunker46" },
+  "extDescription": { "message": "Удалённый подписант NIP-07 через NIP-46 / Bunker46" },
 
-  "appSubtitle": { "message": "Удалённый подписчик NIP-07" },
+  "appSubtitle": { "message": "Удалённый подписант NIP-07" },
   "connected": { "message": "Подключено" },
   "offline": { "message": "Не в сети" },
   "loading": { "message": "Загрузка…" },
@@ -34,23 +34,23 @@
   "toastRemovedFromWhitelist": { "message": "Удалено из белого списка" },
   "toastRemoveFromWhitelistFailed": { "message": "Не удалось удалить из белого списка" },
 
-  "signerKey": { "message": "Ключ подписчика" },
+  "signerKey": { "message": "Ключ подписанта" },
   "copyTitle": { "message": "Копировать" },
   "showQrTitle": { "message": "Показать QR-код" },
   "signerDescription": {
-    "message": "Все запросы NIP-07 от веб-страниц перенаправляются к этому удалённому подписчику через NIP-46. Приватные ключи не хранятся в расширении."
+    "message": "Все запросы NIP-07 от веб-страниц перенаправляются к этому удалённому подписанту через NIP-46. Приватные ключи не хранятся в расширении."
   },
   "disconnect": { "message": "Отключить" },
   "logoutConfirmTitle": { "message": "Полностью выйти?" },
   "logoutConfirmDescription": {
-    "message": "Это отключит вашего подписчика и очистит все разрешения и белый список режима конфиденциальности. Вам нужно будет переподключиться и повторно разрешить сайты."
+    "message": "Это отключит вашего подписанта и очистит все разрешения и белый список режима конфиденциальности. Вам нужно будет переподключиться и повторно разрешить сайты."
   },
   "cancel": { "message": "Отмена" },
   "logOut": { "message": "Выйти" },
 
   "connectViaBunkerUri": { "message": "Подключить через URI Bunker" },
   "connectViaBunkerUriDesc": {
-    "message": "Вставьте URI bunker:// из вашего удалённого подписчика для подключения"
+    "message": "Вставьте URI bunker:// из вашего удалённого подписанта для подключения"
   },
   "placeholderBunkerUri": { "message": "bunker://..." },
   "connecting": { "message": "Подключение..." },

@@ -123,9 +123,9 @@
   "method_signEvent_kind": { "message": "Firma evento (tipo $1)" },
   "method_getRelays": { "message": "Ottieni relay" },
   "method_nip04_encrypt": { "message": "Crittografa NIP-04" },
-  "method_nip04_decrypt": { "message": "Decifra NIP-04" },
+  "method_nip04_decrypt": { "message": "Decrittografa NIP-04" },
   "method_nip44_encrypt": { "message": "Crittografa NIP-44" },
-  "method_nip44_decrypt": { "message": "Decifra NIP-44" },
+  "method_nip44_decrypt": { "message": "Decrittografa NIP-44" },
 
   "promptPermissionRequest": { "message": "Richiesta di permesso" },
   "promptWantsAccess": { "message": "vuole accedere alla tua identità Nostr" },
