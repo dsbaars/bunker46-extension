@@ -1,0 +1,146 @@
+{
+  "extName": { "message": "Bunker46" },
+  "extDescription": { "message": "Fjern NIP-07-underskriver via NIP-46 / Bunker46" },
+
+  "appSubtitle": { "message": "Fjern NIP-07-underskriver" },
+  "connected": { "message": "Forbundet" },
+  "offline": { "message": "Offline" },
+  "loading": { "message": "Indlæser…" },
+  "tabConnection": { "message": "Forbindelse" },
+  "tabPermissions": { "message": "Tilladelser" },
+  "tabSettings": { "message": "Indstillinger" },
+
+  "errorPasteUri": { "message": "Indsæt en bunker://-URI ovenfor" },
+  "errorConnectionFailed": { "message": "Forbindelsen mislykkedes" },
+  "errorGenerateUri": { "message": "Kunne ikke generere forbindelses-URI" },
+  "errorStartConnection": { "message": "Kunne ikke starte forbindelsen" },
+
+  "toastLoggedOut": { "message": "Logget ud" },
+  "toastLogoutFailed": { "message": "Log ud mislykkedes" },
+  "toastSettingsSaved": { "message": "Indstillinger gemt" },
+  "toastPrivacyModeOn": { "message": "Privatlivstilstand aktiveret" },
+  "toastPrivacyModeOff": { "message": "Privatlivstilstand deaktiveret" },
+  "toastBadgeShown": { "message": "Badge vises" },
+  "toastBadgeHidden": { "message": "Badge skjult" },
+  "toastCopied": { "message": "Kopieret til udklipsholder" },
+  "toastCopyFailed": { "message": "Kopiering mislykkedes" },
+  "toastPermissionRemoved": { "message": "Tilladelse fjernet" },
+  "toastPermissionRemoveFailed": { "message": "Kunne ikke fjerne tilladelse" },
+  "toastDomainRemoved": { "message": "Domænetilladelser fjernet" },
+  "toastDomainRemoveFailed": { "message": "Kunne ikke fjerne domæne" },
+  "toastNoActiveTab": { "message": "Ingen aktiv fane eller URL" },
+  "toastAddedToWhitelist": {
+    "message": "$1 tilføjet til tilladelseslisten. Genindlæs fanen for at bruge Nostr."
+  },
+  "toastAddDomainFailed": { "message": "Kunne ikke tilføje domæne" },
+  "toastRemovedFromWhitelist": { "message": "Fjernet fra tilladelseslisten" },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Kunne ikke fjerne fra tilladelseslisten"
+  },
+
+  "signerKey": { "message": "Underskrivingsnøgle" },
+  "copyTitle": { "message": "Kopiér" },
+  "showQrTitle": { "message": "Vis QR-kode" },
+  "signerDescription": {
+    "message": "Alle NIP-07-anmodninger fra websider videresendes til denne fjernunderskriver via NIP-46. Ingen private nøgler gemmes i udvidelsen."
+  },
+  "disconnect": { "message": "Afbryd forbindelsen" },
+  "logoutConfirmTitle": { "message": "Log helt ud?" },
+  "logoutConfirmDescription": {
+    "message": "Dette afbryder forbindelsen til din underskriver og sletter alle tilladelser og tilladelseslisten for privatlivstilstand. Du skal oprette forbindelsen igen og godkende websteder på ny."
+  },
+  "cancel": { "message": "Annuller" },
+  "logOut": { "message": "Log ud" },
+
+  "connectViaBunkerUri": { "message": "Opret forbindelse via Bunker-URI" },
+  "connectViaBunkerUriDesc": {
+    "message": "Indsæt en bunker://-URI fra din fjernunderskriver for at oprette forbindelsen"
+  },
+  "placeholderBunkerUri": { "message": "bunker://..." },
+  "connecting": { "message": "Opretter forbindelse..." },
+  "connect": { "message": "Opret forbindelse" },
+  "separatorOr": { "message": "eller" },
+  "getUriFromBunker46": { "message": "Hent URI fra Bunker46" },
+  "nostrConnectDesc": {
+    "message": "Opret forbindelse via Nostrconnect: vis en QR-kode og URI, som din bunker-app kan scanne."
+  },
+  "showQrConnectionUri": { "message": "Vis QR-kode og forbindelses-URI" },
+
+  "settingsUseBunker46": { "message": "Brug Bunker46" },
+  "settingsUseBunker46Hint": {
+    "message": "Håndtér nostrconnect:-links og omdiriger til din Bunker46-instans."
+  },
+  "settingsBunkerUrl": { "message": "Bunker46-URL" },
+  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
+  "settingsBunkerUrlHint": { "message": "Basis-URL for din Bunker46-instans" },
+  "settingsSpecifyNostrConnectRelays": { "message": "Angiv Nostrconnect-relæer" },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Angiv brugerdefinerede relæ-URL'er til Nostrconnect QR/URI."
+  },
+  "settingsNostrConnectRelays": { "message": "Nostr-forbindelsesrelæer" },
+  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelaysHint": {
+    "message": "Én relæ-URL pr. linje (eller kommasepareret). Bruges ved generering af QR/URI til forbindelse via Nostrconnect."
+  },
+  "choiceOn": { "message": "Til" },
+  "choiceOff": { "message": "Fra" },
+  "save": { "message": "Gem" },
+  "privacyMode": { "message": "Privatlivstilstand" },
+  "privacyModeHint": {
+    "message": "Eksponerer kun window.nostr på domæner på tilladelseslisten (fanen Tilladelser); reducerer fingeraftryk-sporing."
+  },
+  "privacyModeSitesHint": {
+    "message": "Websteder kan ikke registrere udvidelsen, så nogle viser måske ikke \"Log ind med Nostr\" før du tilføjer dem under Tilladelser."
+  },
+  "showBadge": { "message": "Vis badge på udvidelsesikonet" },
+  "showBadgeHint": {
+    "message": "Når aktiveret viser ikonet antallet af tildelte tilladelser for den aktuelle fane (f.eks. 1, 2)."
+  },
+
+  "addToWhitelistTitle": { "message": "Tilføj $1 til tilladelseslisten" },
+  "addToWhitelistButton": { "message": "Tilføj $1 til tilladelseslisten" },
+  "removeFromWhitelistTitle": { "message": "Fjern $1 fra tilladelseslisten" },
+  "removeFromWhitelistButton": { "message": "Fjern $1 fra tilladelseslisten" },
+  "searchDomainsPlaceholder": { "message": "Søg i domæner..." },
+  "noPermissionsYet": { "message": "Ingen tilladelser endnu" },
+  "noPermissionsHint": {
+    "message": "Når websteder anmoder om adgang til din Nostr-identitet, vises de her."
+  },
+  "noDomainsMatch": { "message": "Ingen domæner matcher din søgning" },
+  "revokeAllPermissionsTitle": { "message": "Tilbagekald alle tilladelser for dette domæne" },
+  "whitelistedNoPermissions": {
+    "message": "På tilladelseslisten for Nostr (ingen tilladelser endnu)"
+  },
+  "allowed": { "message": "Tilladt" },
+  "denied": { "message": "Afvist" },
+  "revokeTitle": { "message": "Tilbagekald" },
+  "removeFromWhitelist": { "message": "Fjern fra tilladelseslisten" },
+
+  "qrScanToUse": { "message": "$1 (scan for at bruge)" },
+  "qrCodeAlt": { "message": "QR-kode" },
+  "close": { "message": "Luk" },
+  "nostrConnectModalHint": { "message": "Scan med din bunker-app, eller kopiér URI'en" },
+  "nostrConnectQrAlt": { "message": "Nostrconnect QR-kode" },
+  "copyUri": { "message": "Kopiér URI" },
+  "waitingForBunker": { "message": "Venter på at bunkeren opretter forbindelse…" },
+
+  "method_getPublicKey": { "message": "Hent offentlig nøgle" },
+  "method_signEvent": { "message": "Underskriv hændelse" },
+  "method_signEvent_kind": { "message": "Underskriv hændelse (type $1)" },
+  "method_getRelays": { "message": "Hent relæer" },
+  "method_nip04_encrypt": { "message": "NIP-04-kryptering" },
+  "method_nip04_decrypt": { "message": "NIP-04-dekryptering" },
+  "method_nip44_encrypt": { "message": "NIP-44-kryptering" },
+  "method_nip44_decrypt": { "message": "NIP-44-dekryptering" },
+
+  "promptPermissionRequest": { "message": "Tilladelsesbegæring" },
+  "promptWantsAccess": { "message": "ønsker adgang til din Nostr-identitet" },
+  "promptEventKind": { "message": "Hændelsestype $1" },
+  "promptViewRawMessage": { "message": "Se rå besked" },
+  "promptHideRawMessage": { "message": "Skjul rå besked" },
+  "promptAllowAlways": { "message": "Tillad altid" },
+  "promptAllowAlwaysForKindHint": { "message": "Gælder kun for denne hændelsestype" },
+  "promptAllowOnce": { "message": "Tillad én gang" },
+  "promptDenyOnce": { "message": "Afvis" },
+  "promptDenyAlways": { "message": "Afvis altid" }
+}

@@ -1,0 +1,144 @@
+{
+  "extName": { "message": "Bunker46" },
+  "extDescription": { "message": "Assinador remoto NIP-07 via NIP-46 / Bunker46" },
+
+  "appSubtitle": { "message": "Assinador Remoto NIP-07" },
+  "connected": { "message": "Conectado" },
+  "offline": { "message": "Offline" },
+  "loading": { "message": "Carregando…" },
+  "tabConnection": { "message": "Conexão" },
+  "tabPermissions": { "message": "Permissões" },
+  "tabSettings": { "message": "Configurações" },
+
+  "errorPasteUri": { "message": "Cole um URI bunker:// acima" },
+  "errorConnectionFailed": { "message": "Falha na conexão" },
+  "errorGenerateUri": { "message": "Falha ao gerar URI de conexão" },
+  "errorStartConnection": { "message": "Falha ao iniciar conexão" },
+
+  "toastLoggedOut": { "message": "Sessão encerrada" },
+  "toastLogoutFailed": { "message": "Falha ao encerrar sessão" },
+  "toastSettingsSaved": { "message": "Configurações salvas" },
+  "toastPrivacyModeOn": { "message": "Modo privacidade ativado" },
+  "toastPrivacyModeOff": { "message": "Modo privacidade desativado" },
+  "toastBadgeShown": { "message": "Badge exibido" },
+  "toastBadgeHidden": { "message": "Badge oculto" },
+  "toastCopied": { "message": "Copiado para a área de transferência" },
+  "toastCopyFailed": { "message": "Falha ao copiar" },
+  "toastPermissionRemoved": { "message": "Permissão removida" },
+  "toastPermissionRemoveFailed": { "message": "Falha ao remover permissão" },
+  "toastDomainRemoved": { "message": "Permissões do domínio removidas" },
+  "toastDomainRemoveFailed": { "message": "Falha ao remover domínio" },
+  "toastNoActiveTab": { "message": "Nenhuma aba ativa ou URL" },
+  "toastAddedToWhitelist": {
+    "message": "$1 adicionado à lista de permissões. Recarregue a aba para usar o Nostr."
+  },
+  "toastAddDomainFailed": { "message": "Falha ao adicionar domínio" },
+  "toastRemovedFromWhitelist": { "message": "Removido da lista de permissões" },
+  "toastRemoveFromWhitelistFailed": { "message": "Falha ao remover da lista de permissões" },
+
+  "signerKey": { "message": "Chave do Assinador" },
+  "copyTitle": { "message": "Copiar" },
+  "showQrTitle": { "message": "Mostrar código QR" },
+  "signerDescription": {
+    "message": "Todas as solicitações NIP-07 de páginas web são encaminhadas para este assinador remoto via NIP-46. Nenhuma chave privada é armazenada na extensão."
+  },
+  "disconnect": { "message": "Desconectar" },
+  "logoutConfirmTitle": { "message": "Encerrar sessão completamente?" },
+  "logoutConfirmDescription": {
+    "message": "Isso irá desconectar do seu assinador e limpar todas as permissões e a lista de permissões do modo privacidade. Você precisará reconectar e reautorizar os sites."
+  },
+  "cancel": { "message": "Cancelar" },
+  "logOut": { "message": "Encerrar sessão" },
+
+  "connectViaBunkerUri": { "message": "Conectar via URI Bunker" },
+  "connectViaBunkerUriDesc": {
+    "message": "Cole um URI bunker:// do seu assinador remoto para conectar"
+  },
+  "placeholderBunkerUri": { "message": "bunker://..." },
+  "connecting": { "message": "Conectando..." },
+  "connect": { "message": "Conectar" },
+  "separatorOr": { "message": "ou" },
+  "getUriFromBunker46": { "message": "Obter URI do Bunker46" },
+  "nostrConnectDesc": {
+    "message": "Conectar via Nostrconnect: exibe um QR e URI para seu aplicativo bunker escanear."
+  },
+  "showQrConnectionUri": { "message": "Mostrar QR e URI de conexão" },
+
+  "settingsUseBunker46": { "message": "Usar Bunker46" },
+  "settingsUseBunker46Hint": {
+    "message": "Processar links nostrconnect: e redirecionar para sua instância do Bunker46."
+  },
+  "settingsBunkerUrl": { "message": "URL do Bunker46" },
+  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
+  "settingsBunkerUrlHint": { "message": "URL base da sua instância do Bunker46" },
+  "settingsSpecifyNostrConnectRelays": { "message": "Especificar relays Nostrconnect" },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Definir URLs de relay personalizadas para o QR/URI do Nostrconnect."
+  },
+  "settingsNostrConnectRelays": { "message": "Relays de conexão Nostr" },
+  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelaysHint": {
+    "message": "Uma URL de relay por linha (ou separadas por vírgula). Usadas ao gerar o QR/URI para conexão via Nostrconnect."
+  },
+  "choiceOn": { "message": "Ativado" },
+  "choiceOff": { "message": "Desativado" },
+  "save": { "message": "Salvar" },
+  "privacyMode": { "message": "Modo privacidade" },
+  "privacyModeHint": {
+    "message": "Expõe window.nostr apenas em domínios autorizados (aba Permissões); reduz o rastreamento de impressão digital."
+  },
+  "privacyModeSitesHint": {
+    "message": "Os sites não conseguem detectar a extensão, por isso alguns podem não mostrar 'Entrar com Nostr' até você adicioná-los em Permissões."
+  },
+  "showBadge": { "message": "Mostrar badge no ícone da extensão" },
+  "showBadgeHint": {
+    "message": "Quando ativado, o ícone exibe o número de permissões concedidas para a aba atual (ex.: 1, 2)."
+  },
+
+  "addToWhitelistTitle": { "message": "Adicionar $1 à lista de permissões" },
+  "addToWhitelistButton": { "message": "Adicionar $1 à lista de permissões" },
+  "removeFromWhitelistTitle": { "message": "Remover $1 da lista de permissões" },
+  "removeFromWhitelistButton": { "message": "Remover $1 da lista de permissões" },
+  "searchDomainsPlaceholder": { "message": "Pesquisar domínios..." },
+  "noPermissionsYet": { "message": "Nenhuma permissão ainda" },
+  "noPermissionsHint": {
+    "message": "Quando sites solicitarem acesso à sua identidade Nostr, eles aparecerão aqui."
+  },
+  "noDomainsMatch": { "message": "Nenhum domínio corresponde à pesquisa" },
+  "revokeAllPermissionsTitle": { "message": "Revogar todas as permissões para este domínio" },
+  "whitelistedNoPermissions": {
+    "message": "Na lista de permissões para Nostr (sem permissões ainda)"
+  },
+  "allowed": { "message": "Permitido" },
+  "denied": { "message": "Negado" },
+  "revokeTitle": { "message": "Revogar" },
+  "removeFromWhitelist": { "message": "Remover da lista de permissões" },
+
+  "qrScanToUse": { "message": "$1 (escanear para usar)" },
+  "qrCodeAlt": { "message": "Código QR" },
+  "close": { "message": "Fechar" },
+  "nostrConnectModalHint": { "message": "Escaneie com seu aplicativo bunker ou copie o URI" },
+  "nostrConnectQrAlt": { "message": "Código QR do Nostrconnect" },
+  "copyUri": { "message": "Copiar URI" },
+  "waitingForBunker": { "message": "Aguardando conexão do bunker…" },
+
+  "method_getPublicKey": { "message": "Obter Chave Pública" },
+  "method_signEvent": { "message": "Assinar Evento" },
+  "method_signEvent_kind": { "message": "Assinar evento (tipo $1)" },
+  "method_getRelays": { "message": "Obter Relays" },
+  "method_nip04_encrypt": { "message": "Criptografar NIP-04" },
+  "method_nip04_decrypt": { "message": "Descriptografar NIP-04" },
+  "method_nip44_encrypt": { "message": "Criptografar NIP-44" },
+  "method_nip44_decrypt": { "message": "Descriptografar NIP-44" },
+
+  "promptPermissionRequest": { "message": "Solicitação de Permissão" },
+  "promptWantsAccess": { "message": "quer acessar sua identidade Nostr" },
+  "promptEventKind": { "message": "Tipo de evento $1" },
+  "promptViewRawMessage": { "message": "Ver mensagem bruta" },
+  "promptHideRawMessage": { "message": "Ocultar mensagem bruta" },
+  "promptAllowAlways": { "message": "Permitir Sempre" },
+  "promptAllowAlwaysForKindHint": { "message": "Aplica-se apenas a este tipo de evento" },
+  "promptAllowOnce": { "message": "Permitir Uma Vez" },
+  "promptDenyOnce": { "message": "Negar" },
+  "promptDenyAlways": { "message": "Negar Sempre" }
+}
