@@ -29,7 +29,9 @@
   "toastDomainRemoved": { "message": "ドメインの許可を削除しました" },
   "toastDomainRemoveFailed": { "message": "ドメインの削除に失敗しました" },
   "toastNoActiveTab": { "message": "アクティブなタブまたは URL がありません" },
-  "toastAddedToWhitelist": { "message": "$1 をホワイトリストに追加しました。Nostr を使用するにはタブを再読み込みしてください。" },
+  "toastAddedToWhitelist": {
+    "message": "$1 をホワイトリストに追加しました。Nostr を使用するにはタブを再読み込みしてください。"
+  },
   "toastAddDomainFailed": { "message": "ドメインの追加に失敗しました" },
   "toastRemovedFromWhitelist": { "message": "ホワイトリストから削除しました" },
   "toastRemoveFromWhitelistFailed": { "message": "ホワイトリストからの削除に失敗しました" },
@@ -104,7 +106,9 @@
   },
   "noDomainsMatch": { "message": "検索に一致するドメインがありません" },
   "revokeAllPermissionsTitle": { "message": "このドメインのすべての許可を取り消す" },
-  "whitelistedNoPermissions": { "message": "Nostr 用ホワイトリスト登録済み（許可はまだありません）" },
+  "whitelistedNoPermissions": {
+    "message": "Nostr 用ホワイトリスト登録済み（許可はまだありません）"
+  },
   "allowed": { "message": "許可済み" },
   "denied": { "message": "拒否済み" },
   "revokeTitle": { "message": "取り消す" },

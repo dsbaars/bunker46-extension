@@ -29,7 +29,9 @@
   "toastDomainRemoved": { "message": "Izin domain dihapus" },
   "toastDomainRemoveFailed": { "message": "Gagal menghapus domain" },
   "toastNoActiveTab": { "message": "Tidak ada tab atau URL aktif" },
-  "toastAddedToWhitelist": { "message": "$1 ditambahkan ke daftar putih. Muat ulang tab untuk menggunakan Nostr." },
+  "toastAddedToWhitelist": {
+    "message": "$1 ditambahkan ke daftar putih. Muat ulang tab untuk menggunakan Nostr."
+  },
   "toastAddDomainFailed": { "message": "Gagal menambahkan domain" },
   "toastRemovedFromWhitelist": { "message": "Dihapus dari daftar putih" },
   "toastRemoveFromWhitelistFailed": { "message": "Gagal menghapus dari daftar putih" },

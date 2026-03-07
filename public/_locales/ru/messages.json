@@ -29,7 +29,9 @@
   "toastDomainRemoved": { "message": "Разрешения домена удалены" },
   "toastDomainRemoveFailed": { "message": "Не удалось удалить домен" },
   "toastNoActiveTab": { "message": "Нет активной вкладки или URL" },
-  "toastAddedToWhitelist": { "message": "$1 добавлен в белый список. Перезагрузите вкладку для использования Nostr." },
+  "toastAddedToWhitelist": {
+    "message": "$1 добавлен в белый список. Перезагрузите вкладку для использования Nostr."
+  },
   "toastAddDomainFailed": { "message": "Не удалось добавить домен" },
   "toastRemovedFromWhitelist": { "message": "Удалено из белого списка" },
   "toastRemoveFromWhitelistFailed": { "message": "Не удалось удалить из белого списка" },

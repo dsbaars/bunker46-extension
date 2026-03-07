@@ -29,7 +29,9 @@
   "toastDomainRemoved": { "message": "डोमेन अनुमतियाँ हटाई गईं" },
   "toastDomainRemoveFailed": { "message": "डोमेन हटाने में विफल" },
   "toastNoActiveTab": { "message": "कोई सक्रिय टैब या URL नहीं" },
-  "toastAddedToWhitelist": { "message": "$1 को व्हाइटलिस्ट में जोड़ा गया। Nostr का उपयोग करने के लिए टैब रीलोड करें।" },
+  "toastAddedToWhitelist": {
+    "message": "$1 को व्हाइटलिस्ट में जोड़ा गया। Nostr का उपयोग करने के लिए टैब रीलोड करें।"
+  },
   "toastAddDomainFailed": { "message": "डोमेन जोड़ने में विफल" },
   "toastRemovedFromWhitelist": { "message": "व्हाइटलिस्ट से हटाया गया" },
   "toastRemoveFromWhitelistFailed": { "message": "व्हाइटलिस्ट से हटाने में विफल" },

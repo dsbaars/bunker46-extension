@@ -29,7 +29,9 @@
   "toastDomainRemoved": { "message": "Permissions du domaine supprimées" },
   "toastDomainRemoveFailed": { "message": "Impossible de supprimer le domaine" },
   "toastNoActiveTab": { "message": "Aucun onglet actif ou URL" },
-  "toastAddedToWhitelist": { "message": "$1 ajouté à la liste blanche. Rechargez l'onglet pour utiliser Nostr." },
+  "toastAddedToWhitelist": {
+    "message": "$1 ajouté à la liste blanche. Rechargez l'onglet pour utiliser Nostr."
+  },
   "toastAddDomainFailed": { "message": "Impossible d'ajouter le domaine" },
   "toastRemovedFromWhitelist": { "message": "Retiré de la liste blanche" },
   "toastRemoveFromWhitelistFailed": { "message": "Impossible de retirer de la liste blanche" },
@@ -104,7 +106,9 @@
   },
   "noDomainsMatch": { "message": "Aucun domaine ne correspond à votre recherche" },
   "revokeAllPermissionsTitle": { "message": "Révoquer toutes les permissions pour ce domaine" },
-  "whitelistedNoPermissions": { "message": "Dans la liste blanche pour Nostr (aucune permission encore)" },
+  "whitelistedNoPermissions": {
+    "message": "Dans la liste blanche pour Nostr (aucune permission encore)"
+  },
   "allowed": { "message": "Autorisé" },
   "denied": { "message": "Refusé" },
   "revokeTitle": { "message": "Révoquer" },

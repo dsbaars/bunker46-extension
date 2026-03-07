@@ -29,7 +29,9 @@
   "toastDomainRemoved": { "message": "Alan adı izinleri kaldırıldı" },
   "toastDomainRemoveFailed": { "message": "Alan adı kaldırılamadı" },
   "toastNoActiveTab": { "message": "Aktif sekme veya URL yok" },
-  "toastAddedToWhitelist": { "message": "$1 izin listesine eklendi. Nostr'u kullanmak için sekmeyi yenileyin." },
+  "toastAddedToWhitelist": {
+    "message": "$1 izin listesine eklendi. Nostr'u kullanmak için sekmeyi yenileyin."
+  },
   "toastAddDomainFailed": { "message": "Alan adı eklenemedi" },
   "toastRemovedFromWhitelist": { "message": "İzin listesinden kaldırıldı" },
   "toastRemoveFromWhitelistFailed": { "message": "İzin listesinden kaldırılamadı" },

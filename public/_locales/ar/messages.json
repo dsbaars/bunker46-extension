@@ -29,7 +29,9 @@
   "toastDomainRemoved": { "message": "تم حذف أذونات النطاق" },
   "toastDomainRemoveFailed": { "message": "فشل حذف النطاق" },
   "toastNoActiveTab": { "message": "لا توجد علامة تبويب أو URL نشطة" },
-  "toastAddedToWhitelist": { "message": "تمت إضافة $1 إلى القائمة البيضاء. أعد تحميل علامة التبويب لاستخدام Nostr." },
+  "toastAddedToWhitelist": {
+    "message": "تمت إضافة $1 إلى القائمة البيضاء. أعد تحميل علامة التبويب لاستخدام Nostr."
+  },
   "toastAddDomainFailed": { "message": "فشل إضافة النطاق" },
   "toastRemovedFromWhitelist": { "message": "تمت الإزالة من القائمة البيضاء" },
   "toastRemoveFromWhitelistFailed": { "message": "فشل الإزالة من القائمة البيضاء" },
@@ -104,7 +106,9 @@
   },
   "noDomainsMatch": { "message": "لا توجد نطاقات تطابق بحثك" },
   "revokeAllPermissionsTitle": { "message": "إلغاء جميع الأذونات لهذا النطاق" },
-  "whitelistedNoPermissions": { "message": "مدرج في القائمة البيضاء لـ Nostr (لا توجد أذونات بعد)" },
+  "whitelistedNoPermissions": {
+    "message": "مدرج في القائمة البيضاء لـ Nostr (لا توجد أذونات بعد)"
+  },
   "allowed": { "message": "مسموح" },
   "denied": { "message": "مرفوض" },
   "revokeTitle": { "message": "إلغاء" },
