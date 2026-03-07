@@ -1,143 +1,386 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "Firmante remoto NIP-07 vía NIP-46 / Bunker46" },
-
-  "appSubtitle": { "message": "Firmante remoto NIP-07" },
-  "openFullPage": { "message": "Abrir en nueva pestaña para gestionar opciones" },
-  "connected": { "message": "Conectado" },
-  "offline": { "message": "Desconectado" },
-  "loading": { "message": "Cargando…" },
-  "tabConnection": { "message": "Conexión" },
-  "tabPermissions": { "message": "Permisos" },
-  "tabSettings": { "message": "Ajustes" },
-
-  "errorPasteUri": { "message": "Pega una URI bunker:// arriba" },
-  "errorConnectionFailed": { "message": "Error de conexión" },
-  "errorGenerateUri": { "message": "No se pudo generar la URI de conexión" },
-  "errorStartConnection": { "message": "No se pudo iniciar la conexión" },
-
-  "toastLoggedOut": { "message": "Sesión cerrada" },
-  "toastLogoutFailed": { "message": "Error al cerrar sesión" },
-  "toastSettingsSaved": { "message": "Ajustes guardados" },
-  "toastPrivacyModeOn": { "message": "Modo privacidad activado" },
-  "toastPrivacyModeOff": { "message": "Modo privacidad desactivado" },
-  "toastBadgeShown": { "message": "Insignia visible" },
-  "toastBadgeHidden": { "message": "Insignia oculta" },
-  "toastCopied": { "message": "Copiado al portapapeles" },
-  "toastCopyFailed": { "message": "Error al copiar" },
-  "toastPermissionRemoved": { "message": "Permiso eliminado" },
-  "toastPermissionRemoveFailed": { "message": "Error al eliminar el permiso" },
-  "toastDomainRemoved": { "message": "Permisos del dominio eliminados" },
-  "toastDomainRemoveFailed": { "message": "Error al eliminar el dominio" },
-  "toastNoActiveTab": { "message": "No hay pestaña activa ni URL" },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "extDescription": {
+    "message": "Firmante remoto NIP-07 vía NIP-46 / Bunker46"
+  },
+  "appSubtitle": {
+    "message": "Firmante remoto NIP-07"
+  },
+  "openFullPage": {
+    "message": "Abrir en nueva pestaña para gestionar opciones"
+  },
+  "connected": {
+    "message": "Conectado"
+  },
+  "offline": {
+    "message": "Desconectado"
+  },
+  "loading": {
+    "message": "Cargando…"
+  },
+  "tabConnection": {
+    "message": "Conexión"
+  },
+  "tabPermissions": {
+    "message": "Permisos"
+  },
+  "tabSettings": {
+    "message": "Ajustes"
+  },
+  "errorPasteUri": {
+    "message": "Pega una URI bunker:// arriba"
+  },
+  "errorConnectionFailed": {
+    "message": "Error de conexión"
+  },
+  "errorGenerateUri": {
+    "message": "No se pudo generar la URI de conexión"
+  },
+  "errorStartConnection": {
+    "message": "No se pudo iniciar la conexión"
+  },
+  "toastLoggedOut": {
+    "message": "Sesión cerrada"
+  },
+  "toastLogoutFailed": {
+    "message": "Error al cerrar sesión"
+  },
+  "toastSettingsSaved": {
+    "message": "Ajustes guardados"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Modo privacidad activado"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Modo privacidad desactivado"
+  },
+  "toastBadgeShown": {
+    "message": "Insignia visible"
+  },
+  "toastBadgeHidden": {
+    "message": "Insignia oculta"
+  },
+  "toastCopied": {
+    "message": "Copiado al portapapeles"
+  },
+  "toastCopyFailed": {
+    "message": "Error al copiar"
+  },
+  "toastPermissionRemoved": {
+    "message": "Permiso eliminado"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Error al eliminar el permiso"
+  },
+  "toastDomainRemoved": {
+    "message": "Permisos del dominio eliminados"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Error al eliminar el dominio"
+  },
+  "toastNoActiveTab": {
+    "message": "No hay pestaña activa ni URL"
+  },
   "toastAddedToWhitelist": {
     "message": "$1 añadido a la lista blanca. Recarga la pestaña para usar nostr."
   },
-  "toastAddDomainFailed": { "message": "Error al añadir el dominio" },
-  "toastRemovedFromWhitelist": { "message": "Eliminado de la lista blanca" },
-  "toastRemoveFromWhitelistFailed": { "message": "Error al eliminar de la lista blanca" },
-
-  "signerKey": { "message": "Clave del firmante" },
-  "copyTitle": { "message": "Copiar" },
-  "showQrTitle": { "message": "Mostrar código QR" },
+  "toastAddDomainFailed": {
+    "message": "Error al añadir el dominio"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "Eliminado de la lista blanca"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Error al eliminar de la lista blanca"
+  },
+  "signerKey": {
+    "message": "Clave del firmante"
+  },
+  "copyTitle": {
+    "message": "Copiar"
+  },
+  "showQrTitle": {
+    "message": "Mostrar código QR"
+  },
   "signerDescription": {
     "message": "Todas las peticiones NIP-07 de las páginas web se reenvían a este firmante remoto vía NIP-46. No se almacenan claves privadas en la extensión."
   },
-  "disconnect": { "message": "Desconectar" },
-  "logoutConfirmTitle": { "message": "¿Cerrar sesión por completo?" },
+  "disconnect": {
+    "message": "Desconectar"
+  },
+  "logoutConfirmTitle": {
+    "message": "¿Cerrar sesión por completo?"
+  },
   "logoutConfirmDescription": {
     "message": "Esto desconectará de tu firmante y borrará todos los permisos y la lista blanca del modo privacidad. Tendrás que volver a conectar y autorizar los sitios de nuevo."
   },
-  "cancel": { "message": "Cancelar" },
-  "logOut": { "message": "Cerrar sesión" },
-
-  "connectViaBunkerUri": { "message": "Conectar mediante URI Bunker" },
+  "cancel": {
+    "message": "Cancelar"
+  },
+  "logOut": {
+    "message": "Cerrar sesión"
+  },
+  "connectViaBunkerUri": {
+    "message": "Conectar mediante URI Bunker"
+  },
   "connectViaBunkerUriDesc": {
     "message": "Pega una URI bunker:// de tu firmante remoto para conectar"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "Conectando…" },
-  "connect": { "message": "Conectar" },
-  "separatorOr": { "message": "o" },
-  "getUriFromBunker46": { "message": "Obtener URI desde Bunker46" },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "connecting": {
+    "message": "Conectando…"
+  },
+  "connect": {
+    "message": "Conectar"
+  },
+  "separatorOr": {
+    "message": "o"
+  },
+  "getUriFromBunker46": {
+    "message": "Obtener URI desde Bunker46"
+  },
   "nostrConnectDesc": {
     "message": "Conectar vía Nostrconnect: muestra un QR y una URI para que los escanee tu app bunker."
   },
-  "showQrConnectionUri": { "message": "Mostrar QR y URI de conexión" },
-
-  "settingsUseBunker46": { "message": "Usar Bunker46" },
+  "showQrConnectionUri": {
+    "message": "Mostrar QR y URI de conexión"
+  },
+  "settingsUseBunker46": {
+    "message": "Usar Bunker46"
+  },
   "settingsUseBunker46Hint": {
     "message": "Gestionar enlaces nostrconnect: y redirigir a tu instancia Bunker46."
   },
-  "settingsBunkerUrl": { "message": "URL de Bunker46" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "URL base de tu instancia Bunker46" },
-  "settingsSpecifyNostrConnectRelays": { "message": "Especificar relays de nostrconnect" },
+  "settingsBunkerUrl": {
+    "message": "URL de Bunker46"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "URL base de tu instancia Bunker46"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Especificar relays de nostrconnect"
+  },
   "settingsSpecifyNostrConnectRelaysHint": {
     "message": "Definir URLs de relays para el QR/URI de Nostrconnect."
   },
-  "settingsNostrConnectRelays": { "message": "Relays de Nostr Connect" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelays": {
+    "message": "Relays de Nostr Connect"
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
   "settingsNostrConnectRelaysHint": {
     "message": "Una URL de relay por línea (o separadas por comas). Se usa al generar el QR/URI para conectar por Nostrconnect."
   },
-  "choiceOn": { "message": "Sí" },
-  "choiceOff": { "message": "No" },
-  "save": { "message": "Guardar" },
-  "privacyMode": { "message": "Modo privacidad" },
+  "choiceOn": {
+    "message": "Sí"
+  },
+  "choiceOff": {
+    "message": "No"
+  },
+  "save": {
+    "message": "Guardar"
+  },
+  "privacyMode": {
+    "message": "Modo privacidad"
+  },
   "privacyModeHint": {
     "message": "Exponer window.nostr solo en dominios de la lista blanca (pestaña Permisos); reduce fingerprinting."
   },
   "privacyModeSitesHint": {
     "message": "Los sitios no pueden detectar la extensión, así que algunos no mostrarán \"Iniciar sesión con Nostr\" hasta que los añadas en Permisos."
   },
-  "showBadge": { "message": "Mostrar insignia en el icono de la extensión" },
+  "showBadge": {
+    "message": "Mostrar insignia en el icono de la extensión"
+  },
   "showBadgeHint": {
     "message": "Cuando está activo, el icono muestra el número de permisos concedidos para la pestaña actual (p. ej. 1, 2)."
   },
-
-  "addToWhitelistTitle": { "message": "Añadir $1 a la lista blanca" },
-  "addToWhitelistButton": { "message": "Añadir $1 a la lista blanca" },
-  "removeFromWhitelistTitle": { "message": "Quitar $1 de la lista blanca" },
-  "removeFromWhitelistButton": { "message": "Quitar $1 de la lista blanca" },
-  "searchDomainsPlaceholder": { "message": "Buscar dominios…" },
-  "noPermissionsYet": { "message": "Aún no hay permisos" },
+  "addToWhitelistTitle": {
+    "message": "Añadir $1 a la lista blanca"
+  },
+  "addToWhitelistButton": {
+    "message": "Añadir $1 a la lista blanca"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "Quitar $1 de la lista blanca"
+  },
+  "removeFromWhitelistButton": {
+    "message": "Quitar $1 de la lista blanca"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Buscar dominios…"
+  },
+  "noPermissionsYet": {
+    "message": "Aún no hay permisos"
+  },
   "noPermissionsHint": {
     "message": "Cuando los sitios web pidan acceso a tu identidad Nostr, aparecerán aquí."
   },
-  "noDomainsMatch": { "message": "Ningún dominio coincide con tu búsqueda" },
-  "revokeAllPermissionsTitle": { "message": "Revocar todos los permisos de este dominio" },
-  "whitelistedNoPermissions": { "message": "En lista blanca para nostr (aún sin permisos)" },
-  "allowed": { "message": "Permitido" },
-  "denied": { "message": "Denegado" },
-  "revokeTitle": { "message": "Revocar" },
-  "removeFromWhitelist": { "message": "Quitar de la lista blanca" },
-
-  "qrScanToUse": { "message": "$1 (escanear para usar)" },
-  "qrCodeAlt": { "message": "Código QR" },
-  "close": { "message": "Cerrar" },
-  "nostrConnectModalHint": { "message": "Escanea con tu app bunker o copia la URI" },
-  "nostrConnectQrAlt": { "message": "Código QR Nostrconnect" },
-  "copyUri": { "message": "Copiar URI" },
-  "waitingForBunker": { "message": "Esperando conexión con bunker…" },
-
-  "method_getPublicKey": { "message": "Obtener clave pública" },
-  "method_signEvent": { "message": "Firmar evento" },
-  "method_signEvent_kind": { "message": "Firmar evento (tipo $1)" },
-  "method_getRelays": { "message": "Obtener relays" },
-  "method_nip04_encrypt": { "message": "Cifrar NIP-04" },
-  "method_nip04_decrypt": { "message": "Descifrar NIP-04" },
-  "method_nip44_encrypt": { "message": "Cifrar NIP-44" },
-  "method_nip44_decrypt": { "message": "Descifrar NIP-44" },
-
-  "promptPermissionRequest": { "message": "Solicitud de permiso" },
-  "promptWantsAccess": { "message": "quiere acceder a tu identidad Nostr" },
-  "promptEventKind": { "message": "Tipo de evento $1" },
-  "promptViewRawMessage": { "message": "Ver mensaje raw" },
-  "promptHideRawMessage": { "message": "Ocultar mensaje raw" },
-  "promptAllowAlways": { "message": "Permitir siempre" },
-  "promptAllowAlwaysForKindHint": { "message": "Solo para este tipo de evento" },
-  "promptAllowOnce": { "message": "Permitir una vez" },
-  "promptDenyOnce": { "message": "Denegar" },
-  "promptDenyAlways": { "message": "Denegar siempre" }
+  "noDomainsMatch": {
+    "message": "Ningún dominio coincide con tu búsqueda"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "Revocar todos los permisos de este dominio"
+  },
+  "whitelistedNoPermissions": {
+    "message": "En lista blanca para nostr (aún sin permisos)"
+  },
+  "allowed": {
+    "message": "Permitido"
+  },
+  "denied": {
+    "message": "Denegado"
+  },
+  "revokeTitle": {
+    "message": "Revocar"
+  },
+  "removeFromWhitelist": {
+    "message": "Quitar de la lista blanca"
+  },
+  "qrScanToUse": {
+    "message": "$1 (escanear para usar)"
+  },
+  "qrCodeAlt": {
+    "message": "Código QR"
+  },
+  "close": {
+    "message": "Cerrar"
+  },
+  "nostrConnectModalHint": {
+    "message": "Escanea con tu app bunker o copia la URI"
+  },
+  "nostrConnectQrAlt": {
+    "message": "Código QR Nostrconnect"
+  },
+  "copyUri": {
+    "message": "Copiar URI"
+  },
+  "waitingForBunker": {
+    "message": "Esperando conexión con bunker…"
+  },
+  "method_getPublicKey": {
+    "message": "Obtener clave pública"
+  },
+  "method_signEvent": {
+    "message": "Firmar evento"
+  },
+  "method_signEvent_kind": {
+    "message": "Firmar evento (tipo $1)"
+  },
+  "method_getRelays": {
+    "message": "Obtener relays"
+  },
+  "method_nip04_encrypt": {
+    "message": "Cifrar NIP-04"
+  },
+  "method_nip04_decrypt": {
+    "message": "Descifrar NIP-04"
+  },
+  "method_nip44_encrypt": {
+    "message": "Cifrar NIP-44"
+  },
+  "method_nip44_decrypt": {
+    "message": "Descifrar NIP-44"
+  },
+  "promptPermissionRequest": {
+    "message": "Solicitud de permiso"
+  },
+  "promptWantsAccess": {
+    "message": "quiere acceder a tu identidad Nostr"
+  },
+  "promptEventKind": {
+    "message": "Tipo de evento $1"
+  },
+  "promptViewRawMessage": {
+    "message": "Ver mensaje raw"
+  },
+  "promptHideRawMessage": {
+    "message": "Ocultar mensaje raw"
+  },
+  "promptAllowAlways": {
+    "message": "Permitir siempre"
+  },
+  "promptAllowAlwaysForKindHint": {
+    "message": "Solo para este tipo de evento"
+  },
+  "promptAllowOnce": {
+    "message": "Permitir una vez"
+  },
+  "promptDenyOnce": {
+    "message": "Denegar"
+  },
+  "promptDenyAlways": {
+    "message": "Denegar siempre"
+  },
+  "settingsMultiProfile": {
+    "message": "Múltiples perfiles"
+  },
+  "settingsMultiProfileHint": {
+    "message": "Mostrar selector de perfil y permitir agregar múltiples conexiones."
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Elimina los perfiles adicionales para usar el modo de perfil único."
+  },
+  "addAnotherConnection": {
+    "message": "Agregar otra conexión"
+  },
+  "removeProfile": {
+    "message": "Eliminar este perfil"
+  },
+  "removeProfileConfirmTitle": {
+    "message": "¿Eliminar perfil?"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "Esto desconectará y eliminará todos los permisos y entradas de la lista blanca de este perfil."
+  },
+  "switchProfile": {
+    "message": "Cambiar perfil"
+  },
+  "toastProfileRemoved": {
+    "message": "Perfil eliminado"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "No se pudo eliminar el perfil"
+  },
+  "reconnectionFailedMessage": {
+    "message": "No se pudo restaurar la conexión. Es posible que el bunker haya revocado el acceso."
+  },
+  "renameProfile": {
+    "message": "Renombrar perfil"
+  },
+  "renameProfileTitle": {
+    "message": "Renombrar perfil"
+  },
+  "renameProfileHint": {
+    "message": "Establece un nombre para mostrar o recupéralo desde Nostr (kind 0)."
+  },
+  "renameProfileNameLabel": {
+    "message": "Nombre para mostrar"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "Nombre del perfil"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Obtener desde Nostr"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "Información del perfil obtenida"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "No se pudo obtener el perfil desde Nostr"
+  },
+  "toastProfileRenameFailed": {
+    "message": "No se pudo renombrar el perfil"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Desconectar y eliminar perfil"
+  }
 }

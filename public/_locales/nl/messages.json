@@ -1,143 +1,386 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "NIP-07 externe ondertekenaar via NIP-46 / Bunker46" },
-
-  "appSubtitle": { "message": "NIP-07 externe ondertekenaar" },
-  "openFullPage": { "message": "Open in nieuw tabblad om opties te beheren" },
-  "connected": { "message": "Verbonden" },
-  "offline": { "message": "Offline" },
-  "loading": { "message": "Laden…" },
-  "tabConnection": { "message": "Verbinding" },
-  "tabPermissions": { "message": "Machtigingen" },
-  "tabSettings": { "message": "Instellingen" },
-
-  "errorPasteUri": { "message": "Plak hierboven een bunker:// URI" },
-  "errorConnectionFailed": { "message": "Verbinding mislukt" },
-  "errorGenerateUri": { "message": "Kon verbindings-URI niet genereren" },
-  "errorStartConnection": { "message": "Kon verbinding niet starten" },
-
-  "toastLoggedOut": { "message": "Uitgelogd" },
-  "toastLogoutFailed": { "message": "Uitloggen mislukt" },
-  "toastSettingsSaved": { "message": "Instellingen opgeslagen" },
-  "toastPrivacyModeOn": { "message": "Privacymodus aan" },
-  "toastPrivacyModeOff": { "message": "Privacymodus uit" },
-  "toastBadgeShown": { "message": "Badge zichtbaar" },
-  "toastBadgeHidden": { "message": "Badge verborgen" },
-  "toastCopied": { "message": "Gekopieerd naar klembord" },
-  "toastCopyFailed": { "message": "Kopiëren mislukt" },
-  "toastPermissionRemoved": { "message": "Machtiging verwijderd" },
-  "toastPermissionRemoveFailed": { "message": "Machtiging verwijderen mislukt" },
-  "toastDomainRemoved": { "message": "Domeinmachtigingen verwijderd" },
-  "toastDomainRemoveFailed": { "message": "Domein verwijderen mislukt" },
-  "toastNoActiveTab": { "message": "Geen actief tabblad of URL" },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "extDescription": {
+    "message": "NIP-07 externe ondertekenaar via NIP-46 / Bunker46"
+  },
+  "appSubtitle": {
+    "message": "NIP-07 externe ondertekenaar"
+  },
+  "openFullPage": {
+    "message": "Open in nieuw tabblad om opties te beheren"
+  },
+  "connected": {
+    "message": "Verbonden"
+  },
+  "offline": {
+    "message": "Offline"
+  },
+  "loading": {
+    "message": "Laden…"
+  },
+  "tabConnection": {
+    "message": "Verbinding"
+  },
+  "tabPermissions": {
+    "message": "Machtigingen"
+  },
+  "tabSettings": {
+    "message": "Instellingen"
+  },
+  "errorPasteUri": {
+    "message": "Plak hierboven een bunker:// URI"
+  },
+  "errorConnectionFailed": {
+    "message": "Verbinding mislukt"
+  },
+  "errorGenerateUri": {
+    "message": "Kon verbindings-URI niet genereren"
+  },
+  "errorStartConnection": {
+    "message": "Kon verbinding niet starten"
+  },
+  "toastLoggedOut": {
+    "message": "Uitgelogd"
+  },
+  "toastLogoutFailed": {
+    "message": "Uitloggen mislukt"
+  },
+  "toastSettingsSaved": {
+    "message": "Instellingen opgeslagen"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Privacymodus aan"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Privacymodus uit"
+  },
+  "toastBadgeShown": {
+    "message": "Badge zichtbaar"
+  },
+  "toastBadgeHidden": {
+    "message": "Badge verborgen"
+  },
+  "toastCopied": {
+    "message": "Gekopieerd naar klembord"
+  },
+  "toastCopyFailed": {
+    "message": "Kopiëren mislukt"
+  },
+  "toastPermissionRemoved": {
+    "message": "Machtiging verwijderd"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Machtiging verwijderen mislukt"
+  },
+  "toastDomainRemoved": {
+    "message": "Domeinmachtigingen verwijderd"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Domein verwijderen mislukt"
+  },
+  "toastNoActiveTab": {
+    "message": "Geen actief tabblad of URL"
+  },
   "toastAddedToWhitelist": {
     "message": "$1 toegevoegd aan whitelist. Vernieuw het tabblad om nostr te gebruiken."
   },
-  "toastAddDomainFailed": { "message": "Domein toevoegen mislukt" },
-  "toastRemovedFromWhitelist": { "message": "Verwijderd van whitelist" },
-  "toastRemoveFromWhitelistFailed": { "message": "Van whitelist verwijderen mislukt" },
-
-  "signerKey": { "message": "Ondertekenaarsleutel" },
-  "copyTitle": { "message": "Kopiëren" },
-  "showQrTitle": { "message": "QR-code tonen" },
+  "toastAddDomainFailed": {
+    "message": "Domein toevoegen mislukt"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "Verwijderd van whitelist"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Van whitelist verwijderen mislukt"
+  },
+  "signerKey": {
+    "message": "Ondertekenaarsleutel"
+  },
+  "copyTitle": {
+    "message": "Kopiëren"
+  },
+  "showQrTitle": {
+    "message": "QR-code tonen"
+  },
   "signerDescription": {
     "message": "Alle NIP-07-verzoeken van webpagina's worden via NIP-46 doorgestuurd naar deze externe ondertekenaar. Er worden geen privésleutels in de extensie opgeslagen."
   },
-  "disconnect": { "message": "Verbinding verbreken" },
-  "logoutConfirmTitle": { "message": "Volledig uitloggen?" },
+  "disconnect": {
+    "message": "Verbinding verbreken"
+  },
+  "logoutConfirmTitle": {
+    "message": "Volledig uitloggen?"
+  },
   "logoutConfirmDescription": {
     "message": "Dit verbreekt de verbinding met uw ondertekenaar en wist alle machtigingen en de whitelist van de privacymodus. U moet opnieuw verbinden en sites opnieuw toestaan."
   },
-  "cancel": { "message": "Annuleren" },
-  "logOut": { "message": "Uitloggen" },
-
-  "connectViaBunkerUri": { "message": "Verbinden via Bunker-URI" },
+  "cancel": {
+    "message": "Annuleren"
+  },
+  "logOut": {
+    "message": "Uitloggen"
+  },
+  "connectViaBunkerUri": {
+    "message": "Verbinden via Bunker-URI"
+  },
   "connectViaBunkerUriDesc": {
     "message": "Plak een bunker:// URI van uw externe ondertekenaar om te verbinden"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "Verbinden…" },
-  "connect": { "message": "Verbinden" },
-  "separatorOr": { "message": "of" },
-  "getUriFromBunker46": { "message": "URI ophalen van Bunker46" },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "connecting": {
+    "message": "Verbinden…"
+  },
+  "connect": {
+    "message": "Verbinden"
+  },
+  "separatorOr": {
+    "message": "of"
+  },
+  "getUriFromBunker46": {
+    "message": "URI ophalen van Bunker46"
+  },
   "nostrConnectDesc": {
     "message": "Verbinden via Nostrconnect: toon een QR en URI om te scannen met uw bunker-app."
   },
-  "showQrConnectionUri": { "message": "QR en verbindings-URI tonen" },
-
-  "settingsUseBunker46": { "message": "Bunker46 gebruiken" },
+  "showQrConnectionUri": {
+    "message": "QR en verbindings-URI tonen"
+  },
+  "settingsUseBunker46": {
+    "message": "Bunker46 gebruiken"
+  },
   "settingsUseBunker46Hint": {
     "message": "nostrconnect:-links afhandelen en doorsturen naar uw Bunker46-installatie."
   },
-  "settingsBunkerUrl": { "message": "Bunker46-URL" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "Basis-URL van uw Bunker46-installatie" },
-  "settingsSpecifyNostrConnectRelays": { "message": "Nostrconnect-relays opgeven" },
+  "settingsBunkerUrl": {
+    "message": "Bunker46-URL"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "Basis-URL van uw Bunker46-installatie"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Nostrconnect-relays opgeven"
+  },
   "settingsSpecifyNostrConnectRelaysHint": {
     "message": "Aangepaste relay-URL's instellen voor de Nostrconnect-QR/URI."
   },
-  "settingsNostrConnectRelays": { "message": "Nostr Connect-relays" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelays": {
+    "message": "Nostr Connect-relays"
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
   "settingsNostrConnectRelaysHint": {
     "message": "Eén relay-URL per regel (of gescheiden door komma's). Gebruikt bij het genereren van de QR/URI om via Nostrconnect te verbinden."
   },
-  "choiceOn": { "message": "Aan" },
-  "choiceOff": { "message": "Uit" },
-  "save": { "message": "Opslaan" },
-  "privacyMode": { "message": "Privacymodus" },
+  "choiceOn": {
+    "message": "Aan"
+  },
+  "choiceOff": {
+    "message": "Uit"
+  },
+  "save": {
+    "message": "Opslaan"
+  },
+  "privacyMode": {
+    "message": "Privacymodus"
+  },
   "privacyModeHint": {
     "message": "window.nostr alleen op whitelist-domeinen (tabblad Machtigingen); vermindert fingerprinting."
   },
   "privacyModeSitesHint": {
     "message": "Sites kunnen de extensie niet detecteren; sommige tonen pas \"Inloggen met Nostr\" als u ze in Machtigingen hebt toegevoegd."
   },
-  "showBadge": { "message": "Badge op extensiepictogram tonen" },
+  "showBadge": {
+    "message": "Badge op extensiepictogram tonen"
+  },
   "showBadgeHint": {
     "message": "Wanneer aan: het pictogram toont het aantal verleende machtigingen voor het huidige tabblad (bijv. 1, 2)."
   },
-
-  "addToWhitelistTitle": { "message": "$1 aan whitelist toevoegen" },
-  "addToWhitelistButton": { "message": "$1 aan whitelist toevoegen" },
-  "removeFromWhitelistTitle": { "message": "$1 van whitelist verwijderen" },
-  "removeFromWhitelistButton": { "message": "$1 van whitelist verwijderen" },
-  "searchDomainsPlaceholder": { "message": "Domeinen zoeken…" },
-  "noPermissionsYet": { "message": "Nog geen machtigingen" },
+  "addToWhitelistTitle": {
+    "message": "$1 aan whitelist toevoegen"
+  },
+  "addToWhitelistButton": {
+    "message": "$1 aan whitelist toevoegen"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "$1 van whitelist verwijderen"
+  },
+  "removeFromWhitelistButton": {
+    "message": "$1 van whitelist verwijderen"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Domeinen zoeken…"
+  },
+  "noPermissionsYet": {
+    "message": "Nog geen machtigingen"
+  },
   "noPermissionsHint": {
     "message": "Wanneer websites toegang tot uw Nostr-identiteit vragen, verschijnen ze hier."
   },
-  "noDomainsMatch": { "message": "Geen domeinen gevonden voor uw zoekopdracht" },
-  "revokeAllPermissionsTitle": { "message": "Alle machtigingen voor dit domein intrekken" },
-  "whitelistedNoPermissions": { "message": "Op whitelist voor nostr (nog geen machtigingen)" },
-  "allowed": { "message": "Toegestaan" },
-  "denied": { "message": "Geweigerd" },
-  "revokeTitle": { "message": "Intrekken" },
-  "removeFromWhitelist": { "message": "Van whitelist verwijderen" },
-
-  "qrScanToUse": { "message": "$1 (scannen om te gebruiken)" },
-  "qrCodeAlt": { "message": "QR-code" },
-  "close": { "message": "Sluiten" },
-  "nostrConnectModalHint": { "message": "Scan met uw bunker-app of kopieer de URI" },
-  "nostrConnectQrAlt": { "message": "Nostrconnect QR-code" },
-  "copyUri": { "message": "URI kopiëren" },
-  "waitingForBunker": { "message": "Wachten op verbinding met bunker…" },
-
-  "method_getPublicKey": { "message": "Publieke sleutel ophalen" },
-  "method_signEvent": { "message": "Event ondertekenen" },
-  "method_signEvent_kind": { "message": "Event ondertekenen (type $1)" },
-  "method_getRelays": { "message": "Relays ophalen" },
-  "method_nip04_encrypt": { "message": "NIP-04 versleutelen" },
-  "method_nip04_decrypt": { "message": "NIP-04 ontsleutelen" },
-  "method_nip44_encrypt": { "message": "NIP-44 versleutelen" },
-  "method_nip44_decrypt": { "message": "NIP-44 ontsleutelen" },
-
-  "promptPermissionRequest": { "message": "Machtigingsverzoek" },
-  "promptWantsAccess": { "message": "wil toegang tot uw Nostr-identiteit" },
-  "promptEventKind": { "message": "Eventtype $1" },
-  "promptViewRawMessage": { "message": "Ruwe bericht bekijken" },
-  "promptHideRawMessage": { "message": "Ruwe bericht verbergen" },
-  "promptAllowAlways": { "message": "Altijd toestaan" },
-  "promptAllowAlwaysForKindHint": { "message": "Alleen voor dit eventtype" },
-  "promptAllowOnce": { "message": "Eenmalig toestaan" },
-  "promptDenyOnce": { "message": "Weigeren" },
-  "promptDenyAlways": { "message": "Altijd weigeren" }
+  "noDomainsMatch": {
+    "message": "Geen domeinen gevonden voor uw zoekopdracht"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "Alle machtigingen voor dit domein intrekken"
+  },
+  "whitelistedNoPermissions": {
+    "message": "Op whitelist voor nostr (nog geen machtigingen)"
+  },
+  "allowed": {
+    "message": "Toegestaan"
+  },
+  "denied": {
+    "message": "Geweigerd"
+  },
+  "revokeTitle": {
+    "message": "Intrekken"
+  },
+  "removeFromWhitelist": {
+    "message": "Van whitelist verwijderen"
+  },
+  "qrScanToUse": {
+    "message": "$1 (scannen om te gebruiken)"
+  },
+  "qrCodeAlt": {
+    "message": "QR-code"
+  },
+  "close": {
+    "message": "Sluiten"
+  },
+  "nostrConnectModalHint": {
+    "message": "Scan met uw bunker-app of kopieer de URI"
+  },
+  "nostrConnectQrAlt": {
+    "message": "Nostrconnect QR-code"
+  },
+  "copyUri": {
+    "message": "URI kopiëren"
+  },
+  "waitingForBunker": {
+    "message": "Wachten op verbinding met bunker…"
+  },
+  "method_getPublicKey": {
+    "message": "Publieke sleutel ophalen"
+  },
+  "method_signEvent": {
+    "message": "Event ondertekenen"
+  },
+  "method_signEvent_kind": {
+    "message": "Event ondertekenen (type $1)"
+  },
+  "method_getRelays": {
+    "message": "Relays ophalen"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04 versleutelen"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04 ontsleutelen"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44 versleutelen"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44 ontsleutelen"
+  },
+  "promptPermissionRequest": {
+    "message": "Machtigingsverzoek"
+  },
+  "promptWantsAccess": {
+    "message": "wil toegang tot uw Nostr-identiteit"
+  },
+  "promptEventKind": {
+    "message": "Eventtype $1"
+  },
+  "promptViewRawMessage": {
+    "message": "Ruwe bericht bekijken"
+  },
+  "promptHideRawMessage": {
+    "message": "Ruwe bericht verbergen"
+  },
+  "promptAllowAlways": {
+    "message": "Altijd toestaan"
+  },
+  "promptAllowAlwaysForKindHint": {
+    "message": "Alleen voor dit eventtype"
+  },
+  "promptAllowOnce": {
+    "message": "Eenmalig toestaan"
+  },
+  "promptDenyOnce": {
+    "message": "Weigeren"
+  },
+  "promptDenyAlways": {
+    "message": "Altijd weigeren"
+  },
+  "settingsMultiProfile": {
+    "message": "Meerdere profielen"
+  },
+  "settingsMultiProfileHint": {
+    "message": "Toon profielwisselaar en sta toe meerdere verbindingen toe te voegen."
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Verwijder extra profielen om de enkelprofiel-modus te gebruiken."
+  },
+  "addAnotherConnection": {
+    "message": "Nog een verbinding toevoegen"
+  },
+  "removeProfile": {
+    "message": "Dit profiel verwijderen"
+  },
+  "removeProfileConfirmTitle": {
+    "message": "Profiel verwijderen?"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "Dit verbreekt de verbinding en wist alle machtigingen en whitelist-vermeldingen voor dit profiel."
+  },
+  "switchProfile": {
+    "message": "Van profiel wisselen"
+  },
+  "toastProfileRemoved": {
+    "message": "Profiel verwijderd"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "Kan profiel niet verwijderen"
+  },
+  "reconnectionFailedMessage": {
+    "message": "Verbinding kon niet worden hersteld. De bunker heeft mogelijk de toegang ingetrokken."
+  },
+  "renameProfile": {
+    "message": "Profiel hernoemen"
+  },
+  "renameProfileTitle": {
+    "message": "Profiel hernoemen"
+  },
+  "renameProfileHint": {
+    "message": "Stel een weergavenaam in of haal deze op uit Nostr (kind 0)."
+  },
+  "renameProfileNameLabel": {
+    "message": "Weergavenaam"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "Profielnaam"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Ophalen uit Nostr"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "Profielinfo opgehaald"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "Kon profiel niet ophalen uit Nostr"
+  },
+  "toastProfileRenameFailed": {
+    "message": "Kan profiel niet hernoemen"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Verbinding verbreken en profiel verwijderen"
+  }
 }

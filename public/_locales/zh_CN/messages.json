@@ -1,141 +1,386 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "通过 NIP-46 / Bunker46 的 NIP-07 远程签名器" },
-
-  "appSubtitle": { "message": "NIP-07 远程签名器" },
-  "openFullPage": { "message": "在新标签页中打开以管理选项" },
-  "connected": { "message": "已连接" },
-  "offline": { "message": "离线" },
-  "loading": { "message": "加载中…" },
-  "tabConnection": { "message": "连接" },
-  "tabPermissions": { "message": "权限" },
-  "tabSettings": { "message": "设置" },
-
-  "errorPasteUri": { "message": "请在上方粘贴 bunker:// URI" },
-  "errorConnectionFailed": { "message": "连接失败" },
-  "errorGenerateUri": { "message": "生成连接 URI 失败" },
-  "errorStartConnection": { "message": "启动连接失败" },
-
-  "toastLoggedOut": { "message": "已退出登录" },
-  "toastLogoutFailed": { "message": "退出登录失败" },
-  "toastSettingsSaved": { "message": "设置已保存" },
-  "toastPrivacyModeOn": { "message": "隐私模式已开启" },
-  "toastPrivacyModeOff": { "message": "隐私模式已关闭" },
-  "toastBadgeShown": { "message": "徽章已显示" },
-  "toastBadgeHidden": { "message": "徽章已隐藏" },
-  "toastCopied": { "message": "已复制到剪贴板" },
-  "toastCopyFailed": { "message": "复制失败" },
-  "toastPermissionRemoved": { "message": "权限已移除" },
-  "toastPermissionRemoveFailed": { "message": "移除权限失败" },
-  "toastDomainRemoved": { "message": "域名权限已移除" },
-  "toastDomainRemoveFailed": { "message": "移除域名失败" },
-  "toastNoActiveTab": { "message": "没有活动标签页或 URL" },
-  "toastAddedToWhitelist": { "message": "已将 $1 添加到白名单。请重新加载标签页以使用 Nostr。" },
-  "toastAddDomainFailed": { "message": "添加域名失败" },
-  "toastRemovedFromWhitelist": { "message": "已从白名单中移除" },
-  "toastRemoveFromWhitelistFailed": { "message": "从白名单移除失败" },
-
-  "signerKey": { "message": "签名器密钥" },
-  "copyTitle": { "message": "复制" },
-  "showQrTitle": { "message": "显示二维码" },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "extDescription": {
+    "message": "通过 NIP-46 / Bunker46 的 NIP-07 远程签名器"
+  },
+  "appSubtitle": {
+    "message": "NIP-07 远程签名器"
+  },
+  "openFullPage": {
+    "message": "在新标签页中打开以管理选项"
+  },
+  "connected": {
+    "message": "已连接"
+  },
+  "offline": {
+    "message": "离线"
+  },
+  "loading": {
+    "message": "加载中…"
+  },
+  "tabConnection": {
+    "message": "连接"
+  },
+  "tabPermissions": {
+    "message": "权限"
+  },
+  "tabSettings": {
+    "message": "设置"
+  },
+  "errorPasteUri": {
+    "message": "请在上方粘贴 bunker:// URI"
+  },
+  "errorConnectionFailed": {
+    "message": "连接失败"
+  },
+  "errorGenerateUri": {
+    "message": "生成连接 URI 失败"
+  },
+  "errorStartConnection": {
+    "message": "启动连接失败"
+  },
+  "toastLoggedOut": {
+    "message": "已退出登录"
+  },
+  "toastLogoutFailed": {
+    "message": "退出登录失败"
+  },
+  "toastSettingsSaved": {
+    "message": "设置已保存"
+  },
+  "toastPrivacyModeOn": {
+    "message": "隐私模式已开启"
+  },
+  "toastPrivacyModeOff": {
+    "message": "隐私模式已关闭"
+  },
+  "toastBadgeShown": {
+    "message": "徽章已显示"
+  },
+  "toastBadgeHidden": {
+    "message": "徽章已隐藏"
+  },
+  "toastCopied": {
+    "message": "已复制到剪贴板"
+  },
+  "toastCopyFailed": {
+    "message": "复制失败"
+  },
+  "toastPermissionRemoved": {
+    "message": "权限已移除"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "移除权限失败"
+  },
+  "toastDomainRemoved": {
+    "message": "域名权限已移除"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "移除域名失败"
+  },
+  "toastNoActiveTab": {
+    "message": "没有活动标签页或 URL"
+  },
+  "toastAddedToWhitelist": {
+    "message": "已将 $1 添加到白名单。请重新加载标签页以使用 Nostr。"
+  },
+  "toastAddDomainFailed": {
+    "message": "添加域名失败"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "已从白名单中移除"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "从白名单移除失败"
+  },
+  "signerKey": {
+    "message": "签名器密钥"
+  },
+  "copyTitle": {
+    "message": "复制"
+  },
+  "showQrTitle": {
+    "message": "显示二维码"
+  },
   "signerDescription": {
     "message": "网页的所有 NIP-07 请求均通过 NIP-46 转发至此远程签名器。扩展程序中不存储任何私钥。"
   },
-  "disconnect": { "message": "断开连接" },
-  "logoutConfirmTitle": { "message": "完全退出登录？" },
+  "disconnect": {
+    "message": "断开连接"
+  },
+  "logoutConfirmTitle": {
+    "message": "完全退出登录？"
+  },
   "logoutConfirmDescription": {
     "message": "此操作将断开与签名器的连接，并清除所有权限及隐私模式白名单。您需要重新连接并重新授权站点。"
   },
-  "cancel": { "message": "取消" },
-  "logOut": { "message": "退出登录" },
-
-  "connectViaBunkerUri": { "message": "通过 Bunker URI 连接" },
+  "cancel": {
+    "message": "取消"
+  },
+  "logOut": {
+    "message": "退出登录"
+  },
+  "connectViaBunkerUri": {
+    "message": "通过 Bunker URI 连接"
+  },
   "connectViaBunkerUriDesc": {
     "message": "粘贴来自远程签名器的 bunker:// URI 以连接"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "连接中..." },
-  "connect": { "message": "连接" },
-  "separatorOr": { "message": "或" },
-  "getUriFromBunker46": { "message": "从 Bunker46 获取 URI" },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "connecting": {
+    "message": "连接中..."
+  },
+  "connect": {
+    "message": "连接"
+  },
+  "separatorOr": {
+    "message": "或"
+  },
+  "getUriFromBunker46": {
+    "message": "从 Bunker46 获取 URI"
+  },
   "nostrConnectDesc": {
     "message": "通过 Nostrconnect 连接：显示二维码和 URI，供您的 bunker 应用扫描。"
   },
-  "showQrConnectionUri": { "message": "显示二维码和连接 URI" },
-
-  "settingsUseBunker46": { "message": "使用 Bunker46" },
+  "showQrConnectionUri": {
+    "message": "显示二维码和连接 URI"
+  },
+  "settingsUseBunker46": {
+    "message": "使用 Bunker46"
+  },
   "settingsUseBunker46Hint": {
     "message": "处理 nostrconnect: 链接并重定向到您的 Bunker46 实例。"
   },
-  "settingsBunkerUrl": { "message": "Bunker46 URL" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "您的 Bunker46 实例的基础 URL" },
-  "settingsSpecifyNostrConnectRelays": { "message": "指定 Nostrconnect 中继" },
+  "settingsBunkerUrl": {
+    "message": "Bunker46 URL"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "您的 Bunker46 实例的基础 URL"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "指定 Nostrconnect 中继"
+  },
   "settingsSpecifyNostrConnectRelaysHint": {
     "message": "为 Nostrconnect 二维码/URI 设置自定义中继 URL。"
   },
-  "settingsNostrConnectRelays": { "message": "Nostr 连接中继" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelays": {
+    "message": "Nostr 连接中继"
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
   "settingsNostrConnectRelaysHint": {
     "message": "每行一个中继 URL（或用逗号分隔）。用于生成通过 Nostrconnect 连接的二维码/URI。"
   },
-  "choiceOn": { "message": "开启" },
-  "choiceOff": { "message": "关闭" },
-  "save": { "message": "保存" },
-  "privacyMode": { "message": "隐私模式" },
+  "choiceOn": {
+    "message": "开启"
+  },
+  "choiceOff": {
+    "message": "关闭"
+  },
+  "save": {
+    "message": "保存"
+  },
+  "privacyMode": {
+    "message": "隐私模式"
+  },
   "privacyModeHint": {
     "message": "仅在白名单域名上公开 window.nostr（权限标签页）；减少浏览器指纹识别。"
   },
   "privacyModeSitesHint": {
     "message": "站点无法检测到扩展程序，因此某些站点可能不会显示「使用 Nostr 登录」，直到您在权限中添加它们。"
   },
-  "showBadge": { "message": "在扩展图标上显示徽章" },
+  "showBadge": {
+    "message": "在扩展图标上显示徽章"
+  },
   "showBadgeHint": {
     "message": "开启后，图标显示当前标签页已授予的权限数量（如 1、2）。"
   },
-
-  "addToWhitelistTitle": { "message": "将 $1 添加到白名单" },
-  "addToWhitelistButton": { "message": "将 $1 添加到白名单" },
-  "removeFromWhitelistTitle": { "message": "将 $1 从白名单移除" },
-  "removeFromWhitelistButton": { "message": "将 $1 从白名单移除" },
-  "searchDomainsPlaceholder": { "message": "搜索域名..." },
-  "noPermissionsYet": { "message": "暂无权限" },
+  "addToWhitelistTitle": {
+    "message": "将 $1 添加到白名单"
+  },
+  "addToWhitelistButton": {
+    "message": "将 $1 添加到白名单"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "将 $1 从白名单移除"
+  },
+  "removeFromWhitelistButton": {
+    "message": "将 $1 从白名单移除"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "搜索域名..."
+  },
+  "noPermissionsYet": {
+    "message": "暂无权限"
+  },
   "noPermissionsHint": {
     "message": "当网站请求访问您的 Nostr 身份时，它们将显示在此处。"
   },
-  "noDomainsMatch": { "message": "没有匹配的域名" },
-  "revokeAllPermissionsTitle": { "message": "撤销此域名的所有权限" },
-  "whitelistedNoPermissions": { "message": "已加入 Nostr 白名单（暂无权限）" },
-  "allowed": { "message": "已允许" },
-  "denied": { "message": "已拒绝" },
-  "revokeTitle": { "message": "撤销" },
-  "removeFromWhitelist": { "message": "从白名单移除" },
-
-  "qrScanToUse": { "message": "$1（扫描使用）" },
-  "qrCodeAlt": { "message": "二维码" },
-  "close": { "message": "关闭" },
-  "nostrConnectModalHint": { "message": "使用 bunker 应用扫描或复制 URI" },
-  "nostrConnectQrAlt": { "message": "Nostrconnect 二维码" },
-  "copyUri": { "message": "复制 URI" },
-  "waitingForBunker": { "message": "等待 bunker 连接…" },
-
-  "method_getPublicKey": { "message": "获取公钥" },
-  "method_signEvent": { "message": "签名事件" },
-  "method_signEvent_kind": { "message": "签名事件（类型 $1）" },
-  "method_getRelays": { "message": "获取中继" },
-  "method_nip04_encrypt": { "message": "NIP-04 加密" },
-  "method_nip04_decrypt": { "message": "NIP-04 解密" },
-  "method_nip44_encrypt": { "message": "NIP-44 加密" },
-  "method_nip44_decrypt": { "message": "NIP-44 解密" },
-
-  "promptPermissionRequest": { "message": "权限请求" },
-  "promptWantsAccess": { "message": "想要访问您的 Nostr 身份" },
-  "promptEventKind": { "message": "事件类型 $1" },
-  "promptViewRawMessage": { "message": "查看原始消息" },
-  "promptHideRawMessage": { "message": "隐藏原始消息" },
-  "promptAllowAlways": { "message": "始终允许" },
-  "promptAllowAlwaysForKindHint": { "message": "仅适用于此事件类型" },
-  "promptAllowOnce": { "message": "允许一次" },
-  "promptDenyOnce": { "message": "拒绝" },
-  "promptDenyAlways": { "message": "始终拒绝" }
+  "noDomainsMatch": {
+    "message": "没有匹配的域名"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "撤销此域名的所有权限"
+  },
+  "whitelistedNoPermissions": {
+    "message": "已加入 Nostr 白名单（暂无权限）"
+  },
+  "allowed": {
+    "message": "已允许"
+  },
+  "denied": {
+    "message": "已拒绝"
+  },
+  "revokeTitle": {
+    "message": "撤销"
+  },
+  "removeFromWhitelist": {
+    "message": "从白名单移除"
+  },
+  "qrScanToUse": {
+    "message": "$1（扫描使用）"
+  },
+  "qrCodeAlt": {
+    "message": "二维码"
+  },
+  "close": {
+    "message": "关闭"
+  },
+  "nostrConnectModalHint": {
+    "message": "使用 bunker 应用扫描或复制 URI"
+  },
+  "nostrConnectQrAlt": {
+    "message": "Nostrconnect 二维码"
+  },
+  "copyUri": {
+    "message": "复制 URI"
+  },
+  "waitingForBunker": {
+    "message": "等待 bunker 连接…"
+  },
+  "method_getPublicKey": {
+    "message": "获取公钥"
+  },
+  "method_signEvent": {
+    "message": "签名事件"
+  },
+  "method_signEvent_kind": {
+    "message": "签名事件（类型 $1）"
+  },
+  "method_getRelays": {
+    "message": "获取中继"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04 加密"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04 解密"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44 加密"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44 解密"
+  },
+  "promptPermissionRequest": {
+    "message": "权限请求"
+  },
+  "promptWantsAccess": {
+    "message": "想要访问您的 Nostr 身份"
+  },
+  "promptEventKind": {
+    "message": "事件类型 $1"
+  },
+  "promptViewRawMessage": {
+    "message": "查看原始消息"
+  },
+  "promptHideRawMessage": {
+    "message": "隐藏原始消息"
+  },
+  "promptAllowAlways": {
+    "message": "始终允许"
+  },
+  "promptAllowAlwaysForKindHint": {
+    "message": "仅适用于此事件类型"
+  },
+  "promptAllowOnce": {
+    "message": "允许一次"
+  },
+  "promptDenyOnce": {
+    "message": "拒绝"
+  },
+  "promptDenyAlways": {
+    "message": "始终拒绝"
+  },
+  "settingsMultiProfile": {
+    "message": "多个配置文件"
+  },
+  "settingsMultiProfileHint": {
+    "message": "显示配置文件切换器并允许添加多个连接。"
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "删除额外的配置文件以使用单配置文件模式。"
+  },
+  "addAnotherConnection": {
+    "message": "添加另一个连接"
+  },
+  "removeProfile": {
+    "message": "删除此配置文件"
+  },
+  "removeProfileConfirmTitle": {
+    "message": "删除配置文件？"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "这将断开连接并清除此配置文件的所有权限和白名单条目。"
+  },
+  "switchProfile": {
+    "message": "切换配置文件"
+  },
+  "toastProfileRemoved": {
+    "message": "配置文件已删除"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "删除配置文件失败"
+  },
+  "reconnectionFailedMessage": {
+    "message": "无法恢复连接。Bunker 可能已撤销访问权限。"
+  },
+  "renameProfile": {
+    "message": "重命名配置文件"
+  },
+  "renameProfileTitle": {
+    "message": "重命名配置文件"
+  },
+  "renameProfileHint": {
+    "message": "设置显示名称或从 Nostr 获取（kind 0）。"
+  },
+  "renameProfileNameLabel": {
+    "message": "显示名称"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "配置文件名称"
+  },
+  "fetchProfileFromNostr": {
+    "message": "从 Nostr 获取"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "配置文件信息已获取"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "无法从 Nostr 获取配置文件"
+  },
+  "toastProfileRenameFailed": {
+    "message": "重命名配置文件失败"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "断开连接并删除配置文件"
+  }
 }

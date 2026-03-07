@@ -1,145 +1,386 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "موقّع بعيد NIP-07 عبر NIP-46 / Bunker46" },
-
-  "appSubtitle": { "message": "موقّع بعيد NIP-07" },
-  "openFullPage": { "message": "فتح في علامة تبويب جديدة لإدارة الخيارات" },
-  "connected": { "message": "متصل" },
-  "offline": { "message": "غير متصل" },
-  "loading": { "message": "جارٍ التحميل…" },
-  "tabConnection": { "message": "الاتصال" },
-  "tabPermissions": { "message": "الأذونات" },
-  "tabSettings": { "message": "الإعدادات" },
-
-  "errorPasteUri": { "message": "الصق URI من النوع bunker:// أعلاه" },
-  "errorConnectionFailed": { "message": "فشل الاتصال" },
-  "errorGenerateUri": { "message": "فشل إنشاء URI الاتصال" },
-  "errorStartConnection": { "message": "فشل بدء الاتصال" },
-
-  "toastLoggedOut": { "message": "تم تسجيل الخروج" },
-  "toastLogoutFailed": { "message": "فشل تسجيل الخروج" },
-  "toastSettingsSaved": { "message": "تم حفظ الإعدادات" },
-  "toastPrivacyModeOn": { "message": "وضع الخصوصية مفعّل" },
-  "toastPrivacyModeOff": { "message": "وضع الخصوصية معطّل" },
-  "toastBadgeShown": { "message": "الشارة ظاهرة" },
-  "toastBadgeHidden": { "message": "الشارة مخفية" },
-  "toastCopied": { "message": "تم النسخ إلى الحافظة" },
-  "toastCopyFailed": { "message": "فشل النسخ" },
-  "toastPermissionRemoved": { "message": "تم حذف الإذن" },
-  "toastPermissionRemoveFailed": { "message": "فشل حذف الإذن" },
-  "toastDomainRemoved": { "message": "تم حذف أذونات النطاق" },
-  "toastDomainRemoveFailed": { "message": "فشل حذف النطاق" },
-  "toastNoActiveTab": { "message": "لا توجد علامة تبويب أو URL نشطة" },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "extDescription": {
+    "message": "موقّع بعيد NIP-07 عبر NIP-46 / Bunker46"
+  },
+  "appSubtitle": {
+    "message": "موقّع بعيد NIP-07"
+  },
+  "openFullPage": {
+    "message": "فتح في علامة تبويب جديدة لإدارة الخيارات"
+  },
+  "connected": {
+    "message": "متصل"
+  },
+  "offline": {
+    "message": "غير متصل"
+  },
+  "loading": {
+    "message": "جارٍ التحميل…"
+  },
+  "tabConnection": {
+    "message": "الاتصال"
+  },
+  "tabPermissions": {
+    "message": "الأذونات"
+  },
+  "tabSettings": {
+    "message": "الإعدادات"
+  },
+  "errorPasteUri": {
+    "message": "الصق URI من النوع bunker:// أعلاه"
+  },
+  "errorConnectionFailed": {
+    "message": "فشل الاتصال"
+  },
+  "errorGenerateUri": {
+    "message": "فشل إنشاء URI الاتصال"
+  },
+  "errorStartConnection": {
+    "message": "فشل بدء الاتصال"
+  },
+  "toastLoggedOut": {
+    "message": "تم تسجيل الخروج"
+  },
+  "toastLogoutFailed": {
+    "message": "فشل تسجيل الخروج"
+  },
+  "toastSettingsSaved": {
+    "message": "تم حفظ الإعدادات"
+  },
+  "toastPrivacyModeOn": {
+    "message": "وضع الخصوصية مفعّل"
+  },
+  "toastPrivacyModeOff": {
+    "message": "وضع الخصوصية معطّل"
+  },
+  "toastBadgeShown": {
+    "message": "الشارة ظاهرة"
+  },
+  "toastBadgeHidden": {
+    "message": "الشارة مخفية"
+  },
+  "toastCopied": {
+    "message": "تم النسخ إلى الحافظة"
+  },
+  "toastCopyFailed": {
+    "message": "فشل النسخ"
+  },
+  "toastPermissionRemoved": {
+    "message": "تم حذف الإذن"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "فشل حذف الإذن"
+  },
+  "toastDomainRemoved": {
+    "message": "تم حذف أذونات النطاق"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "فشل حذف النطاق"
+  },
+  "toastNoActiveTab": {
+    "message": "لا توجد علامة تبويب أو URL نشطة"
+  },
   "toastAddedToWhitelist": {
     "message": "تمت إضافة $1 إلى القائمة البيضاء. أعد تحميل علامة التبويب لاستخدام Nostr."
   },
-  "toastAddDomainFailed": { "message": "فشل إضافة النطاق" },
-  "toastRemovedFromWhitelist": { "message": "تمت الإزالة من القائمة البيضاء" },
-  "toastRemoveFromWhitelistFailed": { "message": "فشل الإزالة من القائمة البيضاء" },
-
-  "signerKey": { "message": "مفتاح الموقّع" },
-  "copyTitle": { "message": "نسخ" },
-  "showQrTitle": { "message": "عرض رمز QR" },
+  "toastAddDomainFailed": {
+    "message": "فشل إضافة النطاق"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "تمت الإزالة من القائمة البيضاء"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "فشل الإزالة من القائمة البيضاء"
+  },
+  "signerKey": {
+    "message": "مفتاح الموقّع"
+  },
+  "copyTitle": {
+    "message": "نسخ"
+  },
+  "showQrTitle": {
+    "message": "عرض رمز QR"
+  },
   "signerDescription": {
     "message": "يتم إعادة توجيه جميع طلبات NIP-07 من صفحات الويب إلى هذا الموقّع البعيد عبر NIP-46. لا يتم تخزين أي مفاتيح خاصة في الامتداد."
   },
-  "disconnect": { "message": "قطع الاتصال" },
-  "logoutConfirmTitle": { "message": "تسجيل الخروج الكامل؟" },
+  "disconnect": {
+    "message": "قطع الاتصال"
+  },
+  "logoutConfirmTitle": {
+    "message": "تسجيل الخروج الكامل؟"
+  },
   "logoutConfirmDescription": {
     "message": "سيؤدي هذا إلى قطع اتصال موقّعك وحذف جميع الأذونات والقائمة البيضاء لوضع الخصوصية. ستحتاج إلى إعادة الاتصال والسماح للمواقع مجدداً."
   },
-  "cancel": { "message": "إلغاء" },
-  "logOut": { "message": "تسجيل الخروج" },
-
-  "connectViaBunkerUri": { "message": "الاتصال عبر URI Bunker" },
+  "cancel": {
+    "message": "إلغاء"
+  },
+  "logOut": {
+    "message": "تسجيل الخروج"
+  },
+  "connectViaBunkerUri": {
+    "message": "الاتصال عبر URI Bunker"
+  },
   "connectViaBunkerUriDesc": {
     "message": "الصق URI من النوع bunker:// من موقّعك البعيد للاتصال"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "جارٍ الاتصال..." },
-  "connect": { "message": "اتصال" },
-  "separatorOr": { "message": "أو" },
-  "getUriFromBunker46": { "message": "الحصول على URI من Bunker46" },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "connecting": {
+    "message": "جارٍ الاتصال..."
+  },
+  "connect": {
+    "message": "اتصال"
+  },
+  "separatorOr": {
+    "message": "أو"
+  },
+  "getUriFromBunker46": {
+    "message": "الحصول على URI من Bunker46"
+  },
   "nostrConnectDesc": {
     "message": "الاتصال عبر Nostrconnect: يعرض رمز QR وURI لتطبيق bunker الخاص بك لمسحه."
   },
-  "showQrConnectionUri": { "message": "عرض QR وURI الاتصال" },
-
-  "settingsUseBunker46": { "message": "استخدام Bunker46" },
+  "showQrConnectionUri": {
+    "message": "عرض QR وURI الاتصال"
+  },
+  "settingsUseBunker46": {
+    "message": "استخدام Bunker46"
+  },
   "settingsUseBunker46Hint": {
     "message": "معالجة روابط nostrconnect: وإعادة التوجيه إلى نسختك من Bunker46."
   },
-  "settingsBunkerUrl": { "message": "رابط Bunker46" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "الرابط الأساسي لنسختك من Bunker46" },
-  "settingsSpecifyNostrConnectRelays": { "message": "تحديد مرحّلات Nostrconnect" },
+  "settingsBunkerUrl": {
+    "message": "رابط Bunker46"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "الرابط الأساسي لنسختك من Bunker46"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "تحديد مرحّلات Nostrconnect"
+  },
   "settingsSpecifyNostrConnectRelaysHint": {
     "message": "تعيين روابط مرحّلات مخصصة لـ QR/URI الخاص بـ Nostrconnect."
   },
-  "settingsNostrConnectRelays": { "message": "مرحّلات اتصال Nostr" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelays": {
+    "message": "مرحّلات اتصال Nostr"
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
   "settingsNostrConnectRelaysHint": {
     "message": "رابط مرحّل واحد في كل سطر (أو مفصولة بفواصل). تُستخدم عند إنشاء QR/URI للاتصال عبر Nostrconnect."
   },
-  "choiceOn": { "message": "تشغيل" },
-  "choiceOff": { "message": "إيقاف" },
-  "save": { "message": "حفظ" },
-  "privacyMode": { "message": "وضع الخصوصية" },
+  "choiceOn": {
+    "message": "تشغيل"
+  },
+  "choiceOff": {
+    "message": "إيقاف"
+  },
+  "save": {
+    "message": "حفظ"
+  },
+  "privacyMode": {
+    "message": "وضع الخصوصية"
+  },
   "privacyModeHint": {
     "message": "يعرض window.nostr فقط على النطاقات المدرجة في القائمة البيضاء (تبويب الأذونات)؛ يقلل تتبع بصمة المتصفح."
   },
   "privacyModeSitesHint": {
     "message": "لا تستطيع المواقع اكتشاف الامتداد، لذا قد لا تعرض بعضها 'تسجيل الدخول بـ Nostr' حتى تضيفها في الأذونات."
   },
-  "showBadge": { "message": "عرض الشارة على أيقونة الامتداد" },
+  "showBadge": {
+    "message": "عرض الشارة على أيقونة الامتداد"
+  },
   "showBadgeHint": {
     "message": "عند التفعيل، تعرض الأيقونة عدد الأذونات الممنوحة لعلامة التبويب الحالية (مثل 1، 2)."
   },
-
-  "addToWhitelistTitle": { "message": "إضافة $1 إلى القائمة البيضاء" },
-  "addToWhitelistButton": { "message": "إضافة $1 إلى القائمة البيضاء" },
-  "removeFromWhitelistTitle": { "message": "إزالة $1 من القائمة البيضاء" },
-  "removeFromWhitelistButton": { "message": "إزالة $1 من القائمة البيضاء" },
-  "searchDomainsPlaceholder": { "message": "البحث في النطاقات..." },
-  "noPermissionsYet": { "message": "لا توجد أذونات بعد" },
+  "addToWhitelistTitle": {
+    "message": "إضافة $1 إلى القائمة البيضاء"
+  },
+  "addToWhitelistButton": {
+    "message": "إضافة $1 إلى القائمة البيضاء"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "إزالة $1 من القائمة البيضاء"
+  },
+  "removeFromWhitelistButton": {
+    "message": "إزالة $1 من القائمة البيضاء"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "البحث في النطاقات..."
+  },
+  "noPermissionsYet": {
+    "message": "لا توجد أذونات بعد"
+  },
   "noPermissionsHint": {
     "message": "عندما تطلب المواقع الوصول إلى هويتك في Nostr، ستظهر هنا."
   },
-  "noDomainsMatch": { "message": "لا توجد نطاقات تطابق بحثك" },
-  "revokeAllPermissionsTitle": { "message": "إلغاء جميع الأذونات لهذا النطاق" },
+  "noDomainsMatch": {
+    "message": "لا توجد نطاقات تطابق بحثك"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "إلغاء جميع الأذونات لهذا النطاق"
+  },
   "whitelistedNoPermissions": {
     "message": "مدرج في القائمة البيضاء لـ Nostr (لا توجد أذونات بعد)"
   },
-  "allowed": { "message": "مسموح" },
-  "denied": { "message": "مرفوض" },
-  "revokeTitle": { "message": "إلغاء" },
-  "removeFromWhitelist": { "message": "إزالة من القائمة البيضاء" },
-
-  "qrScanToUse": { "message": "$1 (امسح للاستخدام)" },
-  "qrCodeAlt": { "message": "رمز QR" },
-  "close": { "message": "إغلاق" },
-  "nostrConnectModalHint": { "message": "امسح باستخدام تطبيق bunker أو انسخ URI" },
-  "nostrConnectQrAlt": { "message": "رمز QR لـ Nostrconnect" },
-  "copyUri": { "message": "نسخ URI" },
-  "waitingForBunker": { "message": "في انتظار اتصال bunker…" },
-
-  "method_getPublicKey": { "message": "الحصول على المفتاح العام" },
-  "method_signEvent": { "message": "توقيع الحدث" },
-  "method_signEvent_kind": { "message": "توقيع الحدث (النوع $1)" },
-  "method_getRelays": { "message": "الحصول على المرحّلات" },
-  "method_nip04_encrypt": { "message": "تشفير NIP-04" },
-  "method_nip04_decrypt": { "message": "فك تشفير NIP-04" },
-  "method_nip44_encrypt": { "message": "تشفير NIP-44" },
-  "method_nip44_decrypt": { "message": "فك تشفير NIP-44" },
-
-  "promptPermissionRequest": { "message": "طلب إذن" },
-  "promptWantsAccess": { "message": "يريد الوصول إلى هويتك في Nostr" },
-  "promptEventKind": { "message": "نوع الحدث $1" },
-  "promptViewRawMessage": { "message": "عرض الرسالة الخام" },
-  "promptHideRawMessage": { "message": "إخفاء الرسالة الخام" },
-  "promptAllowAlways": { "message": "السماح دائماً" },
-  "promptAllowAlwaysForKindHint": { "message": "ينطبق على هذا النوع من الأحداث فقط" },
-  "promptAllowOnce": { "message": "السماح مرة واحدة" },
-  "promptDenyOnce": { "message": "رفض" },
-  "promptDenyAlways": { "message": "الرفض دائماً" }
+  "allowed": {
+    "message": "مسموح"
+  },
+  "denied": {
+    "message": "مرفوض"
+  },
+  "revokeTitle": {
+    "message": "إلغاء"
+  },
+  "removeFromWhitelist": {
+    "message": "إزالة من القائمة البيضاء"
+  },
+  "qrScanToUse": {
+    "message": "$1 (امسح للاستخدام)"
+  },
+  "qrCodeAlt": {
+    "message": "رمز QR"
+  },
+  "close": {
+    "message": "إغلاق"
+  },
+  "nostrConnectModalHint": {
+    "message": "امسح باستخدام تطبيق bunker أو انسخ URI"
+  },
+  "nostrConnectQrAlt": {
+    "message": "رمز QR لـ Nostrconnect"
+  },
+  "copyUri": {
+    "message": "نسخ URI"
+  },
+  "waitingForBunker": {
+    "message": "في انتظار اتصال bunker…"
+  },
+  "method_getPublicKey": {
+    "message": "الحصول على المفتاح العام"
+  },
+  "method_signEvent": {
+    "message": "توقيع الحدث"
+  },
+  "method_signEvent_kind": {
+    "message": "توقيع الحدث (النوع $1)"
+  },
+  "method_getRelays": {
+    "message": "الحصول على المرحّلات"
+  },
+  "method_nip04_encrypt": {
+    "message": "تشفير NIP-04"
+  },
+  "method_nip04_decrypt": {
+    "message": "فك تشفير NIP-04"
+  },
+  "method_nip44_encrypt": {
+    "message": "تشفير NIP-44"
+  },
+  "method_nip44_decrypt": {
+    "message": "فك تشفير NIP-44"
+  },
+  "promptPermissionRequest": {
+    "message": "طلب إذن"
+  },
+  "promptWantsAccess": {
+    "message": "يريد الوصول إلى هويتك في Nostr"
+  },
+  "promptEventKind": {
+    "message": "نوع الحدث $1"
+  },
+  "promptViewRawMessage": {
+    "message": "عرض الرسالة الخام"
+  },
+  "promptHideRawMessage": {
+    "message": "إخفاء الرسالة الخام"
+  },
+  "promptAllowAlways": {
+    "message": "السماح دائماً"
+  },
+  "promptAllowAlwaysForKindHint": {
+    "message": "ينطبق على هذا النوع من الأحداث فقط"
+  },
+  "promptAllowOnce": {
+    "message": "السماح مرة واحدة"
+  },
+  "promptDenyOnce": {
+    "message": "رفض"
+  },
+  "promptDenyAlways": {
+    "message": "الرفض دائماً"
+  },
+  "settingsMultiProfile": {
+    "message": "ملفات شخصية متعددة"
+  },
+  "settingsMultiProfileHint": {
+    "message": "عرض مبدّل الملفات الشخصية والسماح بإضافة اتصالات متعددة."
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "أزِل الملفات الشخصية الإضافية لاستخدام وضع الملف الشخصي الواحد."
+  },
+  "addAnotherConnection": {
+    "message": "إضافة اتصال آخر"
+  },
+  "removeProfile": {
+    "message": "إزالة هذا الملف الشخصي"
+  },
+  "removeProfileConfirmTitle": {
+    "message": "إزالة الملف الشخصي؟"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "سيؤدي هذا إلى قطع الاتصال ومسح جميع الأذونات وإدخالات القائمة البيضاء لهذا الملف الشخصي."
+  },
+  "switchProfile": {
+    "message": "تبديل الملف الشخصي"
+  },
+  "toastProfileRemoved": {
+    "message": "تمت إزالة الملف الشخصي"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "فشل إزالة الملف الشخصي"
+  },
+  "reconnectionFailedMessage": {
+    "message": "تعذّر استعادة الاتصال. ربما أبطل الـ bunker الوصول."
+  },
+  "renameProfile": {
+    "message": "إعادة تسمية الملف الشخصي"
+  },
+  "renameProfileTitle": {
+    "message": "إعادة تسمية الملف الشخصي"
+  },
+  "renameProfileHint": {
+    "message": "عيّن اسم عرض أو اجلبه من Nostr (نوع 0)."
+  },
+  "renameProfileNameLabel": {
+    "message": "اسم العرض"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "اسم الملف الشخصي"
+  },
+  "fetchProfileFromNostr": {
+    "message": "الجلب من Nostr"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "تم جلب معلومات الملف الشخصي"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "تعذّر جلب الملف الشخصي من Nostr"
+  },
+  "toastProfileRenameFailed": {
+    "message": "فشل إعادة تسمية الملف الشخصي"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "قطع الاتصال وإزالة الملف الشخصي"
+  }
 }

@@ -1,147 +1,386 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "Fjärr-NIP-07-signerare via NIP-46 / Bunker46" },
-
-  "appSubtitle": { "message": "Fjärr-NIP-07-signerare" },
-  "openFullPage": { "message": "Öppna i ny flik för att hantera alternativ" },
-  "connected": { "message": "Ansluten" },
-  "offline": { "message": "Offline" },
-  "loading": { "message": "Laddar…" },
-  "tabConnection": { "message": "Anslutning" },
-  "tabPermissions": { "message": "Behörigheter" },
-  "tabSettings": { "message": "Inställningar" },
-
-  "errorPasteUri": { "message": "Klistra in en bunker://-URI ovan" },
-  "errorConnectionFailed": { "message": "Anslutningen misslyckades" },
-  "errorGenerateUri": { "message": "Det gick inte att skapa anslutnings-URI" },
-  "errorStartConnection": { "message": "Det gick inte att starta anslutningen" },
-
-  "toastLoggedOut": { "message": "Utloggad" },
-  "toastLogoutFailed": { "message": "Utloggning misslyckades" },
-  "toastSettingsSaved": { "message": "Inställningar sparade" },
-  "toastPrivacyModeOn": { "message": "Integritetsläge aktiverat" },
-  "toastPrivacyModeOff": { "message": "Integritetsläge inaktiverat" },
-  "toastBadgeShown": { "message": "Märke visas" },
-  "toastBadgeHidden": { "message": "Märke dolt" },
-  "toastCopied": { "message": "Kopierat till urklipp" },
-  "toastCopyFailed": { "message": "Kopiering misslyckades" },
-  "toastPermissionRemoved": { "message": "Behörighet borttagen" },
-  "toastPermissionRemoveFailed": { "message": "Det gick inte att ta bort behörighet" },
-  "toastDomainRemoved": { "message": "Domänbehörigheter borttagna" },
-  "toastDomainRemoveFailed": { "message": "Det gick inte att ta bort domän" },
-  "toastNoActiveTab": { "message": "Ingen aktiv flik eller URL" },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "extDescription": {
+    "message": "Fjärr-NIP-07-signerare via NIP-46 / Bunker46"
+  },
+  "appSubtitle": {
+    "message": "Fjärr-NIP-07-signerare"
+  },
+  "openFullPage": {
+    "message": "Öppna i ny flik för att hantera alternativ"
+  },
+  "connected": {
+    "message": "Ansluten"
+  },
+  "offline": {
+    "message": "Offline"
+  },
+  "loading": {
+    "message": "Laddar…"
+  },
+  "tabConnection": {
+    "message": "Anslutning"
+  },
+  "tabPermissions": {
+    "message": "Behörigheter"
+  },
+  "tabSettings": {
+    "message": "Inställningar"
+  },
+  "errorPasteUri": {
+    "message": "Klistra in en bunker://-URI ovan"
+  },
+  "errorConnectionFailed": {
+    "message": "Anslutningen misslyckades"
+  },
+  "errorGenerateUri": {
+    "message": "Det gick inte att skapa anslutnings-URI"
+  },
+  "errorStartConnection": {
+    "message": "Det gick inte att starta anslutningen"
+  },
+  "toastLoggedOut": {
+    "message": "Utloggad"
+  },
+  "toastLogoutFailed": {
+    "message": "Utloggning misslyckades"
+  },
+  "toastSettingsSaved": {
+    "message": "Inställningar sparade"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Integritetsläge aktiverat"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Integritetsläge inaktiverat"
+  },
+  "toastBadgeShown": {
+    "message": "Märke visas"
+  },
+  "toastBadgeHidden": {
+    "message": "Märke dolt"
+  },
+  "toastCopied": {
+    "message": "Kopierat till urklipp"
+  },
+  "toastCopyFailed": {
+    "message": "Kopiering misslyckades"
+  },
+  "toastPermissionRemoved": {
+    "message": "Behörighet borttagen"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Det gick inte att ta bort behörighet"
+  },
+  "toastDomainRemoved": {
+    "message": "Domänbehörigheter borttagna"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Det gick inte att ta bort domän"
+  },
+  "toastNoActiveTab": {
+    "message": "Ingen aktiv flik eller URL"
+  },
   "toastAddedToWhitelist": {
     "message": "$1 tillagd i tillåtelselistan. Ladda om fliken för att använda Nostr."
   },
-  "toastAddDomainFailed": { "message": "Det gick inte att lägga till domän" },
-  "toastRemovedFromWhitelist": { "message": "Borttagen från tillåtelselistan" },
+  "toastAddDomainFailed": {
+    "message": "Det gick inte att lägga till domän"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "Borttagen från tillåtelselistan"
+  },
   "toastRemoveFromWhitelistFailed": {
     "message": "Det gick inte att ta bort från tillåtelselistan"
   },
-
-  "signerKey": { "message": "Signeringsnyckel" },
-  "copyTitle": { "message": "Kopiera" },
-  "showQrTitle": { "message": "Visa QR-kod" },
+  "signerKey": {
+    "message": "Signeringsnyckel"
+  },
+  "copyTitle": {
+    "message": "Kopiera"
+  },
+  "showQrTitle": {
+    "message": "Visa QR-kod"
+  },
   "signerDescription": {
     "message": "Alla NIP-07-förfrågningar från webbsidor vidarebefordras till denna fjärrsignerare via NIP-46. Inga privata nycklar lagras i tillägget."
   },
-  "disconnect": { "message": "Koppla från" },
-  "logoutConfirmTitle": { "message": "Logga ut helt?" },
+  "disconnect": {
+    "message": "Koppla från"
+  },
+  "logoutConfirmTitle": {
+    "message": "Logga ut helt?"
+  },
   "logoutConfirmDescription": {
     "message": "Detta kopplar från signeraren och rensar alla behörigheter samt tillåtelselistan för integritetsläget. Du måste ansluta igen och godkänna webbplatser på nytt."
   },
-  "cancel": { "message": "Avbryt" },
-  "logOut": { "message": "Logga ut" },
-
-  "connectViaBunkerUri": { "message": "Anslut via Bunker-URI" },
+  "cancel": {
+    "message": "Avbryt"
+  },
+  "logOut": {
+    "message": "Logga ut"
+  },
+  "connectViaBunkerUri": {
+    "message": "Anslut via Bunker-URI"
+  },
   "connectViaBunkerUriDesc": {
     "message": "Klistra in en bunker://-URI från din fjärrsignerare för att ansluta"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "Ansluter..." },
-  "connect": { "message": "Anslut" },
-  "separatorOr": { "message": "eller" },
-  "getUriFromBunker46": { "message": "Hämta URI från Bunker46" },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "connecting": {
+    "message": "Ansluter..."
+  },
+  "connect": {
+    "message": "Anslut"
+  },
+  "separatorOr": {
+    "message": "eller"
+  },
+  "getUriFromBunker46": {
+    "message": "Hämta URI från Bunker46"
+  },
   "nostrConnectDesc": {
     "message": "Anslut via Nostrconnect: visa en QR-kod och URI som din bunker-app kan skanna."
   },
-  "showQrConnectionUri": { "message": "Visa QR-kod och anslutnings-URI" },
-
-  "settingsUseBunker46": { "message": "Använd Bunker46" },
+  "showQrConnectionUri": {
+    "message": "Visa QR-kod och anslutnings-URI"
+  },
+  "settingsUseBunker46": {
+    "message": "Använd Bunker46"
+  },
   "settingsUseBunker46Hint": {
     "message": "Hantera nostrconnect:-länkar och omdirigera till din Bunker46-instans."
   },
-  "settingsBunkerUrl": { "message": "Bunker46-URL" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "Bas-URL för din Bunker46-instans" },
-  "settingsSpecifyNostrConnectRelays": { "message": "Ange Nostrconnect-reläer" },
+  "settingsBunkerUrl": {
+    "message": "Bunker46-URL"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "Bas-URL för din Bunker46-instans"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Ange Nostrconnect-reläer"
+  },
   "settingsSpecifyNostrConnectRelaysHint": {
     "message": "Ange anpassade relä-URL:er för Nostrconnect QR/URI."
   },
-  "settingsNostrConnectRelays": { "message": "Nostr-anslutningsreläer" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelays": {
+    "message": "Nostr-anslutningsreläer"
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
   "settingsNostrConnectRelaysHint": {
     "message": "En relä-URL per rad (eller kommaavgränsad). Används vid generering av QR/URI för anslutning via Nostrconnect."
   },
-  "choiceOn": { "message": "På" },
-  "choiceOff": { "message": "Av" },
-  "save": { "message": "Spara" },
-  "privacyMode": { "message": "Integritetsläge" },
+  "choiceOn": {
+    "message": "På"
+  },
+  "choiceOff": {
+    "message": "Av"
+  },
+  "save": {
+    "message": "Spara"
+  },
+  "privacyMode": {
+    "message": "Integritetsläge"
+  },
   "privacyModeHint": {
     "message": "Exponerar window.nostr endast på domäner i tillåtelselistan (fliken Behörigheter); minskar fingeravtrycksspårning."
   },
   "privacyModeSitesHint": {
     "message": "Webbplatser kan inte identifiera tillägget, så vissa kanske inte visar \"Logga in med Nostr\" förrän du lägger till dem under Behörigheter."
   },
-  "showBadge": { "message": "Visa märke på tilläggsikonen" },
+  "showBadge": {
+    "message": "Visa märke på tilläggsikonen"
+  },
   "showBadgeHint": {
     "message": "När aktiverat visar ikonen antalet beviljade behörigheter för den aktuella fliken (t.ex. 1, 2)."
   },
-
-  "addToWhitelistTitle": { "message": "Lägg till $1 i tillåtelselistan" },
-  "addToWhitelistButton": { "message": "Lägg till $1 i tillåtelselistan" },
-  "removeFromWhitelistTitle": { "message": "Ta bort $1 från tillåtelselistan" },
-  "removeFromWhitelistButton": { "message": "Ta bort $1 från tillåtelselistan" },
-  "searchDomainsPlaceholder": { "message": "Sök domäner..." },
-  "noPermissionsYet": { "message": "Inga behörigheter ännu" },
+  "addToWhitelistTitle": {
+    "message": "Lägg till $1 i tillåtelselistan"
+  },
+  "addToWhitelistButton": {
+    "message": "Lägg till $1 i tillåtelselistan"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "Ta bort $1 från tillåtelselistan"
+  },
+  "removeFromWhitelistButton": {
+    "message": "Ta bort $1 från tillåtelselistan"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Sök domäner..."
+  },
+  "noPermissionsYet": {
+    "message": "Inga behörigheter ännu"
+  },
   "noPermissionsHint": {
     "message": "När webbplatser begär åtkomst till din Nostr-identitet visas de här."
   },
-  "noDomainsMatch": { "message": "Inga domäner matchar din sökning" },
-  "revokeAllPermissionsTitle": { "message": "Återkalla alla behörigheter för denna domän" },
+  "noDomainsMatch": {
+    "message": "Inga domäner matchar din sökning"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "Återkalla alla behörigheter för denna domän"
+  },
   "whitelistedNoPermissions": {
     "message": "I tillåtelselistan för Nostr (inga behörigheter ännu)"
   },
-  "allowed": { "message": "Tillåten" },
-  "denied": { "message": "Nekad" },
-  "revokeTitle": { "message": "Återkalla" },
-  "removeFromWhitelist": { "message": "Ta bort från tillåtelselistan" },
-
-  "qrScanToUse": { "message": "$1 (skanna för att använda)" },
-  "qrCodeAlt": { "message": "QR-kod" },
-  "close": { "message": "Stäng" },
-  "nostrConnectModalHint": { "message": "Skanna med din bunker-app eller kopiera URI:n" },
-  "nostrConnectQrAlt": { "message": "Nostrconnect QR-kod" },
-  "copyUri": { "message": "Kopiera URI" },
-  "waitingForBunker": { "message": "Väntar på att bunkern ansluter…" },
-
-  "method_getPublicKey": { "message": "Hämta offentlig nyckel" },
-  "method_signEvent": { "message": "Signera händelse" },
-  "method_signEvent_kind": { "message": "Signera händelse (typ $1)" },
-  "method_getRelays": { "message": "Hämta reläer" },
-  "method_nip04_encrypt": { "message": "NIP-04-kryptering" },
-  "method_nip04_decrypt": { "message": "NIP-04-dekryptering" },
-  "method_nip44_encrypt": { "message": "NIP-44-kryptering" },
-  "method_nip44_decrypt": { "message": "NIP-44-dekryptering" },
-
-  "promptPermissionRequest": { "message": "Behörighetsbegäran" },
-  "promptWantsAccess": { "message": "vill komma åt din Nostr-identitet" },
-  "promptEventKind": { "message": "Händelsetyp $1" },
-  "promptViewRawMessage": { "message": "Visa råmeddelande" },
-  "promptHideRawMessage": { "message": "Dölj råmeddelande" },
-  "promptAllowAlways": { "message": "Tillåt alltid" },
-  "promptAllowAlwaysForKindHint": { "message": "Gäller endast denna händelsetyp" },
-  "promptAllowOnce": { "message": "Tillåt en gång" },
-  "promptDenyOnce": { "message": "Neka" },
-  "promptDenyAlways": { "message": "Neka alltid" }
+  "allowed": {
+    "message": "Tillåten"
+  },
+  "denied": {
+    "message": "Nekad"
+  },
+  "revokeTitle": {
+    "message": "Återkalla"
+  },
+  "removeFromWhitelist": {
+    "message": "Ta bort från tillåtelselistan"
+  },
+  "qrScanToUse": {
+    "message": "$1 (skanna för att använda)"
+  },
+  "qrCodeAlt": {
+    "message": "QR-kod"
+  },
+  "close": {
+    "message": "Stäng"
+  },
+  "nostrConnectModalHint": {
+    "message": "Skanna med din bunker-app eller kopiera URI:n"
+  },
+  "nostrConnectQrAlt": {
+    "message": "Nostrconnect QR-kod"
+  },
+  "copyUri": {
+    "message": "Kopiera URI"
+  },
+  "waitingForBunker": {
+    "message": "Väntar på att bunkern ansluter…"
+  },
+  "method_getPublicKey": {
+    "message": "Hämta offentlig nyckel"
+  },
+  "method_signEvent": {
+    "message": "Signera händelse"
+  },
+  "method_signEvent_kind": {
+    "message": "Signera händelse (typ $1)"
+  },
+  "method_getRelays": {
+    "message": "Hämta reläer"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04-kryptering"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04-dekryptering"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44-kryptering"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44-dekryptering"
+  },
+  "promptPermissionRequest": {
+    "message": "Behörighetsbegäran"
+  },
+  "promptWantsAccess": {
+    "message": "vill komma åt din Nostr-identitet"
+  },
+  "promptEventKind": {
+    "message": "Händelsetyp $1"
+  },
+  "promptViewRawMessage": {
+    "message": "Visa råmeddelande"
+  },
+  "promptHideRawMessage": {
+    "message": "Dölj råmeddelande"
+  },
+  "promptAllowAlways": {
+    "message": "Tillåt alltid"
+  },
+  "promptAllowAlwaysForKindHint": {
+    "message": "Gäller endast denna händelsetyp"
+  },
+  "promptAllowOnce": {
+    "message": "Tillåt en gång"
+  },
+  "promptDenyOnce": {
+    "message": "Neka"
+  },
+  "promptDenyAlways": {
+    "message": "Neka alltid"
+  },
+  "settingsMultiProfile": {
+    "message": "Flera profiler"
+  },
+  "settingsMultiProfileHint": {
+    "message": "Visa profilväxlare och tillåt att lägga till flera anslutningar."
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Ta bort extra profiler för att använda enkelprofillsläge."
+  },
+  "addAnotherConnection": {
+    "message": "Lägg till en annan anslutning"
+  },
+  "removeProfile": {
+    "message": "Ta bort den här profilen"
+  },
+  "removeProfileConfirmTitle": {
+    "message": "Ta bort profil?"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "Detta kopplar från och rensar alla behörigheter och vitlisteposter för den här profilen."
+  },
+  "switchProfile": {
+    "message": "Byt profil"
+  },
+  "toastProfileRemoved": {
+    "message": "Profil borttagen"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "Det gick inte att ta bort profilen"
+  },
+  "reconnectionFailedMessage": {
+    "message": "Anslutningen kunde inte återupprättas. Bunkern kan ha återkallat åtkomsten."
+  },
+  "renameProfile": {
+    "message": "Byt namn på profil"
+  },
+  "renameProfileTitle": {
+    "message": "Byt namn på profil"
+  },
+  "renameProfileHint": {
+    "message": "Ange ett visningsnamn eller hämta det från Nostr (kind 0)."
+  },
+  "renameProfileNameLabel": {
+    "message": "Visningsnamn"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "Profilnamn"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Hämta från Nostr"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "Profilinformation hämtad"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "Kunde inte hämta profil från Nostr"
+  },
+  "toastProfileRenameFailed": {
+    "message": "Det gick inte att byta namn på profilen"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Koppla från och ta bort profil"
+  }
 }

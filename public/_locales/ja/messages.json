@@ -1,145 +1,386 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "NIP-46 / Bunker46 経由の NIP-07 リモート署名者" },
-
-  "appSubtitle": { "message": "NIP-07 リモート署名者" },
-  "openFullPage": { "message": "新しいタブで開いてオプションを管理" },
-  "connected": { "message": "接続済み" },
-  "offline": { "message": "オフライン" },
-  "loading": { "message": "読み込み中…" },
-  "tabConnection": { "message": "接続" },
-  "tabPermissions": { "message": "許可" },
-  "tabSettings": { "message": "設定" },
-
-  "errorPasteUri": { "message": "bunker:// URI を上に貼り付けてください" },
-  "errorConnectionFailed": { "message": "接続に失敗しました" },
-  "errorGenerateUri": { "message": "接続 URI の生成に失敗しました" },
-  "errorStartConnection": { "message": "接続の開始に失敗しました" },
-
-  "toastLoggedOut": { "message": "ログアウトしました" },
-  "toastLogoutFailed": { "message": "ログアウトに失敗しました" },
-  "toastSettingsSaved": { "message": "設定を保存しました" },
-  "toastPrivacyModeOn": { "message": "プライバシーモードをオンにしました" },
-  "toastPrivacyModeOff": { "message": "プライバシーモードをオフにしました" },
-  "toastBadgeShown": { "message": "バッジを表示しています" },
-  "toastBadgeHidden": { "message": "バッジを非表示にしました" },
-  "toastCopied": { "message": "クリップボードにコピーしました" },
-  "toastCopyFailed": { "message": "コピーに失敗しました" },
-  "toastPermissionRemoved": { "message": "許可を削除しました" },
-  "toastPermissionRemoveFailed": { "message": "許可の削除に失敗しました" },
-  "toastDomainRemoved": { "message": "ドメインの許可を削除しました" },
-  "toastDomainRemoveFailed": { "message": "ドメインの削除に失敗しました" },
-  "toastNoActiveTab": { "message": "アクティブなタブまたは URL がありません" },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "extDescription": {
+    "message": "NIP-46 / Bunker46 経由の NIP-07 リモート署名者"
+  },
+  "appSubtitle": {
+    "message": "NIP-07 リモート署名者"
+  },
+  "openFullPage": {
+    "message": "新しいタブで開いてオプションを管理"
+  },
+  "connected": {
+    "message": "接続済み"
+  },
+  "offline": {
+    "message": "オフライン"
+  },
+  "loading": {
+    "message": "読み込み中…"
+  },
+  "tabConnection": {
+    "message": "接続"
+  },
+  "tabPermissions": {
+    "message": "許可"
+  },
+  "tabSettings": {
+    "message": "設定"
+  },
+  "errorPasteUri": {
+    "message": "bunker:// URI を上に貼り付けてください"
+  },
+  "errorConnectionFailed": {
+    "message": "接続に失敗しました"
+  },
+  "errorGenerateUri": {
+    "message": "接続 URI の生成に失敗しました"
+  },
+  "errorStartConnection": {
+    "message": "接続の開始に失敗しました"
+  },
+  "toastLoggedOut": {
+    "message": "ログアウトしました"
+  },
+  "toastLogoutFailed": {
+    "message": "ログアウトに失敗しました"
+  },
+  "toastSettingsSaved": {
+    "message": "設定を保存しました"
+  },
+  "toastPrivacyModeOn": {
+    "message": "プライバシーモードをオンにしました"
+  },
+  "toastPrivacyModeOff": {
+    "message": "プライバシーモードをオフにしました"
+  },
+  "toastBadgeShown": {
+    "message": "バッジを表示しています"
+  },
+  "toastBadgeHidden": {
+    "message": "バッジを非表示にしました"
+  },
+  "toastCopied": {
+    "message": "クリップボードにコピーしました"
+  },
+  "toastCopyFailed": {
+    "message": "コピーに失敗しました"
+  },
+  "toastPermissionRemoved": {
+    "message": "許可を削除しました"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "許可の削除に失敗しました"
+  },
+  "toastDomainRemoved": {
+    "message": "ドメインの許可を削除しました"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "ドメインの削除に失敗しました"
+  },
+  "toastNoActiveTab": {
+    "message": "アクティブなタブまたは URL がありません"
+  },
   "toastAddedToWhitelist": {
     "message": "$1 をホワイトリストに追加しました。Nostr を使用するにはタブを再読み込みしてください。"
   },
-  "toastAddDomainFailed": { "message": "ドメインの追加に失敗しました" },
-  "toastRemovedFromWhitelist": { "message": "ホワイトリストから削除しました" },
-  "toastRemoveFromWhitelistFailed": { "message": "ホワイトリストからの削除に失敗しました" },
-
-  "signerKey": { "message": "署名者キー" },
-  "copyTitle": { "message": "コピー" },
-  "showQrTitle": { "message": "QR コードを表示" },
+  "toastAddDomainFailed": {
+    "message": "ドメインの追加に失敗しました"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "ホワイトリストから削除しました"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "ホワイトリストからの削除に失敗しました"
+  },
+  "signerKey": {
+    "message": "署名者キー"
+  },
+  "copyTitle": {
+    "message": "コピー"
+  },
+  "showQrTitle": {
+    "message": "QR コードを表示"
+  },
   "signerDescription": {
     "message": "ウェブページからの NIP-07 リクエストはすべて、NIP-46 経由でこのリモート署名者に転送されます。拡張機能に秘密鍵は保存されません。"
   },
-  "disconnect": { "message": "切断" },
-  "logoutConfirmTitle": { "message": "完全にログアウトしますか？" },
+  "disconnect": {
+    "message": "切断"
+  },
+  "logoutConfirmTitle": {
+    "message": "完全にログアウトしますか？"
+  },
   "logoutConfirmDescription": {
     "message": "この操作により署名者との接続が切断され、すべての許可とプライバシーモードのホワイトリストが消去されます。再接続してサイトを再承認する必要があります。"
   },
-  "cancel": { "message": "キャンセル" },
-  "logOut": { "message": "ログアウト" },
-
-  "connectViaBunkerUri": { "message": "Bunker URI で接続" },
+  "cancel": {
+    "message": "キャンセル"
+  },
+  "logOut": {
+    "message": "ログアウト"
+  },
+  "connectViaBunkerUri": {
+    "message": "Bunker URI で接続"
+  },
   "connectViaBunkerUriDesc": {
     "message": "リモート署名者から bunker:// URI を貼り付けて接続してください"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "接続中..." },
-  "connect": { "message": "接続" },
-  "separatorOr": { "message": "または" },
-  "getUriFromBunker46": { "message": "Bunker46 から URI を取得" },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "connecting": {
+    "message": "接続中..."
+  },
+  "connect": {
+    "message": "接続"
+  },
+  "separatorOr": {
+    "message": "または"
+  },
+  "getUriFromBunker46": {
+    "message": "Bunker46 から URI を取得"
+  },
   "nostrConnectDesc": {
     "message": "Nostrconnect で接続：バンカーアプリでスキャンできる QR コードと URI を表示します。"
   },
-  "showQrConnectionUri": { "message": "QR と接続 URI を表示" },
-
-  "settingsUseBunker46": { "message": "Bunker46 を使用" },
+  "showQrConnectionUri": {
+    "message": "QR と接続 URI を表示"
+  },
+  "settingsUseBunker46": {
+    "message": "Bunker46 を使用"
+  },
   "settingsUseBunker46Hint": {
     "message": "nostrconnect: リンクを処理して Bunker46 インスタンスにリダイレクトします。"
   },
-  "settingsBunkerUrl": { "message": "Bunker46 URL" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "Bunker46 インスタンスのベース URL" },
-  "settingsSpecifyNostrConnectRelays": { "message": "Nostrconnect リレーを指定" },
+  "settingsBunkerUrl": {
+    "message": "Bunker46 URL"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "Bunker46 インスタンスのベース URL"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Nostrconnect リレーを指定"
+  },
   "settingsSpecifyNostrConnectRelaysHint": {
     "message": "Nostrconnect QR/URI 用のカスタムリレー URL を設定します。"
   },
-  "settingsNostrConnectRelays": { "message": "Nostr 接続リレー" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelays": {
+    "message": "Nostr 接続リレー"
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
   "settingsNostrConnectRelaysHint": {
     "message": "1 行に 1 つのリレー URL（またはカンマ区切り）。Nostrconnect 経由の接続用 QR/URI 生成時に使用されます。"
   },
-  "choiceOn": { "message": "オン" },
-  "choiceOff": { "message": "オフ" },
-  "save": { "message": "保存" },
-  "privacyMode": { "message": "プライバシーモード" },
+  "choiceOn": {
+    "message": "オン"
+  },
+  "choiceOff": {
+    "message": "オフ"
+  },
+  "save": {
+    "message": "保存"
+  },
+  "privacyMode": {
+    "message": "プライバシーモード"
+  },
   "privacyModeHint": {
     "message": "ホワイトリストのドメインのみ window.nostr を公開します（「許可」タブ）。フィンガープリントによる追跡を軽減します。"
   },
   "privacyModeSitesHint": {
     "message": "サイトは拡張機能を検出できないため、「Nostr でサインイン」が表示されないことがあります。その場合は「許可」で追加してください。"
   },
-  "showBadge": { "message": "拡張機能アイコンにバッジを表示" },
+  "showBadge": {
+    "message": "拡張機能アイコンにバッジを表示"
+  },
   "showBadgeHint": {
     "message": "オンにすると、現在のタブで付与されている許可数をアイコンに表示します（例：1、2）。"
   },
-
-  "addToWhitelistTitle": { "message": "$1 をホワイトリストに追加" },
-  "addToWhitelistButton": { "message": "$1 をホワイトリストに追加" },
-  "removeFromWhitelistTitle": { "message": "$1 をホワイトリストから削除" },
-  "removeFromWhitelistButton": { "message": "$1 をホワイトリストから削除" },
-  "searchDomainsPlaceholder": { "message": "ドメインを検索..." },
-  "noPermissionsYet": { "message": "許可はまだありません" },
+  "addToWhitelistTitle": {
+    "message": "$1 をホワイトリストに追加"
+  },
+  "addToWhitelistButton": {
+    "message": "$1 をホワイトリストに追加"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "$1 をホワイトリストから削除"
+  },
+  "removeFromWhitelistButton": {
+    "message": "$1 をホワイトリストから削除"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "ドメインを検索..."
+  },
+  "noPermissionsYet": {
+    "message": "許可はまだありません"
+  },
   "noPermissionsHint": {
     "message": "ウェブサイトが Nostr ID へのアクセスを要求すると、ここに表示されます。"
   },
-  "noDomainsMatch": { "message": "検索に一致するドメインがありません" },
-  "revokeAllPermissionsTitle": { "message": "このドメインのすべての許可を取り消す" },
+  "noDomainsMatch": {
+    "message": "検索に一致するドメインがありません"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "このドメインのすべての許可を取り消す"
+  },
   "whitelistedNoPermissions": {
     "message": "Nostr 用ホワイトリスト登録済み（許可はまだありません）"
   },
-  "allowed": { "message": "許可済み" },
-  "denied": { "message": "拒否済み" },
-  "revokeTitle": { "message": "取り消す" },
-  "removeFromWhitelist": { "message": "ホワイトリストから削除" },
-
-  "qrScanToUse": { "message": "$1（スキャンして使用）" },
-  "qrCodeAlt": { "message": "QR コード" },
-  "close": { "message": "閉じる" },
-  "nostrConnectModalHint": { "message": "バンカーアプリでスキャンするか URI をコピーしてください" },
-  "nostrConnectQrAlt": { "message": "Nostrconnect QR コード" },
-  "copyUri": { "message": "URI をコピー" },
-  "waitingForBunker": { "message": "バンカーの接続を待っています…" },
-
-  "method_getPublicKey": { "message": "公開鍵を取得" },
-  "method_signEvent": { "message": "イベントに署名" },
-  "method_signEvent_kind": { "message": "イベントに署名（種類 $1）" },
-  "method_getRelays": { "message": "リレーを取得" },
-  "method_nip04_encrypt": { "message": "NIP-04 暗号化" },
-  "method_nip04_decrypt": { "message": "NIP-04 復号" },
-  "method_nip44_encrypt": { "message": "NIP-44 暗号化" },
-  "method_nip44_decrypt": { "message": "NIP-44 復号" },
-
-  "promptPermissionRequest": { "message": "許可リクエスト" },
-  "promptWantsAccess": { "message": "あなたの Nostr ID へのアクセスを要求しています" },
-  "promptEventKind": { "message": "イベント種類 $1" },
-  "promptViewRawMessage": { "message": "生のメッセージを表示" },
-  "promptHideRawMessage": { "message": "生のメッセージを非表示" },
-  "promptAllowAlways": { "message": "常に許可" },
-  "promptAllowAlwaysForKindHint": { "message": "このイベント種類にのみ適用されます" },
-  "promptAllowOnce": { "message": "一度だけ許可" },
-  "promptDenyOnce": { "message": "拒否" },
-  "promptDenyAlways": { "message": "常に拒否" }
+  "allowed": {
+    "message": "許可済み"
+  },
+  "denied": {
+    "message": "拒否済み"
+  },
+  "revokeTitle": {
+    "message": "取り消す"
+  },
+  "removeFromWhitelist": {
+    "message": "ホワイトリストから削除"
+  },
+  "qrScanToUse": {
+    "message": "$1（スキャンして使用）"
+  },
+  "qrCodeAlt": {
+    "message": "QR コード"
+  },
+  "close": {
+    "message": "閉じる"
+  },
+  "nostrConnectModalHint": {
+    "message": "バンカーアプリでスキャンするか URI をコピーしてください"
+  },
+  "nostrConnectQrAlt": {
+    "message": "Nostrconnect QR コード"
+  },
+  "copyUri": {
+    "message": "URI をコピー"
+  },
+  "waitingForBunker": {
+    "message": "バンカーの接続を待っています…"
+  },
+  "method_getPublicKey": {
+    "message": "公開鍵を取得"
+  },
+  "method_signEvent": {
+    "message": "イベントに署名"
+  },
+  "method_signEvent_kind": {
+    "message": "イベントに署名（種類 $1）"
+  },
+  "method_getRelays": {
+    "message": "リレーを取得"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04 暗号化"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04 復号"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44 暗号化"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44 復号"
+  },
+  "promptPermissionRequest": {
+    "message": "許可リクエスト"
+  },
+  "promptWantsAccess": {
+    "message": "あなたの Nostr ID へのアクセスを要求しています"
+  },
+  "promptEventKind": {
+    "message": "イベント種類 $1"
+  },
+  "promptViewRawMessage": {
+    "message": "生のメッセージを表示"
+  },
+  "promptHideRawMessage": {
+    "message": "生のメッセージを非表示"
+  },
+  "promptAllowAlways": {
+    "message": "常に許可"
+  },
+  "promptAllowAlwaysForKindHint": {
+    "message": "このイベント種類にのみ適用されます"
+  },
+  "promptAllowOnce": {
+    "message": "一度だけ許可"
+  },
+  "promptDenyOnce": {
+    "message": "拒否"
+  },
+  "promptDenyAlways": {
+    "message": "常に拒否"
+  },
+  "settingsMultiProfile": {
+    "message": "複数のプロフィール"
+  },
+  "settingsMultiProfileHint": {
+    "message": "プロフィール切替器を表示し、複数の接続を追加できるようにします。"
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "シングルプロフィールモードを使用するには、追加のプロフィールを削除してください。"
+  },
+  "addAnotherConnection": {
+    "message": "別の接続を追加"
+  },
+  "removeProfile": {
+    "message": "このプロフィールを削除"
+  },
+  "removeProfileConfirmTitle": {
+    "message": "プロフィールを削除しますか？"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "このプロフィールのすべての権限とホワイトリストのエントリを切断・削除します。"
+  },
+  "switchProfile": {
+    "message": "プロフィールを切替"
+  },
+  "toastProfileRemoved": {
+    "message": "プロフィールを削除しました"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "プロフィールの削除に失敗しました"
+  },
+  "reconnectionFailedMessage": {
+    "message": "接続を復元できませんでした。バンカーがアクセスを取り消した可能性があります。"
+  },
+  "renameProfile": {
+    "message": "プロフィールの名前を変更"
+  },
+  "renameProfileTitle": {
+    "message": "プロフィールの名前を変更"
+  },
+  "renameProfileHint": {
+    "message": "表示名を設定するか、Nostrから取得します（kind 0）。"
+  },
+  "renameProfileNameLabel": {
+    "message": "表示名"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "プロフィール名"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Nostrから取得"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "プロフィール情報を取得しました"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "Nostrからプロフィールを取得できませんでした"
+  },
+  "toastProfileRenameFailed": {
+    "message": "プロフィールの名前変更に失敗しました"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "切断してプロフィールを削除"
+  }
 }

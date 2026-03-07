@@ -1,143 +1,386 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "NIP-46 / Bunker46 के ज़रिए NIP-07 रिमोट साइनर" },
-
-  "appSubtitle": { "message": "NIP-07 रिमोट साइनर" },
-  "openFullPage": { "message": "विकल्प प्रबंधित करने के लिए नए टैब में खोलें" },
-  "connected": { "message": "कनेक्टेड" },
-  "offline": { "message": "ऑफ़लाइन" },
-  "loading": { "message": "लोड हो रहा है…" },
-  "tabConnection": { "message": "कनेक्शन" },
-  "tabPermissions": { "message": "अनुमतियाँ" },
-  "tabSettings": { "message": "सेटिंग्स" },
-
-  "errorPasteUri": { "message": "ऊपर एक bunker:// URI पेस्ट करें" },
-  "errorConnectionFailed": { "message": "कनेक्शन विफल" },
-  "errorGenerateUri": { "message": "कनेक्शन URI बनाने में विफल" },
-  "errorStartConnection": { "message": "कनेक्शन शुरू करने में विफल" },
-
-  "toastLoggedOut": { "message": "लॉग आउट हो गया" },
-  "toastLogoutFailed": { "message": "लॉग आउट विफल" },
-  "toastSettingsSaved": { "message": "सेटिंग्स सहेजी गईं" },
-  "toastPrivacyModeOn": { "message": "प्राइवेसी मोड चालू" },
-  "toastPrivacyModeOff": { "message": "प्राइवेसी मोड बंद" },
-  "toastBadgeShown": { "message": "बैज दिख रहा है" },
-  "toastBadgeHidden": { "message": "बैज छुपाया गया" },
-  "toastCopied": { "message": "क्लिपबोर्ड पर कॉपी हो गया" },
-  "toastCopyFailed": { "message": "कॉपी करने में विफल" },
-  "toastPermissionRemoved": { "message": "अनुमति हटाई गई" },
-  "toastPermissionRemoveFailed": { "message": "अनुमति हटाने में विफल" },
-  "toastDomainRemoved": { "message": "डोमेन अनुमतियाँ हटाई गईं" },
-  "toastDomainRemoveFailed": { "message": "डोमेन हटाने में विफल" },
-  "toastNoActiveTab": { "message": "कोई सक्रिय टैब या URL नहीं" },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "extDescription": {
+    "message": "NIP-46 / Bunker46 के ज़रिए NIP-07 रिमोट साइनर"
+  },
+  "appSubtitle": {
+    "message": "NIP-07 रिमोट साइनर"
+  },
+  "openFullPage": {
+    "message": "विकल्प प्रबंधित करने के लिए नए टैब में खोलें"
+  },
+  "connected": {
+    "message": "कनेक्टेड"
+  },
+  "offline": {
+    "message": "ऑफ़लाइन"
+  },
+  "loading": {
+    "message": "लोड हो रहा है…"
+  },
+  "tabConnection": {
+    "message": "कनेक्शन"
+  },
+  "tabPermissions": {
+    "message": "अनुमतियाँ"
+  },
+  "tabSettings": {
+    "message": "सेटिंग्स"
+  },
+  "errorPasteUri": {
+    "message": "ऊपर एक bunker:// URI पेस्ट करें"
+  },
+  "errorConnectionFailed": {
+    "message": "कनेक्शन विफल"
+  },
+  "errorGenerateUri": {
+    "message": "कनेक्शन URI बनाने में विफल"
+  },
+  "errorStartConnection": {
+    "message": "कनेक्शन शुरू करने में विफल"
+  },
+  "toastLoggedOut": {
+    "message": "लॉग आउट हो गया"
+  },
+  "toastLogoutFailed": {
+    "message": "लॉग आउट विफल"
+  },
+  "toastSettingsSaved": {
+    "message": "सेटिंग्स सहेजी गईं"
+  },
+  "toastPrivacyModeOn": {
+    "message": "प्राइवेसी मोड चालू"
+  },
+  "toastPrivacyModeOff": {
+    "message": "प्राइवेसी मोड बंद"
+  },
+  "toastBadgeShown": {
+    "message": "बैज दिख रहा है"
+  },
+  "toastBadgeHidden": {
+    "message": "बैज छुपाया गया"
+  },
+  "toastCopied": {
+    "message": "क्लिपबोर्ड पर कॉपी हो गया"
+  },
+  "toastCopyFailed": {
+    "message": "कॉपी करने में विफल"
+  },
+  "toastPermissionRemoved": {
+    "message": "अनुमति हटाई गई"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "अनुमति हटाने में विफल"
+  },
+  "toastDomainRemoved": {
+    "message": "डोमेन अनुमतियाँ हटाई गईं"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "डोमेन हटाने में विफल"
+  },
+  "toastNoActiveTab": {
+    "message": "कोई सक्रिय टैब या URL नहीं"
+  },
   "toastAddedToWhitelist": {
     "message": "$1 को व्हाइटलिस्ट में जोड़ा गया। Nostr का उपयोग करने के लिए टैब रीलोड करें।"
   },
-  "toastAddDomainFailed": { "message": "डोमेन जोड़ने में विफल" },
-  "toastRemovedFromWhitelist": { "message": "व्हाइटलिस्ट से हटाया गया" },
-  "toastRemoveFromWhitelistFailed": { "message": "व्हाइटलिस्ट से हटाने में विफल" },
-
-  "signerKey": { "message": "साइनर की" },
-  "copyTitle": { "message": "कॉपी करें" },
-  "showQrTitle": { "message": "QR कोड दिखाएं" },
+  "toastAddDomainFailed": {
+    "message": "डोमेन जोड़ने में विफल"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "व्हाइटलिस्ट से हटाया गया"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "व्हाइटलिस्ट से हटाने में विफल"
+  },
+  "signerKey": {
+    "message": "साइनर की"
+  },
+  "copyTitle": {
+    "message": "कॉपी करें"
+  },
+  "showQrTitle": {
+    "message": "QR कोड दिखाएं"
+  },
   "signerDescription": {
     "message": "वेब पेजों से सभी NIP-07 अनुरोध NIP-46 के ज़रिए इस रिमोट साइनर को भेजे जाते हैं। एक्सटेंशन में कोई निजी कुंजी संग्रहीत नहीं होती।"
   },
-  "disconnect": { "message": "डिसकनेक्ट करें" },
-  "logoutConfirmTitle": { "message": "पूरी तरह लॉग आउट करें?" },
+  "disconnect": {
+    "message": "डिसकनेक्ट करें"
+  },
+  "logoutConfirmTitle": {
+    "message": "पूरी तरह लॉग आउट करें?"
+  },
   "logoutConfirmDescription": {
     "message": "यह आपके साइनर से डिसकनेक्ट करेगा और सभी अनुमतियों और प्राइवेसी मोड व्हाइटलिस्ट को साफ़ कर देगा। आपको फिर से कनेक्ट करना होगा और साइटों को फिर से अनुमति देनी होगी।"
   },
-  "cancel": { "message": "रद्द करें" },
-  "logOut": { "message": "लॉग आउट" },
-
-  "connectViaBunkerUri": { "message": "Bunker URI से कनेक्ट करें" },
+  "cancel": {
+    "message": "रद्द करें"
+  },
+  "logOut": {
+    "message": "लॉग आउट"
+  },
+  "connectViaBunkerUri": {
+    "message": "Bunker URI से कनेक्ट करें"
+  },
   "connectViaBunkerUriDesc": {
     "message": "कनेक्ट करने के लिए अपने रिमोट साइनर से bunker:// URI पेस्ट करें"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "कनेक्ट हो रहा है..." },
-  "connect": { "message": "कनेक्ट करें" },
-  "separatorOr": { "message": "या" },
-  "getUriFromBunker46": { "message": "Bunker46 से URI प्राप्त करें" },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "connecting": {
+    "message": "कनेक्ट हो रहा है..."
+  },
+  "connect": {
+    "message": "कनेक्ट करें"
+  },
+  "separatorOr": {
+    "message": "या"
+  },
+  "getUriFromBunker46": {
+    "message": "Bunker46 से URI प्राप्त करें"
+  },
   "nostrConnectDesc": {
     "message": "Nostrconnect के ज़रिए कनेक्ट करें: आपके bunker ऐप के लिए QR और URI दिखाएं।"
   },
-  "showQrConnectionUri": { "message": "QR और कनेक्शन URI दिखाएं" },
-
-  "settingsUseBunker46": { "message": "Bunker46 का उपयोग करें" },
+  "showQrConnectionUri": {
+    "message": "QR और कनेक्शन URI दिखाएं"
+  },
+  "settingsUseBunker46": {
+    "message": "Bunker46 का उपयोग करें"
+  },
   "settingsUseBunker46Hint": {
     "message": "nostrconnect: लिंक को संभालें और अपने Bunker46 इंस्टेंस पर रीडायरेक्ट करें।"
   },
-  "settingsBunkerUrl": { "message": "Bunker46 URL" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "आपके Bunker46 इंस्टेंस का बेस URL" },
-  "settingsSpecifyNostrConnectRelays": { "message": "Nostrconnect रिले निर्दिष्ट करें" },
+  "settingsBunkerUrl": {
+    "message": "Bunker46 URL"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "आपके Bunker46 इंस्टेंस का बेस URL"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Nostrconnect रिले निर्दिष्ट करें"
+  },
   "settingsSpecifyNostrConnectRelaysHint": {
     "message": "Nostrconnect QR/URI के लिए कस्टम रिले URL सेट करें।"
   },
-  "settingsNostrConnectRelays": { "message": "Nostr कनेक्शन रिले" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelays": {
+    "message": "Nostr कनेक्शन रिले"
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
   "settingsNostrConnectRelaysHint": {
     "message": "प्रति पंक्ति एक रिले URL (या कॉमा से अलग)। Nostrconnect के ज़रिए कनेक्शन के लिए QR/URI बनाते समय उपयोग किया जाता है।"
   },
-  "choiceOn": { "message": "चालू" },
-  "choiceOff": { "message": "बंद" },
-  "save": { "message": "सहेजें" },
-  "privacyMode": { "message": "प्राइवेसी मोड" },
+  "choiceOn": {
+    "message": "चालू"
+  },
+  "choiceOff": {
+    "message": "बंद"
+  },
+  "save": {
+    "message": "सहेजें"
+  },
+  "privacyMode": {
+    "message": "प्राइवेसी मोड"
+  },
   "privacyModeHint": {
     "message": "केवल व्हाइटलिस्ट डोमेन पर window.nostr दिखाता है (अनुमतियाँ टैब); फ़िंगरप्रिंटिंग कम करता है।"
   },
   "privacyModeSitesHint": {
     "message": "साइटें एक्सटेंशन का पता नहीं लगा सकतीं, इसलिए कुछ 'Nostr से साइन इन करें' नहीं दिखा सकतीं जब तक आप उन्हें अनुमतियों में न जोड़ें।"
   },
-  "showBadge": { "message": "एक्सटेंशन आइकन पर बैज दिखाएं" },
+  "showBadge": {
+    "message": "एक्सटेंशन आइकन पर बैज दिखाएं"
+  },
   "showBadgeHint": {
     "message": "चालू होने पर, आइकन वर्तमान टैब के लिए दी गई अनुमतियों की संख्या दिखाता है (जैसे 1, 2)।"
   },
-
-  "addToWhitelistTitle": { "message": "$1 को व्हाइटलिस्ट में जोड़ें" },
-  "addToWhitelistButton": { "message": "$1 को व्हाइटलिस्ट में जोड़ें" },
-  "removeFromWhitelistTitle": { "message": "$1 को व्हाइटलिस्ट से हटाएं" },
-  "removeFromWhitelistButton": { "message": "$1 को व्हाइटलिस्ट से हटाएं" },
-  "searchDomainsPlaceholder": { "message": "डोमेन खोजें..." },
-  "noPermissionsYet": { "message": "अभी कोई अनुमति नहीं" },
+  "addToWhitelistTitle": {
+    "message": "$1 को व्हाइटलिस्ट में जोड़ें"
+  },
+  "addToWhitelistButton": {
+    "message": "$1 को व्हाइटलिस्ट में जोड़ें"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "$1 को व्हाइटलिस्ट से हटाएं"
+  },
+  "removeFromWhitelistButton": {
+    "message": "$1 को व्हाइटलिस्ट से हटाएं"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "डोमेन खोजें..."
+  },
+  "noPermissionsYet": {
+    "message": "अभी कोई अनुमति नहीं"
+  },
   "noPermissionsHint": {
     "message": "जब वेबसाइटें आपकी Nostr पहचान तक पहुंच मांगती हैं, तो वे यहाँ दिखेंगी।"
   },
-  "noDomainsMatch": { "message": "आपकी खोज से कोई डोमेन मेल नहीं खाता" },
-  "revokeAllPermissionsTitle": { "message": "इस डोमेन की सभी अनुमतियाँ रद्द करें" },
-  "whitelistedNoPermissions": { "message": "Nostr के लिए व्हाइटलिस्ट में (अभी कोई अनुमति नहीं)" },
-  "allowed": { "message": "अनुमत" },
-  "denied": { "message": "अस्वीकृत" },
-  "revokeTitle": { "message": "रद्द करें" },
-  "removeFromWhitelist": { "message": "व्हाइटलिस्ट से हटाएं" },
-
-  "qrScanToUse": { "message": "$1 (उपयोग करने के लिए स्कैन करें)" },
-  "qrCodeAlt": { "message": "QR कोड" },
-  "close": { "message": "बंद करें" },
-  "nostrConnectModalHint": { "message": "अपने bunker ऐप से स्कैन करें या URI कॉपी करें" },
-  "nostrConnectQrAlt": { "message": "Nostrconnect QR कोड" },
-  "copyUri": { "message": "URI कॉपी करें" },
-  "waitingForBunker": { "message": "bunker के कनेक्ट होने का इंतज़ार है…" },
-
-  "method_getPublicKey": { "message": "पब्लिक की प्राप्त करें" },
-  "method_signEvent": { "message": "इवेंट साइन करें" },
-  "method_signEvent_kind": { "message": "इवेंट साइन करें (प्रकार $1)" },
-  "method_getRelays": { "message": "रिले प्राप्त करें" },
-  "method_nip04_encrypt": { "message": "NIP-04 एन्क्रिप्ट" },
-  "method_nip04_decrypt": { "message": "NIP-04 डिक्रिप्ट" },
-  "method_nip44_encrypt": { "message": "NIP-44 एन्क्रिप्ट" },
-  "method_nip44_decrypt": { "message": "NIP-44 डिक्रिप्ट" },
-
-  "promptPermissionRequest": { "message": "अनुमति अनुरोध" },
-  "promptWantsAccess": { "message": "आपकी Nostr पहचान तक पहुंचना चाहता है" },
-  "promptEventKind": { "message": "इवेंट प्रकार $1" },
-  "promptViewRawMessage": { "message": "रॉ मैसेज देखें" },
-  "promptHideRawMessage": { "message": "रॉ मैसेज छुपाएं" },
-  "promptAllowAlways": { "message": "हमेशा अनुमति दें" },
-  "promptAllowAlwaysForKindHint": { "message": "केवल इस इवेंट प्रकार पर लागू होता है" },
-  "promptAllowOnce": { "message": "एक बार अनुमति दें" },
-  "promptDenyOnce": { "message": "अस्वीकार करें" },
-  "promptDenyAlways": { "message": "हमेशा अस्वीकार करें" }
+  "noDomainsMatch": {
+    "message": "आपकी खोज से कोई डोमेन मेल नहीं खाता"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "इस डोमेन की सभी अनुमतियाँ रद्द करें"
+  },
+  "whitelistedNoPermissions": {
+    "message": "Nostr के लिए व्हाइटलिस्ट में (अभी कोई अनुमति नहीं)"
+  },
+  "allowed": {
+    "message": "अनुमत"
+  },
+  "denied": {
+    "message": "अस्वीकृत"
+  },
+  "revokeTitle": {
+    "message": "रद्द करें"
+  },
+  "removeFromWhitelist": {
+    "message": "व्हाइटलिस्ट से हटाएं"
+  },
+  "qrScanToUse": {
+    "message": "$1 (उपयोग करने के लिए स्कैन करें)"
+  },
+  "qrCodeAlt": {
+    "message": "QR कोड"
+  },
+  "close": {
+    "message": "बंद करें"
+  },
+  "nostrConnectModalHint": {
+    "message": "अपने bunker ऐप से स्कैन करें या URI कॉपी करें"
+  },
+  "nostrConnectQrAlt": {
+    "message": "Nostrconnect QR कोड"
+  },
+  "copyUri": {
+    "message": "URI कॉपी करें"
+  },
+  "waitingForBunker": {
+    "message": "bunker के कनेक्ट होने का इंतज़ार है…"
+  },
+  "method_getPublicKey": {
+    "message": "पब्लिक की प्राप्त करें"
+  },
+  "method_signEvent": {
+    "message": "इवेंट साइन करें"
+  },
+  "method_signEvent_kind": {
+    "message": "इवेंट साइन करें (प्रकार $1)"
+  },
+  "method_getRelays": {
+    "message": "रिले प्राप्त करें"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04 एन्क्रिप्ट"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04 डिक्रिप्ट"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44 एन्क्रिप्ट"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44 डिक्रिप्ट"
+  },
+  "promptPermissionRequest": {
+    "message": "अनुमति अनुरोध"
+  },
+  "promptWantsAccess": {
+    "message": "आपकी Nostr पहचान तक पहुंचना चाहता है"
+  },
+  "promptEventKind": {
+    "message": "इवेंट प्रकार $1"
+  },
+  "promptViewRawMessage": {
+    "message": "रॉ मैसेज देखें"
+  },
+  "promptHideRawMessage": {
+    "message": "रॉ मैसेज छुपाएं"
+  },
+  "promptAllowAlways": {
+    "message": "हमेशा अनुमति दें"
+  },
+  "promptAllowAlwaysForKindHint": {
+    "message": "केवल इस इवेंट प्रकार पर लागू होता है"
+  },
+  "promptAllowOnce": {
+    "message": "एक बार अनुमति दें"
+  },
+  "promptDenyOnce": {
+    "message": "अस्वीकार करें"
+  },
+  "promptDenyAlways": {
+    "message": "हमेशा अस्वीकार करें"
+  },
+  "settingsMultiProfile": {
+    "message": "एकाधिक प्रोफ़ाइल"
+  },
+  "settingsMultiProfileHint": {
+    "message": "प्रोफ़ाइल स्विचर दिखाएं और एकाधिक कनेक्शन जोड़ने की अनुमति दें।"
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "एकल-प्रोफ़ाइल मोड का उपयोग करने के लिए अतिरिक्त प्रोफ़ाइल हटाएं।"
+  },
+  "addAnotherConnection": {
+    "message": "एक और कनेक्शन जोड़ें"
+  },
+  "removeProfile": {
+    "message": "यह प्रोफ़ाइल हटाएं"
+  },
+  "removeProfileConfirmTitle": {
+    "message": "प्रोफ़ाइल हटाएं?"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "यह डिसकनेक्ट कर देगा और इस प्रोफ़ाइल की सभी अनुमतियाँ और व्हाइटलिस्ट प्रविष्टियाँ साफ़ कर देगा।"
+  },
+  "switchProfile": {
+    "message": "प्रोफ़ाइल बदलें"
+  },
+  "toastProfileRemoved": {
+    "message": "प्रोफ़ाइल हटाई गई"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "प्रोफ़ाइल हटाने में विफल"
+  },
+  "reconnectionFailedMessage": {
+    "message": "कनेक्शन बहाल नहीं हो सका। bunker ने एक्सेस रद्द किया हो सकता है।"
+  },
+  "renameProfile": {
+    "message": "प्रोफ़ाइल का नाम बदलें"
+  },
+  "renameProfileTitle": {
+    "message": "प्रोफ़ाइल का नाम बदलें"
+  },
+  "renameProfileHint": {
+    "message": "एक डिस्प्ले नाम सेट करें या Nostr से प्राप्त करें (kind 0)।"
+  },
+  "renameProfileNameLabel": {
+    "message": "डिस्प्ले नाम"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "प्रोफ़ाइल नाम"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Nostr से प्राप्त करें"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "प्रोफ़ाइल जानकारी प्राप्त की"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "Nostr से प्रोफ़ाइल प्राप्त नहीं हो सकी"
+  },
+  "toastProfileRenameFailed": {
+    "message": "प्रोफ़ाइल का नाम बदलने में विफल"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "डिसकनेक्ट करें और प्रोफ़ाइल हटाएं"
+  }
 }
