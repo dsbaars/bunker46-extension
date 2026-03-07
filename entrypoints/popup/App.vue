@@ -11,6 +11,7 @@ import Badge from '@/components/ui/Badge.vue';
 import Separator from '@/components/ui/Separator.vue';
 import Label from '@/components/ui/Label.vue';
 import ChoiceCard from '@/components/ui/ChoiceCard.vue';
+import ProfileAvatar from '@/components/ui/ProfileAvatar.vue';
 import { Toaster, toast } from 'vue-sonner';
 import 'vue-sonner/style.css';
 import { nip19 } from 'nostr-tools';
@@ -26,11 +27,18 @@ import {
   AlertDialogTitle,
 } from 'reka-ui';
 import {
+  DialogClose,
+  DialogContent,
+  DialogOverlay,
+  DialogPortal,
+  DialogRoot,
+  DialogTitle,
+} from 'reka-ui';
+import {
   Link2,
   Unplug,
   Loader2,
   ExternalLink,
-  KeyRound,
   ShieldCheck,
   Trash2,
   Globe,
@@ -39,6 +47,11 @@ import {
   Search,
   Plus,
   Maximize2,
+  ChevronDown,
+  UserPlus,
+  X,
+  Pencil,
+  Download,
 } from 'lucide-vue-next';
 import { t, getMethodLabel } from '@/lib/i18n';
 
@@ -52,6 +65,18 @@ type DomainPolicies = {
     [method: string]: PermissionEntry;
   };
 };
+
+type ProfileSummary = {
+  id: string;
+  name?: string;
+  picture?: string;
+  signerPubkey?: string;
+  connected: boolean;
+};
+
+// ---------------------------------------------------------------------------
+// Reactive state
+// ---------------------------------------------------------------------------
 
 const activeTab = ref<'connection' | 'permissions' | 'settings'>('connection');
 const connected = ref(false);
@@ -78,10 +103,36 @@ const showNostrConnectModal = ref(false);
 const nostrConnectUri = ref('');
 const nostrConnectQrDataUrl = ref('');
 const nostrConnectWaiting = ref(false);
+/** When adding a new profile via Nostr Connect, we only close the modal when profile count increases (not when an existing profile is still connected). */
+const nostrConnectInitialProfileCount = ref(0);
 let nostrConnectPollTimer: ReturnType<typeof setInterval> | null = null;
+let profileSwitchPollTimer: ReturnType<typeof setInterval> | null = null;
+const PROFILE_SWITCH_POLL_MS = 1000;
+const PROFILE_SWITCH_TIMEOUT_MS = 35_000;
 
 const nostrWhitelist = ref<string[]>([]);
 const currentTabDomain = ref('');
+
+// Multi-profile state
+const multiProfileEnabled = ref(false);
+const allProfiles = ref<ProfileSummary[]>([]);
+const activeProfileIdRef = ref<string | null>(null);
+const activeProfileName = ref<string | undefined>(undefined);
+const activeProfilePicture = ref<string | undefined>(undefined);
+const showProfileSwitcher = ref(false);
+const addingNewProfile = ref(false);
+const showRemoveProfileConfirm = ref(false);
+const reconnectionFailed = ref(false);
+/** True while background is reconnecting after a profile switch (GET_SESSION returns reconnecting: true). */
+const reconnecting = ref(false);
+const showRenameModal = ref(false);
+const renameProfileId = ref<string | null>(null);
+const renameProfileName = ref('');
+const renameProfileFetching = ref(false);
+
+// ---------------------------------------------------------------------------
+// Computed
+// ---------------------------------------------------------------------------
 
 const permissionDomains = computed(() => {
   const fromPerms = Object.keys(permissions.value);
@@ -139,10 +190,55 @@ const pubkeyDisplayShort = computed(() => {
   return s.slice(0, 12) + '…' + s.slice(-10);
 });
 
+const activeProfileSummary = computed(() =>
+  allProfiles.value.find((p) => p.id === activeProfileIdRef.value)
+);
+
+const canDisableMultiProfile = computed(
+  () => !multiProfileEnabled.value || allProfiles.value.length <= 1
+);
+
+// ---------------------------------------------------------------------------
+// Profile helpers
+// ---------------------------------------------------------------------------
+
+function shortNpub(hex: string): string {
+  try {
+    const npub = nip19.npubEncode(hex);
+    if (npub.length <= 24) return npub;
+    return npub.slice(0, 12) + '…' + npub.slice(-10);
+  } catch {
+    if (hex.length <= 20) return hex;
+    return hex.slice(0, 10) + '…' + hex.slice(-8);
+  }
+}
+
+function profileDisplayName(p: ProfileSummary): string {
+  if (p.name) return p.name;
+  if (p.signerPubkey) return shortNpub(p.signerPubkey);
+  return 'Unknown';
+}
+
 function cyclePubkeyFormat() {
   const order: PubkeyFormat[] = ['npub', 'hex', 'nprofile'];
   const i = order.indexOf(pubkeyDisplayMode.value);
   pubkeyDisplayMode.value = order[(i + 1) % order.length];
+}
+
+// ---------------------------------------------------------------------------
+// Data loading
+// ---------------------------------------------------------------------------
+
+async function loadProfiles() {
+  try {
+    const res = await chrome.runtime.sendMessage({ type: 'GET_PROFILES' });
+    if (res?.profiles) {
+      allProfiles.value = res.profiles as ProfileSummary[];
+      activeProfileIdRef.value = (res.activeProfileId as string | null) ?? null;
+    }
+  } catch {
+    /* ignore */
+  }
 }
 
 async function loadState() {
@@ -151,12 +247,32 @@ async function loadState() {
       connected?: boolean;
       signerPubkey?: string;
       relays?: string[];
+      profileName?: string;
+      profilePicture?: string;
+      activeProfileId?: string;
     } = await chrome.runtime.sendMessage({ type: 'GET_SESSION' });
+    const sessionRes = res as {
+      reconnecting?: boolean;
+      reconnectionFailed?: boolean;
+    };
+    reconnecting.value = sessionRes?.reconnecting ?? false;
     if (res?.connected) {
       connected.value = true;
+      reconnectionFailed.value = false;
       signerPubkey.value = res.signerPubkey ?? '';
       signerRelays.value = res.relays ?? [];
+      activeProfileName.value = res.profileName;
+      activeProfilePicture.value = res.profilePicture;
+    } else {
+      connected.value = false;
+      signerPubkey.value = '';
+      signerRelays.value = [];
+      activeProfileName.value = res?.profileName;
+      activeProfilePicture.value = res?.profilePicture;
+      reconnectionFailed.value = sessionRes?.reconnectionFailed ?? false;
     }
+    activeProfileIdRef.value = res?.activeProfileId ?? null;
+
     const stored = await chrome.storage.local.get([
       'bunker46BaseUrl',
       'useBunker46',
@@ -164,6 +280,7 @@ async function loadState() {
       'nostrConnectRelays',
       'privacyMode',
       'showNostrBadge',
+      'multiProfileEnabled',
     ]);
     if (stored.bunker46BaseUrl) baseUrl.value = stored.bunker46BaseUrl as string;
     useBunker46.value = stored.useBunker46 === true;
@@ -176,11 +293,13 @@ async function loadState() {
     }
     privacyMode.value = stored.privacyMode === true;
     showNostrBadge.value = stored.showNostrBadge !== false;
+    multiProfileEnabled.value = stored.multiProfileEnabled === true;
   } catch {
     /* background may not be ready */
   } finally {
     connectionStateLoaded.value = true;
   }
+  await loadProfiles();
 }
 
 async function loadPermissions() {
@@ -212,6 +331,10 @@ async function fetchCurrentTabDomain() {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Connection actions
+// ---------------------------------------------------------------------------
+
 async function connectWithBunkerUri() {
   const uri = bunkerUriInput.value.trim();
   if (!uri) {
@@ -225,13 +348,27 @@ async function connectWithBunkerUri() {
       success?: boolean;
       signerPubkey?: string;
       error?: string;
-    } = await chrome.runtime.sendMessage({ type: 'CONNECT_BUNKER_URI', uri });
+    } = await chrome.runtime.sendMessage({
+      type: 'CONNECT_BUNKER_URI',
+      uri,
+      asNewProfile: addingNewProfile.value,
+    });
     if (res?.success) {
       connected.value = true;
       signerPubkey.value = res.signerPubkey ?? '';
-      const sessionRes = await chrome.runtime.sendMessage({ type: 'GET_SESSION' });
-      signerRelays.value = (sessionRes as { relays?: string[] })?.relays ?? [];
+      const sessionRes: {
+        relays?: string[];
+        profileName?: string;
+        profilePicture?: string;
+        activeProfileId?: string;
+      } = await chrome.runtime.sendMessage({ type: 'GET_SESSION' });
+      signerRelays.value = sessionRes?.relays ?? [];
+      activeProfileName.value = sessionRes?.profileName;
+      activeProfilePicture.value = sessionRes?.profilePicture;
+      activeProfileIdRef.value = sessionRes?.activeProfileId ?? null;
       bunkerUriInput.value = '';
+      addingNewProfile.value = false;
+      await loadProfiles();
     } else {
       errorMessage.value = res?.error || t('errorConnectionFailed');
     }
@@ -248,15 +385,157 @@ async function doFullLogout() {
     connected.value = false;
     signerPubkey.value = '';
     signerRelays.value = [];
+    activeProfileName.value = undefined;
+    activeProfilePicture.value = undefined;
     permissions.value = {};
     nostrWhitelist.value = [];
     errorMessage.value = '';
     showLogoutConfirm.value = false;
+    addingNewProfile.value = false;
+    await loadProfiles();
     toast.success(t('toastLoggedOut'));
   } catch {
     toast.error(t('toastLogoutFailed'));
   }
 }
+
+async function switchProfile(profileId: string) {
+  showProfileSwitcher.value = false;
+  if (profileSwitchPollTimer) {
+    clearInterval(profileSwitchPollTimer);
+    profileSwitchPollTimer = null;
+  }
+  try {
+    const res = await chrome.runtime.sendMessage({ type: 'SWITCH_PROFILE', profileId });
+    const data = res as {
+      success?: boolean;
+      activeProfileId?: string;
+      profileName?: string;
+      profilePicture?: string;
+      hasSession?: boolean;
+      error?: string;
+    };
+    if (!data?.success) return;
+
+    // Update UI immediately so the new profile appears selected
+    activeProfileIdRef.value = data.activeProfileId ?? profileId;
+    activeProfileName.value = data.profileName;
+    activeProfilePicture.value = data.profilePicture;
+    connected.value = false;
+    signerPubkey.value = '';
+    signerRelays.value = [];
+    reconnectionFailed.value = false;
+    await loadProfiles();
+
+    if (!data.hasSession) {
+      connectionStateLoaded.value = true;
+      await loadState();
+      await loadPermissions();
+      return;
+    }
+
+    reconnecting.value = true;
+    connectionStateLoaded.value = false; // Show "Loading" on Connection tab
+    const startedAt = Date.now();
+    profileSwitchPollTimer = setInterval(async () => {
+      if (Date.now() - startedAt > PROFILE_SWITCH_TIMEOUT_MS) {
+        if (profileSwitchPollTimer) clearInterval(profileSwitchPollTimer);
+        profileSwitchPollTimer = null;
+        connectionStateLoaded.value = true;
+        await loadState();
+        await loadPermissions();
+        return;
+      }
+      const s = await chrome.runtime.sendMessage({ type: 'GET_SESSION' });
+      const session = s as {
+        connected?: boolean;
+        reconnecting?: boolean;
+        reconnectionFailed?: boolean;
+      };
+      if (session.reconnecting) {
+        reconnecting.value = true;
+        return; // Keep showing loading
+      }
+      if (profileSwitchPollTimer) clearInterval(profileSwitchPollTimer);
+      profileSwitchPollTimer = null;
+      connectionStateLoaded.value = true;
+      await loadState();
+      await loadPermissions();
+    }, PROFILE_SWITCH_POLL_MS);
+  } catch {
+    connectionStateLoaded.value = true;
+    await loadState();
+  }
+}
+
+async function doRemoveProfile() {
+  showRemoveProfileConfirm.value = false;
+  const profileId = activeProfileIdRef.value;
+  if (!profileId) return;
+  try {
+    await chrome.runtime.sendMessage({ type: 'REMOVE_PROFILE', profileId });
+    await loadState();
+    await loadPermissions();
+    reconnectionFailed.value = false;
+    toast.success(t('toastProfileRemoved'));
+  } catch {
+    toast.error(t('toastProfileRemoveFailed'));
+  }
+}
+
+function openRenameModal(profile: ProfileSummary) {
+  renameProfileId.value = profile.id;
+  renameProfileName.value = profile.name ?? '';
+  showRenameModal.value = true;
+  showProfileSwitcher.value = false;
+}
+
+async function fetchProfileMetadataForRename() {
+  const profileId = renameProfileId.value;
+  if (!profileId) return;
+  renameProfileFetching.value = true;
+  try {
+    const res = await chrome.runtime.sendMessage({
+      type: 'FETCH_PROFILE_METADATA',
+      profileId,
+    });
+    const data = res as { success?: boolean; name?: string; picture?: string };
+    if (data?.success && data.name !== undefined) {
+      renameProfileName.value = data.name;
+      await loadProfiles();
+      toast.success(t('toastProfileMetadataFetched'));
+    } else {
+      toast.error(t('toastProfileMetadataFetchFailed'));
+    }
+  } catch {
+    toast.error(t('toastProfileMetadataFetchFailed'));
+  } finally {
+    renameProfileFetching.value = false;
+  }
+}
+
+async function saveRenameProfile() {
+  const profileId = renameProfileId.value;
+  if (!profileId) return;
+  try {
+    await chrome.runtime.sendMessage({
+      type: 'RENAME_PROFILE',
+      profileId,
+      name: renameProfileName.value.trim(),
+    });
+    await loadProfiles();
+    showRenameModal.value = false;
+    renameProfileId.value = null;
+    renameProfileName.value = '';
+    toast.success(t('toastSettingsSaved'));
+  } catch {
+    toast.error(t('toastProfileRenameFailed'));
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Settings actions
+// ---------------------------------------------------------------------------
 
 async function saveBaseUrl() {
   await chrome.storage.local.set({ bunker46BaseUrl: baseUrl.value });
@@ -300,6 +579,15 @@ async function setSpecifyNostrConnectRelaysEnabled() {
   toast.success(t('toastSettingsSaved'));
 }
 
+async function setMultiProfileEnabled() {
+  await chrome.storage.local.set({ multiProfileEnabled: multiProfileEnabled.value });
+  toast.success(t('toastSettingsSaved'));
+}
+
+// ---------------------------------------------------------------------------
+// Copy / QR
+// ---------------------------------------------------------------------------
+
 async function copyPubkey() {
   const value = pubkeyDisplayValue.value;
   if (!value) return;
@@ -330,6 +618,10 @@ function closeQrModal() {
   showQrModal.value = false;
 }
 
+// ---------------------------------------------------------------------------
+// Nostr Connect (QR flow)
+// ---------------------------------------------------------------------------
+
 async function startNostrConnect() {
   nostrConnectUri.value = '';
   nostrConnectQrDataUrl.value = '';
@@ -337,6 +629,7 @@ async function startNostrConnect() {
   try {
     const res: { uri?: string; error?: string } = await chrome.runtime.sendMessage({
       type: 'CONNECT_VIA_NOSTRCONNECT',
+      asNewProfile: addingNewProfile.value,
     });
     if (res?.error) {
       errorMessage.value = res.error;
@@ -355,14 +648,31 @@ async function startNostrConnect() {
     });
     showNostrConnectModal.value = true;
     nostrConnectWaiting.value = true;
+    nostrConnectInitialProfileCount.value = addingNewProfile.value ? allProfiles.value.length : 0;
     nostrConnectPollTimer = setInterval(async () => {
-      const s: { connected?: boolean } = await chrome.runtime.sendMessage({ type: 'GET_SESSION' });
-      if (s?.connected) {
-        if (nostrConnectPollTimer) clearInterval(nostrConnectPollTimer);
-        nostrConnectPollTimer = null;
-        nostrConnectWaiting.value = false;
-        showNostrConnectModal.value = false;
-        await loadState();
+      if (addingNewProfile.value) {
+        // New profile is only created when the bunker connects; profile count will increase
+        const profilesRes = await chrome.runtime.sendMessage({ type: 'GET_PROFILES' });
+        const profiles = (profilesRes as { profiles?: ProfileSummary[] })?.profiles ?? [];
+        if (profiles.length > nostrConnectInitialProfileCount.value) {
+          if (nostrConnectPollTimer) clearInterval(nostrConnectPollTimer);
+          nostrConnectPollTimer = null;
+          nostrConnectWaiting.value = false;
+          showNostrConnectModal.value = false;
+          addingNewProfile.value = false;
+          await loadState();
+        }
+      } else {
+        const s: { connected?: boolean } = await chrome.runtime.sendMessage({
+          type: 'GET_SESSION',
+        });
+        if (s?.connected) {
+          if (nostrConnectPollTimer) clearInterval(nostrConnectPollTimer);
+          nostrConnectPollTimer = null;
+          nostrConnectWaiting.value = false;
+          showNostrConnectModal.value = false;
+          await loadState();
+        }
       }
     }, 1500);
   } catch (e) {
@@ -394,6 +704,10 @@ function openBunker46() {
   const url = baseUrl.value.replace(/\/+$/, '') + '/connections';
   chrome.tabs.create({ url });
 }
+
+// ---------------------------------------------------------------------------
+// Permissions
+// ---------------------------------------------------------------------------
 
 async function revokePermission(host: string, method: string) {
   try {
@@ -463,6 +777,10 @@ function openFullPage() {
   chrome.tabs.create({ url });
 }
 
+// ---------------------------------------------------------------------------
+// Lifecycle
+// ---------------------------------------------------------------------------
+
 onMounted(() => {
   loadState();
   loadPermissions();
@@ -472,6 +790,10 @@ onUnmounted(() => {
   if (nostrConnectPollTimer) {
     clearInterval(nostrConnectPollTimer);
     nostrConnectPollTimer = null;
+  }
+  if (profileSwitchPollTimer) {
+    clearInterval(profileSwitchPollTimer);
+    profileSwitchPollTimer = null;
   }
 });
 </script>
@@ -485,6 +807,7 @@ onUnmounted(() => {
       :close-button="false"
       :duration="3000"
     />
+
     <!-- Header -->
     <header class="flex items-center justify-between px-5 py-4">
       <div class="flex items-center gap-2.5">
@@ -505,14 +828,116 @@ onUnmounted(() => {
         >
           <Maximize2 class="size-4" />
         </Button>
-        <Badge :variant="connected ? 'success' : 'secondary'">
-        <span
-          :class="['size-1.5 rounded-full', connected ? 'bg-success' : 'bg-muted-foreground']"
-        />
-        {{ connected ? t('connected') : t('offline') }}
-      </Badge>
+        <Badge :variant="reconnecting ? 'secondary' : connected ? 'success' : 'secondary'">
+          <span
+            :class="[
+              'size-1.5 rounded-full',
+              reconnecting
+                ? 'bg-amber-500 animate-pulse'
+                : connected
+                  ? 'bg-success'
+                  : 'bg-muted-foreground',
+            ]"
+          />
+          {{ reconnecting ? t('connecting') : connected ? t('connected') : t('offline') }}
+        </Badge>
       </div>
     </header>
+
+    <!-- Profile switcher (only when multi-profile is enabled and profiles exist) -->
+    <div
+      v-if="multiProfileEnabled && allProfiles.length > 0"
+      class="relative border-b border-border"
+    >
+      <!-- Transparent backdrop to close dropdown on outside click -->
+      <div
+        v-if="showProfileSwitcher"
+        class="fixed inset-0 z-30"
+        @click="showProfileSwitcher = false"
+      />
+
+      <!-- Switcher button -->
+      <button
+        class="flex w-full items-center gap-2.5 px-5 py-2.5 text-left transition-colors hover:bg-muted/50 cursor-pointer"
+        :title="t('switchProfile')"
+        @click="showProfileSwitcher = !showProfileSwitcher"
+      >
+        <ProfileAvatar
+          :signer-pubkey="activeProfileSummary?.signerPubkey"
+          :picture="activeProfileSummary?.picture"
+          :name="activeProfileSummary?.name"
+          size="sm"
+        />
+        <span class="flex-1 min-w-0 text-sm font-medium truncate">
+          {{
+            activeProfileSummary
+              ? profileDisplayName(activeProfileSummary)
+              : reconnecting
+                ? t('connecting')
+                : connected
+                  ? (activeProfileName ?? t('loading'))
+                  : t('offline')
+          }}
+        </span>
+        <ChevronDown
+          class="size-4 text-muted-foreground shrink-0 transition-transform"
+          :class="{ 'rotate-180': showProfileSwitcher }"
+        />
+      </button>
+
+      <!-- Dropdown -->
+      <div
+        v-if="showProfileSwitcher"
+        class="absolute left-0 right-0 top-full z-40 rounded-b-lg border border-t-0 border-border bg-card shadow-lg"
+      >
+        <div
+          v-for="profile in allProfiles"
+          :key="profile.id"
+          class="flex w-full items-center gap-2.5 px-5 py-2.5 text-left transition-colors hover:bg-muted/50 first:rounded-none last:rounded-b-none"
+          :class="{ 'bg-muted/30': profile.id === activeProfileIdRef }"
+        >
+          <button
+            class="flex flex-1 min-w-0 items-center gap-2.5 cursor-pointer text-left"
+            @click="switchProfile(profile.id)"
+          >
+            <ProfileAvatar
+              :signer-pubkey="profile.signerPubkey"
+              :picture="profile.picture"
+              :name="profile.name"
+              size="sm"
+            />
+            <span class="flex-1 min-w-0 text-sm truncate">{{ profileDisplayName(profile) }}</span>
+            <span
+              v-if="profile.id === activeProfileIdRef"
+              class="size-1.5 rounded-full bg-success shrink-0"
+            />
+          </button>
+          <Button
+            variant="ghost"
+            size="icon"
+            class="size-7 shrink-0 text-muted-foreground hover:text-foreground"
+            :title="t('renameProfile')"
+            @click.stop="openRenameModal(profile)"
+          >
+            <Pencil class="size-3.5" />
+          </Button>
+        </div>
+
+        <div class="border-t border-border">
+          <button
+            class="flex w-full items-center gap-2.5 px-5 py-2.5 text-left transition-colors hover:bg-muted/50 cursor-pointer rounded-b-lg text-sm text-muted-foreground"
+            @click="
+              addingNewProfile = true;
+              showProfileSwitcher = false;
+              activeTab = 'connection';
+            "
+          >
+            <UserPlus class="size-4 shrink-0" />
+            {{ t('addAnotherConnection') }}
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Tabs -->
     <div class="flex border-b border-border">
@@ -570,17 +995,122 @@ onUnmounted(() => {
         <Loader2 class="size-5 animate-spin" />
         <span class="text-xs">{{ t('loading') }}</span>
       </div>
+
+      <!-- Adding a new profile: show connect form with Cancel -->
+      <div v-else-if="addingNewProfile" class="flex flex-col gap-4 p-5">
+        <div class="flex items-center justify-between">
+          <p class="text-sm font-medium">{{ t('addAnotherConnection') }}</p>
+          <Button
+            variant="ghost"
+            size="icon"
+            class="size-7 text-muted-foreground hover:text-foreground"
+            @click="
+              addingNewProfile = false;
+              errorMessage = '';
+            "
+          >
+            <X class="size-4" />
+          </Button>
+        </div>
+        <Card>
+          <CardHeader>
+            <div class="flex items-center gap-2">
+              <Link2 class="size-4 text-primary" />
+              <CardTitle>{{ t('connectViaBunkerUri') }}</CardTitle>
+            </div>
+            <CardDescription>{{ t('connectViaBunkerUriDesc') }}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="flex flex-col gap-3">
+              <Input
+                v-model="bunkerUriInput"
+                :placeholder="t('placeholderBunkerUri')"
+                :disabled="connecting"
+                class="font-mono text-xs"
+                @keydown.enter="connectWithBunkerUri"
+              />
+              <Button
+                class="w-full"
+                :disabled="connecting || !bunkerUriInput.trim()"
+                @click="connectWithBunkerUri"
+              >
+                <Loader2 v-if="connecting" class="size-4 animate-spin" />
+                <Link2 v-else class="size-4" />
+                {{ connecting ? t('connecting') : t('connect') }}
+              </Button>
+
+              <template v-if="useBunker46">
+                <Separator :label="t('separatorOr')" />
+                <Button variant="outline" class="w-full" @click="openBunker46">
+                  <ExternalLink class="size-4" />
+                  {{ t('getUriFromBunker46') }}
+                </Button>
+              </template>
+
+              <Separator :label="t('separatorOr')" />
+
+              <div class="flex flex-col gap-3">
+                <p class="text-xs text-muted-foreground">{{ t('nostrConnectDesc') }}</p>
+                <Button variant="outline" class="w-full" @click="startNostrConnect">
+                  <QrCode class="size-4" />
+                  {{ t('showQrConnectionUri') }}
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <!-- Reconnection failed: profile has session but bunker unreachable -->
+      <div v-else-if="reconnectionFailed" class="flex flex-col gap-4 p-5">
+        <Card class="border-destructive/50">
+          <CardContent class="pt-5">
+            <div class="flex flex-col gap-4">
+              <div class="flex items-start gap-3">
+                <div class="size-10 shrink-0 flex items-center justify-center">
+                  <ProfileAvatar
+                    :signer-pubkey="activeProfileSummary?.signerPubkey"
+                    :picture="activeProfilePicture ?? activeProfileSummary?.picture"
+                    :name="activeProfileName ?? activeProfileSummary?.name"
+                    size="lg"
+                  />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium">
+                    {{ activeProfileName || activeProfileSummary?.name || t('signerKey') }}
+                  </p>
+                  <p class="text-xs text-destructive mt-0.5">
+                    {{ t('reconnectionFailedMessage') }}
+                  </p>
+                </div>
+              </div>
+              <Button variant="destructive" class="w-full" @click="showRemoveProfileConfirm = true">
+                <Trash2 class="size-4" />
+                {{ t('removeProfile') }}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
       <!-- Connected state -->
       <div v-else-if="connected" class="flex flex-col gap-4 p-5">
         <Card>
           <CardContent class="pt-5">
             <div class="flex flex-col gap-4">
-              <div class="flex items-center gap-3">
-                <div class="flex items-center justify-center size-10 rounded-full bg-success/15">
-                  <KeyRound class="size-5 text-success" />
+              <div class="flex items-start gap-3">
+                <div class="size-10 shrink-0 flex items-center justify-center">
+                  <ProfileAvatar
+                    :signer-pubkey="signerPubkey"
+                    :picture="activeProfilePicture ?? activeProfileSummary?.picture"
+                    :name="activeProfileName ?? activeProfileSummary?.name"
+                    size="lg"
+                  />
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm font-medium">{{ t('signerKey') }}</p>
+                  <p class="text-sm font-medium">
+                    {{ activeProfileName || activeProfileSummary?.name || t('signerKey') }}
+                  </p>
                   <div class="flex items-center gap-2">
                     <button
                       class="text-xs text-muted-foreground font-mono truncate block max-w-full hover:text-foreground transition-colors cursor-pointer text-left flex-1 min-w-0"
@@ -620,12 +1150,41 @@ onUnmounted(() => {
           </CardContent>
         </Card>
 
-        <Button variant="outline" class="w-full" @click="showLogoutConfirm = true">
+        <!-- Single-profile: Disconnect only. Multi-profile: Disconnect & remove in one prominent button. -->
+        <Button
+          v-if="!multiProfileEnabled"
+          variant="outline"
+          class="w-full"
+          @click="showLogoutConfirm = true"
+        >
           <Unplug class="size-4" />
           {{ t('disconnect') }}
         </Button>
+        <Button
+          v-else
+          variant="outline"
+          class="w-full border-destructive/50 text-destructive hover:bg-destructive/10 hover:border-destructive"
+          @click="showRemoveProfileConfirm = true"
+        >
+          <Trash2 class="size-4" />
+          {{ t('disconnectAndRemoveProfile') }}
+        </Button>
 
-        <!-- Log out confirmation (disconnect + clear permissions + whitelist) -->
+        <!-- Add another connection (multi-profile only) -->
+        <Button
+          v-if="multiProfileEnabled"
+          variant="outline"
+          class="w-full"
+          @click="
+            addingNewProfile = true;
+            errorMessage = '';
+          "
+        >
+          <UserPlus class="size-4" />
+          {{ t('addAnotherConnection') }}
+        </Button>
+
+        <!-- Log out confirmation -->
         <AlertDialogRoot v-model:open="showLogoutConfirm">
           <AlertDialogPortal>
             <AlertDialogOverlay
@@ -655,7 +1214,7 @@ onUnmounted(() => {
         </AlertDialogRoot>
       </div>
 
-      <!-- Disconnected state -->
+      <!-- Disconnected state (first connection) -->
       <div v-else class="flex flex-col gap-4 p-5">
         <Card>
           <CardHeader>
@@ -714,6 +1273,19 @@ onUnmounted(() => {
     <!-- SETTINGS TAB -->
     <template v-if="activeTab === 'settings'">
       <div class="flex min-w-0 flex-col gap-4 overflow-x-hidden p-5">
+        <!-- Multiple profiles toggle (at top) -->
+        <ChoiceCard
+          v-model="multiProfileEnabled"
+          :label="t('settingsMultiProfile')"
+          :description="t('settingsMultiProfileHint')"
+          :disabled="!canDisableMultiProfile"
+          :show-slot-content="!canDisableMultiProfile"
+          @update:model-value="setMultiProfileEnabled()"
+        >
+          <p v-if="!canDisableMultiProfile" class="text-xs text-muted-foreground">
+            {{ t('settingsMultiProfileDisabledHint') }}
+          </p>
+        </ChoiceCard>
         <ChoiceCard
           v-model="privacyMode"
           :label="t('privacyMode')"
@@ -901,6 +1473,83 @@ onUnmounted(() => {
         </div>
       </div>
     </template>
+
+    <!-- Remove profile confirmation (root-level so it works in reconnectionFailed state too) -->
+    <AlertDialogRoot v-model:open="showRemoveProfileConfirm">
+      <AlertDialogPortal>
+        <AlertDialogOverlay
+          class="fixed inset-0 z-50 bg-black/70 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+        />
+        <AlertDialogContent
+          class="fixed left-1/2 top-1/2 z-50 w-full max-w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-4 shadow-xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
+        >
+          <AlertDialogTitle class="text-sm font-semibold">
+            {{ t('removeProfileConfirmTitle') }}
+          </AlertDialogTitle>
+          <AlertDialogDescription class="mt-2 text-xs text-muted-foreground">
+            {{ t('removeProfileConfirmDesc') }}
+          </AlertDialogDescription>
+          <div class="mt-4 flex justify-end gap-2">
+            <AlertDialogCancel as-child>
+              <Button variant="outline" size="sm"> {{ t('cancel') }} </Button>
+            </AlertDialogCancel>
+            <AlertDialogAction as-child>
+              <Button variant="destructive" size="sm" @click="doRemoveProfile">
+                {{ t('removeProfile') }}
+              </Button>
+            </AlertDialogAction>
+          </div>
+        </AlertDialogContent>
+      </AlertDialogPortal>
+    </AlertDialogRoot>
+
+    <!-- Rename profile dialog (root-level so it works in reconnectionFailed state too) -->
+    <DialogRoot v-model:open="showRenameModal">
+      <DialogPortal>
+        <DialogOverlay
+          class="fixed inset-0 z-50 bg-black/70 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
+        />
+        <DialogContent
+          class="fixed left-1/2 top-1/2 z-50 w-full max-w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-4 shadow-xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
+        >
+          <DialogTitle class="text-sm font-semibold">
+            {{ t('renameProfileTitle') }}
+          </DialogTitle>
+          <p class="mt-1 text-xs text-muted-foreground">
+            {{ t('renameProfileHint') }}
+          </p>
+          <div class="mt-4 flex flex-col gap-3">
+            <div class="flex flex-col gap-1.5">
+              <Label class="text-xs">{{ t('renameProfileNameLabel') }}</Label>
+              <Input
+                v-model="renameProfileName"
+                class="text-sm"
+                :placeholder="t('renameProfileNamePlaceholder')"
+              />
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              class="w-full"
+              :disabled="renameProfileFetching"
+              @click="fetchProfileMetadataForRename"
+            >
+              <Loader2 v-if="renameProfileFetching" class="size-3.5 animate-spin" />
+              <Download v-else class="size-3.5" />
+              {{ t('fetchProfileFromNostr') }}
+            </Button>
+          </div>
+          <div class="mt-4 flex justify-end gap-2">
+            <DialogClose as-child>
+              <Button variant="outline" size="sm">{{ t('cancel') }}</Button>
+            </DialogClose>
+            <Button size="sm" @click="saveRenameProfile">
+              {{ t('save') }}
+            </Button>
+          </div>
+        </DialogContent>
+      </DialogPortal>
+    </DialogRoot>
 
     <!-- QR code modal (signer pubkey) -->
     <div

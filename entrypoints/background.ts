@@ -5,7 +5,7 @@ import {
   parseBunkerInput,
   toBunkerURL,
 } from 'nostr-tools/nip46';
-import { bytesToHex, hexToBytes } from '@/lib/hex';
+import { bytesToHex } from '@/lib/hex';
 import { DEFAULT_NOSTRCONNECT_RELAYS, NIP46_APP_NAME } from '@/lib/constants';
 import {
   checkPermission,
@@ -14,6 +14,7 @@ import {
   removePermission,
   removeDomainPermissions,
   clearAllPermissions,
+  deleteProfilePermissions,
 } from '@/lib/permissions';
 import type { DomainPolicies } from '@/lib/permissions';
 import {
@@ -22,19 +23,22 @@ import {
   removeFromNostrWhitelist,
   getNostrWhitelist,
   clearNostrWhitelist,
+  deleteProfileWhitelist,
 } from '@/lib/privacy-mode';
 import type { NIP07SignEventInput } from '@/lib/nip07/types';
+import {
+  migrateToProfiles,
+  getProfiles,
+  saveProfiles,
+  getActiveProfileId,
+  setActiveProfileId,
+  generateNewClientSecret,
+  getClientSecretBytes,
+  profilesToSummaries,
+} from '@/lib/profiles';
+import type { Profile, Session } from '@/lib/profiles';
 
-const STORAGE_KEY_CLIENT_SECRET = 'nip46_client_secret_hex';
-const STORAGE_KEY_SESSION = 'nip46_session';
 const STORAGE_KEY_NOSTRCONNECT_RELAYS = 'nostrConnectRelays';
-
-type Session = {
-  signerPubkey: string;
-  relays: string[];
-  /** Optional: original bunker URI for reconnection (may include one-time secret). */
-  bunkerUri?: string;
-};
 
 type PendingPermission = {
   resolve: (allowed: boolean) => void;
@@ -62,41 +66,60 @@ function validateSignEventInput(event: unknown): event is NIP07SignEventInput {
   );
 }
 
+// ---------------------------------------------------------------------------
+// In-memory state
+// ---------------------------------------------------------------------------
+
 let bunkerSigner: BunkerSigner | null = null;
-let session: Session | null = null;
+let activeProfile: Profile | null = null;
+let activeProfileId: string | null = null;
+/** True while reconnectFromSession() is running (e.g. after SWITCH_PROFILE). GET_SESSION returns reconnecting: true without blocking. */
+let reconnecting = false;
 const pendingPermissions = new Map<string, PendingPermission>();
 /** Raw event payload for signEvent permission prompts (requestId -> event). Cleaned up on response. */
 const pendingRawEvents = new Map<string, unknown>();
 
-async function getOrCreateClientKey(): Promise<Uint8Array> {
-  const raw = await chrome.storage.local.get(STORAGE_KEY_CLIENT_SECRET);
-  const hex = raw[STORAGE_KEY_CLIENT_SECRET] as string | undefined;
-  if (hex) return hexToBytes(hex);
-  const secret = generateSecretKey();
-  await chrome.storage.local.set({
-    [STORAGE_KEY_CLIENT_SECRET]: bytesToHex(secret),
-  });
-  return secret;
+// ---------------------------------------------------------------------------
+// Profile state management
+// ---------------------------------------------------------------------------
+
+async function loadActiveProfileFromStorage(): Promise<void> {
+  activeProfileId = await getActiveProfileId();
+  if (!activeProfileId) {
+    activeProfile = null;
+    return;
+  }
+  const profiles = await getProfiles();
+  activeProfile = profiles[activeProfileId] ?? null;
 }
 
-async function loadSessionFromStorage(): Promise<void> {
-  const raw = await chrome.storage.local.get(STORAGE_KEY_SESSION);
-  session = (raw[STORAGE_KEY_SESSION] as Session) ?? null;
+async function persistProfileSession(profileId: string, session: Session): Promise<void> {
+  const profiles = await getProfiles();
+  if (!profiles[profileId]) return;
+  profiles[profileId] = { ...profiles[profileId], session };
+  await saveProfiles(profiles);
+  if (profileId === activeProfileId) {
+    activeProfile = profiles[profileId];
+  }
 }
 
-async function persistSession(s: Session): Promise<void> {
-  session = s;
-  await chrome.storage.local.set({ [STORAGE_KEY_SESSION]: s });
+async function clearProfileSession(profileId: string): Promise<void> {
+  const profiles = await getProfiles();
+  if (!profiles[profileId]) return;
+  const { session: _session, ...rest } = profiles[profileId];
+  profiles[profileId] = rest as Profile;
+  await saveProfiles(profiles);
+  if (profileId === activeProfileId) {
+    activeProfile = profiles[profileId];
+    bunkerSigner = null;
+  }
 }
 
-async function clearSession(): Promise<void> {
-  session = null;
-  bunkerSigner = null;
-  await chrome.storage.local.remove(STORAGE_KEY_SESSION);
-}
+// ---------------------------------------------------------------------------
+// Badge helpers
+// ---------------------------------------------------------------------------
 
 const BUNKER_CONNECT_TIMEOUT_MS = 30_000;
-
 const STORAGE_KEY_SHOW_BADGE = 'showNostrBadge';
 const NOSTR_BADGE_COLOR = '#a855f7';
 
@@ -124,12 +147,16 @@ function countAllowedPermissions(policies: DomainPolicies, host: string): number
 }
 
 async function updateBadgeForTabsWithHost(host: string): Promise<void> {
+  const profileId = activeProfileId ?? undefined;
   const showBadge = await getShowNostrBadge();
   if (!showBadge) {
     await clearBadgeForTabsWithHost(host);
     return;
   }
-  const [policies, inject] = await Promise.all([getPermissions(), shouldExposeNostrForHost(host)]);
+  const [policies, inject] = await Promise.all([
+    getPermissions(profileId),
+    shouldExposeNostrForHost(host, profileId),
+  ]);
   const count = inject ? countAllowedPermissions(policies, host) : 0;
   let tabs: { id?: number; url?: string }[];
   try {
@@ -190,17 +217,15 @@ async function clearAllBadges(): Promise<void> {
   }
 }
 
-/** NIP-65 relay list metadata (kind 10002) */
-const NIP65_KIND_RELAY_LIST = 10002;
+// ---------------------------------------------------------------------------
+// NIP-65 relay list
+// ---------------------------------------------------------------------------
 
+const NIP65_KIND_RELAY_LIST = 10002;
 const NIP65_FETCH_TIMEOUT_MS = 8_000;
 
 type RelayEntry = [string, { read: boolean; write: boolean }];
 
-/**
- * Fetch the user's NIP-65 relay list (kind 10002) from relays and return entries
- * in getRelays format. Returns null on failure or if no event found.
- */
 async function fetchNip65RelayList(pubkey: string, relays: string[]): Promise<RelayEntry[] | null> {
   if (!relays.length) return null;
   const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
@@ -245,9 +270,82 @@ function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promi
   ]);
 }
 
-/** Reconnect to the bunker using stored session (e.g. after service worker restarted). */
+// ---------------------------------------------------------------------------
+// Kind 0 metadata fetch (name / picture)
+// ---------------------------------------------------------------------------
+
+const KIND0_FETCH_TIMEOUT_MS = 8_000;
+
+/**
+ * Fetch kind 0 (metadata) for the signer pubkey from session relays.
+ * Updates the profile's name and picture in storage. Fire-and-forget.
+ */
+async function fetchKind0ForProfile(
+  profileId: string,
+  pubkey: string,
+  relays: string[]
+): Promise<void> {
+  if (!relays.length) return;
+  const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
+  try {
+    const event = await withTimeout(
+      pool.get(relays, { kinds: [0], authors: [pubkey] }),
+      KIND0_FETCH_TIMEOUT_MS,
+      'Kind 0 fetch timed out'
+    );
+    pool.close(relays);
+    if (!event?.content) return;
+
+    const metadata = JSON.parse(event.content) as Record<string, unknown>;
+
+    let name: string | undefined;
+    if (typeof metadata.name === 'string' && metadata.name.trim()) {
+      name = metadata.name.trim();
+    } else if (typeof metadata.nip05 === 'string' && metadata.nip05.trim()) {
+      const nip05 = metadata.nip05.trim();
+      name = nip05.includes('@') ? nip05.split('@')[0] : nip05;
+    }
+
+    let picture: string | undefined;
+    if (
+      typeof metadata.picture === 'string' &&
+      (metadata.picture.startsWith('https://') || metadata.picture.startsWith('http://'))
+    ) {
+      picture = metadata.picture;
+    }
+
+    if (name === undefined && picture === undefined) return;
+
+    const profiles = await getProfiles();
+    if (!profiles[profileId]) return;
+
+    profiles[profileId] = {
+      ...profiles[profileId],
+      ...(name !== undefined ? { name } : {}),
+      ...(picture !== undefined ? { picture } : {}),
+    };
+    await saveProfiles(profiles);
+    if (profileId === activeProfileId) {
+      activeProfile = profiles[profileId];
+    }
+  } catch {
+    try {
+      pool.close(relays);
+    } catch {
+      /* ignore */
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Connection helpers
+// ---------------------------------------------------------------------------
+
+/** Reconnect to the bunker using the active profile's stored session + client secret. */
 async function reconnectFromSession(): Promise<boolean> {
+  const session = activeProfile?.session;
   if (!session?.signerPubkey || !session.relays?.length) return false;
+  if (!activeProfile) return false;
   try {
     let bp: { pubkey: string; relays: string[]; secret: string | null };
     if (session.bunkerUri) {
@@ -261,7 +359,7 @@ async function reconnectFromSession(): Promise<boolean> {
         secret: null,
       };
     }
-    const secret = await getOrCreateClientKey();
+    const secret = getClientSecretBytes(activeProfile);
     const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
     const signer = BunkerSigner.fromBunker(secret, bp, { pool });
     await withTimeout(signer.connect(), BUNKER_CONNECT_TIMEOUT_MS, 'Reconnection timed out.');
@@ -272,33 +370,65 @@ async function reconnectFromSession(): Promise<boolean> {
   }
 }
 
+/**
+ * Connect to a bunker via URI.
+ * If `asNewProfile` is true or no active profile exists, a new profile is created.
+ * Otherwise the active profile's session is updated.
+ */
 async function connectWithBunkerUri(
-  uri: string
-): Promise<{ success: boolean; signerPubkey?: string; error?: string }> {
+  uri: string,
+  opts?: { asNewProfile?: boolean }
+): Promise<{ success: boolean; signerPubkey?: string; profileId?: string; error?: string }> {
   try {
     const bp = await parseBunkerInput(uri);
     if (!bp) return { success: false, error: 'Invalid bunker URI' };
     if (!bp.relays?.length) return { success: false, error: 'No relays in bunker URI' };
 
-    const secret = await getOrCreateClientKey();
-    const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
-    const signer = BunkerSigner.fromBunker(secret, bp, { pool });
+    const createNew = opts?.asNewProfile === true || !activeProfileId;
 
-    // Use built-in connect(): sends [remotePubkey, secret]. Some bunkers (e.g. nsec.app) return
-    // the secret as result instead of "ack"; both are success.
+    let profileId: string;
+    let clientSecretBytes: Uint8Array;
+    let clientSecretHex: string;
+
+    if (createNew) {
+      const { hex, bytes } = generateNewClientSecret();
+      clientSecretHex = hex;
+      clientSecretBytes = bytes;
+      profileId = crypto.randomUUID();
+    } else {
+      profileId = activeProfileId!;
+      clientSecretBytes = getClientSecretBytes(activeProfile!);
+      clientSecretHex = activeProfile!.clientSecretHex;
+    }
+
+    const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
+    const signer = BunkerSigner.fromBunker(clientSecretBytes, bp, { pool });
+
     await withTimeout(
       signer.connect(),
       BUNKER_CONNECT_TIMEOUT_MS,
       'Connection timed out. The bunker may be slow or unreachable—check relays and try again.'
     );
+
     const signerPubkey = await signer.getPublicKey();
+    const session: Session = { signerPubkey, relays: bp.relays, bunkerUri: uri };
+
+    const profiles = await getProfiles();
+    if (createNew) {
+      profiles[profileId] = { id: profileId, clientSecretHex, session };
+    } else {
+      profiles[profileId] = { ...profiles[profileId], session };
+    }
+    await saveProfiles(profiles);
+
+    activeProfileId = profileId;
+    activeProfile = profiles[profileId];
+    await setActiveProfileId(profileId);
     bunkerSigner = signer;
-    await persistSession({
-      signerPubkey,
-      relays: bp.relays,
-      bunkerUri: uri,
-    });
-    return { success: true, signerPubkey };
+
+    void fetchKind0ForProfile(profileId, signerPubkey, bp.relays);
+
+    return { success: true, signerPubkey, profileId };
   } catch (e) {
     const message =
       e instanceof Error ? e.message : typeof e === 'string' ? e : 'Connection failed';
@@ -312,14 +442,29 @@ function randomNostrConnectSecret(): string {
 }
 
 /**
- * Start connecting via nostrconnect: generate a URI for the client (extension), show it as QR/copy;
+ * Start connecting via nostrconnect: generate a URI, show it as QR/copy;
  * wait for bunker to connect in the background and persist session when done.
- * Uses relays from storage (nostrConnectRelays) or DEFAULT_NOSTRCONNECT_RELAYS.
  */
-function startNostrConnectConnection(): Promise<{ uri: string }> {
+function startNostrConnectConnection(opts?: { asNewProfile?: boolean }): Promise<{ uri: string }> {
   return (async () => {
-    const secret = await getOrCreateClientKey();
-    const clientPubkey = getPublicKey(secret);
+    const createNew = opts?.asNewProfile === true || !activeProfileId;
+
+    let profileId: string;
+    let clientSecretBytesVal: Uint8Array;
+    let clientSecretHex: string;
+
+    if (createNew) {
+      const { hex, bytes } = generateNewClientSecret();
+      clientSecretHex = hex;
+      clientSecretBytesVal = bytes;
+      profileId = crypto.randomUUID();
+    } else {
+      profileId = activeProfileId!;
+      clientSecretBytesVal = getClientSecretBytes(activeProfile!);
+      clientSecretHex = activeProfile!.clientSecretHex;
+    }
+
+    const clientPubkey = getPublicKey(clientSecretBytesVal);
     const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
 
     const data = await chrome.storage.local.get(STORAGE_KEY_NOSTRCONNECT_RELAYS);
@@ -337,16 +482,29 @@ function startNostrConnectConnection(): Promise<{ uri: string }> {
       name: NIP46_APP_NAME,
     });
 
-    // Wait for bunker to connect in the background; persist session when done
-    BunkerSigner.fromURI(secret, uri, { pool }, BUNKER_CONNECT_TIMEOUT_MS)
+    // Wait for bunker to connect in the background; create/persist profile only on success
+    BunkerSigner.fromURI(clientSecretBytesVal, uri, { pool }, BUNKER_CONNECT_TIMEOUT_MS)
       .then(async (signer) => {
         const signerPubkey = await signer.getPublicKey();
-        bunkerSigner = signer;
-        await persistSession({
+        const session: Session = {
           signerPubkey,
           relays: signer.bp.relays,
           bunkerUri: toBunkerURL(signer.bp),
-        });
+        };
+
+        if (createNew) {
+          const profiles = await getProfiles();
+          profiles[profileId] = { id: profileId, clientSecretHex, session };
+          await saveProfiles(profiles);
+          activeProfileId = profileId;
+          activeProfile = profiles[profileId];
+          await setActiveProfileId(profileId);
+        } else {
+          await persistProfileSession(profileId, session);
+        }
+
+        bunkerSigner = signer;
+        void fetchKind0ForProfile(profileId, signerPubkey, signer.bp.relays);
       })
       .catch(() => {
         // Popup may poll GET_SESSION; no need to surface timeout here
@@ -356,6 +514,10 @@ function startNostrConnectConnection(): Promise<{ uri: string }> {
   })();
 }
 
+// ---------------------------------------------------------------------------
+// Permission enforcement
+// ---------------------------------------------------------------------------
+
 async function requestPermission(
   host: string,
   method: string,
@@ -363,11 +525,7 @@ async function requestPermission(
 ): Promise<boolean> {
   const requestId = Math.random().toString(36).slice(2) + Date.now();
 
-  const qs = new URLSearchParams({
-    requestId,
-    host,
-    method,
-  });
+  const qs = new URLSearchParams({ requestId, host, method });
 
   if (method === 'signEvent' && params?.[0]) {
     const evt = params[0] as { kind?: number };
@@ -400,12 +558,40 @@ async function requestPermission(
   });
 
   return new Promise<boolean>((resolve) => {
-    pendingPermissions.set(requestId, {
-      resolve,
-      windowId: win.id!,
-    });
+    pendingPermissions.set(requestId, { resolve, windowId: win.id! });
   });
 }
+
+async function enforcePermission(
+  senderUrl: string | undefined,
+  msgType: string,
+  params?: unknown[]
+): Promise<{ allowed: boolean; error?: string }> {
+  const method = NIP07_METHOD_MAP[msgType];
+  if (!method) return { allowed: true };
+
+  if (!senderUrl) return { allowed: false, error: 'Unknown origin' };
+
+  let host: string;
+  try {
+    host = new URL(senderUrl).hostname;
+  } catch {
+    return { allowed: false, error: 'Invalid origin' };
+  }
+
+  const kind =
+    method === 'signEvent' ? (params?.[0] as { kind?: number } | undefined)?.kind : undefined;
+  const decision = await checkPermission(host, method, kind, activeProfileId ?? undefined);
+  if (decision === 'allow') return { allowed: true };
+  if (decision === 'deny') return { allowed: false, error: 'Permission denied' };
+
+  const allowed = await requestPermission(host, method, params);
+  return allowed ? { allowed: true } : { allowed: false, error: 'Permission denied' };
+}
+
+// ---------------------------------------------------------------------------
+// Message listener
+// ---------------------------------------------------------------------------
 
 /** Message types that may only be sent from extension pages (popup, prompt, options), not content scripts. */
 const PRIVILEGED_MESSAGE_TYPES = new Set([
@@ -413,6 +599,11 @@ const PRIVILEGED_MESSAGE_TYPES = new Set([
   'GET_SESSION',
   'CONNECT_BUNKER_URI',
   'CONNECT_VIA_NOSTRCONNECT',
+  'GET_PROFILES',
+  'SWITCH_PROFILE',
+  'REMOVE_PROFILE',
+  'RENAME_PROFILE',
+  'FETCH_PROFILE_METADATA',
   'ADD_TO_NOSTR_WHITELIST',
   'GET_NOSTR_WHITELIST',
   'REMOVE_FROM_NOSTR_WHITELIST',
@@ -439,33 +630,6 @@ function validateNip04Nip44Params(params: unknown[]): params is [string, string]
   return params.length >= 2 && typeof params[0] === 'string' && typeof params[1] === 'string';
 }
 
-async function enforcePermission(
-  senderUrl: string | undefined,
-  msgType: string,
-  params?: unknown[]
-): Promise<{ allowed: boolean; error?: string }> {
-  const method = NIP07_METHOD_MAP[msgType];
-  if (!method) return { allowed: true };
-
-  if (!senderUrl) return { allowed: false, error: 'Unknown origin' };
-
-  let host: string;
-  try {
-    host = new URL(senderUrl).hostname;
-  } catch {
-    return { allowed: false, error: 'Invalid origin' };
-  }
-
-  const kind =
-    method === 'signEvent' ? (params?.[0] as { kind?: number } | undefined)?.kind : undefined;
-  const decision = await checkPermission(host, method, kind);
-  if (decision === 'allow') return { allowed: true };
-  if (decision === 'deny') return { allowed: false, error: 'Permission denied' };
-
-  const allowed = await requestPermission(host, method, params);
-  return allowed ? { allowed: true } : { allowed: false, error: 'Permission denied' };
-}
-
 chrome.runtime.onMessage.addListener(
   (
     msg: {
@@ -477,6 +641,9 @@ chrome.runtime.onMessage.addListener(
       requestId?: string;
       decision?: string;
       enabled?: boolean;
+      profileId?: string;
+      asNewProfile?: boolean;
+      name?: string;
     },
     sender: { url?: string; tab?: { id?: number } },
     sendResponse: (response: unknown) => void
@@ -498,7 +665,6 @@ chrome.runtime.onMessage.addListener(
         pendingRawEvents.delete(msg.requestId);
         pendingPermissions.delete(msg.requestId);
 
-        // Host and method are in the prompt page URL (sender.url); eventKind for per-kind signEvent
         let host = '';
         let method = '';
         let eventKind: number | undefined;
@@ -517,13 +683,16 @@ chrome.runtime.onMessage.addListener(
           }
         }
 
+        const profileId = activeProfileId ?? undefined;
+
         if (msg.decision === 'allow_always') {
           if (host && method)
             await setPermission(
               host,
               method,
               'allow',
-              method === 'signEvent' ? eventKind : undefined
+              method === 'signEvent' ? eventKind : undefined,
+              profileId
             );
           if (host) void updateBadgeForTabsWithHost(host);
           pending.resolve(true);
@@ -533,7 +702,8 @@ chrome.runtime.onMessage.addListener(
               host,
               method,
               'deny',
-              method === 'signEvent' ? eventKind : undefined
+              method === 'signEvent' ? eventKind : undefined,
+              profileId
             );
           if (host) void updateBadgeForTabsWithHost(host);
           pending.resolve(false);
@@ -545,32 +715,185 @@ chrome.runtime.onMessage.addListener(
         return {};
       }
 
-      // --- Popup management messages ---
+      // --- Session / profile management ---
       if (msg.type === 'GET_SESSION') {
-        await loadSessionFromStorage();
-        if (session && !bunkerSigner) await reconnectFromSession();
-        if (bunkerSigner && session)
+        await loadActiveProfileFromStorage();
+        if (reconnecting) {
+          return { connected: false, reconnecting: true, activeProfileId };
+        }
+        if (activeProfile?.session && !bunkerSigner) {
+          const reconnected = await reconnectFromSession();
+          if (!reconnected) {
+            return {
+              connected: false,
+              reconnectionFailed: true,
+              activeProfileId,
+              profileName: activeProfile.name,
+              profilePicture: activeProfile.picture,
+            };
+          }
+        }
+        if (bunkerSigner && activeProfile?.session) {
           return {
             connected: true,
-            signerPubkey: session.signerPubkey,
-            relays: session.relays,
+            signerPubkey: activeProfile.session.signerPubkey,
+            relays: activeProfile.session.relays,
+            profileName: activeProfile.name,
+            profilePicture: activeProfile.picture,
+            activeProfileId,
           };
-        return { connected: false };
+        }
+        return { connected: false, activeProfileId };
       }
 
       if (msg.type === 'CONNECT_BUNKER_URI' && msg.uri) {
-        return await connectWithBunkerUri(msg.uri);
+        return await connectWithBunkerUri(msg.uri, { asNewProfile: msg.asNewProfile });
       }
 
       if (msg.type === 'CONNECT_VIA_NOSTRCONNECT') {
-        return await startNostrConnectConnection();
+        return await startNostrConnectConnection({ asNewProfile: msg.asNewProfile });
+      }
+
+      if (msg.type === 'GET_PROFILES') {
+        const [profiles, currentActiveId] = await Promise.all([
+          getProfiles(),
+          getActiveProfileId(),
+        ]);
+        return {
+          profiles: profilesToSummaries(profiles),
+          activeProfileId: currentActiveId,
+        };
+      }
+
+      if (msg.type === 'SWITCH_PROFILE' && msg.profileId) {
+        const targetId = msg.profileId;
+        const profiles = await getProfiles();
+        if (!profiles[targetId]) return { success: false, error: 'Profile not found' };
+
+        // Close current signer
+        if (bunkerSigner) {
+          try {
+            await bunkerSigner.close();
+          } catch {
+            /* ignore */
+          }
+          bunkerSigner = null;
+        }
+
+        activeProfileId = targetId;
+        activeProfile = profiles[targetId];
+        await setActiveProfileId(targetId);
+
+        // Reconnect in background so UI can update immediately
+        if (activeProfile.session?.signerPubkey) {
+          reconnecting = true;
+          reconnectFromSession()
+            .then(() => {})
+            .finally(() => {
+              reconnecting = false;
+            });
+        }
+
+        return {
+          success: true,
+          activeProfileId: targetId,
+          profileName: activeProfile.name,
+          profilePicture: activeProfile.picture,
+          hasSession: Boolean(activeProfile.session?.signerPubkey),
+        };
+      }
+
+      if (msg.type === 'REMOVE_PROFILE' && msg.profileId) {
+        const targetId = msg.profileId;
+        const profiles = await getProfiles();
+        if (!profiles[targetId]) return { success: false, error: 'Profile not found' };
+
+        const wasActive = targetId === activeProfileId;
+
+        // If removing active profile, disconnect
+        if (wasActive && bunkerSigner) {
+          try {
+            await bunkerSigner.close();
+          } catch {
+            /* ignore */
+          }
+          bunkerSigner = null;
+        }
+
+        // Remove profile and its data
+        delete profiles[targetId];
+        await saveProfiles(profiles);
+        await deleteProfilePermissions(targetId);
+        await deleteProfileWhitelist(targetId);
+
+        let newActiveId: string | null = null;
+
+        if (wasActive) {
+          // Switch to another profile if available
+          const remaining = Object.keys(profiles);
+          newActiveId = remaining.length > 0 ? remaining[0] : null;
+          activeProfileId = newActiveId;
+          activeProfile = newActiveId ? profiles[newActiveId] : null;
+          await setActiveProfileId(newActiveId);
+
+          // Reconnect if new active profile has session
+          let connected = false;
+          if (activeProfile?.session?.signerPubkey) {
+            connected = await reconnectFromSession();
+          }
+          void connected; // suppress unused warning
+        }
+
+        await clearAllBadges();
+
+        return {
+          success: true,
+          newActiveProfileId: wasActive ? newActiveId : activeProfileId,
+        };
+      }
+
+      if (msg.type === 'RENAME_PROFILE' && msg.profileId && typeof msg.name === 'string') {
+        const profiles = await getProfiles();
+        if (!profiles[msg.profileId]) return { success: false, error: 'Profile not found' };
+        profiles[msg.profileId] = {
+          ...profiles[msg.profileId],
+          name: msg.name.trim() || undefined,
+        };
+        await saveProfiles(profiles);
+        if (msg.profileId === activeProfileId) {
+          activeProfile = profiles[msg.profileId];
+        }
+        return { success: true };
+      }
+
+      if (msg.type === 'FETCH_PROFILE_METADATA' && msg.profileId) {
+        const profiles = await getProfiles();
+        const profile = profiles[msg.profileId];
+        if (!profile?.session?.signerPubkey || !profile.session.relays?.length) {
+          return { success: false, error: 'Profile has no session or relays' };
+        }
+        await fetchKind0ForProfile(
+          msg.profileId,
+          profile.session.signerPubkey,
+          profile.session.relays
+        );
+        const updated = await getProfiles();
+        const p = updated[msg.profileId];
+        return {
+          success: true,
+          name: p?.name,
+          picture: p?.picture,
+        };
       }
 
       if (msg.type === 'SHOULD_INJECT_NOSTR' && typeof msg.host === 'string') {
         const host = msg.host;
+        // Ensure profile is loaded (service worker may have restarted)
+        if (activeProfileId === null) await loadActiveProfileFromStorage();
+        const profileId = activeProfileId ?? undefined;
         const [inject, policies, showBadge] = await Promise.all([
-          shouldExposeNostrForHost(host),
-          getPermissions(),
+          shouldExposeNostrForHost(host, profileId),
+          getPermissions(profileId),
           getShowNostrBadge(),
         ]);
         const count = showBadge && inject ? countAllowedPermissions(policies, host) : 0;
@@ -582,16 +905,16 @@ chrome.runtime.onMessage.addListener(
       }
 
       if (msg.type === 'ADD_TO_NOSTR_WHITELIST' && typeof msg.host === 'string') {
-        await addToNostrWhitelist(msg.host);
+        await addToNostrWhitelist(msg.host, activeProfileId ?? undefined);
         return {};
       }
 
       if (msg.type === 'GET_NOSTR_WHITELIST') {
-        return { whitelist: await getNostrWhitelist() };
+        return { whitelist: await getNostrWhitelist(activeProfileId ?? undefined) };
       }
 
       if (msg.type === 'REMOVE_FROM_NOSTR_WHITELIST' && typeof msg.host === 'string') {
-        await removeFromNostrWhitelist(msg.host);
+        await removeFromNostrWhitelist(msg.host, activeProfileId ?? undefined);
         void updateBadgeForTabsWithHost(msg.host);
         return {};
       }
@@ -619,7 +942,7 @@ chrome.runtime.onMessage.addListener(
             await bunkerSigner.close();
           } catch {}
         }
-        await clearSession();
+        if (activeProfileId) await clearProfileSession(activeProfileId);
         return {};
       }
 
@@ -629,9 +952,11 @@ chrome.runtime.onMessage.addListener(
             await bunkerSigner.close();
           } catch {}
         }
-        await clearSession();
-        await clearAllPermissions();
-        await clearNostrWhitelist();
+        bunkerSigner = null;
+        const profileId = activeProfileId ?? undefined;
+        if (activeProfileId) await clearProfileSession(activeProfileId);
+        await clearAllPermissions(profileId);
+        await clearNostrWhitelist(profileId);
         await clearAllBadges();
         return {};
       }
@@ -641,28 +966,28 @@ chrome.runtime.onMessage.addListener(
       }
 
       if (msg.type === 'GET_PERMISSIONS') {
-        const perms = await getPermissions();
+        const perms = await getPermissions(activeProfileId ?? undefined);
         return { permissions: perms };
       }
 
       if (msg.type === 'REMOVE_PERMISSION' && msg.host && msg.method) {
-        await removePermission(msg.host, msg.method);
+        await removePermission(msg.host, msg.method, undefined, activeProfileId ?? undefined);
         void updateBadgeForTabsWithHost(msg.host);
         return {};
       }
 
       if (msg.type === 'REMOVE_DOMAIN_PERMISSIONS' && msg.host) {
-        await removeDomainPermissions(msg.host);
+        await removeDomainPermissions(msg.host, activeProfileId ?? undefined);
         void updateBadgeForTabsWithHost(msg.host);
         return {};
       }
 
-      // --- NIP-07 from content script (NIP-07 compliant: getPublicKey, signEvent, optional nip04/nip44/getRelays) ---
+      // --- NIP-07 from content script ---
       const nip07Method = NIP07_METHOD_MAP[msg.type];
       if (nip07Method) {
-        await loadSessionFromStorage();
-        if (session && !bunkerSigner) await reconnectFromSession();
-        if (!bunkerSigner || !session) {
+        await loadActiveProfileFromStorage();
+        if (activeProfile?.session && !bunkerSigner) await reconnectFromSession();
+        if (!bunkerSigner || !activeProfile?.session) {
           return { error: 'Not connected to signer. Connect in the extension popup.' };
         }
 
@@ -688,8 +1013,8 @@ chrome.runtime.onMessage.addListener(
           return { result: event };
         }
 
+        const session = activeProfile.session;
         if (msg.type === 'NIP07_GET_RELAYS') {
-          // NIP-65 (kind 10002) is preferred; fall back to session.relays from bunker connection
           const pubkey = await bunkerSigner.getPublicKey();
           const nip65 =
             session.relays.length > 0 ? await fetchNip65RelayList(pubkey, session.relays) : null;
@@ -702,27 +1027,16 @@ chrome.runtime.onMessage.addListener(
 
         const nip44Params = msg.params ?? [];
         if (msg.type === 'NIP04_ENCRYPT' && validateNip04Nip44Params(nip44Params)) {
-          return {
-            result: await bunkerSigner.nip04Encrypt(nip44Params[0], nip44Params[1]),
-          };
+          return { result: await bunkerSigner.nip04Encrypt(nip44Params[0], nip44Params[1]) };
         }
-
         if (msg.type === 'NIP04_DECRYPT' && validateNip04Nip44Params(nip44Params)) {
-          return {
-            result: await bunkerSigner.nip04Decrypt(nip44Params[0], nip44Params[1]),
-          };
+          return { result: await bunkerSigner.nip04Decrypt(nip44Params[0], nip44Params[1]) };
         }
-
         if (msg.type === 'NIP44_ENCRYPT' && validateNip04Nip44Params(nip44Params)) {
-          return {
-            result: await bunkerSigner.nip44Encrypt(nip44Params[0], nip44Params[1]),
-          };
+          return { result: await bunkerSigner.nip44Encrypt(nip44Params[0], nip44Params[1]) };
         }
-
         if (msg.type === 'NIP44_DECRYPT' && validateNip04Nip44Params(nip44Params)) {
-          return {
-            result: await bunkerSigner.nip44Decrypt(nip44Params[0], nip44Params[1]),
-          };
+          return { result: await bunkerSigner.nip44Decrypt(nip44Params[0], nip44Params[1]) };
         }
 
         if (
@@ -751,6 +1065,10 @@ chrome.windows.onRemoved.addListener((windowId: number) => {
 });
 
 export default defineBackground(async () => {
-  await loadSessionFromStorage();
-  if (session && !bunkerSigner) void reconnectFromSession();
+  // Run migration (idempotent) before anything else
+  await migrateToProfiles();
+
+  // Load active profile and attempt reconnect
+  await loadActiveProfileFromStorage();
+  if (activeProfile?.session && !bunkerSigner) void reconnectFromSession();
 });

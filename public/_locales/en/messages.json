@@ -1,141 +1,386 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "NIP-07 remote signer via NIP-46 / Bunker46" },
-
-  "appSubtitle": { "message": "NIP-07 Remote Signer" },
-  "openFullPage": { "message": "Open in new tab to manage options" },
-  "connected": { "message": "Connected" },
-  "offline": { "message": "Offline" },
-  "loading": { "message": "Loading…" },
-  "tabConnection": { "message": "Connection" },
-  "tabPermissions": { "message": "Permissions" },
-  "tabSettings": { "message": "Settings" },
-
-  "errorPasteUri": { "message": "Paste a bunker:// URI above" },
-  "errorConnectionFailed": { "message": "Connection failed" },
-  "errorGenerateUri": { "message": "Failed to generate connection URI" },
-  "errorStartConnection": { "message": "Failed to start connection" },
-
-  "toastLoggedOut": { "message": "Logged out" },
-  "toastLogoutFailed": { "message": "Log out failed" },
-  "toastSettingsSaved": { "message": "Settings saved" },
-  "toastPrivacyModeOn": { "message": "Privacy mode on" },
-  "toastPrivacyModeOff": { "message": "Privacy mode off" },
-  "toastBadgeShown": { "message": "Badge shown" },
-  "toastBadgeHidden": { "message": "Badge hidden" },
-  "toastCopied": { "message": "Copied to clipboard" },
-  "toastCopyFailed": { "message": "Failed to copy" },
-  "toastPermissionRemoved": { "message": "Permission removed" },
-  "toastPermissionRemoveFailed": { "message": "Failed to remove permission" },
-  "toastDomainRemoved": { "message": "Domain permissions removed" },
-  "toastDomainRemoveFailed": { "message": "Failed to remove domain" },
-  "toastNoActiveTab": { "message": "No active tab or URL" },
-  "toastAddedToWhitelist": { "message": "Added $1 to whitelist. Reload the tab to use nostr." },
-  "toastAddDomainFailed": { "message": "Failed to add domain" },
-  "toastRemovedFromWhitelist": { "message": "Removed from whitelist" },
-  "toastRemoveFromWhitelistFailed": { "message": "Failed to remove from whitelist" },
-
-  "signerKey": { "message": "Signer Key" },
-  "copyTitle": { "message": "Copy" },
-  "showQrTitle": { "message": "Show QR code" },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "extDescription": {
+    "message": "NIP-07 remote signer via NIP-46 / Bunker46"
+  },
+  "appSubtitle": {
+    "message": "NIP-07 Remote Signer"
+  },
+  "openFullPage": {
+    "message": "Open in new tab to manage options"
+  },
+  "connected": {
+    "message": "Connected"
+  },
+  "offline": {
+    "message": "Offline"
+  },
+  "loading": {
+    "message": "Loading…"
+  },
+  "tabConnection": {
+    "message": "Connection"
+  },
+  "tabPermissions": {
+    "message": "Permissions"
+  },
+  "tabSettings": {
+    "message": "Settings"
+  },
+  "errorPasteUri": {
+    "message": "Paste a bunker:// URI above"
+  },
+  "errorConnectionFailed": {
+    "message": "Connection failed"
+  },
+  "errorGenerateUri": {
+    "message": "Failed to generate connection URI"
+  },
+  "errorStartConnection": {
+    "message": "Failed to start connection"
+  },
+  "toastLoggedOut": {
+    "message": "Logged out"
+  },
+  "toastLogoutFailed": {
+    "message": "Log out failed"
+  },
+  "toastSettingsSaved": {
+    "message": "Settings saved"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Privacy mode on"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Privacy mode off"
+  },
+  "toastBadgeShown": {
+    "message": "Badge shown"
+  },
+  "toastBadgeHidden": {
+    "message": "Badge hidden"
+  },
+  "toastCopied": {
+    "message": "Copied to clipboard"
+  },
+  "toastCopyFailed": {
+    "message": "Failed to copy"
+  },
+  "toastPermissionRemoved": {
+    "message": "Permission removed"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Failed to remove permission"
+  },
+  "toastDomainRemoved": {
+    "message": "Domain permissions removed"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Failed to remove domain"
+  },
+  "toastNoActiveTab": {
+    "message": "No active tab or URL"
+  },
+  "toastAddedToWhitelist": {
+    "message": "Added $1 to whitelist. Reload the tab to use nostr."
+  },
+  "toastAddDomainFailed": {
+    "message": "Failed to add domain"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "Removed from whitelist"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Failed to remove from whitelist"
+  },
+  "signerKey": {
+    "message": "Signer Key"
+  },
+  "copyTitle": {
+    "message": "Copy"
+  },
+  "showQrTitle": {
+    "message": "Show QR code"
+  },
   "signerDescription": {
     "message": "All NIP-07 requests from web pages are forwarded to this remote signer via NIP-46. No private keys are stored in the extension."
   },
-  "disconnect": { "message": "Disconnect" },
-  "logoutConfirmTitle": { "message": "Log out completely?" },
+  "disconnect": {
+    "message": "Disconnect"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Disconnect & remove profile"
+  },
+  "logoutConfirmTitle": {
+    "message": "Log out completely?"
+  },
   "logoutConfirmDescription": {
     "message": "This will disconnect from your signer and clear all permissions and the privacy-mode whitelist. You'll need to reconnect and re-allow sites."
   },
-  "cancel": { "message": "Cancel" },
-  "logOut": { "message": "Log out" },
-
-  "connectViaBunkerUri": { "message": "Connect via Bunker URI" },
+  "cancel": {
+    "message": "Cancel"
+  },
+  "logOut": {
+    "message": "Log out"
+  },
+  "connectViaBunkerUri": {
+    "message": "Connect via Bunker URI"
+  },
   "connectViaBunkerUriDesc": {
     "message": "Paste a bunker:// URI from your remote signer to connect"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "Connecting..." },
-  "connect": { "message": "Connect" },
-  "separatorOr": { "message": "or" },
-  "getUriFromBunker46": { "message": "Get URI from Bunker46" },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "connecting": {
+    "message": "Connecting..."
+  },
+  "connect": {
+    "message": "Connect"
+  },
+  "separatorOr": {
+    "message": "or"
+  },
+  "getUriFromBunker46": {
+    "message": "Get URI from Bunker46"
+  },
   "nostrConnectDesc": {
     "message": "Connect via Nostrconnect: show a QR and URI for your bunker app to scan."
   },
-  "showQrConnectionUri": { "message": "Show QR & connection URI" },
-
-  "settingsUseBunker46": { "message": "Use Bunker46" },
+  "showQrConnectionUri": {
+    "message": "Show QR & connection URI"
+  },
+  "settingsUseBunker46": {
+    "message": "Use Bunker46"
+  },
   "settingsUseBunker46Hint": {
     "message": "Handle nostrconnect: links and redirect to your Bunker46 instance."
   },
-  "settingsBunkerUrl": { "message": "Bunker46 URL" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "Base URL of your Bunker46 instance" },
-  "settingsSpecifyNostrConnectRelays": { "message": "Specify nostrconnect relays" },
+  "settingsBunkerUrl": {
+    "message": "Bunker46 URL"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "Base URL of your Bunker46 instance"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Specify nostrconnect relays"
+  },
   "settingsSpecifyNostrConnectRelaysHint": {
     "message": "Set custom relay URLs for the Nostrconnect QR/URI."
   },
-  "settingsNostrConnectRelays": { "message": "Nostr Connect relays" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelays": {
+    "message": "Nostr Connect relays"
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
   "settingsNostrConnectRelaysHint": {
     "message": "One relay URL per line (or comma-separated). Used when generating the QR/URI for connecting via Nostrconnect."
   },
-  "choiceOn": { "message": "On" },
-  "choiceOff": { "message": "Off" },
-  "save": { "message": "Save" },
-  "privacyMode": { "message": "Privacy mode" },
+  "choiceOn": {
+    "message": "On"
+  },
+  "choiceOff": {
+    "message": "Off"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "privacyMode": {
+    "message": "Privacy mode"
+  },
   "privacyModeHint": {
     "message": "Only expose window.nostr on whitelisted domains (Permissions tab); reduces fingerprinting."
   },
   "privacyModeSitesHint": {
     "message": "Sites can't detect the extension, so some may not show \"Sign in with Nostr\" until you add them in Permissions."
   },
-  "showBadge": { "message": "Show badge on extension icon" },
+  "showBadge": {
+    "message": "Show badge on extension icon"
+  },
   "showBadgeHint": {
     "message": "When on, the icon shows the number of granted permissions for the current tab (e.g. 1, 2)."
   },
-
-  "addToWhitelistTitle": { "message": "Add $1 to whitelist" },
-  "addToWhitelistButton": { "message": "Add $1 to whitelist" },
-  "removeFromWhitelistTitle": { "message": "Remove $1 from whitelist" },
-  "removeFromWhitelistButton": { "message": "Remove $1 from whitelist" },
-  "searchDomainsPlaceholder": { "message": "Search domains..." },
-  "noPermissionsYet": { "message": "No permissions yet" },
+  "addToWhitelistTitle": {
+    "message": "Add $1 to whitelist"
+  },
+  "addToWhitelistButton": {
+    "message": "Add $1 to whitelist"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "Remove $1 from whitelist"
+  },
+  "removeFromWhitelistButton": {
+    "message": "Remove $1 from whitelist"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Search domains..."
+  },
+  "noPermissionsYet": {
+    "message": "No permissions yet"
+  },
   "noPermissionsHint": {
     "message": "When websites request access to your Nostr identity, you'll see them here."
   },
-  "noDomainsMatch": { "message": "No domains match your search" },
-  "revokeAllPermissionsTitle": { "message": "Revoke all permissions for this domain" },
-  "whitelistedNoPermissions": { "message": "Whitelisted for nostr (no permissions yet)" },
-  "allowed": { "message": "Allowed" },
-  "denied": { "message": "Denied" },
-  "revokeTitle": { "message": "Revoke" },
-  "removeFromWhitelist": { "message": "Remove from whitelist" },
-
-  "qrScanToUse": { "message": "$1 (scan to use)" },
-  "qrCodeAlt": { "message": "QR code" },
-  "close": { "message": "Close" },
-  "nostrConnectModalHint": { "message": "Scan with your bunker app or copy the URI" },
-  "nostrConnectQrAlt": { "message": "Nostrconnect QR code" },
-  "copyUri": { "message": "Copy URI" },
-  "waitingForBunker": { "message": "Waiting for bunker to connect…" },
-
-  "method_getPublicKey": { "message": "Get Public Key" },
-  "method_signEvent": { "message": "Sign Event" },
-  "method_signEvent_kind": { "message": "Sign event (kind $1)" },
-  "method_getRelays": { "message": "Get Relays" },
-  "method_nip04_encrypt": { "message": "NIP-04 Encrypt" },
-  "method_nip04_decrypt": { "message": "NIP-04 Decrypt" },
-  "method_nip44_encrypt": { "message": "NIP-44 Encrypt" },
-  "method_nip44_decrypt": { "message": "NIP-44 Decrypt" },
-
-  "promptPermissionRequest": { "message": "Permission Request" },
-  "promptWantsAccess": { "message": "wants to access your Nostr identity" },
-  "promptEventKind": { "message": "Event kind $1" },
-  "promptViewRawMessage": { "message": "View raw message" },
-  "promptHideRawMessage": { "message": "Hide raw message" },
-  "promptAllowAlways": { "message": "Allow Always" },
-  "promptAllowAlwaysForKindHint": { "message": "Applies to this event kind only" },
-  "promptAllowOnce": { "message": "Allow Once" },
-  "promptDenyOnce": { "message": "Deny" },
-  "promptDenyAlways": { "message": "Deny Always" }
+  "noDomainsMatch": {
+    "message": "No domains match your search"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "Revoke all permissions for this domain"
+  },
+  "whitelistedNoPermissions": {
+    "message": "Whitelisted for nostr (no permissions yet)"
+  },
+  "allowed": {
+    "message": "Allowed"
+  },
+  "denied": {
+    "message": "Denied"
+  },
+  "revokeTitle": {
+    "message": "Revoke"
+  },
+  "removeFromWhitelist": {
+    "message": "Remove from whitelist"
+  },
+  "qrScanToUse": {
+    "message": "$1 (scan to use)"
+  },
+  "qrCodeAlt": {
+    "message": "QR code"
+  },
+  "close": {
+    "message": "Close"
+  },
+  "nostrConnectModalHint": {
+    "message": "Scan with your bunker app or copy the URI"
+  },
+  "nostrConnectQrAlt": {
+    "message": "Nostrconnect QR code"
+  },
+  "copyUri": {
+    "message": "Copy URI"
+  },
+  "waitingForBunker": {
+    "message": "Waiting for bunker to connect…"
+  },
+  "method_getPublicKey": {
+    "message": "Get Public Key"
+  },
+  "method_signEvent": {
+    "message": "Sign Event"
+  },
+  "method_signEvent_kind": {
+    "message": "Sign event (kind $1)"
+  },
+  "method_getRelays": {
+    "message": "Get Relays"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04 Encrypt"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04 Decrypt"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44 Encrypt"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44 Decrypt"
+  },
+  "promptPermissionRequest": {
+    "message": "Permission Request"
+  },
+  "promptWantsAccess": {
+    "message": "wants to access your Nostr identity"
+  },
+  "promptEventKind": {
+    "message": "Event kind $1"
+  },
+  "promptViewRawMessage": {
+    "message": "View raw message"
+  },
+  "promptHideRawMessage": {
+    "message": "Hide raw message"
+  },
+  "promptAllowAlways": {
+    "message": "Allow Always"
+  },
+  "promptAllowAlwaysForKindHint": {
+    "message": "Applies to this event kind only"
+  },
+  "promptAllowOnce": {
+    "message": "Allow Once"
+  },
+  "promptDenyOnce": {
+    "message": "Deny"
+  },
+  "promptDenyAlways": {
+    "message": "Deny Always"
+  },
+  "settingsMultiProfile": {
+    "message": "Multiple profiles"
+  },
+  "settingsMultiProfileHint": {
+    "message": "Show profile switcher and allow adding multiple connections."
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Remove extra profiles to use single-profile mode."
+  },
+  "addAnotherConnection": {
+    "message": "Add another connection"
+  },
+  "removeProfile": {
+    "message": "Remove this profile"
+  },
+  "removeProfileConfirmTitle": {
+    "message": "Remove profile?"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "This will disconnect and clear all permissions and whitelist entries for this profile."
+  },
+  "switchProfile": {
+    "message": "Switch profile"
+  },
+  "toastProfileRemoved": {
+    "message": "Profile removed"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "Failed to remove profile"
+  },
+  "reconnectionFailedMessage": {
+    "message": "Connection could not be restored. The bunker may have revoked access."
+  },
+  "renameProfile": {
+    "message": "Rename profile"
+  },
+  "renameProfileTitle": {
+    "message": "Rename profile"
+  },
+  "renameProfileHint": {
+    "message": "Set a display name or fetch it from Nostr (kind 0)."
+  },
+  "renameProfileNameLabel": {
+    "message": "Display name"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "Profile name"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Fetch from Nostr"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "Profile info fetched"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "Could not fetch profile from Nostr"
+  },
+  "toastProfileRenameFailed": {
+    "message": "Failed to rename profile"
+  }
 }

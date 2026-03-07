@@ -1,7 +1,5 @@
 import { NIP07_METHODS } from '@/lib/nip07/types';
 
-const STORAGE_KEY = 'domain_policies';
-
 /** Reserved keys that must not be used as host or method (prototype pollution / reserved). */
 const RESERVED_KEYS = new Set(['__proto__', 'constructor', 'prototype']);
 
@@ -19,6 +17,11 @@ export type DomainPolicies = {
     [method: string]: PermissionEntry;
   };
 };
+
+/** Returns the storage key for a profile's permissions. Falls back to legacy key when no profileId. */
+function storageKey(profileId?: string): string {
+  return profileId ? `domain_policies_${profileId}` : 'domain_policies';
+}
 
 function isSafeHost(host: string): boolean {
   if (typeof host !== 'string' || !host.trim()) return false;
@@ -51,29 +54,33 @@ function methodKey(method: string, kind?: number): string {
   return method;
 }
 
-export async function getPermissions(): Promise<DomainPolicies> {
-  const raw = await chrome.storage.local.get(STORAGE_KEY);
-  return (raw[STORAGE_KEY] as DomainPolicies) ?? {};
+export async function getPermissions(profileId?: string): Promise<DomainPolicies> {
+  const key = storageKey(profileId);
+  const raw = await chrome.storage.local.get(key);
+  return (raw[key] as DomainPolicies) ?? {};
 }
 
-async function savePermissions(policies: DomainPolicies): Promise<void> {
-  await chrome.storage.local.set({ [STORAGE_KEY]: policies });
+async function savePermissions(policies: DomainPolicies, profileId?: string): Promise<void> {
+  const key = storageKey(profileId);
+  await chrome.storage.local.set({ [key]: policies });
 }
 
 /**
- * Check permission for (host, method). For signEvent, pass kind to check per-kind first, then fallback to "signEvent" (all kinds).
+ * Check permission for (host, method). For signEvent, pass kind to check per-kind first,
+ * then fallback to "signEvent" (all kinds).
  */
 export async function checkPermission(
   host: string,
   method: string,
-  kind?: number
+  kind?: number,
+  profileId?: string
 ): Promise<PermissionDecision | null> {
   if (!isSafeHost(host)) return null;
   if (method !== 'signEvent' && !isSafeMethod(method)) return null;
   if (method === 'signEvent' && kind !== undefined && (typeof kind !== 'number' || kind < 0))
     return null;
 
-  const policies = await getPermissions();
+  const policies = await getPermissions(profileId);
   const hostPolicies = policies[host];
   if (!hostPolicies) return null;
 
@@ -88,43 +95,56 @@ export async function checkPermission(
 }
 
 /**
- * Set permission. For signEvent, pass kind to allow/deny that kind only; otherwise "signEvent" applies to all kinds.
+ * Set permission. For signEvent, pass kind to allow/deny that kind only;
+ * otherwise "signEvent" applies to all kinds.
  */
 export async function setPermission(
   host: string,
   method: string,
   decision: PermissionDecision,
-  kind?: number
+  kind?: number,
+  profileId?: string
 ): Promise<void> {
   if (!isSafeHost(host)) return;
   const key = methodKey(method, kind);
   if (!isSafeMethodKey(key)) return;
 
-  const policies = await getPermissions();
+  const policies = await getPermissions(profileId);
   if (!policies[host]) policies[host] = {};
   policies[host][key] = { decision, created_at: Date.now() };
-  await savePermissions(policies);
+  await savePermissions(policies, profileId);
 }
 
-export async function removePermission(host: string, method: string, kind?: number): Promise<void> {
+export async function removePermission(
+  host: string,
+  method: string,
+  kind?: number,
+  profileId?: string
+): Promise<void> {
   if (!isSafeHost(host)) return;
   const key = methodKey(method, kind);
   if (!isSafeMethodKey(key)) return;
 
-  const policies = await getPermissions();
+  const policies = await getPermissions(profileId);
   if (!policies[host]) return;
   delete policies[host][key];
   if (Object.keys(policies[host]).length === 0) delete policies[host];
-  await savePermissions(policies);
+  await savePermissions(policies, profileId);
 }
 
-export async function removeDomainPermissions(host: string): Promise<void> {
+export async function removeDomainPermissions(host: string, profileId?: string): Promise<void> {
   if (!isSafeHost(host)) return;
-  const policies = await getPermissions();
+  const policies = await getPermissions(profileId);
   delete policies[host];
-  await savePermissions(policies);
+  await savePermissions(policies, profileId);
 }
 
-export async function clearAllPermissions(): Promise<void> {
-  await chrome.storage.local.set({ [STORAGE_KEY]: {} });
+export async function clearAllPermissions(profileId?: string): Promise<void> {
+  const key = storageKey(profileId);
+  await chrome.storage.local.set({ [key]: {} });
+}
+
+/** Remove all permission data for a profile (used when deleting a profile). */
+export async function deleteProfilePermissions(profileId: string): Promise<void> {
+  await chrome.storage.local.remove(storageKey(profileId));
 }

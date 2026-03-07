@@ -93,4 +93,16 @@ describe('permissions', () => {
     await removePermission('example.com', 'signEvent:1');
     expect(await checkPermission('example.com', 'signEvent', 1)).toBe(null);
   });
+
+  it('profile-scoped: different profileIds use separate storage keys', async () => {
+    await setPermission('example.com', 'getPublicKey', 'allow', undefined, 'profile-a');
+    await setPermission('example.com', 'getPublicKey', 'deny', undefined, 'profile-b');
+    expect(await checkPermission('example.com', 'getPublicKey', undefined, 'profile-a')).toBe(
+      'allow'
+    );
+    expect(await checkPermission('example.com', 'getPublicKey', undefined, 'profile-b')).toBe(
+      'deny'
+    );
+    expect(await checkPermission('example.com', 'getPublicKey')).toBe(null); // legacy key unchanged
+  });
 });
