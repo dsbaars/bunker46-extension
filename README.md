@@ -25,19 +25,19 @@ A **NIP-07 compliant** browser extension that exposes `window.nostr` to web page
 
 The popup and prompts are localized. Supported locales (22):
 
-| Code    | Language            | Code    | Language             |
-|---------|---------------------|---------|----------------------|
-| `en`    | English             | `nl`    | Dutch                |
-| `ar`    | Arabic              | `no`    | Norwegian            |
-| `da`    | Danish              | `pl`    | Polish               |
-| `de`    | German              | `pt`    | Portuguese           |
-| `es`    | Spanish             | `ru`    | Russian              |
-| `fi`    | Finnish             | `sv`    | Swedish              |
-| `fr`    | French              | `tr`    | Turkish              |
-| `hi`    | Hindi               | `uk`    | Ukrainian            |
-| `id`    | Indonesian          | `zh_CN` | Chinese (Simplified) |
-| `it`    | Italian             | `zh_TW` | Chinese (Traditional)|
-| `ja`    | Japanese            | `ko`    | Korean               |
+| Code | Language   | Code    | Language              |
+| ---- | ---------- | ------- | --------------------- |
+| `en` | English    | `nl`    | Dutch                 |
+| `ar` | Arabic     | `no`    | Norwegian             |
+| `da` | Danish     | `pl`    | Polish                |
+| `de` | German     | `pt`    | Portuguese            |
+| `es` | Spanish    | `ru`    | Russian               |
+| `fi` | Finnish    | `sv`    | Swedish               |
+| `fr` | French     | `tr`    | Turkish               |
+| `hi` | Hindi      | `uk`    | Ukrainian             |
+| `id` | Indonesian | `zh_CN` | Chinese (Simplified)  |
+| `it` | Italian    | `zh_TW` | Chinese (Traditional) |
+| `ja` | Japanese   | `ko`    | Korean                |
 
 Locale files live in `public/_locales/<code>/messages.json`. The extension uses the browser’s language when a matching locale exists; otherwise it falls back to English.
 
