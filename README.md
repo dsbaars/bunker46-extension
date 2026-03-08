@@ -11,12 +11,35 @@ A **NIP-07 compliant** browser extension that exposes `window.nostr` to web page
 
 - **NIP-07 provider** — Injects `window.nostr` (getPublicKey, signEvent, getRelays, nip04/nip44) so Nostr apps can request signatures without holding keys locally.
 - **Remote signer** — Connect with a `bunker://` URI or via **nostrconnect**: the extension shows a QR and copyable URI for your bunker app to scan; once connected, the session is saved so you stay connected after restart.
+- **Multiple profiles** — Enable in Settings to use a profile switcher and add more than one connection; each profile has its own session, permissions, and privacy whitelist. Switch or remove profiles from the dropdown; add another connection from the Connection tab or the switcher.
 - **Per-domain permissions** — Each site must be allowed (once or always) before it can use your Nostr identity; you can revoke domains or individual methods from the Permissions tab.
 - **Privacy mode** — When enabled (Settings), `window.nostr` is only exposed on domains you add to a whitelist, reducing fingerprinting; add or remove domains from the Permissions tab.
 - **Extension icon badge** — Optional (Settings): show the number of granted permissions for the current tab on the extension icon.
-- **Full logout** — Disconnect asks for confirmation and then disconnects, clears all permissions, and clears the privacy whitelist in one step.
+- **Bunker46 URL** — Optional (Settings): set the base URL of your Bunker46 instance; used when you click nostrconnect links or “Get URI from Bunker46” so the extension redirects to your instance.
+- **Custom nostrconnect relays** — Optional (Settings): set custom relay URLs for the Nostrconnect QR/URI when connecting.
+- **Full logout** — Disconnect asks for confirmation and then disconnects, clears all permissions, and clears the privacy whitelist (for the active profile) in one step.
 - **nostrconnect:// links** — Clicking nostrconnect links opens your configured Bunker46 instance so you can add or manage connections there.
 - **Chrome & Firefox** — Built with [WXT](https://wxt.dev); Chrome and Firefox (MV3) builds are supported.
+
+## Languages
+
+The popup and prompts are localized. Supported locales (22):
+
+| Code    | Language            | Code    | Language             |
+|---------|---------------------|---------|----------------------|
+| `en`    | English             | `nl`    | Dutch                |
+| `ar`    | Arabic              | `no`    | Norwegian            |
+| `da`    | Danish              | `pl`    | Polish               |
+| `de`    | German              | `pt`    | Portuguese           |
+| `es`    | Spanish             | `ru`    | Russian              |
+| `fi`    | Finnish             | `sv`    | Swedish              |
+| `fr`    | French              | `tr`    | Turkish              |
+| `hi`    | Hindi               | `uk`    | Ukrainian            |
+| `id`    | Indonesian          | `zh_CN` | Chinese (Simplified) |
+| `it`    | Italian             | `zh_TW` | Chinese (Traditional)|
+| `ja`    | Japanese            | `ko`    | Korean               |
+
+Locale files live in `public/_locales/<code>/messages.json`. The extension uses the browser’s language when a matching locale exists; otherwise it falls back to English.
 
 ## Screenshots
 
