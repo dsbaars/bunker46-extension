@@ -382,5 +382,11 @@
   },
   "disconnectAndRemoveProfile": {
     "message": "قطع الاتصال وإزالة الملف الشخصي"
+  },
+  "connectingToRelays": {
+    "message": "الاتصال بـ:"
+  },
+  "connectedViaRelays": {
+    "message": "متصل عبر:"
   }
 }

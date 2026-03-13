@@ -12,6 +12,7 @@ import Separator from '@/components/ui/Separator.vue';
 import Label from '@/components/ui/Label.vue';
 import ChoiceCard from '@/components/ui/ChoiceCard.vue';
 import ProfileAvatar from '@/components/ui/ProfileAvatar.vue';
+import Tooltip from '@/components/ui/Tooltip.vue';
 import { Toaster, toast } from 'vue-sonner';
 import 'vue-sonner/style.css';
 import { nip19 } from 'nostr-tools';
@@ -52,8 +53,11 @@ import {
   X,
   Pencil,
   Download,
+  CheckCircle2,
+  XCircle,
 } from 'lucide-vue-next';
 import { t, getMethodLabel } from '@/lib/i18n';
+import { getPermissionDomains, filterAndPinDomains } from '@/lib/domains';
 
 type PermissionEntry = {
   decision: 'allow' | 'deny';
@@ -94,6 +98,10 @@ const showQrModal = ref(false);
 const qrDataUrl = ref('');
 const bunkerUriInput = ref('');
 const connecting = ref(false);
+/** Relay hostnames extracted from the bunker URI being connected, shown while connecting. */
+const connectingRelays = ref<string[]>([]);
+/** Per-relay probe status for UI feedback (connecting / ok / failed). */
+const relayStatuses = ref<Record<string, 'connecting' | 'ok' | 'failed'>>({});
 const connectionStateLoaded = ref(false);
 const errorMessage = ref('');
 const permissions = ref<DomainPolicies>({});
@@ -125,6 +133,8 @@ const showRemoveProfileConfirm = ref(false);
 const reconnectionFailed = ref(false);
 /** True while background is reconnecting after a profile switch (GET_SESSION returns reconnecting: true). */
 const reconnecting = ref(false);
+/** Relays the background is currently (or last tried to) connect through. Shown in loading / error UI. */
+const reconnectingRelaysList = ref<string[]>([]);
 const showRenameModal = ref(false);
 const renameProfileId = ref<string | null>(null);
 const renameProfileName = ref('');
@@ -134,17 +144,13 @@ const renameProfileFetching = ref(false);
 // Computed
 // ---------------------------------------------------------------------------
 
-const permissionDomains = computed(() => {
-  const fromPerms = Object.keys(permissions.value);
-  const fromWhitelist = nostrWhitelist.value;
-  return [...new Set([...fromPerms, ...fromWhitelist])].sort();
-});
+const permissionDomains = computed(() =>
+  getPermissionDomains(Object.keys(permissions.value), nostrWhitelist.value)
+);
 const permissionSearchQuery = ref('');
-const filteredPermissionDomains = computed(() => {
-  const q = permissionSearchQuery.value.trim().toLowerCase();
-  if (!q) return permissionDomains.value;
-  return permissionDomains.value.filter((host) => host.toLowerCase().includes(q));
-});
+const filteredPermissionDomains = computed(() =>
+  filterAndPinDomains(permissionDomains.value, permissionSearchQuery.value, currentTabDomain.value)
+);
 
 function isWhitelistOnly(host: string): boolean {
   return (
@@ -226,6 +232,104 @@ function cyclePubkeyFormat() {
 }
 
 // ---------------------------------------------------------------------------
+// Reconnect polling + relay probe UI
+// ---------------------------------------------------------------------------
+
+/**
+ * Probe each relay URL from the popup side and update relayStatuses in real
+ * time so the UI can show per-relay ✓/✗ icons.
+ *
+ * Uses the same logic as the background probeRelays() but drives reactive
+ * state instead of returning a map.  Safe to call multiple times; statuses
+ * are reset on each call.
+ */
+function probeRelaysUi(relays: string[]) {
+  if (!relays.length) return;
+  const initial: Record<string, 'connecting' | 'ok' | 'failed'> = {};
+  for (const r of relays) initial[r] = 'connecting';
+  relayStatuses.value = initial;
+
+  for (const url of relays) {
+    try {
+      const ws = new WebSocket(url);
+      let settled = false;
+
+      const setStatus = (status: 'ok' | 'failed') => {
+        if (settled) return;
+        settled = true;
+        relayStatuses.value = { ...relayStatuses.value, [url]: status };
+      };
+
+      const timer = setTimeout(() => setStatus('ok'), 5_000);
+
+      ws.addEventListener('open', () => {
+        clearTimeout(timer);
+        setStatus('ok');
+        try {
+          ws.close(1000, 'probe');
+        } catch {
+          /* ignore */
+        }
+      });
+      ws.addEventListener('error', () => {
+        clearTimeout(timer);
+        setStatus('failed');
+      });
+      ws.addEventListener('close', () => {
+        clearTimeout(timer);
+        if (!settled) setStatus('failed');
+      });
+    } catch {
+      relayStatuses.value = { ...relayStatuses.value, [url]: 'failed' };
+    }
+  }
+}
+
+/**
+ * Start polling GET_SESSION every second until the background is no longer
+ * reconnecting, then call loadState + loadPermissions.
+ * Also shown during the initial-load reconnect (not just profile switches).
+ */
+function startReconnectPoll(relays?: string[]) {
+  if (relays?.length) {
+    reconnectingRelaysList.value = relays;
+    probeRelaysUi(relays);
+  }
+  if (profileSwitchPollTimer) {
+    clearInterval(profileSwitchPollTimer);
+    profileSwitchPollTimer = null;
+  }
+  const startedAt = Date.now();
+  profileSwitchPollTimer = setInterval(async () => {
+    if (Date.now() - startedAt > PROFILE_SWITCH_TIMEOUT_MS) {
+      if (profileSwitchPollTimer) clearInterval(profileSwitchPollTimer);
+      profileSwitchPollTimer = null;
+      connectionStateLoaded.value = true;
+      await loadState();
+      await loadPermissions();
+      return;
+    }
+    const s = await chrome.runtime.sendMessage({ type: 'GET_SESSION' });
+    const session = s as {
+      reconnecting?: boolean;
+      reconnectingRelays?: string[];
+    };
+    if (session.reconnectingRelays?.length) {
+      reconnectingRelaysList.value = session.reconnectingRelays;
+    }
+    if (session.reconnecting) {
+      reconnecting.value = true;
+      return;
+    }
+    if (profileSwitchPollTimer) clearInterval(profileSwitchPollTimer);
+    profileSwitchPollTimer = null;
+    connectionStateLoaded.value = true;
+    await loadState();
+    await loadPermissions();
+  }, PROFILE_SWITCH_POLL_MS);
+}
+
+// ---------------------------------------------------------------------------
 // Data loading
 // ---------------------------------------------------------------------------
 
@@ -242,6 +346,7 @@ async function loadProfiles() {
 }
 
 async function loadState() {
+  let startedPoll = false;
   try {
     const res: {
       connected?: boolean;
@@ -254,9 +359,20 @@ async function loadState() {
     const sessionRes = res as {
       reconnecting?: boolean;
       reconnectionFailed?: boolean;
+      reconnectingRelays?: string[];
+      reconnectionFailedRelays?: string[];
     };
+
     reconnecting.value = sessionRes?.reconnecting ?? false;
-    if (res?.connected) {
+    activeProfileIdRef.value = res?.activeProfileId ?? null;
+
+    if (sessionRes?.reconnecting && !profileSwitchPollTimer) {
+      // Background just kicked off a reconnect; keep the spinner up and poll.
+      startedPoll = true;
+      if (res?.profileName) activeProfileName.value = res.profileName;
+      if (res?.profilePicture) activeProfilePicture.value = res.profilePicture;
+      startReconnectPoll(sessionRes.reconnectingRelays);
+    } else if (res?.connected) {
       connected.value = true;
       reconnectionFailed.value = false;
       signerPubkey.value = res.signerPubkey ?? '';
@@ -270,8 +386,10 @@ async function loadState() {
       activeProfileName.value = res?.profileName;
       activeProfilePicture.value = res?.profilePicture;
       reconnectionFailed.value = sessionRes?.reconnectionFailed ?? false;
+      if (sessionRes?.reconnectionFailedRelays?.length) {
+        reconnectingRelaysList.value = sessionRes.reconnectionFailedRelays;
+      }
     }
-    activeProfileIdRef.value = res?.activeProfileId ?? null;
 
     const stored = await chrome.storage.local.get([
       'bunker46BaseUrl',
@@ -297,9 +415,13 @@ async function loadState() {
   } catch {
     /* background may not be ready */
   } finally {
-    connectionStateLoaded.value = true;
+    if (!startedPoll) {
+      connectionStateLoaded.value = true;
+    }
   }
-  await loadProfiles();
+  if (!startedPoll) {
+    await loadProfiles();
+  }
 }
 
 async function loadPermissions() {
@@ -335,6 +457,19 @@ async function fetchCurrentTabDomain() {
 // Connection actions
 // ---------------------------------------------------------------------------
 
+/** Extract relay URLs from a bunker:// URI without a full parse. */
+function parseRelaysFromBunkerUri(uri: string): string[] {
+  try {
+    const normalized = uri.trim().replace(/^bunker:\/\//, 'https://');
+    const url = new URL(normalized);
+    return url.searchParams
+      .getAll('relay')
+      .filter((r) => r.startsWith('wss://') || r.startsWith('ws://'));
+  } catch {
+    return [];
+  }
+}
+
 async function connectWithBunkerUri() {
   const uri = bunkerUriInput.value.trim();
   if (!uri) {
@@ -342,6 +477,8 @@ async function connectWithBunkerUri() {
     return;
   }
   connecting.value = true;
+  connectingRelays.value = parseRelaysFromBunkerUri(uri);
+  probeRelaysUi(connectingRelays.value);
   errorMessage.value = '';
   try {
     const res: {
@@ -376,6 +513,8 @@ async function connectWithBunkerUri() {
     errorMessage.value = e instanceof Error ? e.message : t('errorConnectionFailed');
   } finally {
     connecting.value = false;
+    connectingRelays.value = [];
+    relayStatuses.value = {};
   }
 }
 
@@ -401,6 +540,7 @@ async function doFullLogout() {
 
 async function switchProfile(profileId: string) {
   showProfileSwitcher.value = false;
+  if (profileId === activeProfileIdRef.value) return;
   if (profileSwitchPollTimer) {
     clearInterval(profileSwitchPollTimer);
     profileSwitchPollTimer = null;
@@ -413,6 +553,7 @@ async function switchProfile(profileId: string) {
       profileName?: string;
       profilePicture?: string;
       hasSession?: boolean;
+      reconnectingRelays?: string[];
       error?: string;
     };
     if (!data?.success) return;
@@ -436,32 +577,7 @@ async function switchProfile(profileId: string) {
 
     reconnecting.value = true;
     connectionStateLoaded.value = false; // Show "Loading" on Connection tab
-    const startedAt = Date.now();
-    profileSwitchPollTimer = setInterval(async () => {
-      if (Date.now() - startedAt > PROFILE_SWITCH_TIMEOUT_MS) {
-        if (profileSwitchPollTimer) clearInterval(profileSwitchPollTimer);
-        profileSwitchPollTimer = null;
-        connectionStateLoaded.value = true;
-        await loadState();
-        await loadPermissions();
-        return;
-      }
-      const s = await chrome.runtime.sendMessage({ type: 'GET_SESSION' });
-      const session = s as {
-        connected?: boolean;
-        reconnecting?: boolean;
-        reconnectionFailed?: boolean;
-      };
-      if (session.reconnecting) {
-        reconnecting.value = true;
-        return; // Keep showing loading
-      }
-      if (profileSwitchPollTimer) clearInterval(profileSwitchPollTimer);
-      profileSwitchPollTimer = null;
-      connectionStateLoaded.value = true;
-      await loadState();
-      await loadPermissions();
-    }, PROFILE_SWITCH_POLL_MS);
+    startReconnectPoll(data.reconnectingRelays);
   } catch {
     connectionStateLoaded.value = true;
     await loadState();
@@ -768,7 +884,7 @@ function switchTab(tab: 'connection' | 'permissions' | 'settings') {
   activeTab.value = tab;
   if (tab === 'permissions') {
     loadPermissions();
-    if (privacyMode.value) void fetchCurrentTabDomain();
+    void fetchCurrentTabDomain();
   }
 }
 
@@ -828,19 +944,32 @@ onUnmounted(() => {
         >
           <Maximize2 class="size-4" />
         </Button>
-        <Badge :variant="reconnecting ? 'secondary' : connected ? 'success' : 'secondary'">
-          <span
-            :class="[
-              'size-1.5 rounded-full',
-              reconnecting
-                ? 'bg-amber-500 animate-pulse'
-                : connected
-                  ? 'bg-success'
-                  : 'bg-muted-foreground',
-            ]"
-          />
-          {{ reconnecting ? t('connecting') : connected ? t('connected') : t('offline') }}
-        </Badge>
+        <Tooltip :disabled="!connected" side="bottom" :side-offset="8">
+          <Badge
+            :variant="reconnecting ? 'secondary' : connected ? 'success' : 'secondary'"
+            class="cursor-default select-none"
+          >
+            <span
+              :class="[
+                'size-1.5 rounded-full',
+                reconnecting
+                  ? 'bg-amber-500 animate-pulse'
+                  : connected
+                    ? 'bg-success'
+                    : 'bg-muted-foreground',
+              ]"
+            />
+            {{ reconnecting ? t('connecting') : connected ? t('connected') : t('offline') }}
+          </Badge>
+          <template #content>
+            <p class="mb-1.5 font-medium text-muted-foreground">{{ t('connectedViaRelays') }}</p>
+            <div class="flex flex-col gap-0.5">
+              <p v-for="relay in signerRelays" :key="relay" class="font-mono text-foreground">
+                {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
+              </p>
+            </div>
+          </template>
+        </Tooltip>
       </div>
     </header>
 
@@ -994,6 +1123,27 @@ onUnmounted(() => {
       >
         <Loader2 class="size-5 animate-spin" />
         <span class="text-xs">{{ t('loading') }}</span>
+        <div v-if="reconnectingRelaysList.length" class="flex flex-col items-center gap-1 mt-1">
+          <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
+          <div
+            v-for="relay in reconnectingRelaysList"
+            :key="relay"
+            class="flex items-center gap-1.5"
+          >
+            <Loader2
+              v-if="!relayStatuses[relay] || relayStatuses[relay] === 'connecting'"
+              class="size-3 shrink-0 animate-spin text-muted-foreground/50"
+            />
+            <CheckCircle2
+              v-else-if="relayStatuses[relay] === 'ok'"
+              class="size-3 shrink-0 text-green-500"
+            />
+            <XCircle v-else class="size-3 shrink-0 text-destructive" />
+            <span class="text-xs font-mono text-muted-foreground/50 truncate max-w-[200px]">
+              {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
+            </span>
+          </div>
+        </div>
       </div>
 
       <!-- Adding a new profile: show connect form with Cancel -->
@@ -1039,6 +1189,31 @@ onUnmounted(() => {
                 {{ connecting ? t('connecting') : t('connect') }}
               </Button>
 
+              <div
+                v-if="connecting && connectingRelays.length"
+                class="flex flex-col items-center gap-1"
+              >
+                <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
+                <div
+                  v-for="relay in connectingRelays"
+                  :key="relay"
+                  class="flex items-center gap-1.5"
+                >
+                  <Loader2
+                    v-if="!relayStatuses[relay] || relayStatuses[relay] === 'connecting'"
+                    class="size-3 shrink-0 animate-spin text-muted-foreground/50"
+                  />
+                  <CheckCircle2
+                    v-else-if="relayStatuses[relay] === 'ok'"
+                    class="size-3 shrink-0 text-green-500"
+                  />
+                  <XCircle v-else class="size-3 shrink-0 text-destructive" />
+                  <span class="text-xs font-mono text-muted-foreground/50 truncate max-w-[220px]">
+                    {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
+                  </span>
+                </div>
+              </div>
+
               <template v-if="useBunker46">
                 <Separator :label="t('separatorOr')" />
                 <Button variant="outline" class="w-full" @click="openBunker46">
@@ -1082,6 +1257,19 @@ onUnmounted(() => {
                   <p class="text-xs text-destructive mt-0.5">
                     {{ t('reconnectionFailedMessage') }}
                   </p>
+                  <div v-if="reconnectingRelaysList.length" class="mt-1.5 flex flex-col gap-1">
+                    <div
+                      v-for="relay in reconnectingRelaysList"
+                      :key="relay"
+                      class="flex items-center gap-1.5"
+                      :title="relay"
+                    >
+                      <XCircle class="size-3 shrink-0 text-destructive/70" />
+                      <span class="text-xs font-mono text-muted-foreground/60 truncate">
+                        {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <Button variant="destructive" class="w-full" @click="showRemoveProfileConfirm = true">
@@ -1244,6 +1432,31 @@ onUnmounted(() => {
                 <Link2 v-else class="size-4" />
                 {{ connecting ? t('connecting') : t('connect') }}
               </Button>
+
+              <div
+                v-if="connecting && connectingRelays.length"
+                class="flex flex-col items-center gap-1"
+              >
+                <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
+                <div
+                  v-for="relay in connectingRelays"
+                  :key="relay"
+                  class="flex items-center gap-1.5"
+                >
+                  <Loader2
+                    v-if="!relayStatuses[relay] || relayStatuses[relay] === 'connecting'"
+                    class="size-3 shrink-0 animate-spin text-muted-foreground/50"
+                  />
+                  <CheckCircle2
+                    v-else-if="relayStatuses[relay] === 'ok'"
+                    class="size-3 shrink-0 text-green-500"
+                  />
+                  <XCircle v-else class="size-3 shrink-0 text-destructive" />
+                  <span class="text-xs font-mono text-muted-foreground/50 truncate max-w-[220px]">
+                    {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
+                  </span>
+                </div>
+              </div>
 
               <template v-if="useBunker46">
                 <Separator :label="t('separatorOr')" />

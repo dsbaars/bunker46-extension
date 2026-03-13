@@ -75,6 +75,12 @@ let activeProfile: Profile | null = null;
 let activeProfileId: string | null = null;
 /** True while reconnectFromSession() is running (e.g. after SWITCH_PROFILE). GET_SESSION returns reconnecting: true without blocking. */
 let reconnecting = false;
+/** Relays being tried during the current reconnect attempt. */
+let reconnectingRelays: string[] = [];
+/** True after a reconnect attempt failed. Reset on new connect/switch/logout. */
+let reconnectionFailed = false;
+/** Relays that were tried in the last failed reconnect attempt. */
+let reconnectionFailedRelays: string[] = [];
 const pendingPermissions = new Map<string, PendingPermission>();
 /** Raw event payload for signEvent permission prompts (requestId -> event). Cleaned up on response. */
 const pendingRawEvents = new Map<string, unknown>();
@@ -270,6 +276,97 @@ function withTimeout<T>(promise: Promise<T>, ms: number, message: string): Promi
   ]);
 }
 
+/**
+ * Probe each relay URL with a raw WebSocket to detect fast failures (HTTP 503,
+ * connection refused, mid-connect closes, etc.) before the nostr-tools pool
+ * times out silently.
+ *
+ * Rules:
+ * - onerror  → unreachable (HTTP error, TLS failure, …)
+ * - onclose before onopen → unreachable (server closed mid-handshake)
+ * - onopen   → reachable; close gracefully (ws is OPEN so no console warning)
+ * - timeout  → possibly reachable (slow relay); do NOT call ws.close() while
+ *              still CONNECTING to avoid "WebSocket is closed before the
+ *              connection is established" console warnings
+ */
+const RELAY_PROBE_TIMEOUT_MS = 5_000;
+function probeRelays(relays: string[]): Promise<Map<string, boolean>> {
+  if (!relays.length) return Promise.resolve(new Map());
+  return Promise.all(
+    relays.map(
+      (url) =>
+        new Promise<[string, boolean]>((resolve) => {
+          try {
+            const ws = new WebSocket(url);
+            let settled = false;
+
+            const settle = (reachable: boolean) => {
+              if (settled) return;
+              settled = true;
+              resolve([url, reachable]);
+            };
+
+            const timer = setTimeout(() => {
+              // Do NOT close the socket here — calling ws.close() while the
+              // WebSocket is still in CONNECTING state (readyState 0) produces
+              // a "WebSocket is closed before the connection is established"
+              // warning in the browser console. Just resolve and leave the
+              // socket to close on its own.
+              settle(true);
+            }, RELAY_PROBE_TIMEOUT_MS);
+
+            ws.addEventListener('open', () => {
+              clearTimeout(timer);
+              settle(true);
+              // Now safe to close: the socket is OPEN (readyState 1)
+              try {
+                ws.close(1000, 'probe');
+              } catch {
+                /* ignore */
+              }
+            });
+
+            ws.addEventListener('error', () => {
+              clearTimeout(timer);
+              settle(false);
+            });
+
+            // onclose fires after onerror for HTTP-error cases, and also when
+            // the server closes the connection mid-handshake.  If we haven't
+            // settled yet (i.e. onopen never fired) the relay is unreachable.
+            ws.addEventListener('close', () => {
+              clearTimeout(timer);
+              settle(false);
+            });
+          } catch {
+            resolve([url, false]);
+          }
+        })
+    )
+  ).then((results) => new Map(results));
+}
+
+/**
+ * Race a promise against a relay probe. If ALL relays fail immediately
+ * (e.g. HTTP 503), reject with a clear error before the main timeout fires.
+ * If any relay is reachable the probe defers to the main promise indefinitely.
+ */
+function withRelayProbe<T>(promise: Promise<T>, relays: string[]): Promise<T> {
+  if (!relays.length) return promise;
+  const probe = probeRelays(relays).then((results) => {
+    const failed = relays.filter((r) => results.get(r) === false);
+    if (failed.length === relays.length) {
+      const names = failed.map((r) => r.replace(/^wss?:\/\//, '')).join(', ');
+      throw new Error(
+        `Could not connect to ${relays.length === 1 ? 'relay' : 'any relay'}: ${names}`
+      );
+    }
+    // At least one relay is up; yield to the main promise forever
+    return new Promise<T>(() => {});
+  });
+  return Promise.race([promise, probe]);
+}
+
 // ---------------------------------------------------------------------------
 // Kind 0 metadata fetch (name / picture)
 // ---------------------------------------------------------------------------
@@ -362,7 +459,11 @@ async function reconnectFromSession(): Promise<boolean> {
     const secret = getClientSecretBytes(activeProfile);
     const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
     const signer = BunkerSigner.fromBunker(secret, bp, { pool });
-    await withTimeout(signer.connect(), BUNKER_CONNECT_TIMEOUT_MS, 'Reconnection timed out.');
+    await withTimeout(
+      withRelayProbe(signer.connect(), bp.relays),
+      BUNKER_CONNECT_TIMEOUT_MS,
+      'Reconnection timed out.'
+    );
     bunkerSigner = signer;
     return true;
   } catch {
@@ -405,7 +506,7 @@ async function connectWithBunkerUri(
     const signer = BunkerSigner.fromBunker(clientSecretBytes, bp, { pool });
 
     await withTimeout(
-      signer.connect(),
+      withRelayProbe(signer.connect(), bp.relays),
       BUNKER_CONNECT_TIMEOUT_MS,
       'Connection timed out. The bunker may be slow or unreachable—check relays and try again.'
     );
@@ -425,6 +526,9 @@ async function connectWithBunkerUri(
     activeProfile = profiles[profileId];
     await setActiveProfileId(profileId);
     bunkerSigner = signer;
+    reconnectionFailed = false;
+    reconnectingRelays = [];
+    reconnectionFailedRelays = [];
 
     void fetchKind0ForProfile(profileId, signerPubkey, bp.relays);
 
@@ -719,21 +823,51 @@ chrome.runtime.onMessage.addListener(
       if (msg.type === 'GET_SESSION') {
         await loadActiveProfileFromStorage();
         if (reconnecting) {
-          return { connected: false, reconnecting: true, activeProfileId };
+          return {
+            connected: false,
+            reconnecting: true,
+            reconnectingRelays,
+            activeProfileId,
+            profileName: activeProfile?.name,
+            profilePicture: activeProfile?.picture,
+          };
         }
         if (activeProfile?.session && !bunkerSigner) {
-          const reconnected = await reconnectFromSession();
-          if (!reconnected) {
+          if (reconnectionFailed) {
             return {
               connected: false,
               reconnectionFailed: true,
+              reconnectionFailedRelays,
               activeProfileId,
               profileName: activeProfile.name,
               profilePicture: activeProfile.picture,
             };
           }
+          // Kick off reconnect in the background; return reconnecting:true immediately
+          // so the popup doesn't block for 30 s on a slow/failing relay.
+          reconnecting = true;
+          reconnectingRelays = activeProfile.session.relays ?? [];
+          reconnectFromSession()
+            .then((success) => {
+              if (!success) {
+                reconnectionFailed = true;
+                reconnectionFailedRelays = [...reconnectingRelays];
+              }
+            })
+            .finally(() => {
+              reconnecting = false;
+            });
+          return {
+            connected: false,
+            reconnecting: true,
+            reconnectingRelays,
+            activeProfileId,
+            profileName: activeProfile.name,
+            profilePicture: activeProfile.picture,
+          };
         }
         if (bunkerSigner && activeProfile?.session) {
+          reconnectionFailed = false;
           return {
             connected: true,
             signerPubkey: activeProfile.session.signerPubkey,
@@ -787,8 +921,15 @@ chrome.runtime.onMessage.addListener(
         // Reconnect in background so UI can update immediately
         if (activeProfile.session?.signerPubkey) {
           reconnecting = true;
+          reconnectionFailed = false;
+          reconnectingRelays = activeProfile.session.relays ?? [];
           reconnectFromSession()
-            .then(() => {})
+            .then((success) => {
+              if (!success) {
+                reconnectionFailed = true;
+                reconnectionFailedRelays = [...reconnectingRelays];
+              }
+            })
             .finally(() => {
               reconnecting = false;
             });
@@ -800,6 +941,7 @@ chrome.runtime.onMessage.addListener(
           profileName: activeProfile.name,
           profilePicture: activeProfile.picture,
           hasSession: Boolean(activeProfile.session?.signerPubkey),
+          reconnectingRelays: activeProfile.session?.relays ?? [],
         };
       }
 
@@ -953,6 +1095,9 @@ chrome.runtime.onMessage.addListener(
           } catch {}
         }
         bunkerSigner = null;
+        reconnectionFailed = false;
+        reconnectingRelays = [];
+        reconnectionFailedRelays = [];
         const profileId = activeProfileId ?? undefined;
         if (activeProfileId) await clearProfileSession(activeProfileId);
         await clearAllPermissions(profileId);

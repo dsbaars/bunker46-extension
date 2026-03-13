@@ -382,5 +382,11 @@
   },
   "disconnectAndRemoveProfile": {
     "message": "Відключити та видалити профіль"
+  },
+  "connectingToRelays": {
+    "message": "Підключення до:"
+  },
+  "connectedViaRelays": {
+    "message": "Підключено через:"
   }
 }

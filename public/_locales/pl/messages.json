@@ -382,5 +382,11 @@
   },
   "disconnectAndRemoveProfile": {
     "message": "Rozłącz i usuń profil"
+  },
+  "connectingToRelays": {
+    "message": "Łączenie z:"
+  },
+  "connectedViaRelays": {
+    "message": "Połączono przez:"
   }
 }

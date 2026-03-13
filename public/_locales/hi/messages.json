@@ -382,5 +382,11 @@
   },
   "disconnectAndRemoveProfile": {
     "message": "डिसकनेक्ट करें और प्रोफ़ाइल हटाएं"
+  },
+  "connectingToRelays": {
+    "message": "कनेक्ट हो रहा है:"
+  },
+  "connectedViaRelays": {
+    "message": "इसके माध्यम से कनेक्ट:"
   }
 }

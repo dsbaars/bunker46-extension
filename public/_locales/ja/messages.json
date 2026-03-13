@@ -382,5 +382,11 @@
   },
   "disconnectAndRemoveProfile": {
     "message": "切断してプロフィールを削除"
+  },
+  "connectingToRelays": {
+    "message": "接続中:"
+  },
+  "connectedViaRelays": {
+    "message": "経由で接続:"
   }
 }

@@ -382,5 +382,11 @@
   },
   "toastProfileRenameFailed": {
     "message": "Failed to rename profile"
+  },
+  "connectingToRelays": {
+    "message": "Connecting to:"
+  },
+  "connectedViaRelays": {
+    "message": "Connected via:"
   }
 }

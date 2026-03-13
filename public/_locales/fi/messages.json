@@ -382,5 +382,11 @@
   },
   "disconnectAndRemoveProfile": {
     "message": "Katkaise yhteys ja poista profiili"
+  },
+  "connectingToRelays": {
+    "message": "Yhdistetään:"
+  },
+  "connectedViaRelays": {
+    "message": "Yhdistetty kautta:"
   }
 }

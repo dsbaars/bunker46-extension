@@ -382,5 +382,11 @@
   },
   "disconnectAndRemoveProfile": {
     "message": "断开连接并删除配置文件"
+  },
+  "connectingToRelays": {
+    "message": "正在连接至："
+  },
+  "connectedViaRelays": {
+    "message": "通过以下连接："
   }
 }

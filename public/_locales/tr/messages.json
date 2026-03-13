@@ -382,5 +382,11 @@
   },
   "disconnectAndRemoveProfile": {
     "message": "Bağlantıyı kes ve profili kaldır"
+  },
+  "connectingToRelays": {
+    "message": "Bağlanılıyor:"
+  },
+  "connectedViaRelays": {
+    "message": "Üzerinden bağlı:"
   }
 }
