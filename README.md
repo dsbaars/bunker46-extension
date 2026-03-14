@@ -3,7 +3,7 @@
 [![CI](https://github.com/dsbaars/bunker46-extension/actions/workflows/ci.yml/badge.svg)](https://github.com/dsbaars/bunker46-extension/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-4285F4?logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/bunker46/hffbfaedhainmpaodhdgepnmmkmpahaa)
-[![Firefox Add-on](https://img.shields.io/badge/Firefox-Add--on-FF7139?logo=firefoxbrowser&logoColor=white)](https://addons.mozilla.org/nl/firefox/addon/bunker46/)
+[![Firefox Add-on](https://img.shields.io/badge/Firefox-Add--on-FF7139?logo=firefoxbrowser&logoColor=white)](https://addons.mozilla.org/firefox/addon/bunker46/)
 
 A **NIP-07 compliant** browser extension that exposes `window.nostr` to web pages. Instead of storing private keys in the browser, it forwards every signing request to a remote [NIP-46](https://nips.nostr.com/46) signer (such as [Bunker46](https://github.com/dsbaars/bunker46)) over Nostr relays.
 
@@ -23,21 +23,32 @@ A **NIP-07 compliant** browser extension that exposes `window.nostr` to web page
 
 ## Languages
 
-The popup and prompts are localized. Supported locales (22):
+The popup and prompts are localized. Supported locales (44):
 
-| Code | Language   | Code    | Language              |
-| ---- | ---------- | ------- | --------------------- |
-| `en` | English    | `nl`    | Dutch                 |
-| `ar` | Arabic     | `no`    | Norwegian             |
-| `da` | Danish     | `pl`    | Polish                |
-| `de` | German     | `pt`    | Portuguese            |
-| `es` | Spanish    | `ru`    | Russian               |
-| `fi` | Finnish    | `sv`    | Swedish               |
-| `fr` | French     | `tr`    | Turkish               |
-| `hi` | Hindi      | `uk`    | Ukrainian             |
-| `id` | Indonesian | `zh_CN` | Chinese (Simplified)  |
-| `it` | Italian    | `zh_TW` | Chinese (Traditional) |
-| `ja` | Japanese   | `ko`    | Korean                |
+| Code    | Language             | Code    | Language              |
+| ------- | -------------------- | ------- | --------------------- |
+| `ar`    | Arabic               | `nl`    | Dutch                 |
+| `bg`    | Bulgarian            | `no`    | Norwegian             |
+| `bn`    | Bengali              | `pl`    | Polish                |
+| `cs`    | Czech                | `pt`    | Portuguese            |
+| `da`    | Danish               | `ro`    | Romanian              |
+| `de`    | German               | `ru`    | Russian               |
+| `el`    | Greek                | `sk`    | Slovak                |
+| `en`    | English              | `sl`    | Slovenian             |
+| `es`    | Spanish              | `sv`    | Swedish               |
+| `et`    | Estonian             | `sw`    | Swahili               |
+| `fa`    | Persian              | `ta`    | Tamil                 |
+| `fi`    | Finnish              | `te`    | Telugu                |
+| `fr`    | French               | `th`    | Thai                  |
+| `he`    | Hebrew               | `tr`    | Turkish               |
+| `hi`    | Hindi                | `uk`    | Ukrainian             |
+| `hr`    | Croatian             | `ur`    | Urdu                  |
+| `hu`    | Hungarian            | `vi`    | Vietnamese            |
+| `id`    | Indonesian           | `zh_CN` | Chinese (Simplified)  |
+| `is`    | Icelandic            | `zh_TW` | Chinese (Traditional) |
+| `it`    | Italian              | `ja`    | Japanese              |
+| `ko`    | Korean               | `lt`    | Lithuanian            |
+| `lv`    | Latvian              | `mr`    | Marathi               |
 
 Locale files live in `public/_locales/<code>/messages.json`. The extension uses the browser’s language when a matching locale exists; otherwise it falls back to English.
 
