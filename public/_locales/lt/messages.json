@@ -1,0 +1,166 @@
+{
+  "extName": { "message": "Bunker46" },
+  "extDescription": { "message": "NIP-07 nuotolinis pasirašytojas per NIP-46 / Bunker46" },
+  "appSubtitle": { "message": "NIP-07 Nuotolinis Pasirašytojas" },
+  "openFullPage": { "message": "Atidaryti naujame skirtuke parinkčių valdymui" },
+  "connected": { "message": "Prisijungta" },
+  "offline": { "message": "Neprisijungęs" },
+  "loading": { "message": "Kraunama…" },
+  "tabConnection": { "message": "Ryšys" },
+  "tabPermissions": { "message": "Leidimai" },
+  "tabSettings": { "message": "Nustatymai" },
+  "errorPasteUri": { "message": "Įklijuokite bunker:// URI aukščiau" },
+  "errorConnectionFailed": { "message": "Ryšys nepavyko" },
+  "errorGenerateUri": { "message": "Nepavyko sugeneruoti ryšio URI" },
+  "errorStartConnection": { "message": "Nepavyko pradėti ryšio" },
+  "toastLoggedOut": { "message": "Atsijungta" },
+  "toastLogoutFailed": { "message": "Atsijungimas nepavyko" },
+  "toastSettingsSaved": { "message": "Nustatymai išsaugoti" },
+  "toastPrivacyModeOn": { "message": "Privatumo režimas įjungtas" },
+  "toastPrivacyModeOff": { "message": "Privatumo režimas išjungtas" },
+  "toastBadgeShown": { "message": "Ženklelis rodomas" },
+  "toastBadgeHidden": { "message": "Ženklelis paslėptas" },
+  "toastCopied": { "message": "Nukopijuota į iškarpinę" },
+  "toastCopyFailed": { "message": "Kopijavimas nepavyko" },
+  "toastPermissionRemoved": { "message": "Leidimas pašalintas" },
+  "toastPermissionRemoveFailed": { "message": "Nepavyko pašalinti leidimo" },
+  "toastDomainRemoved": { "message": "Domeno leidimai pašalinti" },
+  "toastDomainRemoveFailed": { "message": "Nepavyko pašalinti domeno" },
+  "toastNoActiveTab": { "message": "Nėra aktyvios kortelės ar URL" },
+  "toastAddedToWhitelist": {
+    "message": "$1 pridėtas į leidžiamų sąrašą. Perkraukite kortelę nostr naudojimui."
+  },
+  "toastAddDomainFailed": { "message": "Nepavyko pridėti domeno" },
+  "toastRemovedFromWhitelist": { "message": "Pašalinta iš leidžiamų sąrašo" },
+  "toastRemoveFromWhitelistFailed": { "message": "Nepavyko pašalinti iš leidžiamų sąrašo" },
+  "signerKey": { "message": "Pasirašytojo raktas" },
+  "copyTitle": { "message": "Kopijuoti" },
+  "showQrTitle": { "message": "Rodyti QR kodą" },
+  "signerDescription": {
+    "message": "Visos NIP-07 užklausos iš tinklalapių perduodamos šiam nuotoliniam pasirašytojui per NIP-46. Plėtinyje nesaugomi privatūs raktai."
+  },
+  "disconnect": { "message": "Atjungti" },
+  "disconnectAndRemoveProfile": { "message": "Atjungti ir pašalinti profilį" },
+  "logoutConfirmTitle": { "message": "Visiškai atsijungti?" },
+  "logoutConfirmDescription": {
+    "message": "Tai atjungs jūsų pasirašytoją ir išvalys visus leidimus bei privatumo režimo leidžiamų sąrašą. Reikės iš naujo prisijungti ir leisti svetainėms."
+  },
+  "cancel": { "message": "Atšaukti" },
+  "logOut": { "message": "Atsijungti" },
+  "connectViaBunkerUri": { "message": "Prisijungti per Bunker URI" },
+  "connectViaBunkerUriDesc": {
+    "message": "Įklijuokite bunker:// URI iš savo nuotolinio pasirašytojo prisijungimui"
+  },
+  "placeholderBunkerUri": { "message": "bunker://..." },
+  "connecting": { "message": "Jungiamasi..." },
+  "connect": { "message": "Prisijungti" },
+  "separatorOr": { "message": "arba" },
+  "getUriFromBunker46": { "message": "Gauti URI iš Bunker46" },
+  "nostrConnectDesc": {
+    "message": "Prisijungti per Nostrconnect: rodyti QR ir URI jūsų bunker programai nuskaityti."
+  },
+  "showQrConnectionUri": { "message": "Rodyti QR ir ryšio URI" },
+  "settingsUseBunker46": { "message": "Naudoti Bunker46" },
+  "settingsUseBunker46Hint": {
+    "message": "Tvarkyti nostrconnect: nuorodas ir peradresuoti į jūsų Bunker46 egzempliorių."
+  },
+  "settingsBunkerUrl": { "message": "Bunker46 URL" },
+  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
+  "settingsBunkerUrlHint": { "message": "Jūsų Bunker46 egzemplioriaus bazinis URL" },
+  "settingsSpecifyNostrConnectRelays": { "message": "Nurodyti Nostrconnect tarpininkus" },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Nustatyti tinkintus tarpininkų URL Nostrconnect QR/URI."
+  },
+  "settingsNostrConnectRelays": { "message": "Nostr Connect tarpininkai" },
+  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelaysHint": {
+    "message": "Vienas tarpininko URL eilutėje (arba atskirti kableliais). Naudojama generuojant QR/URI prisijungimui per Nostrconnect."
+  },
+  "choiceOn": { "message": "Įjungta" },
+  "choiceOff": { "message": "Išjungta" },
+  "save": { "message": "Išsaugoti" },
+  "privacyMode": { "message": "Privatumo režimas" },
+  "privacyModeHint": {
+    "message": "Atskleisti window.nostr tik leidžiamų sąrašo domenams (skirtukas Leidimai); mažina skaitmeninį atspaudą."
+  },
+  "privacyModeSitesHint": {
+    "message": "Svetainės negali aptikti plėtinio, todėl kai kurios gali nerodyti \"Prisijungti su Nostr\", kol jų nepridėsite prie Leidimų."
+  },
+  "showBadge": { "message": "Rodyti ženklelį plėtinio piktogramoje" },
+  "showBadgeHint": {
+    "message": "Įjungus, piktograma rodo suteiktų leidimų skaičių dabartinei kortelei (pvz. 1, 2)."
+  },
+  "addToWhitelistTitle": { "message": "Pridėti $1 į leidžiamų sąrašą" },
+  "addToWhitelistButton": { "message": "Pridėti $1 į leidžiamų sąrašą" },
+  "removeFromWhitelistTitle": { "message": "Pašalinti $1 iš leidžiamų sąrašo" },
+  "removeFromWhitelistButton": { "message": "Pašalinti $1 iš leidžiamų sąrašo" },
+  "searchDomainsPlaceholder": { "message": "Ieškoti domenų..." },
+  "noPermissionsYet": { "message": "Dar nėra leidimų" },
+  "noPermissionsHint": {
+    "message": "Kai tinklalapiai prašys prieigos prie jūsų Nostr tapatybės, jie bus rodomi čia."
+  },
+  "noDomainsMatch": { "message": "Nė vienas domenas neatitinka paieškos" },
+  "revokeAllPermissionsTitle": { "message": "Atšaukti visus šio domeno leidimus" },
+  "whitelistedNoPermissions": { "message": "Leidžiamų sąraše nostr (dar nėra leidimų)" },
+  "allowed": { "message": "Leidžiama" },
+  "denied": { "message": "Uždrausta" },
+  "revokeTitle": { "message": "Atšaukti" },
+  "removeFromWhitelist": { "message": "Pašalinti iš leidžiamų sąrašo" },
+  "qrScanToUse": { "message": "$1 (nuskaitykite naudojimui)" },
+  "qrCodeAlt": { "message": "QR kodas" },
+  "close": { "message": "Uždaryti" },
+  "nostrConnectModalHint": { "message": "Nuskaitykite bunker programa arba nukopijuokite URI" },
+  "nostrConnectQrAlt": { "message": "Nostrconnect QR kodas" },
+  "copyUri": { "message": "Kopijuoti URI" },
+  "waitingForBunker": { "message": "Laukiama bunker prisijungimo…" },
+  "method_getPublicKey": { "message": "Gauti viešąjį raktą" },
+  "method_signEvent": { "message": "Pasirašyti įvykį" },
+  "method_signEvent_kind": { "message": "Pasirašyti įvykį (tipas $1)" },
+  "method_getRelays": { "message": "Gauti tarpininkus" },
+  "method_nip04_encrypt": { "message": "NIP-04 Šifravimas" },
+  "method_nip04_decrypt": { "message": "NIP-04 Iššifravimas" },
+  "method_nip44_encrypt": { "message": "NIP-44 Šifravimas" },
+  "method_nip44_decrypt": { "message": "NIP-44 Iššifravimas" },
+  "promptPermissionRequest": { "message": "Leidimo užklausa" },
+  "promptWantsAccess": { "message": "nori prieigos prie jūsų Nostr tapatybės" },
+  "promptEventKind": { "message": "Įvykio tipas $1" },
+  "promptViewRawMessage": { "message": "Žiūrėti neapdorotą žinutę" },
+  "promptHideRawMessage": { "message": "Slėpti neapdorotą žinutę" },
+  "promptAllowAlways": { "message": "Visada leisti" },
+  "promptAllowAlwaysForKindHint": { "message": "Taikoma tik šiam įvykio tipui" },
+  "promptAllowOnce": { "message": "Leisti vieną kartą" },
+  "promptDenyOnce": { "message": "Atmesti" },
+  "promptDenyAlways": { "message": "Visada atmesti" },
+  "settingsMultiProfile": { "message": "Keli profiliai" },
+  "settingsMultiProfileHint": {
+    "message": "Rodyti profilio perjungiklį ir leisti pridėti kelias jungtis."
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Pašalinkite papildomus profilius vieno profilio režimui."
+  },
+  "addAnotherConnection": { "message": "Pridėti kitą jungtį" },
+  "removeProfile": { "message": "Pašalinti šį profilį" },
+  "removeProfileConfirmTitle": { "message": "Pašalinti profilį?" },
+  "removeProfileConfirmDesc": {
+    "message": "Tai atjungs ir išvalys visus leidimus bei leidžiamų sąrašo įrašus šiam profiliui."
+  },
+  "switchProfile": { "message": "Perjungti profilį" },
+  "toastProfileRemoved": { "message": "Profilis pašalintas" },
+  "toastProfileRemoveFailed": { "message": "Nepavyko pašalinti profilio" },
+  "reconnectionFailedMessage": {
+    "message": "Ryšio nepavyko atkurti. Bunker gali būti atšaukęs prieigą."
+  },
+  "renameProfile": { "message": "Pervadinti profilį" },
+  "renameProfileTitle": { "message": "Profilio pervadinimas" },
+  "renameProfileHint": {
+    "message": "Nustatykite rodomą vardą arba gaukite jį iš Nostr (tipas 0)."
+  },
+  "renameProfileNameLabel": { "message": "Rodomas vardas" },
+  "renameProfileNamePlaceholder": { "message": "Profilio pavadinimas" },
+  "fetchProfileFromNostr": { "message": "Gauti iš Nostr" },
+  "toastProfileMetadataFetched": { "message": "Profilio informacija gauta" },
+  "toastProfileMetadataFetchFailed": { "message": "Nepavyko gauti profilio iš Nostr" },
+  "toastProfileRenameFailed": { "message": "Profilio pervadinimas nepavyko" },
+  "connectingToRelays": { "message": "Jungiamasi prie:" },
+  "connectedViaRelays": { "message": "Prisijungta per:" }
+}
