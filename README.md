@@ -25,30 +25,30 @@ A **NIP-07 compliant** browser extension that exposes `window.nostr` to web page
 
 The popup and prompts are localized. Supported locales (44):
 
-| Code    | Language             | Code    | Language              |
-| ------- | -------------------- | ------- | --------------------- |
-| `ar`    | Arabic               | `nl`    | Dutch                 |
-| `bg`    | Bulgarian            | `no`    | Norwegian             |
-| `bn`    | Bengali              | `pl`    | Polish                |
-| `cs`    | Czech                | `pt`    | Portuguese            |
-| `da`    | Danish               | `ro`    | Romanian              |
-| `de`    | German               | `ru`    | Russian               |
-| `el`    | Greek                | `sk`    | Slovak                |
-| `en`    | English              | `sl`    | Slovenian             |
-| `es`    | Spanish              | `sv`    | Swedish               |
-| `et`    | Estonian             | `sw`    | Swahili               |
-| `fa`    | Persian              | `ta`    | Tamil                 |
-| `fi`    | Finnish              | `te`    | Telugu                |
-| `fr`    | French               | `th`    | Thai                  |
-| `he`    | Hebrew               | `tr`    | Turkish               |
-| `hi`    | Hindi                | `uk`    | Ukrainian             |
-| `hr`    | Croatian             | `ur`    | Urdu                  |
-| `hu`    | Hungarian            | `vi`    | Vietnamese            |
-| `id`    | Indonesian           | `zh_CN` | Chinese (Simplified)  |
-| `is`    | Icelandic            | `zh_TW` | Chinese (Traditional) |
-| `it`    | Italian              | `ja`    | Japanese              |
-| `ko`    | Korean               | `lt`    | Lithuanian            |
-| `lv`    | Latvian              | `mr`    | Marathi               |
+| Code | Language   | Code    | Language              |
+| ---- | ---------- | ------- | --------------------- |
+| `ar` | Arabic     | `nl`    | Dutch                 |
+| `bg` | Bulgarian  | `no`    | Norwegian             |
+| `bn` | Bengali    | `pl`    | Polish                |
+| `cs` | Czech      | `pt`    | Portuguese            |
+| `da` | Danish     | `ro`    | Romanian              |
+| `de` | German     | `ru`    | Russian               |
+| `el` | Greek      | `sk`    | Slovak                |
+| `en` | English    | `sl`    | Slovenian             |
+| `es` | Spanish    | `sv`    | Swedish               |
+| `et` | Estonian   | `sw`    | Swahili               |
+| `fa` | Persian    | `ta`    | Tamil                 |
+| `fi` | Finnish    | `te`    | Telugu                |
+| `fr` | French     | `th`    | Thai                  |
+| `he` | Hebrew     | `tr`    | Turkish               |
+| `hi` | Hindi      | `uk`    | Ukrainian             |
+| `hr` | Croatian   | `ur`    | Urdu                  |
+| `hu` | Hungarian  | `vi`    | Vietnamese            |
+| `id` | Indonesian | `zh_CN` | Chinese (Simplified)  |
+| `is` | Icelandic  | `zh_TW` | Chinese (Traditional) |
+| `it` | Italian    | `ja`    | Japanese              |
+| `ko` | Korean     | `lt`    | Lithuanian            |
+| `lv` | Latvian    | `mr`    | Marathi               |
 
 Locale files live in `public/_locales/<code>/messages.json`. The extension uses the browser’s language when a matching locale exists; otherwise it falls back to English.
 
