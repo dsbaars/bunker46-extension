@@ -1,0 +1,172 @@
+{
+  "extName": { "message": "Bunker46" },
+  "extDescription": { "message": "NIP-46 / Bunker46 வழியாக NIP-07 தொலைநிலை கையொப்பமிடுபவர்" },
+  "appSubtitle": { "message": "NIP-07 தொலைநிலை கையொப்பமிடுபவர்" },
+  "openFullPage": { "message": "விருப்பங்களை நிர்வகிக்க புதிய தாவலில் திறக்கவும்" },
+  "connected": { "message": "இணைக்கப்பட்டது" },
+  "offline": { "message": "ஆஃப்லைன்" },
+  "loading": { "message": "ஏற்றுகிறது…" },
+  "tabConnection": { "message": "இணைப்பு" },
+  "tabPermissions": { "message": "அனுமதிகள்" },
+  "tabSettings": { "message": "அமைப்புகள்" },
+  "errorPasteUri": { "message": "மேலே ஒரு bunker:// URI ஒட்டவும்" },
+  "errorConnectionFailed": { "message": "இணைப்பு தோல்வியடைந்தது" },
+  "errorGenerateUri": { "message": "இணைப்பு URI உருவாக்கத் தோல்வி" },
+  "errorStartConnection": { "message": "இணைப்பை தொடங்கத் தோல்வி" },
+  "toastLoggedOut": { "message": "வெளியேறினீர்கள்" },
+  "toastLogoutFailed": { "message": "வெளியேறுவதில் தோல்வி" },
+  "toastSettingsSaved": { "message": "அமைப்புகள் சேமிக்கப்பட்டன" },
+  "toastPrivacyModeOn": { "message": "தனியுரிமை பயன்முறை இயக்கத்தில்" },
+  "toastPrivacyModeOff": { "message": "தனியுரிமை பயன்முறை நிறுத்தப்பட்டது" },
+  "toastBadgeShown": { "message": "பேட்ஜ் காட்டப்பட்டது" },
+  "toastBadgeHidden": { "message": "பேட்ஜ் மறைக்கப்பட்டது" },
+  "toastCopied": { "message": "கிளிப்போர்டில் நகலெடுக்கப்பட்டது" },
+  "toastCopyFailed": { "message": "நகலெடுக்கத் தோல்வி" },
+  "toastPermissionRemoved": { "message": "அனுமதி நீக்கப்பட்டது" },
+  "toastPermissionRemoveFailed": { "message": "அனுமதி நீக்கத் தோல்வி" },
+  "toastDomainRemoved": { "message": "டொமைன் அனுமதிகள் நீக்கப்பட்டன" },
+  "toastDomainRemoveFailed": { "message": "டொமைன் நீக்கத் தோல்வி" },
+  "toastNoActiveTab": { "message": "செயலில் உள்ள தாவல் அல்லது URL இல்லை" },
+  "toastAddedToWhitelist": {
+    "message": "$1 ஐ வெள்ளைப்பட்டியலில் சேர்க்கப்பட்டது. nostr பயன்படுத்த தாவலை மீண்டும் ஏற்றவும்."
+  },
+  "toastAddDomainFailed": { "message": "டொமைன் சேர்க்கத் தோல்வி" },
+  "toastRemovedFromWhitelist": { "message": "வெள்ளைப்பட்டியலில் இருந்து நீக்கப்பட்டது" },
+  "toastRemoveFromWhitelistFailed": { "message": "வெள்ளைப்பட்டியலில் இருந்து நீக்கத் தோல்வி" },
+  "signerKey": { "message": "கையொப்பமிடுபவர் விசை" },
+  "copyTitle": { "message": "நகலெடு" },
+  "showQrTitle": { "message": "QR குறியீட்டை காட்டு" },
+  "signerDescription": {
+    "message": "வலைப்பக்கங்களில் இருந்து அனைத்து NIP-07 கோரிக்கைகளும் NIP-46 வழியாக இந்த தொலைநிலை கையொப்பமிடுபவருக்கு அனுப்பப்படுகின்றன. நீட்டிப்பில் தனியார் விசைகள் சேமிக்கப்படவில்லை."
+  },
+  "disconnect": { "message": "இணைப்பை துண்டிக்கவும்" },
+  "disconnectAndRemoveProfile": { "message": "இணைப்பை துண்டித்து சுயவிவரத்தை நீக்கு" },
+  "logoutConfirmTitle": { "message": "முழுமையாக வெளியேறவா?" },
+  "logoutConfirmDescription": {
+    "message": "இது உங்கள் கையொப்பமிடுபவரிடமிருந்து இணைப்பை துண்டித்து அனைத்து அனுமதிகளையும் தனியுரிமை பயன்முறை வெள்ளைப்பட்டியலையும் அழிக்கும். நீங்கள் மீண்டும் இணைக்க வேண்டும் மற்றும் தளங்களுக்கு அனுமதி வழங்க வேண்டும்."
+  },
+  "cancel": { "message": "ரத்து செய்" },
+  "logOut": { "message": "வெளியேறு" },
+  "connectViaBunkerUri": { "message": "Bunker URI வழியாக இணைக்கவும்" },
+  "connectViaBunkerUriDesc": {
+    "message": "இணைக்க உங்கள் தொலைநிலை கையொப்பமிடுபவரிடமிருந்து bunker:// URI ஒட்டவும்"
+  },
+  "placeholderBunkerUri": { "message": "bunker://..." },
+  "connecting": { "message": "இணைக்கிறது..." },
+  "connect": { "message": "இணைக்கவும்" },
+  "separatorOr": { "message": "அல்லது" },
+  "getUriFromBunker46": { "message": "Bunker46 இல் இருந்து URI பெறவும்" },
+  "nostrConnectDesc": {
+    "message": "Nostrconnect வழியாக இணைக்கவும்: உங்கள் பங்கர் ஆப்பிற்கு ஸ்கேன் செய்ய QR மற்றும் URI காட்டவும்."
+  },
+  "showQrConnectionUri": { "message": "QR மற்றும் இணைப்பு URI காட்டு" },
+  "settingsUseBunker46": { "message": "Bunker46 பயன்படுத்து" },
+  "settingsUseBunker46Hint": {
+    "message": "nostrconnect: இணைப்புகளை கையாண்டு உங்கள் Bunker46 நிகழ்வுக்கு திருப்பிவிடவும்."
+  },
+  "settingsBunkerUrl": { "message": "Bunker46 URL" },
+  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
+  "settingsBunkerUrlHint": { "message": "உங்கள் Bunker46 நிகழ்வின் அடிப்படை URL" },
+  "settingsSpecifyNostrConnectRelays": { "message": "nostrconnect ரிலேக்களை குறிப்பிடவும்" },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Nostrconnect QR/URI க்கான தனிப்பயன் ரிலே URLகளை அமைக்கவும்."
+  },
+  "settingsNostrConnectRelays": { "message": "Nostr Connect ரிலேக்கள்" },
+  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelaysHint": {
+    "message": "வரிக்கு ஒரு ரிலே URL (அல்லது கமாவால் பிரிக்கப்பட்டது). Nostrconnect வழியாக இணைக்க QR/URI உருவாக்கும்போது பயன்படுத்தப்படுகிறது."
+  },
+  "choiceOn": { "message": "இயக்கு" },
+  "choiceOff": { "message": "நிறுத்து" },
+  "save": { "message": "சேமி" },
+  "privacyMode": { "message": "தனியுரிமை பயன்முறை" },
+  "privacyModeHint": {
+    "message": "வெள்ளைப்பட்டியல் டொமைன்களில் மட்டுமே window.nostr வெளிப்படுத்துங்கள் (அனுமதிகள் தாவல்); கைரேகை அடையாளத்தை குறைக்கிறது."
+  },
+  "privacyModeSitesHint": {
+    "message": "தளங்கள் நீட்டிப்பை கண்டறிய முடியாது, எனவே சில தளங்கள் நீங்கள் அனுமதிகளில் சேர்க்கும் வரை \"Nostr உடன் உள்நுழைக\" காட்டாமல் இருக்கலாம்."
+  },
+  "showBadge": { "message": "நீட்டிப்பு ஐகானில் பேட்ஜ் காட்டு" },
+  "showBadgeHint": {
+    "message": "இயக்கத்தில் இருக்கும்போது, ஐகான் தற்போதைய தாவலுக்கு வழங்கப்பட்ட அனுமதிகளின் எண்ணிக்கையை காட்டுகிறது (எ.கா. 1, 2)."
+  },
+  "addToWhitelistTitle": { "message": "$1 ஐ வெள்ளைப்பட்டியலில் சேர்" },
+  "addToWhitelistButton": { "message": "$1 ஐ வெள்ளைப்பட்டியலில் சேர்" },
+  "removeFromWhitelistTitle": { "message": "$1 ஐ வெள்ளைப்பட்டியலில் இருந்து நீக்கு" },
+  "removeFromWhitelistButton": { "message": "$1 ஐ வெள்ளைப்பட்டியலில் இருந்து நீக்கு" },
+  "searchDomainsPlaceholder": { "message": "டொமைன்களை தேடுங்கள்..." },
+  "noPermissionsYet": { "message": "இன்னும் அனுமதிகள் இல்லை" },
+  "noPermissionsHint": {
+    "message": "இணையதளங்கள் உங்கள் Nostr அடையாளத்திற்கு அணுகல் கோரும்போது, அவை இங்கே காட்டப்படும்."
+  },
+  "noDomainsMatch": { "message": "உங்கள் தேடலுக்கு பொருந்தும் டொமைன்கள் இல்லை" },
+  "revokeAllPermissionsTitle": {
+    "message": "இந்த டொமைனுக்கான அனைத்து அனுமதிகளையும் திரும்பப் பெறவும்"
+  },
+  "whitelistedNoPermissions": {
+    "message": "nostr க்கான வெள்ளைப்பட்டியலில் உள்ளது (இன்னும் அனுமதிகள் இல்லை)"
+  },
+  "allowed": { "message": "அனுமதிக்கப்பட்டது" },
+  "denied": { "message": "மறுக்கப்பட்டது" },
+  "revokeTitle": { "message": "திரும்பப் பெறு" },
+  "removeFromWhitelist": { "message": "வெள்ளைப்பட்டியலில் இருந்து நீக்கு" },
+  "qrScanToUse": { "message": "$1 (பயன்படுத்த ஸ்கேன் செய்யவும்)" },
+  "qrCodeAlt": { "message": "QR குறியீடு" },
+  "close": { "message": "மூடு" },
+  "nostrConnectModalHint": {
+    "message": "உங்கள் பங்கர் ஆப்புடன் ஸ்கேன் செய்யவும் அல்லது URI நகலெடுக்கவும்"
+  },
+  "nostrConnectQrAlt": { "message": "Nostrconnect QR குறியீடு" },
+  "copyUri": { "message": "URI நகலெடு" },
+  "waitingForBunker": { "message": "பங்கர் இணைவதற்கு காத்திருக்கிறது…" },
+  "method_getPublicKey": { "message": "பொது விசை பெறுக" },
+  "method_signEvent": { "message": "நிகழ்வில் கையொப்பமிட" },
+  "method_signEvent_kind": { "message": "நிகழ்வில் கையொப்பமிட (வகை $1)" },
+  "method_getRelays": { "message": "ரிலேக்கள் பெறுக" },
+  "method_nip04_encrypt": { "message": "NIP-04 குறியாக்கம்" },
+  "method_nip04_decrypt": { "message": "NIP-04 மறைகுறியாக்கம்" },
+  "method_nip44_encrypt": { "message": "NIP-44 குறியாக்கம்" },
+  "method_nip44_decrypt": { "message": "NIP-44 மறைகுறியாக்கம்" },
+  "promptPermissionRequest": { "message": "அனுமதி கோரிக்கை" },
+  "promptWantsAccess": { "message": "உங்கள் Nostr அடையாளத்தை அணுக விரும்புகிறது" },
+  "promptEventKind": { "message": "நிகழ்வு வகை $1" },
+  "promptViewRawMessage": { "message": "மூல செய்தியை பார்" },
+  "promptHideRawMessage": { "message": "மூல செய்தியை மறை" },
+  "promptAllowAlways": { "message": "எப்போதும் அனுமதி" },
+  "promptAllowAlwaysForKindHint": { "message": "இந்த நிகழ்வு வகைக்கு மட்டுமே பொருந்தும்" },
+  "promptAllowOnce": { "message": "ஒரு முறை அனுமதி" },
+  "promptDenyOnce": { "message": "மறு" },
+  "promptDenyAlways": { "message": "எப்போதும் மறு" },
+  "settingsMultiProfile": { "message": "பல சுயவிவரங்கள்" },
+  "settingsMultiProfileHint": {
+    "message": "சுயவிவர மாற்றியை காட்டி பல இணைப்புகளை சேர்க்க அனுமதிக்கவும்."
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "ஒற்றை சுயவிவர பயன்முறை பயன்படுத்த கூடுதல் சுயவிவரங்களை நீக்கவும்."
+  },
+  "addAnotherConnection": { "message": "மற்றொரு இணைப்பை சேர்" },
+  "removeProfile": { "message": "இந்த சுயவிவரத்தை நீக்கு" },
+  "removeProfileConfirmTitle": { "message": "சுயவிவரம் நீக்கவா?" },
+  "removeProfileConfirmDesc": {
+    "message": "இது இந்த சுயவிவரத்தின் அனைத்து அனுமதிகளையும் வெள்ளைப்பட்டியல் உள்ளீடுகளையும் இணைப்பை துண்டித்து அழிக்கும்."
+  },
+  "switchProfile": { "message": "சுயவிவரம் மாற்று" },
+  "toastProfileRemoved": { "message": "சுயவிவரம் நீக்கப்பட்டது" },
+  "toastProfileRemoveFailed": { "message": "சுயவிவரம் நீக்கத் தோல்வி" },
+  "reconnectionFailedMessage": {
+    "message": "இணைப்பை மீட்டெடுக்க முடியவில்லை. பங்கர் அணுகலை திரும்பப் பெற்றிருக்கலாம்."
+  },
+  "renameProfile": { "message": "சுயவிவரத்தை மறுபெயரிடு" },
+  "renameProfileTitle": { "message": "சுயவிவரத்தை மறுபெயரிடு" },
+  "renameProfileHint": {
+    "message": "காட்சி பெயரை அமைக்கவும் அல்லது Nostr இல் இருந்து பெறவும் (வகை 0)."
+  },
+  "renameProfileNameLabel": { "message": "காட்சி பெயர்" },
+  "renameProfileNamePlaceholder": { "message": "சுயவிவரத்தின் பெயர்" },
+  "fetchProfileFromNostr": { "message": "Nostr இல் இருந்து பெறவும்" },
+  "toastProfileMetadataFetched": { "message": "சுயவிவர தகவல் பெறப்பட்டது" },
+  "toastProfileMetadataFetchFailed": { "message": "Nostr இல் இருந்து சுயவிவரம் பெற முடியவில்லை" },
+  "toastProfileRenameFailed": { "message": "சுயவிவரம் மறுபெயரிட தோல்வி" },
+  "connectingToRelays": { "message": "இணைக்கிறது:" },
+  "connectedViaRelays": { "message": "வழியாக இணைக்கப்பட்டது:" }
+}

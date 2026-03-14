@@ -1,0 +1,166 @@
+{
+  "extName": { "message": "Bunker46" },
+  "extDescription": { "message": "Msimamizi wa mbali NIP-07 kupitia NIP-46 / Bunker46" },
+  "appSubtitle": { "message": "Msimamizi wa Mbali NIP-07" },
+  "openFullPage": { "message": "Fungua kwenye kichupo kipya kudhibiti chaguzi" },
+  "connected": { "message": "Imeunganishwa" },
+  "offline": { "message": "Nje ya mtandao" },
+  "loading": { "message": "Inapakia…" },
+  "tabConnection": { "message": "Muunganisho" },
+  "tabPermissions": { "message": "Ruhusa" },
+  "tabSettings": { "message": "Mipangilio" },
+  "errorPasteUri": { "message": "Bandika URI ya bunker:// hapo juu" },
+  "errorConnectionFailed": { "message": "Muunganisho umeshindwa" },
+  "errorGenerateUri": { "message": "Imeshindwa kuunda URI ya muunganisho" },
+  "errorStartConnection": { "message": "Imeshindwa kuanza muunganisho" },
+  "toastLoggedOut": { "message": "Umetoka" },
+  "toastLogoutFailed": { "message": "Kutoka kumeshindwa" },
+  "toastSettingsSaved": { "message": "Mipangilio imehifadhiwa" },
+  "toastPrivacyModeOn": { "message": "Hali ya faragha imewashwa" },
+  "toastPrivacyModeOff": { "message": "Hali ya faragha imezimwa" },
+  "toastBadgeShown": { "message": "Beji inaonyeshwa" },
+  "toastBadgeHidden": { "message": "Beji imefichwa" },
+  "toastCopied": { "message": "Imenakiliwa kwenye ubao wa kunakili" },
+  "toastCopyFailed": { "message": "Kunakili kumeshindwa" },
+  "toastPermissionRemoved": { "message": "Ruhusa imeondolewa" },
+  "toastPermissionRemoveFailed": { "message": "Kuondoa ruhusa kumeshindwa" },
+  "toastDomainRemoved": { "message": "Ruhusa za kikoa zimeondolewa" },
+  "toastDomainRemoveFailed": { "message": "Kuondoa kikoa kumeshindwa" },
+  "toastNoActiveTab": { "message": "Hakuna kichupo au URL amilifu" },
+  "toastAddedToWhitelist": {
+    "message": "$1 imeongezwa kwenye orodha nyeupe. Pakia upya kichupo kutumia nostr."
+  },
+  "toastAddDomainFailed": { "message": "Kuongeza kikoa kumeshindwa" },
+  "toastRemovedFromWhitelist": { "message": "Imeondolewa kwenye orodha nyeupe" },
+  "toastRemoveFromWhitelistFailed": { "message": "Kuondoa kutoka orodha nyeupe kumeshindwa" },
+  "signerKey": { "message": "Ufunguo wa Msimamizi" },
+  "copyTitle": { "message": "Nakili" },
+  "showQrTitle": { "message": "Onyesha msimbo wa QR" },
+  "signerDescription": {
+    "message": "Maombi yote ya NIP-07 kutoka kurasa za wavuti yanasafirishwa kwa msimamizi huu wa mbali kupitia NIP-46. Hakuna funguo za siri zilizohifadhiwa kwenye kifunio."
+  },
+  "disconnect": { "message": "Kata muunganisho" },
+  "disconnectAndRemoveProfile": { "message": "Kata muunganisho na uondoe wasifu" },
+  "logoutConfirmTitle": { "message": "Toka kabisa?" },
+  "logoutConfirmDescription": {
+    "message": "Hii itakata muunganisho kutoka kwa msimamizi wako na kufuta ruhusa zote na orodha nyeupe ya hali ya faragha. Utahitaji kuunganisha tena na kuruhusu tovuti upya."
+  },
+  "cancel": { "message": "Ghairi" },
+  "logOut": { "message": "Toka" },
+  "connectViaBunkerUri": { "message": "Unganisha kupitia Bunker URI" },
+  "connectViaBunkerUriDesc": {
+    "message": "Bandika URI ya bunker:// kutoka kwa msimamizi wako wa mbali ili kuunganisha"
+  },
+  "placeholderBunkerUri": { "message": "bunker://..." },
+  "connecting": { "message": "Inaunganisha..." },
+  "connect": { "message": "Unganisha" },
+  "separatorOr": { "message": "au" },
+  "getUriFromBunker46": { "message": "Pata URI kutoka Bunker46" },
+  "nostrConnectDesc": {
+    "message": "Unganisha kupitia Nostrconnect: onyesha QR na URI kwa programu yako ya bunker kuscan."
+  },
+  "showQrConnectionUri": { "message": "Onyesha QR na URI ya muunganisho" },
+  "settingsUseBunker46": { "message": "Tumia Bunker46" },
+  "settingsUseBunker46Hint": {
+    "message": "Shughulikia viungo vya nostrconnect: na elekeza kwa mfano wako wa Bunker46."
+  },
+  "settingsBunkerUrl": { "message": "Bunker46 URL" },
+  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
+  "settingsBunkerUrlHint": { "message": "URL ya msingi ya mfano wako wa Bunker46" },
+  "settingsSpecifyNostrConnectRelays": { "message": "Bainisha relays za nostrconnect" },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Weka URL za relay maalum kwa QR/URI ya Nostrconnect."
+  },
+  "settingsNostrConnectRelays": { "message": "Relays za Nostr Connect" },
+  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
+  "settingsNostrConnectRelaysHint": {
+    "message": "URL moja ya relay kwa kila mstari (au kutenganishwa kwa koma). Hutumiwa wakati wa kuunda QR/URI ya kuunganisha kupitia Nostrconnect."
+  },
+  "choiceOn": { "message": "Washa" },
+  "choiceOff": { "message": "Zima" },
+  "save": { "message": "Hifadhi" },
+  "privacyMode": { "message": "Hali ya faragha" },
+  "privacyModeHint": {
+    "message": "Fichua window.nostr kwenye vikoa vilivyoidhinishwa pekee (kichupo cha Ruhusa); hupunguza ufuatiliaji wa alama ya kidole."
+  },
+  "privacyModeSitesHint": {
+    "message": "Tovuti haziwezi kugundua kifunio, kwa hivyo baadhi hazitaonyesha \"Ingia na Nostr\" mpaka uziongeze katika Ruhusa."
+  },
+  "showBadge": { "message": "Onyesha beji kwenye aikoni ya kifunio" },
+  "showBadgeHint": {
+    "message": "Imewashwa, aikoni inaonyesha idadi ya ruhusa zilizotolewa kwa kichupo cha sasa (mfano 1, 2)."
+  },
+  "addToWhitelistTitle": { "message": "Ongeza $1 kwenye orodha nyeupe" },
+  "addToWhitelistButton": { "message": "Ongeza $1 kwenye orodha nyeupe" },
+  "removeFromWhitelistTitle": { "message": "Ondoa $1 kutoka orodha nyeupe" },
+  "removeFromWhitelistButton": { "message": "Ondoa $1 kutoka orodha nyeupe" },
+  "searchDomainsPlaceholder": { "message": "Tafuta vikoa..." },
+  "noPermissionsYet": { "message": "Hakuna ruhusa bado" },
+  "noPermissionsHint": {
+    "message": "Tovuti zinapoomba ufikiaji wa utambulisho wako wa Nostr, utaziona hapa."
+  },
+  "noDomainsMatch": { "message": "Hakuna kikoa kinacholingana na utafutaji wako" },
+  "revokeAllPermissionsTitle": { "message": "Batilisha ruhusa zote za kikoa hiki" },
+  "whitelistedNoPermissions": {
+    "message": "Ipo kwenye orodha nyeupe kwa nostr (hakuna ruhusa bado)"
+  },
+  "allowed": { "message": "Inaruhusiwa" },
+  "denied": { "message": "Imekataliwa" },
+  "revokeTitle": { "message": "Batilisha" },
+  "removeFromWhitelist": { "message": "Ondoa kutoka orodha nyeupe" },
+  "qrScanToUse": { "message": "$1 (scan kutumia)" },
+  "qrCodeAlt": { "message": "Msimbo wa QR" },
+  "close": { "message": "Funga" },
+  "nostrConnectModalHint": { "message": "Scan na programu yako ya bunker au nakili URI" },
+  "nostrConnectQrAlt": { "message": "Msimbo wa QR wa Nostrconnect" },
+  "copyUri": { "message": "Nakili URI" },
+  "waitingForBunker": { "message": "Inasubiri bunker kuunganika…" },
+  "method_getPublicKey": { "message": "Pata Ufunguo wa Umma" },
+  "method_signEvent": { "message": "Saini Tukio" },
+  "method_signEvent_kind": { "message": "Saini tukio (aina $1)" },
+  "method_getRelays": { "message": "Pata Relays" },
+  "method_nip04_encrypt": { "message": "NIP-04 Simbua" },
+  "method_nip04_decrypt": { "message": "NIP-04 Ficha" },
+  "method_nip44_encrypt": { "message": "NIP-44 Simbua" },
+  "method_nip44_decrypt": { "message": "NIP-44 Ficha" },
+  "promptPermissionRequest": { "message": "Ombi la Ruhusa" },
+  "promptWantsAccess": { "message": "anataka kufikia utambulisho wako wa Nostr" },
+  "promptEventKind": { "message": "Aina ya tukio $1" },
+  "promptViewRawMessage": { "message": "Angalia ujumbe ghafi" },
+  "promptHideRawMessage": { "message": "Ficha ujumbe ghafi" },
+  "promptAllowAlways": { "message": "Ruhusu Daima" },
+  "promptAllowAlwaysForKindHint": { "message": "Inatumika kwa aina hii ya tukio pekee" },
+  "promptAllowOnce": { "message": "Ruhusu Mara Moja" },
+  "promptDenyOnce": { "message": "Kataa" },
+  "promptDenyAlways": { "message": "Kataa Daima" },
+  "settingsMultiProfile": { "message": "Wasifu wengi" },
+  "settingsMultiProfileHint": {
+    "message": "Onyesha kubadili wasifu na ruhusu kuongeza muunganisho mingi."
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Ondoa wasifu wa ziada kutumia hali ya wasifu mmoja."
+  },
+  "addAnotherConnection": { "message": "Ongeza muunganisho mwingine" },
+  "removeProfile": { "message": "Ondoa wasifu huu" },
+  "removeProfileConfirmTitle": { "message": "Ondoa wasifu?" },
+  "removeProfileConfirmDesc": {
+    "message": "Hii itakata muunganisho na kufuta ruhusa zote na maingizo ya orodha nyeupe ya wasifu huu."
+  },
+  "switchProfile": { "message": "Badilisha wasifu" },
+  "toastProfileRemoved": { "message": "Wasifu umeondolewa" },
+  "toastProfileRemoveFailed": { "message": "Kuondoa wasifu kumeshindwa" },
+  "reconnectionFailedMessage": {
+    "message": "Muunganisho haukuweza kurejeshwa. Bunker huenda imebatilisha ufikiaji."
+  },
+  "renameProfile": { "message": "Badilisha jina la wasifu" },
+  "renameProfileTitle": { "message": "Badilisha jina la wasifu" },
+  "renameProfileHint": { "message": "Weka jina la kuonyesha au lichukue kutoka Nostr (aina 0)." },
+  "renameProfileNameLabel": { "message": "Jina la kuonyesha" },
+  "renameProfileNamePlaceholder": { "message": "Jina la wasifu" },
+  "fetchProfileFromNostr": { "message": "Chukua kutoka Nostr" },
+  "toastProfileMetadataFetched": { "message": "Taarifa za wasifu zimechukuliwa" },
+  "toastProfileMetadataFetchFailed": { "message": "Haikuweza kuchukua wasifu kutoka Nostr" },
+  "toastProfileRenameFailed": { "message": "Kubadilisha jina la wasifu kumeshindwa" },
+  "connectingToRelays": { "message": "Inaunganisha kwa:" },
+  "connectedViaRelays": { "message": "Imeunganishwa kupitia:" }
+}
