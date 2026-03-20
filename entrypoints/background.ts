@@ -1,4 +1,5 @@
-import { generateSecretKey, getPublicKey, SimplePool } from 'nostr-tools';
+import { generateSecretKey, getPublicKey } from 'nostr-tools';
+import { ResilientPool } from '@/lib/resilient-pool';
 import {
   BunkerSigner,
   createNostrConnectURI,
@@ -234,7 +235,7 @@ type RelayEntry = [string, { read: boolean; write: boolean }];
 
 async function fetchNip65RelayList(pubkey: string, relays: string[]): Promise<RelayEntry[] | null> {
   if (!relays.length) return null;
-  const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
+  const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
   try {
     const event = await withTimeout(
       pool.get(
@@ -383,7 +384,7 @@ async function fetchKind0ForProfile(
   relays: string[]
 ): Promise<void> {
   if (!relays.length) return;
-  const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
+  const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
   try {
     const event = await withTimeout(
       pool.get(relays, { kinds: [0], authors: [pubkey] }),
@@ -457,7 +458,7 @@ async function reconnectFromSession(): Promise<boolean> {
       };
     }
     const secret = getClientSecretBytes(activeProfile);
-    const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
+    const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
     const signer = BunkerSigner.fromBunker(secret, bp, { pool });
     await withTimeout(
       withRelayProbe(signer.connect(), bp.relays),
@@ -502,7 +503,7 @@ async function connectWithBunkerUri(
       clientSecretHex = activeProfile!.clientSecretHex;
     }
 
-    const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
+    const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
     const signer = BunkerSigner.fromBunker(clientSecretBytes, bp, { pool });
 
     await withTimeout(
@@ -569,7 +570,7 @@ function startNostrConnectConnection(opts?: { asNewProfile?: boolean }): Promise
     }
 
     const clientPubkey = getPublicKey(clientSecretBytesVal);
-    const pool = new SimplePool({ maxWaitForConnection: 10_000 } as Record<string, unknown>);
+    const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
 
     const data = await chrome.storage.local.get(STORAGE_KEY_NOSTRCONNECT_RELAYS);
     const stored = data[STORAGE_KEY_NOSTRCONNECT_RELAYS] as string[] | undefined;
