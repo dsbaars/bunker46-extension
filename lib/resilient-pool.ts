@@ -20,11 +20,10 @@ import { normalizeURL } from 'nostr-tools/utils';
 import type { AbstractRelay, Subscription } from 'nostr-tools/abstract-relay';
 import type { Filter, Event, EventTemplate, VerifiedEvent } from 'nostr-tools';
 
-export interface ResilientPoolOptions
-  extends Omit<
-    AbstractPoolConstructorOptions,
-    'verifyEvent' | 'websocketImplementation' | 'maxWaitForConnection'
-  > {
+export interface ResilientPoolOptions extends Omit<
+  AbstractPoolConstructorOptions,
+  'verifyEvent' | 'websocketImplementation' | 'maxWaitForConnection'
+> {
   /**
    * Minimum number of relays that must connect successfully for subscriptions/publishes.
    * Default: 1
@@ -71,7 +70,7 @@ export class ResilientPool extends AbstractSimplePool {
    */
   subscribeMap(
     requests: { url: string; filter: Filter }[],
-    params: SubscribeManyParams,
+    params: SubscribeManyParams
   ): SubCloser {
     const grouped = new Map<string, Filter[]>();
     for (const req of requests) {
@@ -205,7 +204,7 @@ export class ResilientPool extends AbstractSimplePool {
 
         subs.push(subscription);
         return { relay, subscription, url };
-      }),
+      })
     )
       .then((results) => {
         // Check if we have enough successful connections
@@ -258,7 +257,7 @@ export class ResilientPool extends AbstractSimplePool {
       onauth?: (evt: EventTemplate) => Promise<VerifiedEvent>;
       maxWait?: number;
       abort?: AbortSignal;
-    },
+    }
   ): Promise<string>[] {
     const normalizedUrls = [...new Set(relays.map(normalizeURL))];
     const publishPromises = normalizedUrls.map(async (url) => {
@@ -286,7 +285,7 @@ export class ResilientPool extends AbstractSimplePool {
           if (err.message?.startsWith('auth-required: ') && params?.onauth) {
             await relay.auth(params.onauth);
             return (relay as unknown as { publish: (event: Event) => Promise<string> }).publish(
-              event,
+              event
             );
           }
           throw err;
@@ -318,7 +317,7 @@ export class ResilientPool extends AbstractSimplePool {
       onauth?: (evt: EventTemplate) => Promise<VerifiedEvent>;
       maxWait?: number;
       abort?: AbortSignal;
-    },
+    }
   ): Promise<{ successful: string[]; failed: Array<{ url: string; error: string }> }> {
     const normalizedUrls = [...new Set(relays.map(normalizeURL))];
     const results = await Promise.allSettled(this.publish(relays, event, params));
@@ -338,13 +337,13 @@ export class ResilientPool extends AbstractSimplePool {
     if (successful.length > 0 && failed.length > 0) {
       this.onPartialSuccess?.(
         successful,
-        failed.map((f) => f.url),
+        failed.map((f) => f.url)
       );
     }
 
     if (successful.length < this.minSuccessfulRelays) {
       throw new Error(
-        `Not enough relays accepted the event: ${successful.length}/${this.minSuccessfulRelays} required`,
+        `Not enough relays accepted the event: ${successful.length}/${this.minSuccessfulRelays} required`
       );
     }
 
