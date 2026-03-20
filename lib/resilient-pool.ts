@@ -277,7 +277,7 @@ export class ResilientPool extends AbstractSimplePool {
         });
       } catch (err) {
         this.onRelayConnectionFailure?.(url);
-        throw new Error(`connection failure: ${String(err)}`);
+        throw new Error(`connection failure: ${String(err)}`, { cause: err });
       }
 
       return (relay as unknown as { publish: (event: Event) => Promise<string> })
