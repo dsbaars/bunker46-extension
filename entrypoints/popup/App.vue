@@ -1,82 +1,22 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import Button from '@/components/ui/Button.vue';
-import Card from '@/components/ui/Card.vue';
-import CardHeader from '@/components/ui/CardHeader.vue';
-import CardTitle from '@/components/ui/CardTitle.vue';
-import CardDescription from '@/components/ui/CardDescription.vue';
-import CardContent from '@/components/ui/CardContent.vue';
-import Input from '@/components/ui/Input.vue';
-import Badge from '@/components/ui/Badge.vue';
-import Separator from '@/components/ui/Separator.vue';
-import Label from '@/components/ui/Label.vue';
-import ChoiceCard from '@/components/ui/ChoiceCard.vue';
-import ProfileAvatar from '@/components/ui/ProfileAvatar.vue';
-import Tooltip from '@/components/ui/Tooltip.vue';
+import AppHeader from './components/AppHeader.vue';
+import ProfileSwitcher from './components/ProfileSwitcher.vue';
+import ConnectionTab from './components/ConnectionTab.vue';
+import SettingsTab from './components/SettingsTab.vue';
+import PermissionsTab from './components/PermissionsTab.vue';
+import RemoveProfileDialog from './components/RemoveProfileDialog.vue';
+import LogoutDialog from './components/LogoutDialog.vue';
+import RenameProfileDialog from './components/RenameProfileDialog.vue';
+import PubkeyQrModal from './components/PubkeyQrModal.vue';
+import NostrConnectModal from './components/NostrConnectModal.vue';
 import { Toaster, toast } from 'vue-sonner';
 import 'vue-sonner/style.css';
 import { nip19 } from 'nostr-tools';
 import QRCode from 'qrcode';
-import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogOverlay,
-  AlertDialogPortal,
-  AlertDialogRoot,
-  AlertDialogTitle,
-} from 'reka-ui';
-import {
-  DialogClose,
-  DialogContent,
-  DialogOverlay,
-  DialogPortal,
-  DialogRoot,
-  DialogTitle,
-} from 'reka-ui';
-import {
-  Link2,
-  Unplug,
-  Loader2,
-  ExternalLink,
-  ShieldCheck,
-  Trash2,
-  Globe,
-  QrCode,
-  Copy,
-  Search,
-  Plus,
-  Maximize2,
-  ChevronDown,
-  UserPlus,
-  X,
-  Pencil,
-  Download,
-  CheckCircle2,
-  XCircle,
-} from 'lucide-vue-next';
 import { t, getMethodLabel } from '@/lib/i18n';
 import { getPermissionDomains, filterAndPinDomains } from '@/lib/domains';
-
-type PermissionEntry = {
-  decision: 'allow' | 'deny';
-  created_at: number;
-};
-
-type DomainPolicies = {
-  [host: string]: {
-    [method: string]: PermissionEntry;
-  };
-};
-
-type ProfileSummary = {
-  id: string;
-  name?: string;
-  picture?: string;
-  signerPubkey?: string;
-  connected: boolean;
-};
+import type { DomainPolicies, ProfileSummary } from './types';
 
 // ---------------------------------------------------------------------------
 // Reactive state
@@ -929,151 +869,36 @@ onUnmounted(() => {
       :duration="3000"
     />
 
-    <!-- Header -->
-    <header class="flex items-center justify-between px-5 py-4">
-      <div class="flex items-center gap-2.5">
-        <img :src="extensionIconUrl" alt="" class="size-8 rounded-lg object-contain" />
-        <div>
-          <h1 class="text-sm font-semibold leading-tight">{{ t('extName') }}</h1>
-          <p class="text-xs text-muted-foreground leading-tight">{{ t('appSubtitle') }}</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-2">
-        <Button
-          v-if="showOpenFullPageButton"
-          variant="ghost"
-          size="icon"
-          class="size-8 shrink-0 text-muted-foreground hover:text-foreground"
-          :title="t('openFullPage')"
-          @click="openFullPage"
-        >
-          <Maximize2 class="size-4" />
-        </Button>
-        <Tooltip :disabled="!connected" side="bottom" :side-offset="8">
-          <Badge
-            :variant="reconnecting ? 'secondary' : connected ? 'success' : 'secondary'"
-            class="cursor-default select-none"
-          >
-            <span
-              :class="[
-                'size-1.5 rounded-full',
-                reconnecting
-                  ? 'bg-amber-500 animate-pulse'
-                  : connected
-                    ? 'bg-success'
-                    : 'bg-muted-foreground',
-              ]"
-            />
-            {{ reconnecting ? t('connecting') : connected ? t('connected') : t('offline') }}
-          </Badge>
-          <template #content>
-            <p class="mb-1.5 font-medium text-muted-foreground">{{ t('connectedViaRelays') }}</p>
-            <div class="flex flex-col gap-0.5">
-              <p v-for="relay in signerRelays" :key="relay" class="font-mono text-foreground">
-                {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
-              </p>
-            </div>
-          </template>
-        </Tooltip>
-      </div>
-    </header>
+    <AppHeader
+      :extension-icon-url="extensionIconUrl"
+      :show-open-full-page-button="showOpenFullPageButton"
+      :connected="connected"
+      :reconnecting="reconnecting"
+      :signer-relays="signerRelays"
+      @open-full-page="openFullPage"
+    />
 
-    <!-- Profile switcher (only when multi-profile is enabled and profiles exist) -->
-    <div
-      v-if="multiProfileEnabled && allProfiles.length > 0"
-      class="relative border-b border-border"
-    >
-      <!-- Transparent backdrop to close dropdown on outside click -->
-      <div
-        v-if="showProfileSwitcher"
-        class="fixed inset-0 z-30"
-        @click="showProfileSwitcher = false"
-      />
+    <ProfileSwitcher
+      :multi-profile-enabled="multiProfileEnabled"
+      :all-profiles="allProfiles"
+      :show-profile-switcher="showProfileSwitcher"
+      :active-profile-summary="activeProfileSummary"
+      :active-profile-id-ref="activeProfileIdRef"
+      :reconnecting="reconnecting"
+      :connected="connected"
+      :active-profile-name="activeProfileName"
+      :profile-display-name="profileDisplayName"
+      @toggle-open="showProfileSwitcher = !showProfileSwitcher"
+      @close="showProfileSwitcher = false"
+      @switch-profile="switchProfile"
+      @rename-profile="openRenameModal"
+      @add-profile="
+        addingNewProfile = true;
+        showProfileSwitcher = false;
+        activeTab = 'connection';
+      "
+    />
 
-      <!-- Switcher button -->
-      <button
-        class="flex w-full items-center gap-2.5 px-5 py-2.5 text-left transition-colors hover:bg-muted/50 cursor-pointer"
-        :title="t('switchProfile')"
-        @click="showProfileSwitcher = !showProfileSwitcher"
-      >
-        <ProfileAvatar
-          :signer-pubkey="activeProfileSummary?.signerPubkey"
-          :picture="activeProfileSummary?.picture"
-          :name="activeProfileSummary?.name"
-          size="sm"
-        />
-        <span class="flex-1 min-w-0 text-sm font-medium truncate">
-          {{
-            activeProfileSummary
-              ? profileDisplayName(activeProfileSummary)
-              : reconnecting
-                ? t('connecting')
-                : connected
-                  ? (activeProfileName ?? t('loading'))
-                  : t('offline')
-          }}
-        </span>
-        <ChevronDown
-          class="size-4 text-muted-foreground shrink-0 transition-transform"
-          :class="{ 'rotate-180': showProfileSwitcher }"
-        />
-      </button>
-
-      <!-- Dropdown -->
-      <div
-        v-if="showProfileSwitcher"
-        class="absolute left-0 right-0 top-full z-40 rounded-b-lg border border-t-0 border-border bg-card shadow-lg"
-      >
-        <div
-          v-for="profile in allProfiles"
-          :key="profile.id"
-          class="flex w-full items-center gap-2.5 px-5 py-2.5 text-left transition-colors hover:bg-muted/50 first:rounded-none last:rounded-b-none"
-          :class="{ 'bg-muted/30': profile.id === activeProfileIdRef }"
-        >
-          <button
-            class="flex flex-1 min-w-0 items-center gap-2.5 cursor-pointer text-left"
-            @click="switchProfile(profile.id)"
-          >
-            <ProfileAvatar
-              :signer-pubkey="profile.signerPubkey"
-              :picture="profile.picture"
-              :name="profile.name"
-              size="sm"
-            />
-            <span class="flex-1 min-w-0 text-sm truncate">{{ profileDisplayName(profile) }}</span>
-            <span
-              v-if="profile.id === activeProfileIdRef"
-              class="size-1.5 rounded-full bg-success shrink-0"
-            />
-          </button>
-          <Button
-            variant="ghost"
-            size="icon"
-            class="size-7 shrink-0 text-muted-foreground hover:text-foreground"
-            :title="t('renameProfile')"
-            @click.stop="openRenameModal(profile)"
-          >
-            <Pencil class="size-3.5" />
-          </Button>
-        </div>
-
-        <div class="border-t border-border">
-          <button
-            class="flex w-full items-center gap-2.5 px-5 py-2.5 text-left transition-colors hover:bg-muted/50 cursor-pointer rounded-b-lg text-sm text-muted-foreground"
-            @click="
-              addingNewProfile = true;
-              showProfileSwitcher = false;
-              activeTab = 'connection';
-            "
-          >
-            <UserPlus class="size-4 shrink-0" />
-            {{ t('addAnotherConnection') }}
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Tabs -->
     <div class="flex border-b border-border">
       <button
         :class="[
@@ -1110,7 +935,6 @@ onUnmounted(() => {
       </button>
     </div>
 
-    <!-- Error banner -->
     <div
       v-if="errorMessage && activeTab === 'connection'"
       class="mx-5 mt-4 flex items-start gap-2 rounded-lg border border-destructive/30 bg-destructive/10 px-3 py-2.5 text-xs text-destructive"
@@ -1119,715 +943,125 @@ onUnmounted(() => {
       <span>{{ errorMessage }}</span>
     </div>
 
-    <!-- CONNECTION TAB -->
-    <template v-if="activeTab === 'connection'">
-      <!-- Loading: avoid flashing connect form when already connected -->
-      <div
-        v-if="!connectionStateLoaded"
-        class="flex flex-col items-center justify-center gap-2 p-8 text-muted-foreground"
-      >
-        <Loader2 class="size-5 animate-spin" />
-        <span class="text-xs">{{ t('loading') }}</span>
-        <div v-if="reconnectingRelaysList.length" class="flex flex-col items-center gap-1 mt-1">
-          <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
-          <div
-            v-for="relay in reconnectingRelaysList"
-            :key="relay"
-            class="flex items-center gap-1.5"
-          >
-            <Loader2
-              v-if="!relayStatuses[relay] || relayStatuses[relay] === 'connecting'"
-              class="size-3 shrink-0 animate-spin text-muted-foreground/50"
-            />
-            <CheckCircle2
-              v-else-if="relayStatuses[relay] === 'ok'"
-              class="size-3 shrink-0 text-green-500"
-            />
-            <XCircle v-else class="size-3 shrink-0 text-destructive" />
-            <span class="text-xs font-mono text-muted-foreground/50 truncate max-w-[200px]">
-              {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
-            </span>
-          </div>
-        </div>
-      </div>
+    <ConnectionTab
+      v-if="activeTab === 'connection'"
+      :connection-state-loaded="connectionStateLoaded"
+      :reconnecting-relays-list="reconnectingRelaysList"
+      :relay-statuses="relayStatuses"
+      :adding-new-profile="addingNewProfile"
+      :use-bunker46="useBunker46"
+      :connecting="connecting"
+      :bunker-uri-input="bunkerUriInput"
+      :connecting-relays="connectingRelays"
+      :reconnection-failed="reconnectionFailed"
+      :connected="connected"
+      :multi-profile-enabled="multiProfileEnabled"
+      :active-profile-summary="activeProfileSummary"
+      :active-profile-name="activeProfileName"
+      :active-profile-picture="activeProfilePicture"
+      :signer-pubkey="signerPubkey"
+      :pubkey-display-value="pubkeyDisplayValue"
+      :pubkey-display-short="pubkeyDisplayShort"
+      :pubkey-display-mode="pubkeyDisplayMode"
+      @update:bunker-uri-input="bunkerUriInput = $event"
+      @connect-bunker-uri="connectWithBunkerUri"
+      @start-nostr-connect="startNostrConnect"
+      @open-bunker46="openBunker46"
+      @cancel-add-profile="
+        addingNewProfile = false;
+        errorMessage = '';
+      "
+      @request-remove-profile="showRemoveProfileConfirm = true"
+      @request-logout="showLogoutConfirm = true"
+      @start-add-profile="
+        addingNewProfile = true;
+        errorMessage = '';
+      "
+      @cycle-pubkey-format="cyclePubkeyFormat"
+      @copy-pubkey="copyPubkey"
+      @open-qr-modal="openQrModal"
+    />
 
-      <!-- Adding a new profile: show connect form with Cancel -->
-      <div v-else-if="addingNewProfile" class="flex flex-col gap-4 p-5">
-        <div class="flex items-center justify-between">
-          <p class="text-sm font-medium">{{ t('addAnotherConnection') }}</p>
-          <Button
-            variant="ghost"
-            size="icon"
-            class="size-7 text-muted-foreground hover:text-foreground"
-            @click="
-              addingNewProfile = false;
-              errorMessage = '';
-            "
-          >
-            <X class="size-4" />
-          </Button>
-        </div>
-        <Card>
-          <CardHeader>
-            <div class="flex items-center gap-2">
-              <Link2 class="size-4 text-primary" />
-              <CardTitle>{{ t('connectViaBunkerUri') }}</CardTitle>
-            </div>
-            <CardDescription>{{ t('connectViaBunkerUriDesc') }}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div class="flex flex-col gap-3">
-              <Input
-                v-model="bunkerUriInput"
-                :placeholder="t('placeholderBunkerUri')"
-                :disabled="connecting"
-                class="font-mono text-xs"
-                @keydown.enter="connectWithBunkerUri"
-              />
-              <Button
-                class="w-full"
-                :disabled="connecting || !bunkerUriInput.trim()"
-                @click="connectWithBunkerUri"
-              >
-                <Loader2 v-if="connecting" class="size-4 animate-spin" />
-                <Link2 v-else class="size-4" />
-                {{ connecting ? t('connecting') : t('connect') }}
-              </Button>
+    <SettingsTab
+      v-if="activeTab === 'settings'"
+      :multi-profile-enabled="multiProfileEnabled"
+      :can-disable-multi-profile="canDisableMultiProfile"
+      :privacy-mode="privacyMode"
+      :show-nostr-badge="showNostrBadge"
+      :use-bunker46="useBunker46"
+      :base-url="baseUrl"
+      :specify-nostr-connect-relays="specifyNostrConnectRelays"
+      :nostr-connect-relays-input="nostrConnectRelaysInput"
+      @update:multi-profile-enabled="multiProfileEnabled = $event"
+      @update:privacy-mode="privacyMode = $event"
+      @update:show-nostr-badge="showNostrBadge = $event"
+      @update:use-bunker46="useBunker46 = $event"
+      @update:base-url="baseUrl = $event"
+      @update:specify-nostr-connect-relays="specifyNostrConnectRelays = $event"
+      @update:nostr-connect-relays-input="nostrConnectRelaysInput = $event"
+      @set-multi-profile-enabled="setMultiProfileEnabled"
+      @set-privacy-mode-enabled="setPrivacyModeEnabled"
+      @set-show-nostr-badge-enabled="setShowNostrBadgeEnabled"
+      @set-use-bunker46-enabled="setUseBunker46Enabled"
+      @save-base-url="saveBaseUrl"
+      @set-specify-nostr-connect-relays-enabled="setSpecifyNostrConnectRelaysEnabled"
+      @save-nostr-connect-relays="saveNostrConnectRelays"
+    />
 
-              <div
-                v-if="connecting && connectingRelays.length"
-                class="flex flex-col items-center gap-1"
-              >
-                <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
-                <div
-                  v-for="relay in connectingRelays"
-                  :key="relay"
-                  class="flex items-center gap-1.5"
-                >
-                  <Loader2
-                    v-if="!relayStatuses[relay] || relayStatuses[relay] === 'connecting'"
-                    class="size-3 shrink-0 animate-spin text-muted-foreground/50"
-                  />
-                  <CheckCircle2
-                    v-else-if="relayStatuses[relay] === 'ok'"
-                    class="size-3 shrink-0 text-green-500"
-                  />
-                  <XCircle v-else class="size-3 shrink-0 text-destructive" />
-                  <span class="text-xs font-mono text-muted-foreground/50 truncate max-w-[220px]">
-                    {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
-                  </span>
-                </div>
-              </div>
+    <PermissionsTab
+      v-if="activeTab === 'permissions'"
+      :privacy-mode="privacyMode"
+      :current-tab-domain="currentTabDomain"
+      :current-tab-is-whitelisted="currentTabIsWhitelisted"
+      :permission-search-query="permissionSearchQuery"
+      :permission-domains="permissionDomains"
+      :filtered-permission-domains="filteredPermissionDomains"
+      :permissions="permissions"
+      :nostr-whitelist="nostrWhitelist"
+      :is-whitelist-only="isWhitelistOnly"
+      :get-method-label="getMethodLabel"
+      @update:permission-search-query="permissionSearchQuery = $event"
+      @add-current-tab-to-whitelist="addCurrentTabToWhitelist"
+      @remove-from-whitelist="removeFromWhitelist"
+      @revoke-domain="revokeDomain"
+      @revoke-permission="revokePermission"
+    />
 
-              <template v-if="useBunker46">
-                <Separator :label="t('separatorOr')" />
-                <Button variant="outline" class="w-full" @click="openBunker46">
-                  <ExternalLink class="size-4" />
-                  {{ t('getUriFromBunker46') }}
-                </Button>
-              </template>
+    <RemoveProfileDialog
+      :open="showRemoveProfileConfirm"
+      @update:open="showRemoveProfileConfirm = $event"
+      @confirm="doRemoveProfile"
+    />
 
-              <Separator :label="t('separatorOr')" />
+    <LogoutDialog
+      :open="showLogoutConfirm"
+      @update:open="showLogoutConfirm = $event"
+      @confirm="doFullLogout"
+    />
 
-              <div class="flex flex-col gap-3">
-                <p class="text-xs text-muted-foreground">{{ t('nostrConnectDesc') }}</p>
-                <Button variant="outline" class="w-full" @click="startNostrConnect">
-                  <QrCode class="size-4" />
-                  {{ t('showQrConnectionUri') }}
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+    <RenameProfileDialog
+      :open="showRenameModal"
+      :rename-profile-name="renameProfileName"
+      :rename-profile-fetching="renameProfileFetching"
+      @update:open="showRenameModal = $event"
+      @update:rename-profile-name="renameProfileName = $event"
+      @fetch-profile-metadata="fetchProfileMetadataForRename"
+      @save="saveRenameProfile"
+    />
 
-      <!-- Reconnection failed: profile has session but bunker unreachable -->
-      <div v-else-if="reconnectionFailed" class="flex flex-col gap-4 p-5">
-        <Card class="border-destructive/50">
-          <CardContent class="pt-5">
-            <div class="flex flex-col gap-4">
-              <div class="flex items-start gap-3">
-                <div class="size-10 shrink-0 flex items-center justify-center">
-                  <ProfileAvatar
-                    :signer-pubkey="activeProfileSummary?.signerPubkey"
-                    :picture="activeProfilePicture ?? activeProfileSummary?.picture"
-                    :name="activeProfileName ?? activeProfileSummary?.name"
-                    size="lg"
-                  />
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-sm font-medium">
-                    {{ activeProfileName || activeProfileSummary?.name || t('signerKey') }}
-                  </p>
-                  <p class="text-xs text-destructive mt-0.5">
-                    {{ t('reconnectionFailedMessage') }}
-                  </p>
-                  <div v-if="reconnectingRelaysList.length" class="mt-1.5 flex flex-col gap-1">
-                    <div
-                      v-for="relay in reconnectingRelaysList"
-                      :key="relay"
-                      class="flex items-center gap-1.5"
-                      :title="relay"
-                    >
-                      <XCircle class="size-3 shrink-0 text-destructive/70" />
-                      <span class="text-xs font-mono text-muted-foreground/60 truncate">
-                        {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <Button variant="destructive" class="w-full" @click="showRemoveProfileConfirm = true">
-                <Trash2 class="size-4" />
-                {{ t('removeProfile') }}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+    <PubkeyQrModal
+      :show="showQrModal"
+      :qr-data-url="qrDataUrl"
+      :pubkey-display-mode="pubkeyDisplayMode"
+      @close="closeQrModal"
+    />
 
-      <!-- Connected state -->
-      <div v-else-if="connected" class="flex flex-col gap-4 p-5">
-        <Card>
-          <CardContent class="pt-5">
-            <div class="flex flex-col gap-4">
-              <div class="flex items-start gap-3">
-                <div class="size-10 shrink-0 flex items-center justify-center">
-                  <ProfileAvatar
-                    :signer-pubkey="signerPubkey"
-                    :picture="activeProfilePicture ?? activeProfileSummary?.picture"
-                    :name="activeProfileName ?? activeProfileSummary?.name"
-                    size="lg"
-                  />
-                </div>
-                <div class="flex-1 min-w-0">
-                  <p class="text-sm font-medium">
-                    {{ activeProfileName || activeProfileSummary?.name || t('signerKey') }}
-                  </p>
-                  <div class="flex items-center gap-2">
-                    <button
-                      class="text-xs text-muted-foreground font-mono truncate block max-w-full hover:text-foreground transition-colors cursor-pointer text-left flex-1 min-w-0"
-                      :title="pubkeyDisplayValue"
-                      @click="cyclePubkeyFormat"
-                    >
-                      {{ pubkeyDisplayShort }}
-                    </button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      class="size-7 shrink-0 text-muted-foreground hover:text-foreground"
-                      :title="t('copyTitle')"
-                      @click="copyPubkey"
-                    >
-                      <Copy class="size-3.5" />
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      class="size-7 shrink-0 text-muted-foreground hover:text-foreground"
-                      :title="t('showQrTitle')"
-                      @click="openQrModal"
-                    >
-                      <QrCode class="size-3.5" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              <Separator />
-
-              <p class="text-xs text-muted-foreground leading-relaxed">
-                {{ t('signerDescription') }}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <!-- Single-profile: Disconnect only. Multi-profile: Disconnect & remove in one prominent button. -->
-        <Button
-          v-if="!multiProfileEnabled"
-          variant="outline"
-          class="w-full"
-          @click="showLogoutConfirm = true"
-        >
-          <Unplug class="size-4" />
-          {{ t('disconnect') }}
-        </Button>
-        <Button
-          v-else
-          variant="outline"
-          class="w-full border-destructive/50 text-destructive hover:bg-destructive/10 hover:border-destructive"
-          @click="showRemoveProfileConfirm = true"
-        >
-          <Trash2 class="size-4" />
-          {{ t('disconnectAndRemoveProfile') }}
-        </Button>
-
-        <!-- Add another connection (multi-profile only) -->
-        <Button
-          v-if="multiProfileEnabled"
-          variant="outline"
-          class="w-full"
-          @click="
-            addingNewProfile = true;
-            errorMessage = '';
-          "
-        >
-          <UserPlus class="size-4" />
-          {{ t('addAnotherConnection') }}
-        </Button>
-
-        <!-- Log out confirmation -->
-        <AlertDialogRoot v-model:open="showLogoutConfirm">
-          <AlertDialogPortal>
-            <AlertDialogOverlay
-              class="fixed inset-0 z-50 bg-black/70 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
-            />
-            <AlertDialogContent
-              class="fixed left-1/2 top-1/2 z-50 w-full max-w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-4 shadow-xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
-            >
-              <AlertDialogTitle class="text-sm font-semibold">
-                {{ t('logoutConfirmTitle') }}
-              </AlertDialogTitle>
-              <AlertDialogDescription class="mt-2 text-xs text-muted-foreground">
-                {{ t('logoutConfirmDescription') }}
-              </AlertDialogDescription>
-              <div class="mt-4 flex justify-end gap-2">
-                <AlertDialogCancel as-child>
-                  <Button variant="outline" size="sm"> {{ t('cancel') }} </Button>
-                </AlertDialogCancel>
-                <AlertDialogAction as-child>
-                  <Button variant="destructive" size="sm" @click="doFullLogout">
-                    {{ t('logOut') }}
-                  </Button>
-                </AlertDialogAction>
-              </div>
-            </AlertDialogContent>
-          </AlertDialogPortal>
-        </AlertDialogRoot>
-      </div>
-
-      <!-- Disconnected state (first connection) -->
-      <div v-else class="flex flex-col gap-4 p-5">
-        <Card>
-          <CardHeader>
-            <div class="flex items-center gap-2">
-              <Link2 class="size-4 text-primary" />
-              <CardTitle>{{ t('connectViaBunkerUri') }}</CardTitle>
-            </div>
-            <CardDescription>
-              {{ t('connectViaBunkerUriDesc') }}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div class="flex flex-col gap-3">
-              <Input
-                v-model="bunkerUriInput"
-                :placeholder="t('placeholderBunkerUri')"
-                :disabled="connecting"
-                class="font-mono text-xs"
-                @keydown.enter="connectWithBunkerUri"
-              />
-              <Button
-                class="w-full"
-                :disabled="connecting || !bunkerUriInput.trim()"
-                @click="connectWithBunkerUri"
-              >
-                <Loader2 v-if="connecting" class="size-4 animate-spin" />
-                <Link2 v-else class="size-4" />
-                {{ connecting ? t('connecting') : t('connect') }}
-              </Button>
-
-              <div
-                v-if="connecting && connectingRelays.length"
-                class="flex flex-col items-center gap-1"
-              >
-                <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
-                <div
-                  v-for="relay in connectingRelays"
-                  :key="relay"
-                  class="flex items-center gap-1.5"
-                >
-                  <Loader2
-                    v-if="!relayStatuses[relay] || relayStatuses[relay] === 'connecting'"
-                    class="size-3 shrink-0 animate-spin text-muted-foreground/50"
-                  />
-                  <CheckCircle2
-                    v-else-if="relayStatuses[relay] === 'ok'"
-                    class="size-3 shrink-0 text-green-500"
-                  />
-                  <XCircle v-else class="size-3 shrink-0 text-destructive" />
-                  <span class="text-xs font-mono text-muted-foreground/50 truncate max-w-[220px]">
-                    {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
-                  </span>
-                </div>
-              </div>
-
-              <template v-if="useBunker46">
-                <Separator :label="t('separatorOr')" />
-                <Button variant="outline" class="w-full" @click="openBunker46">
-                  <ExternalLink class="size-4" />
-                  {{ t('getUriFromBunker46') }}
-                </Button>
-              </template>
-
-              <Separator :label="t('separatorOr')" />
-
-              <div class="flex flex-col gap-3">
-                <p class="text-xs text-muted-foreground">
-                  {{ t('nostrConnectDesc') }}
-                </p>
-                <Button variant="outline" class="w-full" @click="startNostrConnect">
-                  <QrCode class="size-4" />
-                  {{ t('showQrConnectionUri') }}
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    </template>
-
-    <!-- SETTINGS TAB -->
-    <template v-if="activeTab === 'settings'">
-      <div class="flex min-w-0 flex-col gap-4 overflow-x-hidden p-5">
-        <!-- Multiple profiles toggle (at top) -->
-        <ChoiceCard
-          v-model="multiProfileEnabled"
-          :label="t('settingsMultiProfile')"
-          :description="t('settingsMultiProfileHint')"
-          :disabled="!canDisableMultiProfile"
-          :hide-slot-content="canDisableMultiProfile"
-          @update:model-value="setMultiProfileEnabled()"
-        >
-          <p v-if="!canDisableMultiProfile" class="text-xs text-muted-foreground">
-            {{ t('settingsMultiProfileDisabledHint') }}
-          </p>
-        </ChoiceCard>
-        <ChoiceCard
-          v-model="privacyMode"
-          :label="t('privacyMode')"
-          :description="t('privacyModeHint') + ' ' + t('privacyModeSitesHint')"
-          hide-slot-content
-          @update:model-value="setPrivacyModeEnabled()"
-        />
-        <ChoiceCard
-          v-model="showNostrBadge"
-          :label="t('showBadge')"
-          :description="t('showBadgeHint')"
-          hide-slot-content
-          @update:model-value="setShowNostrBadgeEnabled()"
-        />
-        <ChoiceCard
-          v-model="useBunker46"
-          :label="t('settingsUseBunker46')"
-          :description="t('settingsUseBunker46Hint')"
-          @update:model-value="setUseBunker46Enabled()"
-        >
-          <div class="flex flex-col gap-2" data-testid="settings-bunker46-url-section">
-            <Label class="text-xs">{{ t('settingsBunkerUrl') }}</Label>
-            <Input
-              v-model="baseUrl"
-              :placeholder="t('settingsBunkerUrlPlaceholder')"
-              class="text-xs"
-              data-testid="settings-bunker46-url-input"
-              @click.stop
-            />
-            <p class="text-xs text-muted-foreground">{{ t('settingsBunkerUrlHint') }}</p>
-            <Button size="sm" class="w-fit" @click.stop="saveBaseUrl">
-              {{ t('save') }}
-            </Button>
-          </div>
-        </ChoiceCard>
-        <ChoiceCard
-          v-model="specifyNostrConnectRelays"
-          data-testid="settings-nostrconnect-card"
-          :label="t('settingsSpecifyNostrConnectRelays')"
-          :description="t('settingsSpecifyNostrConnectRelaysHint')"
-          @update:model-value="setSpecifyNostrConnectRelaysEnabled()"
-        >
-          <div class="flex flex-col gap-2" data-testid="settings-nostrconnect-relays-section">
-            <Label class="text-xs">{{ t('settingsNostrConnectRelays') }}</Label>
-            <textarea
-              v-model="nostrConnectRelaysInput"
-              :placeholder="t('settingsNostrConnectRelaysPlaceholder')"
-              rows="3"
-              class="w-full rounded-md border border-input bg-background px-3 py-2 text-xs font-mono ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              @click.stop
-            />
-            <p class="text-xs text-muted-foreground">
-              {{ t('settingsNostrConnectRelaysHint') }}
-            </p>
-            <Button size="sm" class="w-fit" @click.stop="saveNostrConnectRelays">
-              {{ t('save') }}
-            </Button>
-          </div>
-        </ChoiceCard>
-      </div>
-    </template>
-
-    <!-- PERMISSIONS TAB -->
-    <template v-if="activeTab === 'permissions'">
-      <div class="flex flex-col gap-3 p-5 max-h-[400px] overflow-hidden min-h-0">
-        <!-- Add or remove current tab from whitelist (when privacy mode on) -->
-        <Button
-          v-if="privacyMode && currentTabDomain && !currentTabIsWhitelisted"
-          variant="outline"
-          size="sm"
-          class="w-full shrink-0"
-          :title="t('addToWhitelistTitle', currentTabDomain)"
-          @click="addCurrentTabToWhitelist"
-        >
-          <Plus class="size-3.5" />
-          {{ t('addToWhitelistButton', currentTabDomain) }}
-        </Button>
-        <Button
-          v-else-if="privacyMode && currentTabDomain && currentTabIsWhitelisted"
-          variant="outline"
-          size="sm"
-          class="w-full shrink-0 border-destructive/50 text-destructive hover:bg-destructive/10 hover:border-destructive"
-          :title="t('removeFromWhitelistTitle', currentTabDomain)"
-          @click="removeFromWhitelist(currentTabDomain)"
-        >
-          <Trash2 class="size-3.5" />
-          {{ t('removeFromWhitelistButton', currentTabDomain) }}
-        </Button>
-        <!-- Search -->
-        <div class="relative shrink-0">
-          <Search
-            class="absolute left-2.5 top-1/2 -translate-y-1/2 size-3.5 text-muted-foreground pointer-events-none"
-            aria-hidden="true"
-          />
-          <Input
-            v-model="permissionSearchQuery"
-            type="text"
-            :placeholder="t('searchDomainsPlaceholder')"
-            class="pl-8 text-xs h-8"
-          />
-        </div>
-
-        <div class="flex flex-col gap-3 overflow-y-auto min-h-0">
-          <!-- Empty state: no permissions at all -->
-          <div
-            v-if="permissionDomains.length === 0"
-            class="flex flex-col items-center justify-center py-10 text-center"
-          >
-            <ShieldCheck class="size-10 text-muted-foreground/50 mb-3" />
-            <p class="text-sm font-medium text-muted-foreground">{{ t('noPermissionsYet') }}</p>
-            <p class="text-xs text-muted-foreground/70 mt-1 max-w-[250px]">
-              {{ t('noPermissionsHint') }}
-            </p>
-          </div>
-
-          <!-- No search results -->
-          <div
-            v-else-if="filteredPermissionDomains.length === 0"
-            class="flex flex-col items-center justify-center py-8 text-center"
-          >
-            <p class="text-sm font-medium text-muted-foreground">{{ t('noDomainsMatch') }}</p>
-          </div>
-
-          <!-- Domain list -->
-          <Card v-for="host in filteredPermissionDomains" :key="host">
-            <CardHeader class="pb-2">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2 min-w-0">
-                  <Globe class="size-3.5 text-muted-foreground shrink-0" />
-                  <span class="text-sm font-medium truncate">{{ host }}</span>
-                </div>
-                <Button
-                  v-if="permissions[host] && Object.keys(permissions[host]).length > 0"
-                  variant="ghost"
-                  size="icon"
-                  class="size-7 shrink-0 text-muted-foreground hover:text-destructive"
-                  :title="t('revokeAllPermissionsTitle')"
-                  @click="revokeDomain(host)"
-                >
-                  <Trash2 class="size-3.5" />
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent class="pt-0">
-              <!-- Whitelist-only: no permission entries yet -->
-              <div v-if="isWhitelistOnly(host)" class="py-1.5 text-xs text-muted-foreground">
-                {{ t('whitelistedNoPermissions') }}
-              </div>
-              <!-- Has permission entries -->
-              <div v-else class="flex flex-col gap-1.5">
-                <div
-                  v-for="(entry, method) in permissions[host]"
-                  :key="method"
-                  class="flex items-center justify-between py-1"
-                >
-                  <span class="text-xs text-muted-foreground">
-                    {{ getMethodLabel(method as string) }}
-                  </span>
-                  <div class="flex items-center gap-2">
-                    <Badge
-                      :variant="entry.decision === 'allow' ? 'success' : 'destructive'"
-                      class="text-[10px] px-1.5 py-0"
-                    >
-                      {{ entry.decision === 'allow' ? t('allowed') : t('denied') }}
-                    </Badge>
-                    <button
-                      class="text-muted-foreground hover:text-destructive transition-colors cursor-pointer"
-                      :title="t('revokeTitle')"
-                      @click="revokePermission(host, method as string)"
-                    >
-                      <Trash2 class="size-3" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <Button
-                v-if="nostrWhitelist.includes(host.toLowerCase())"
-                variant="outline"
-                size="sm"
-                class="mt-2 w-full text-xs border-destructive/50 text-destructive hover:bg-destructive/10 hover:border-destructive h-7"
-                :title="t('removeFromWhitelist')"
-                @click="removeFromWhitelist(host)"
-              >
-                <Trash2 class="size-3" />
-                {{ t('removeFromWhitelist') }}
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </template>
-
-    <!-- Remove profile confirmation (root-level so it works in reconnectionFailed state too) -->
-    <AlertDialogRoot v-model:open="showRemoveProfileConfirm">
-      <AlertDialogPortal>
-        <AlertDialogOverlay
-          class="fixed inset-0 z-50 bg-black/70 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
-        />
-        <AlertDialogContent
-          class="fixed left-1/2 top-1/2 z-50 w-full max-w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-4 shadow-xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
-        >
-          <AlertDialogTitle class="text-sm font-semibold">
-            {{ t('removeProfileConfirmTitle') }}
-          </AlertDialogTitle>
-          <AlertDialogDescription class="mt-2 text-xs text-muted-foreground">
-            {{ t('removeProfileConfirmDesc') }}
-          </AlertDialogDescription>
-          <div class="mt-4 flex justify-end gap-2">
-            <AlertDialogCancel as-child>
-              <Button variant="outline" size="sm"> {{ t('cancel') }} </Button>
-            </AlertDialogCancel>
-            <AlertDialogAction as-child>
-              <Button variant="destructive" size="sm" @click="doRemoveProfile">
-                {{ t('removeProfile') }}
-              </Button>
-            </AlertDialogAction>
-          </div>
-        </AlertDialogContent>
-      </AlertDialogPortal>
-    </AlertDialogRoot>
-
-    <!-- Rename profile dialog (root-level so it works in reconnectionFailed state too) -->
-    <DialogRoot v-model:open="showRenameModal">
-      <DialogPortal>
-        <DialogOverlay
-          class="fixed inset-0 z-50 bg-black/70 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
-        />
-        <DialogContent
-          class="fixed left-1/2 top-1/2 z-50 w-full max-w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-lg border border-border bg-card p-4 shadow-xl outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95"
-        >
-          <DialogTitle class="text-sm font-semibold">
-            {{ t('renameProfileTitle') }}
-          </DialogTitle>
-          <p class="mt-1 text-xs text-muted-foreground">
-            {{ t('renameProfileHint') }}
-          </p>
-          <div class="mt-4 flex flex-col gap-3">
-            <div class="flex flex-col gap-1.5">
-              <Label class="text-xs">{{ t('renameProfileNameLabel') }}</Label>
-              <Input
-                v-model="renameProfileName"
-                class="text-sm"
-                :placeholder="t('renameProfileNamePlaceholder')"
-              />
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              class="w-full"
-              :disabled="renameProfileFetching"
-              @click="fetchProfileMetadataForRename"
-            >
-              <Loader2 v-if="renameProfileFetching" class="size-3.5 animate-spin" />
-              <Download v-else class="size-3.5" />
-              {{ t('fetchProfileFromNostr') }}
-            </Button>
-          </div>
-          <div class="mt-4 flex justify-end gap-2">
-            <DialogClose as-child>
-              <Button variant="outline" size="sm">{{ t('cancel') }}</Button>
-            </DialogClose>
-            <Button size="sm" @click="saveRenameProfile">
-              {{ t('save') }}
-            </Button>
-          </div>
-        </DialogContent>
-      </DialogPortal>
-    </DialogRoot>
-
-    <!-- QR code modal (signer pubkey) -->
-    <div
-      v-if="showQrModal"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
-      @click.self="closeQrModal"
-    >
-      <div
-        class="rounded-lg border border-border bg-card p-4 shadow-xl flex flex-col items-center gap-3"
-      >
-        <p class="text-xs font-medium text-muted-foreground">
-          {{ t('qrScanToUse', pubkeyDisplayMode) }}
-        </p>
-        <img
-          v-if="qrDataUrl"
-          :src="qrDataUrl"
-          :alt="t('qrCodeAlt')"
-          class="rounded border border-border bg-white"
-          width="220"
-          height="220"
-        />
-        <Button size="sm" variant="outline" @click="closeQrModal"> {{ t('close') }} </Button>
-      </div>
-    </div>
-
-    <!-- Nostrconnect connection modal (QR + copy, waiting for bunker) -->
-    <div
-      v-if="showNostrConnectModal"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
-      @click.self="closeNostrConnectModal"
-    >
-      <div
-        class="rounded-lg border border-border bg-card p-4 shadow-xl flex flex-col items-center gap-3 max-w-[280px]"
-      >
-        <p class="text-xs font-medium text-muted-foreground text-center">
-          {{ t('nostrConnectModalHint') }}
-        </p>
-        <img
-          v-if="nostrConnectQrDataUrl"
-          :src="nostrConnectQrDataUrl"
-          :alt="t('nostrConnectQrAlt')"
-          class="rounded border border-border bg-white shrink-0"
-          width="220"
-          height="220"
-        />
-        <Button variant="outline" size="sm" class="w-full" @click="copyNostrConnectUri">
-          <Copy class="size-3.5" />
-          {{ t('copyUri') }}
-        </Button>
-        <p v-if="nostrConnectWaiting" class="text-xs text-muted-foreground text-center">
-          {{ t('waitingForBunker') }}
-        </p>
-        <Button size="sm" variant="ghost" class="w-full" @click="closeNostrConnectModal">
-          {{ t('cancel') }}
-        </Button>
-      </div>
-    </div>
+    <NostrConnectModal
+      :show="showNostrConnectModal"
+      :nostr-connect-qr-data-url="nostrConnectQrDataUrl"
+      :nostr-connect-waiting="nostrConnectWaiting"
+      @copy-uri="copyNostrConnectUri"
+      @close="closeNostrConnectModal"
+    />
   </div>
 </template>
