@@ -92,6 +92,8 @@ const privacyMode = ref(false);
 const showNostrBadge = ref(true);
 const useBunker46 = ref(false);
 const specifyNostrConnectRelays = ref(false);
+const touchedUseBunker46 = ref(false);
+const touchedSpecifyNostrConnectRelays = ref(false);
 type PubkeyFormat = 'npub' | 'hex' | 'nprofile';
 const pubkeyDisplayMode = ref<PubkeyFormat>('npub');
 const showQrModal = ref(false);
@@ -401,8 +403,9 @@ async function loadState() {
       'multiProfileEnabled',
     ]);
     if (stored.bunker46BaseUrl) baseUrl.value = stored.bunker46BaseUrl as string;
-    useBunker46.value = stored.useBunker46 === true;
-    specifyNostrConnectRelays.value = stored.specifyNostrConnectRelays === true;
+    if (!touchedUseBunker46.value) useBunker46.value = stored.useBunker46 === true;
+    if (!touchedSpecifyNostrConnectRelays.value)
+      specifyNostrConnectRelays.value = stored.specifyNostrConnectRelays === true;
     const relays = stored.nostrConnectRelays as string[] | undefined;
     if (Array.isArray(relays) && relays.length > 0) {
       nostrConnectRelaysInput.value = relays.join('\n');
@@ -684,12 +687,14 @@ async function setShowNostrBadgeEnabled() {
 }
 
 async function setUseBunker46Enabled() {
+  touchedUseBunker46.value = true;
   const enabled = useBunker46.value;
   await chrome.storage.local.set({ useBunker46: enabled });
   toast.success(t('toastSettingsSaved'));
 }
 
 async function setSpecifyNostrConnectRelaysEnabled() {
+  touchedSpecifyNostrConnectRelays.value = true;
   const enabled = specifyNostrConnectRelays.value;
   await chrome.storage.local.set({ specifyNostrConnectRelays: enabled });
   toast.success(t('toastSettingsSaved'));
@@ -1492,7 +1497,7 @@ onUnmounted(() => {
           :label="t('settingsMultiProfile')"
           :description="t('settingsMultiProfileHint')"
           :disabled="!canDisableMultiProfile"
-          :show-slot-content="!canDisableMultiProfile"
+          :hide-slot-content="canDisableMultiProfile"
           @update:model-value="setMultiProfileEnabled()"
         >
           <p v-if="!canDisableMultiProfile" class="text-xs text-muted-foreground">
@@ -1503,12 +1508,14 @@ onUnmounted(() => {
           v-model="privacyMode"
           :label="t('privacyMode')"
           :description="t('privacyModeHint') + ' ' + t('privacyModeSitesHint')"
+          hide-slot-content
           @update:model-value="setPrivacyModeEnabled()"
         />
         <ChoiceCard
           v-model="showNostrBadge"
           :label="t('showBadge')"
           :description="t('showBadgeHint')"
+          hide-slot-content
           @update:model-value="setShowNostrBadgeEnabled()"
         />
         <ChoiceCard
@@ -1534,11 +1541,12 @@ onUnmounted(() => {
         </ChoiceCard>
         <ChoiceCard
           v-model="specifyNostrConnectRelays"
+          data-testid="settings-nostrconnect-card"
           :label="t('settingsSpecifyNostrConnectRelays')"
           :description="t('settingsSpecifyNostrConnectRelaysHint')"
           @update:model-value="setSpecifyNostrConnectRelaysEnabled()"
         >
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2" data-testid="settings-nostrconnect-relays-section">
             <Label class="text-xs">{{ t('settingsNostrConnectRelays') }}</Label>
             <textarea
               v-model="nostrConnectRelaysInput"

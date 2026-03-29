@@ -47,6 +47,23 @@ test('Settings tab shows choice cards for privacy, badge, Bunker46, and nostrcon
   await expect(page.getByText('Specify nostrconnect relays')).toBeVisible();
 });
 
+test('Settings tab shows nostrconnect relays textarea when Specify nostrconnect relays is enabled', async ({
+  page,
+  extensionId,
+}) => {
+  await page.goto(`chrome-extension://${extensionId}/popup.html`);
+  await page.getByRole('button', { name: 'Settings', exact: true }).click();
+  const nostrCard = page.getByTestId('settings-nostrconnect-card');
+  await expect(nostrCard).toHaveCount(1);
+  const nostrSwitch = nostrCard.getByRole('switch');
+  await expect(nostrSwitch).toHaveAttribute('aria-checked', 'false');
+  await expect(nostrCard.getByTestId('settings-nostrconnect-relays-section')).toHaveCount(0);
+  await nostrSwitch.click();
+  await expect(nostrSwitch).toHaveAttribute('aria-checked', 'true');
+  await expect(nostrCard.getByTestId('settings-nostrconnect-relays-section')).toBeVisible();
+  await expect(nostrCard.getByPlaceholder('wss://relay.nsec.app')).toBeVisible();
+});
+
 test('Settings tab shows Use Bunker46 switch and Bunker46 URL section is not rendered when switch is off', async ({
   page,
   extensionId,
@@ -54,8 +71,11 @@ test('Settings tab shows Use Bunker46 switch and Bunker46 URL section is not ren
   await page.goto(`chrome-extension://${extensionId}/popup.html`);
   await page.getByRole('button', { name: 'Settings', exact: true }).click();
   await expect(page.getByText('Use Bunker46')).toBeVisible();
-  await expect(page.getByRole('switch', { name: /Use Bunker46/i })).toBeVisible();
+  const bunkerSwitch = page.getByRole('switch', { name: /Use Bunker46/i });
+  await expect(bunkerSwitch).toBeVisible();
   await expect(page.getByTestId('settings-bunker46-url-section')).toHaveCount(0);
+  await bunkerSwitch.click();
+  await expect(page.getByTestId('settings-bunker46-url-section')).toBeVisible();
 });
 
 test('window.nostr is present on a web page and exposes NIP-07 methods', async ({ page }) => {

@@ -8,8 +8,8 @@ defineProps<{
   label?: string;
   description?: string;
   disabled?: boolean;
-  /** When false, hide the horizontal line and slot area when toggle is on (e.g. when slot content is conditional and empty). */
-  showSlotContent?: boolean;
+  /** When true, hide the horizontal line and slot area when toggle is on. */
+  hideSlotContent?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -37,7 +37,7 @@ const switchId = useId();
     >
       <div class="min-w-0 flex-1">
         <span v-if="label" class="text-sm font-medium leading-none">{{ label }}</span>
-        <p v-if="description" class="mt-1.5 text-xs text-muted-foreground break-words">
+        <p v-if="description" class="mt-1.5 text-xs text-muted-foreground wrap-break-word">
           {{ description }}
         </p>
       </div>
@@ -49,10 +49,7 @@ const switchId = useId();
         @update:model-value="!disabled && emit('update:modelValue', $event)"
       />
     </label>
-    <div
-      v-if="modelValue && $slots.default && showSlotContent !== false"
-      class="mt-3 border-t border-border pt-3"
-    >
+    <div v-if="modelValue && !hideSlotContent" class="mt-3 border-t border-border pt-3">
       <slot />
     </div>
   </div>

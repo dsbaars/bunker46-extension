@@ -1,4 +1,5 @@
 import { generateSecretKey, getPublicKey } from 'nostr-tools';
+import { normalizeURL } from 'nostr-tools/utils';
 import { ResilientPool } from '@/lib/resilient-pool';
 import {
   BunkerSigner,
@@ -369,6 +370,69 @@ function withRelayProbe<T>(promise: Promise<T>, relays: string[]): Promise<T> {
 }
 
 // ---------------------------------------------------------------------------
+// Bunker connect diagnostics (NIP-46 publish uses Promise.any per relay)
+// ---------------------------------------------------------------------------
+
+const BUNKER_LOG_PREFIX = '[Bunker46]';
+
+/** Log helper: same URI shape but `secret` query value redacted. */
+function redactBunkerUriForLog(uri: string): string {
+  try {
+    const normalized = uri.trim().replace(/^bunker:\/\//, 'https://');
+    const u = new URL(normalized);
+    if (u.searchParams.has('secret')) u.searchParams.set('secret', '(redacted)');
+    return `bunker://${u.host}${u.pathname}${u.search}`;
+  } catch {
+    return '(unparseable bunker URI)';
+  }
+}
+
+function normalizedRelayUrls(relays: string[]): string[] {
+  return [...new Set(relays.map((r) => normalizeURL(r)))];
+}
+
+/**
+ * nostr-tools BunkerSigner publishes the connect RPC via Promise.any(relay publishes).
+ * If every relay rejects publish, the runtime throws AggregateError("All promises were rejected").
+ */
+function formatBunkerConnectionError(e: unknown, relays: string[]): string {
+  const urls = normalizedRelayUrls(relays);
+  if (typeof AggregateError !== 'undefined' && e instanceof AggregateError) {
+    const inner = Array.isArray(e.errors) ? e.errors : [];
+    if (inner.length > 0) {
+      const lines = inner.map((err, i) => {
+        const host = (urls[i] ?? `#${i + 1}`).replace(/^wss:\/\//i, '').replace(/^ws:\/\//i, '');
+        const msg = err instanceof Error ? err.message : String(err);
+        return `${host}: ${msg}`;
+      });
+      return (
+        `Signer did not acknowledge the connect request on any relay ` +
+        `(each relay rejected the publish). ${lines.join(' · ')}`
+      );
+    }
+  }
+  if (e instanceof Error) return e.message;
+  return typeof e === 'string' ? e : 'Connection failed';
+}
+
+function logBunkerFailure(phase: string, e: unknown, relays: string[]): void {
+  const urls = normalizedRelayUrls(relays);
+  console.error(BUNKER_LOG_PREFIX, phase, {
+    relayCount: urls.length,
+    relays: urls,
+    message: formatBunkerConnectionError(e, relays),
+  });
+  if (typeof AggregateError !== 'undefined' && e instanceof AggregateError && e.errors?.length) {
+    e.errors.forEach((err, i) => {
+      const relay = urls[i] ?? `(index ${i})`;
+      console.error(BUNKER_LOG_PREFIX, `  relay ${relay}:`, err);
+    });
+  } else if (e instanceof Error && e.stack) {
+    console.error(BUNKER_LOG_PREFIX, '  stack:', e.stack);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Kind 0 metadata fetch (name / picture)
 // ---------------------------------------------------------------------------
 
@@ -444,6 +508,7 @@ async function reconnectFromSession(): Promise<boolean> {
   const session = activeProfile?.session;
   if (!session?.signerPubkey || !session.relays?.length) return false;
   if (!activeProfile) return false;
+  let logRelays: string[] = session.relays;
   try {
     let bp: { pubkey: string; relays: string[]; secret: string | null };
     if (session.bunkerUri) {
@@ -457,6 +522,12 @@ async function reconnectFromSession(): Promise<boolean> {
         secret: null,
       };
     }
+    logRelays = bp.relays;
+    console.info(BUNKER_LOG_PREFIX, 'reconnectFromSession: connecting', {
+      targetPubkey: bp.pubkey.slice(0, 16) + '…',
+      relays: normalizedRelayUrls(bp.relays),
+      hasBunkerSecretInUri: Boolean(bp.secret),
+    });
     const secret = getClientSecretBytes(activeProfile);
     const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
     const signer = BunkerSigner.fromBunker(secret, bp, { pool });
@@ -466,8 +537,10 @@ async function reconnectFromSession(): Promise<boolean> {
       'Reconnection timed out.'
     );
     bunkerSigner = signer;
+    console.info(BUNKER_LOG_PREFIX, 'reconnectFromSession: ok');
     return true;
-  } catch {
+  } catch (e) {
+    logBunkerFailure('reconnectFromSession failed', e, logRelays);
     return false;
   }
 }
@@ -481,10 +554,20 @@ async function connectWithBunkerUri(
   uri: string,
   opts?: { asNewProfile?: boolean }
 ): Promise<{ success: boolean; signerPubkey?: string; profileId?: string; error?: string }> {
+  let relaysForError: string[] = [];
   try {
     const bp = await parseBunkerInput(uri);
     if (!bp) return { success: false, error: 'Invalid bunker URI' };
     if (!bp.relays?.length) return { success: false, error: 'No relays in bunker URI' };
+    relaysForError = bp.relays;
+
+    console.info(BUNKER_LOG_PREFIX, 'connectWithBunkerUri: start', {
+      uri: redactBunkerUriForLog(uri),
+      targetPubkey: bp.pubkey.slice(0, 16) + '…',
+      relays: normalizedRelayUrls(bp.relays),
+      hasSignerSecretInUri: Boolean(bp.secret),
+      asNewProfile: opts?.asNewProfile === true || !activeProfileId,
+    });
 
     const createNew = opts?.asNewProfile === true || !activeProfileId;
 
@@ -506,11 +589,13 @@ async function connectWithBunkerUri(
     const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
     const signer = BunkerSigner.fromBunker(clientSecretBytes, bp, { pool });
 
+    console.info(BUNKER_LOG_PREFIX, 'connectWithBunkerUri: awaiting signer.connect()…');
     await withTimeout(
       withRelayProbe(signer.connect(), bp.relays),
       BUNKER_CONNECT_TIMEOUT_MS,
       'Connection timed out. The bunker may be slow or unreachable—check relays and try again.'
     );
+    console.info(BUNKER_LOG_PREFIX, 'connectWithBunkerUri: connect RPC ok, fetching public key…');
 
     const signerPubkey = await signer.getPublicKey();
     const session: Session = { signerPubkey, relays: bp.relays, bunkerUri: uri };
@@ -533,11 +618,15 @@ async function connectWithBunkerUri(
 
     void fetchKind0ForProfile(profileId, signerPubkey, bp.relays);
 
+    console.info(BUNKER_LOG_PREFIX, 'connectWithBunkerUri: success', {
+      signerPubkey: signerPubkey.slice(0, 16) + '…',
+    });
     return { success: true, signerPubkey, profileId };
   } catch (e) {
-    const message =
-      e instanceof Error ? e.message : typeof e === 'string' ? e : 'Connection failed';
-    return { success: false, error: message };
+    if (relaysForError.length)
+      logBunkerFailure('connectWithBunkerUri failed', e, relaysForError);
+    else console.error(BUNKER_LOG_PREFIX, 'connectWithBunkerUri failed (no relays context)', e);
+    return { success: false, error: formatBunkerConnectionError(e, relaysForError) };
   }
 }
 
