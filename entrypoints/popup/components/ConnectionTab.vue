@@ -70,16 +70,15 @@ defineEmits<{
       <span class="text-xs">{{ t('loading') }}</span>
       <div v-if="reconnectingRelaysList.length" class="flex flex-col items-center gap-1 mt-1">
         <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
-        <div
-          v-for="relay in reconnectingRelaysList"
-          :key="relay"
-          class="flex items-center gap-1.5"
-        >
+        <div v-for="relay in reconnectingRelaysList" :key="relay" class="flex items-center gap-1.5">
           <Loader2
             v-if="!relayStatuses[relay] || relayStatuses[relay] === 'connecting'"
             class="size-3 shrink-0 animate-spin text-muted-foreground/50"
           />
-          <CheckCircle2 v-else-if="relayStatuses[relay] === 'ok'" class="size-3 shrink-0 text-green-500" />
+          <CheckCircle2
+            v-else-if="relayStatuses[relay] === 'ok'"
+            class="size-3 shrink-0 text-green-500"
+          />
           <XCircle v-else class="size-3 shrink-0 text-destructive" />
           <span class="text-xs font-mono text-muted-foreground/50 truncate max-w-[200px]">
             {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
@@ -128,7 +127,10 @@ defineEmits<{
               {{ connecting ? t('connecting') : t('connect') }}
             </Button>
 
-            <div v-if="connecting && connectingRelays.length" class="flex flex-col items-center gap-1">
+            <div
+              v-if="connecting && connectingRelays.length"
+              class="flex flex-col items-center gap-1"
+            >
               <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
               <div v-for="relay in connectingRelays" :key="relay" class="flex items-center gap-1.5">
                 <Loader2
@@ -285,7 +287,12 @@ defineEmits<{
         {{ t('disconnectAndRemoveProfile') }}
       </Button>
 
-      <Button v-if="multiProfileEnabled" variant="outline" class="w-full" @click="$emit('start-add-profile')">
+      <Button
+        v-if="multiProfileEnabled"
+        variant="outline"
+        class="w-full"
+        @click="$emit('start-add-profile')"
+      >
         <UserPlus class="size-4" />
         {{ t('addAnotherConnection') }}
       </Button>
@@ -322,7 +329,10 @@ defineEmits<{
               {{ connecting ? t('connecting') : t('connect') }}
             </Button>
 
-            <div v-if="connecting && connectingRelays.length" class="flex flex-col items-center gap-1">
+            <div
+              v-if="connecting && connectingRelays.length"
+              class="flex flex-col items-center gap-1"
+            >
               <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
               <div v-for="relay in connectingRelays" :key="relay" class="flex items-center gap-1.5">
                 <Loader2

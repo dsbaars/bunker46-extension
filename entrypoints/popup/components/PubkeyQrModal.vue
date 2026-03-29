@@ -19,7 +19,9 @@ defineEmits<{
     class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
     @click.self="$emit('close')"
   >
-    <div class="rounded-lg border border-border bg-card p-4 shadow-xl flex flex-col items-center gap-3">
+    <div
+      class="rounded-lg border border-border bg-card p-4 shadow-xl flex flex-col items-center gap-3"
+    >
       <p class="text-xs font-medium text-muted-foreground">
         {{ t('qrScanToUse', pubkeyDisplayMode) }}
       </p>
