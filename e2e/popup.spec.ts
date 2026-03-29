@@ -22,10 +22,15 @@ test('Connection tab shows bunker URI input and Connect button when disconnected
   page,
   extensionId,
 }) => {
+  const pageErrors: string[] = [];
+  page.on('pageerror', (err) => pageErrors.push(err.message));
+
   await page.goto(`chrome-extension://${extensionId}/popup.html`);
   await expect(page.getByRole('button', { name: 'Connection', exact: true })).toBeVisible();
+  await expect(page.getByTestId('connection-tab-root')).toBeVisible();
   await expect(page.getByPlaceholder(/bunker:\/\/\.\.\./)).toBeVisible();
   await expect(page.getByRole('button', { name: 'Connect', exact: true })).toBeVisible();
+  expect(pageErrors).toEqual([]);
 });
 
 test('connect with invalid bunker URI shows error', async ({ page, extensionId }) => {

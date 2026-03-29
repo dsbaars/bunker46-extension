@@ -61,7 +61,7 @@ defineEmits<{
 </script>
 
 <template>
-  <template>
+  <div data-testid="connection-tab-root">
     <div
       v-if="!connectionStateLoaded"
       class="flex flex-col items-center justify-center gap-2 p-8 text-muted-foreground"
@@ -373,5 +373,5 @@ defineEmits<{
         </CardContent>
       </Card>
     </div>
-  </template>
+  </div>
 </template>
