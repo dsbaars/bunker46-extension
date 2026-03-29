@@ -623,8 +623,7 @@ async function connectWithBunkerUri(
     });
     return { success: true, signerPubkey, profileId };
   } catch (e) {
-    if (relaysForError.length)
-      logBunkerFailure('connectWithBunkerUri failed', e, relaysForError);
+    if (relaysForError.length) logBunkerFailure('connectWithBunkerUri failed', e, relaysForError);
     else console.error(BUNKER_LOG_PREFIX, 'connectWithBunkerUri failed (no relays context)', e);
     return { success: false, error: formatBunkerConnectionError(e, relaysForError) };
   }
