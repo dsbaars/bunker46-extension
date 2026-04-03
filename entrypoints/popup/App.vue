@@ -16,6 +16,7 @@ import { nip19 } from 'nostr-tools';
 import QRCode from 'qrcode';
 import { t, getMethodLabel } from '@/lib/i18n';
 import { getPermissionDomains, filterAndPinDomains } from '@/lib/domains';
+import { runRelayUiProbes, type RelayUiProbeStatus } from '@/lib/relay-ui-probe';
 import type { DomainPolicies, ProfileSummary } from './types';
 
 // ---------------------------------------------------------------------------
@@ -42,8 +43,8 @@ const bunkerUriInput = ref('');
 const connecting = ref(false);
 /** Relay hostnames extracted from the bunker URI being connected, shown while connecting. */
 const connectingRelays = ref<string[]>([]);
-/** Per-relay probe status for UI feedback (connecting / ok / failed). */
-const relayStatuses = ref<Record<string, 'connecting' | 'ok' | 'failed'>>({});
+/** Per-relay probe: connectivity + NIP-42 AUTH hint from probe socket. */
+const relayStatuses = ref<Record<string, RelayUiProbeStatus>>({});
 const connectionStateLoaded = ref(false);
 const errorMessage = ref('');
 const permissions = ref<DomainPolicies>({});
@@ -177,54 +178,57 @@ function cyclePubkeyFormat() {
 // Reconnect polling + relay probe UI
 // ---------------------------------------------------------------------------
 
+/** Avoid duplicate probes: in-flight UI, or already have a final status per relay (same popup session). */
+function shouldSkipRelayProbe(
+  relays: string[],
+  statuses: Record<string, RelayUiProbeStatus>
+): boolean {
+  if (!relays.length) return true;
+  for (const r of relays) {
+    const s = statuses[r];
+    if (s === 'nip42_pending' || s === 'connecting') return true;
+    if (
+      s !== 'ok' &&
+      s !== 'failed' &&
+      s !== 'nip42_ok' &&
+      s !== 'nip42_failed' &&
+      s !== 'nip42_challenge_only'
+    ) {
+      return false;
+    }
+  }
+  return true;
+}
+
 /**
- * Probe each relay URL from the popup side and update relayStatuses in real
- * time so the UI can show per-relay ✓/✗ icons.
- *
- * Uses the same logic as the background probeRelays() but drives reactive
- * state instead of returning a map.  Safe to call multiple times; statuses
- * are reset on each call.
+ * NIP-42-aware probe via background (signs with NIP-46 client secret when session relays match).
+ * Falls back to popup WebSocket-only probe if messaging fails.
  */
 function probeRelaysUi(relays: string[]) {
   if (!relays.length) return;
-  const initial: Record<string, 'connecting' | 'ok' | 'failed'> = {};
-  for (const r of relays) initial[r] = 'connecting';
+  const initial: Record<string, RelayUiProbeStatus> = {};
+  for (const r of relays) initial[r] = 'nip42_pending';
   relayStatuses.value = initial;
 
-  for (const url of relays) {
-    try {
-      const ws = new WebSocket(url);
-      let settled = false;
+  const fallbackToUiProbe = () => {
+    const fb: Record<string, RelayUiProbeStatus> = {};
+    for (const r of relays) fb[r] = 'connecting';
+    relayStatuses.value = fb;
+    runRelayUiProbes(relays, (url, status) => {
+      relayStatuses.value = { ...relayStatuses.value, [url]: status };
+    });
+  };
 
-      const setStatus = (status: 'ok' | 'failed') => {
-        if (settled) return;
-        settled = true;
-        relayStatuses.value = { ...relayStatuses.value, [url]: status };
-      };
-
-      const timer = setTimeout(() => setStatus('ok'), 5_000);
-
-      ws.addEventListener('open', () => {
-        clearTimeout(timer);
-        setStatus('ok');
-        try {
-          ws.close(1000, 'probe');
-        } catch {
-          /* ignore */
-        }
-      });
-      ws.addEventListener('error', () => {
-        clearTimeout(timer);
-        setStatus('failed');
-      });
-      ws.addEventListener('close', () => {
-        clearTimeout(timer);
-        if (!settled) setStatus('failed');
-      });
-    } catch {
-      relayStatuses.value = { ...relayStatuses.value, [url]: 'failed' };
-    }
-  }
+  void chrome.runtime
+    .sendMessage({ type: 'RELAY_AUTH_PROBE', relays })
+    .then((res: { results?: Record<string, RelayUiProbeStatus>; error?: string }) => {
+      if (res?.results && !res.error) {
+        relayStatuses.value = { ...relayStatuses.value, ...res.results };
+        return;
+      }
+      fallbackToUiProbe();
+    })
+    .catch(fallbackToUiProbe);
 }
 
 /**
@@ -321,10 +325,14 @@ async function loadState() {
       signerRelays.value = res.relays ?? [];
       activeProfileName.value = res.profileName;
       activeProfilePicture.value = res.profilePicture;
+      if (!shouldSkipRelayProbe(signerRelays.value, relayStatuses.value)) {
+        probeRelaysUi(signerRelays.value);
+      }
     } else {
       connected.value = false;
       signerPubkey.value = '';
       signerRelays.value = [];
+      relayStatuses.value = {};
       activeProfileName.value = res?.profileName;
       activeProfilePicture.value = res?.profilePicture;
       reconnectionFailed.value = sessionRes?.reconnectionFailed ?? false;
@@ -449,6 +457,7 @@ async function connectWithBunkerUri() {
       bunkerUriInput.value = '';
       addingNewProfile.value = false;
       await loadProfiles();
+      probeRelaysUi(signerRelays.value);
     } else {
       errorMessage.value = res?.error || t('errorConnectionFailed');
     }
@@ -457,7 +466,7 @@ async function connectWithBunkerUri() {
   } finally {
     connecting.value = false;
     connectingRelays.value = [];
-    relayStatuses.value = {};
+    if (!connected.value) relayStatuses.value = {};
   }
 }
 
@@ -467,6 +476,7 @@ async function doFullLogout() {
     connected.value = false;
     signerPubkey.value = '';
     signerRelays.value = [];
+    relayStatuses.value = {};
     activeProfileName.value = undefined;
     activeProfilePicture.value = undefined;
     permissions.value = {};
@@ -875,6 +885,7 @@ onUnmounted(() => {
       :connected="connected"
       :reconnecting="reconnecting"
       :signer-relays="signerRelays"
+      :relay-statuses="relayStatuses"
       @open-full-page="openFullPage"
     />
 

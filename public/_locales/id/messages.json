@@ -1,126 +1,33 @@
 {
-  "extName": {
-    "message": "Bunker46"
+  "addAnotherConnection": {
+    "message": "Tambah koneksi lain"
   },
-  "extDescription": {
-    "message": "Penanda tangan jarak jauh NIP-07 melalui NIP-46 / Bunker46"
+  "addToWhitelistButton": {
+    "message": "Tambahkan $1 ke daftar putih"
+  },
+  "addToWhitelistTitle": {
+    "message": "Tambahkan $1 ke daftar putih"
+  },
+  "allowed": {
+    "message": "Diizinkan"
   },
   "appSubtitle": {
     "message": "Penanda Tangan Jarak Jauh NIP-07"
   },
-  "openFullPage": {
-    "message": "Buka di tab baru untuk mengelola opsi"
-  },
-  "connected": {
-    "message": "Terhubung"
-  },
-  "offline": {
-    "message": "Offline"
-  },
-  "loading": {
-    "message": "Memuat…"
-  },
-  "tabConnection": {
-    "message": "Koneksi"
-  },
-  "tabPermissions": {
-    "message": "Izin"
-  },
-  "tabSettings": {
-    "message": "Pengaturan"
-  },
-  "errorPasteUri": {
-    "message": "Tempel URI bunker:// di atas"
-  },
-  "errorConnectionFailed": {
-    "message": "Koneksi gagal"
-  },
-  "errorGenerateUri": {
-    "message": "Gagal membuat URI koneksi"
-  },
-  "errorStartConnection": {
-    "message": "Gagal memulai koneksi"
-  },
-  "toastLoggedOut": {
-    "message": "Keluar"
-  },
-  "toastLogoutFailed": {
-    "message": "Keluar gagal"
-  },
-  "toastSettingsSaved": {
-    "message": "Pengaturan disimpan"
-  },
-  "toastPrivacyModeOn": {
-    "message": "Mode privasi aktif"
-  },
-  "toastPrivacyModeOff": {
-    "message": "Mode privasi nonaktif"
-  },
-  "toastBadgeShown": {
-    "message": "Lencana ditampilkan"
-  },
-  "toastBadgeHidden": {
-    "message": "Lencana disembunyikan"
-  },
-  "toastCopied": {
-    "message": "Disalin ke clipboard"
-  },
-  "toastCopyFailed": {
-    "message": "Gagal menyalin"
-  },
-  "toastPermissionRemoved": {
-    "message": "Izin dihapus"
-  },
-  "toastPermissionRemoveFailed": {
-    "message": "Gagal menghapus izin"
-  },
-  "toastDomainRemoved": {
-    "message": "Izin domain dihapus"
-  },
-  "toastDomainRemoveFailed": {
-    "message": "Gagal menghapus domain"
-  },
-  "toastNoActiveTab": {
-    "message": "Tidak ada tab atau URL aktif"
-  },
-  "toastAddedToWhitelist": {
-    "message": "$1 ditambahkan ke daftar putih. Muat ulang tab untuk menggunakan Nostr."
-  },
-  "toastAddDomainFailed": {
-    "message": "Gagal menambahkan domain"
-  },
-  "toastRemovedFromWhitelist": {
-    "message": "Dihapus dari daftar putih"
-  },
-  "toastRemoveFromWhitelistFailed": {
-    "message": "Gagal menghapus dari daftar putih"
-  },
-  "signerKey": {
-    "message": "Kunci Penanda Tangan"
-  },
-  "copyTitle": {
-    "message": "Salin"
-  },
-  "showQrTitle": {
-    "message": "Tampilkan kode QR"
-  },
-  "signerDescription": {
-    "message": "Semua permintaan NIP-07 dari halaman web diteruskan ke penanda tangan jarak jauh ini melalui NIP-46. Tidak ada kunci privat yang disimpan di ekstensi."
-  },
-  "disconnect": {
-    "message": "Putuskan koneksi"
-  },
-  "logoutConfirmTitle": {
-    "message": "Keluar sepenuhnya?"
-  },
-  "logoutConfirmDescription": {
-    "message": "Ini akan memutuskan koneksi penanda tangan Anda dan menghapus semua izin serta daftar putih mode privasi. Anda perlu menghubungkan kembali dan mengizinkan situs lagi."
-  },
   "cancel": {
     "message": "Batal"
   },
-  "logOut": {
-    "message": "Keluar"
+  "choiceOff": {
+    "message": "Nonaktif"
+  },
+  "choiceOn": {
+    "message": "Aktif"
+  },
+  "close": {
+    "message": "Tutup"
+  },
+  "connect": {
+    "message": "Hubungkan"
   },
   "connectViaBunkerUri": {
     "message": "Hubungkan via URI Bunker"
@@ -128,65 +35,119 @@
   "connectViaBunkerUriDesc": {
     "message": "Tempel URI bunker:// dari penanda tangan jarak jauh Anda untuk terhubung"
   },
-  "placeholderBunkerUri": {
-    "message": "bunker://..."
+  "connected": {
+    "message": "Terhubung"
+  },
+  "connectedViaRelays": {
+    "message": "Terhubung melalui:"
   },
   "connecting": {
     "message": "Menghubungkan..."
   },
-  "connect": {
-    "message": "Hubungkan"
+  "connectingToRelays": {
+    "message": "Menghubungkan ke:"
   },
-  "separatorOr": {
-    "message": "atau"
+  "copyTitle": {
+    "message": "Salin"
+  },
+  "copyUri": {
+    "message": "Salin URI"
+  },
+  "denied": {
+    "message": "Ditolak"
+  },
+  "disconnect": {
+    "message": "Putuskan koneksi"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Putuskan sambungan & hapus profil"
+  },
+  "errorConnectionFailed": {
+    "message": "Koneksi gagal"
+  },
+  "errorGenerateUri": {
+    "message": "Gagal membuat URI koneksi"
+  },
+  "errorPasteUri": {
+    "message": "Tempel URI bunker:// di atas"
+  },
+  "errorStartConnection": {
+    "message": "Gagal memulai koneksi"
+  },
+  "extDescription": {
+    "message": "Penanda tangan jarak jauh NIP-07 melalui NIP-46 / Bunker46"
+  },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Ambil dari Nostr"
   },
   "getUriFromBunker46": {
     "message": "Dapatkan URI dari Bunker46"
   },
+  "loading": {
+    "message": "Memuat…"
+  },
+  "logOut": {
+    "message": "Keluar"
+  },
+  "logoutConfirmDescription": {
+    "message": "Ini akan memutuskan koneksi penanda tangan Anda dan menghapus semua izin serta daftar putih mode privasi. Anda perlu menghubungkan kembali dan mengizinkan situs lagi."
+  },
+  "logoutConfirmTitle": {
+    "message": "Keluar sepenuhnya?"
+  },
+  "method_getPublicKey": {
+    "message": "Dapatkan Kunci Publik"
+  },
+  "method_getRelays": {
+    "message": "Dapatkan Relay"
+  },
+  "method_nip04_decrypt": {
+    "message": "Dekripsi NIP-04"
+  },
+  "method_nip04_encrypt": {
+    "message": "Enkripsi NIP-04"
+  },
+  "method_nip44_decrypt": {
+    "message": "Dekripsi NIP-44"
+  },
+  "method_nip44_encrypt": {
+    "message": "Enkripsi NIP-44"
+  },
+  "method_signEvent": {
+    "message": "Tandatangani Acara"
+  },
+  "method_signEvent_kind": {
+    "message": "Tandatangani acara (jenis $1)"
+  },
+  "noDomainsMatch": {
+    "message": "Tidak ada domain yang cocok dengan pencarian Anda"
+  },
+  "noPermissionsHint": {
+    "message": "Ketika situs meminta akses ke identitas Nostr Anda, mereka akan muncul di sini."
+  },
+  "noPermissionsYet": {
+    "message": "Belum ada izin"
+  },
   "nostrConnectDesc": {
     "message": "Hubungkan via Nostrconnect: tampilkan QR dan URI untuk dipindai oleh aplikasi bunker Anda."
   },
-  "showQrConnectionUri": {
-    "message": "Tampilkan QR & URI koneksi"
+  "nostrConnectModalHint": {
+    "message": "Pindai dengan aplikasi bunker atau salin URI"
   },
-  "settingsUseBunker46": {
-    "message": "Gunakan Bunker46"
+  "nostrConnectQrAlt": {
+    "message": "Kode QR Nostrconnect"
   },
-  "settingsUseBunker46Hint": {
-    "message": "Tangani tautan nostrconnect: dan arahkan ke instansi Bunker46 Anda."
+  "offline": {
+    "message": "Offline"
   },
-  "settingsBunkerUrl": {
-    "message": "URL Bunker46"
+  "openFullPage": {
+    "message": "Buka di tab baru untuk mengelola opsi"
   },
-  "settingsBunkerUrlPlaceholder": {
-    "message": "http://localhost:5173"
-  },
-  "settingsBunkerUrlHint": {
-    "message": "URL dasar instansi Bunker46 Anda"
-  },
-  "settingsSpecifyNostrConnectRelays": {
-    "message": "Tentukan relay Nostrconnect"
-  },
-  "settingsSpecifyNostrConnectRelaysHint": {
-    "message": "Tetapkan URL relay kustom untuk QR/URI Nostrconnect."
-  },
-  "settingsNostrConnectRelays": {
-    "message": "Relay koneksi Nostr"
-  },
-  "settingsNostrConnectRelaysPlaceholder": {
-    "message": "wss://relay.nsec.app"
-  },
-  "settingsNostrConnectRelaysHint": {
-    "message": "Satu URL relay per baris (atau dipisahkan koma). Digunakan saat membuat QR/URI untuk koneksi via Nostrconnect."
-  },
-  "choiceOn": {
-    "message": "Aktif"
-  },
-  "choiceOff": {
-    "message": "Nonaktif"
-  },
-  "save": {
-    "message": "Simpan"
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
   },
   "privacyMode": {
     "message": "Mode privasi"
@@ -197,114 +158,6 @@
   "privacyModeSitesHint": {
     "message": "Situs tidak dapat mendeteksi ekstensi, sehingga beberapa mungkin tidak menampilkan 'Masuk dengan Nostr' sampai Anda menambahkannya di Izin."
   },
-  "showBadge": {
-    "message": "Tampilkan lencana di ikon ekstensi"
-  },
-  "showBadgeHint": {
-    "message": "Saat aktif, ikon menampilkan jumlah izin yang diberikan untuk tab saat ini (mis. 1, 2)."
-  },
-  "addToWhitelistTitle": {
-    "message": "Tambahkan $1 ke daftar putih"
-  },
-  "addToWhitelistButton": {
-    "message": "Tambahkan $1 ke daftar putih"
-  },
-  "removeFromWhitelistTitle": {
-    "message": "Hapus $1 dari daftar putih"
-  },
-  "removeFromWhitelistButton": {
-    "message": "Hapus $1 dari daftar putih"
-  },
-  "searchDomainsPlaceholder": {
-    "message": "Cari domain..."
-  },
-  "noPermissionsYet": {
-    "message": "Belum ada izin"
-  },
-  "noPermissionsHint": {
-    "message": "Ketika situs meminta akses ke identitas Nostr Anda, mereka akan muncul di sini."
-  },
-  "noDomainsMatch": {
-    "message": "Tidak ada domain yang cocok dengan pencarian Anda"
-  },
-  "revokeAllPermissionsTitle": {
-    "message": "Cabut semua izin untuk domain ini"
-  },
-  "whitelistedNoPermissions": {
-    "message": "Masuk daftar putih untuk Nostr (belum ada izin)"
-  },
-  "allowed": {
-    "message": "Diizinkan"
-  },
-  "denied": {
-    "message": "Ditolak"
-  },
-  "revokeTitle": {
-    "message": "Cabut"
-  },
-  "removeFromWhitelist": {
-    "message": "Hapus dari daftar putih"
-  },
-  "qrScanToUse": {
-    "message": "$1 (pindai untuk digunakan)"
-  },
-  "qrCodeAlt": {
-    "message": "Kode QR"
-  },
-  "close": {
-    "message": "Tutup"
-  },
-  "nostrConnectModalHint": {
-    "message": "Pindai dengan aplikasi bunker atau salin URI"
-  },
-  "nostrConnectQrAlt": {
-    "message": "Kode QR Nostrconnect"
-  },
-  "copyUri": {
-    "message": "Salin URI"
-  },
-  "waitingForBunker": {
-    "message": "Menunggu bunker terhubung…"
-  },
-  "method_getPublicKey": {
-    "message": "Dapatkan Kunci Publik"
-  },
-  "method_signEvent": {
-    "message": "Tandatangani Acara"
-  },
-  "method_signEvent_kind": {
-    "message": "Tandatangani acara (jenis $1)"
-  },
-  "method_getRelays": {
-    "message": "Dapatkan Relay"
-  },
-  "method_nip04_encrypt": {
-    "message": "Enkripsi NIP-04"
-  },
-  "method_nip04_decrypt": {
-    "message": "Dekripsi NIP-04"
-  },
-  "method_nip44_encrypt": {
-    "message": "Enkripsi NIP-44"
-  },
-  "method_nip44_decrypt": {
-    "message": "Dekripsi NIP-44"
-  },
-  "promptPermissionRequest": {
-    "message": "Permintaan Izin"
-  },
-  "promptWantsAccess": {
-    "message": "ingin mengakses identitas Nostr Anda"
-  },
-  "promptEventKind": {
-    "message": "Jenis acara $1"
-  },
-  "promptViewRawMessage": {
-    "message": "Lihat pesan mentah"
-  },
-  "promptHideRawMessage": {
-    "message": "Sembunyikan pesan mentah"
-  },
   "promptAllowAlways": {
     "message": "Selalu Izinkan"
   },
@@ -314,49 +167,67 @@
   "promptAllowOnce": {
     "message": "Izinkan Sekali"
   },
-  "promptDenyOnce": {
-    "message": "Tolak"
-  },
   "promptDenyAlways": {
     "message": "Selalu Tolak"
   },
-  "settingsMultiProfile": {
-    "message": "Beberapa profil"
+  "promptDenyOnce": {
+    "message": "Tolak"
   },
-  "settingsMultiProfileHint": {
-    "message": "Tampilkan pemilih profil dan izinkan penambahan beberapa koneksi."
+  "promptEventKind": {
+    "message": "Jenis acara $1"
   },
-  "settingsMultiProfileDisabledHint": {
-    "message": "Hapus profil tambahan untuk menggunakan mode profil tunggal."
+  "promptHideRawMessage": {
+    "message": "Sembunyikan pesan mentah"
   },
-  "addAnotherConnection": {
-    "message": "Tambah koneksi lain"
+  "promptPermissionRequest": {
+    "message": "Permintaan Izin"
   },
-  "removeProfile": {
-    "message": "Hapus profil ini"
+  "promptViewRawMessage": {
+    "message": "Lihat pesan mentah"
   },
-  "removeProfileConfirmTitle": {
-    "message": "Hapus profil?"
+  "promptWantsAccess": {
+    "message": "ingin mengakses identitas Nostr Anda"
   },
-  "removeProfileConfirmDesc": {
-    "message": "Ini akan memutuskan sambungan dan menghapus semua izin dan entri whitelist untuk profil ini."
+  "qrCodeAlt": {
+    "message": "Kode QR"
   },
-  "switchProfile": {
-    "message": "Ganti profil"
-  },
-  "toastProfileRemoved": {
-    "message": "Profil dihapus"
-  },
-  "toastProfileRemoveFailed": {
-    "message": "Gagal menghapus profil"
+  "qrScanToUse": {
+    "message": "$1 (pindai untuk digunakan)"
   },
   "reconnectionFailedMessage": {
     "message": "Koneksi tidak dapat dipulihkan. Bunker mungkin telah mencabut akses."
   },
-  "renameProfile": {
-    "message": "Ganti nama profil"
+  "relayNip42AuthFailedTitle": {
+    "message": "Autentikasi relay NIP-42 gagal atau habis waktu."
   },
-  "renameProfileTitle": {
+  "relayNip42AuthPendingTitle": {
+    "message": "Memeriksa autentikasi relay NIP-42…"
+  },
+  "relayNip42AuthSuccessTitle": {
+    "message": "Autentikasi relay NIP-42 berhasil."
+  },
+  "relayNip42ChallengeOnlyTitle": {
+    "message": "Relay mengirim tantangan autentikasi; hubungkan dengan profil ini untuk memverifikasi penandatanganan."
+  },
+  "removeFromWhitelist": {
+    "message": "Hapus dari daftar putih"
+  },
+  "removeFromWhitelistButton": {
+    "message": "Hapus $1 dari daftar putih"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "Hapus $1 dari daftar putih"
+  },
+  "removeProfile": {
+    "message": "Hapus profil ini"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "Ini akan memutuskan sambungan dan menghapus semua izin dan entri whitelist untuk profil ini."
+  },
+  "removeProfileConfirmTitle": {
+    "message": "Hapus profil?"
+  },
+  "renameProfile": {
     "message": "Ganti nama profil"
   },
   "renameProfileHint": {
@@ -368,25 +239,166 @@
   "renameProfileNamePlaceholder": {
     "message": "Nama profil"
   },
-  "fetchProfileFromNostr": {
-    "message": "Ambil dari Nostr"
+  "renameProfileTitle": {
+    "message": "Ganti nama profil"
   },
-  "toastProfileMetadataFetched": {
-    "message": "Info profil diambil"
+  "revokeAllPermissionsTitle": {
+    "message": "Cabut semua izin untuk domain ini"
+  },
+  "revokeTitle": {
+    "message": "Cabut"
+  },
+  "save": {
+    "message": "Simpan"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Cari domain..."
+  },
+  "separatorOr": {
+    "message": "atau"
+  },
+  "settingsBunkerUrl": {
+    "message": "URL Bunker46"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "URL dasar instansi Bunker46 Anda"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsMultiProfile": {
+    "message": "Beberapa profil"
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Hapus profil tambahan untuk menggunakan mode profil tunggal."
+  },
+  "settingsMultiProfileHint": {
+    "message": "Tampilkan pemilih profil dan izinkan penambahan beberapa koneksi."
+  },
+  "settingsNostrConnectRelays": {
+    "message": "Relay koneksi Nostr"
+  },
+  "settingsNostrConnectRelaysHint": {
+    "message": "Satu URL relay per baris (atau dipisahkan koma). Digunakan saat membuat QR/URI untuk koneksi via Nostrconnect."
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Tentukan relay Nostrconnect"
+  },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Tetapkan URL relay kustom untuk QR/URI Nostrconnect."
+  },
+  "settingsUseBunker46": {
+    "message": "Gunakan Bunker46"
+  },
+  "settingsUseBunker46Hint": {
+    "message": "Tangani tautan nostrconnect: dan arahkan ke instansi Bunker46 Anda."
+  },
+  "showBadge": {
+    "message": "Tampilkan lencana di ikon ekstensi"
+  },
+  "showBadgeHint": {
+    "message": "Saat aktif, ikon menampilkan jumlah izin yang diberikan untuk tab saat ini (mis. 1, 2)."
+  },
+  "showQrConnectionUri": {
+    "message": "Tampilkan QR & URI koneksi"
+  },
+  "showQrTitle": {
+    "message": "Tampilkan kode QR"
+  },
+  "signerDescription": {
+    "message": "Semua permintaan NIP-07 dari halaman web diteruskan ke penanda tangan jarak jauh ini melalui NIP-46. Tidak ada kunci privat yang disimpan di ekstensi."
+  },
+  "signerKey": {
+    "message": "Kunci Penanda Tangan"
+  },
+  "switchProfile": {
+    "message": "Ganti profil"
+  },
+  "tabConnection": {
+    "message": "Koneksi"
+  },
+  "tabPermissions": {
+    "message": "Izin"
+  },
+  "tabSettings": {
+    "message": "Pengaturan"
+  },
+  "toastAddDomainFailed": {
+    "message": "Gagal menambahkan domain"
+  },
+  "toastAddedToWhitelist": {
+    "message": "$1 ditambahkan ke daftar putih. Muat ulang tab untuk menggunakan Nostr."
+  },
+  "toastBadgeHidden": {
+    "message": "Lencana disembunyikan"
+  },
+  "toastBadgeShown": {
+    "message": "Lencana ditampilkan"
+  },
+  "toastCopied": {
+    "message": "Disalin ke clipboard"
+  },
+  "toastCopyFailed": {
+    "message": "Gagal menyalin"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Gagal menghapus domain"
+  },
+  "toastDomainRemoved": {
+    "message": "Izin domain dihapus"
+  },
+  "toastLoggedOut": {
+    "message": "Keluar"
+  },
+  "toastLogoutFailed": {
+    "message": "Keluar gagal"
+  },
+  "toastNoActiveTab": {
+    "message": "Tidak ada tab atau URL aktif"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Gagal menghapus izin"
+  },
+  "toastPermissionRemoved": {
+    "message": "Izin dihapus"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Mode privasi nonaktif"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Mode privasi aktif"
   },
   "toastProfileMetadataFetchFailed": {
     "message": "Tidak dapat mengambil profil dari Nostr"
   },
+  "toastProfileMetadataFetched": {
+    "message": "Info profil diambil"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "Gagal menghapus profil"
+  },
+  "toastProfileRemoved": {
+    "message": "Profil dihapus"
+  },
   "toastProfileRenameFailed": {
     "message": "Gagal mengganti nama profil"
   },
-  "disconnectAndRemoveProfile": {
-    "message": "Putuskan sambungan & hapus profil"
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Gagal menghapus dari daftar putih"
   },
-  "connectingToRelays": {
-    "message": "Menghubungkan ke:"
+  "toastRemovedFromWhitelist": {
+    "message": "Dihapus dari daftar putih"
   },
-  "connectedViaRelays": {
-    "message": "Terhubung melalui:"
+  "toastSettingsSaved": {
+    "message": "Pengaturan disimpan"
+  },
+  "waitingForBunker": {
+    "message": "Menunggu bunker terhubung…"
+  },
+  "whitelistedNoPermissions": {
+    "message": "Masuk daftar putih untuk Nostr (belum ada izin)"
   }
 }

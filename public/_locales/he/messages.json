@@ -1,154 +1,404 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "חותם מרחוק NIP-07 דרך NIP-46 / Bunker46" },
-  "appSubtitle": { "message": "חותם מרחוק NIP-07" },
-  "openFullPage": { "message": "פתח בלשונית חדשה לניהול אפשרויות" },
-  "connected": { "message": "מחובר" },
-  "offline": { "message": "לא מקוון" },
-  "loading": { "message": "טוען…" },
-  "tabConnection": { "message": "חיבור" },
-  "tabPermissions": { "message": "הרשאות" },
-  "tabSettings": { "message": "הגדרות" },
-  "errorPasteUri": { "message": "הדבק URI מסוג bunker:// למעלה" },
-  "errorConnectionFailed": { "message": "החיבור נכשל" },
-  "errorGenerateUri": { "message": "יצירת URI לחיבור נכשלה" },
-  "errorStartConnection": { "message": "התחלת החיבור נכשלה" },
-  "toastLoggedOut": { "message": "יצאת מהמערכת" },
-  "toastLogoutFailed": { "message": "היציאה מהמערכת נכשלה" },
-  "toastSettingsSaved": { "message": "ההגדרות נשמרו" },
-  "toastPrivacyModeOn": { "message": "מצב פרטיות מופעל" },
-  "toastPrivacyModeOff": { "message": "מצב פרטיות כבוי" },
-  "toastBadgeShown": { "message": "התג מוצג" },
-  "toastBadgeHidden": { "message": "התג מוסתר" },
-  "toastCopied": { "message": "הועתק ללוח" },
-  "toastCopyFailed": { "message": "ההעתקה נכשלה" },
-  "toastPermissionRemoved": { "message": "ההרשאה הוסרה" },
-  "toastPermissionRemoveFailed": { "message": "הסרת ההרשאה נכשלה" },
-  "toastDomainRemoved": { "message": "הרשאות הדומיין הוסרו" },
-  "toastDomainRemoveFailed": { "message": "הסרת הדומיין נכשלה" },
-  "toastNoActiveTab": { "message": "אין לשונית או כתובת URL פעילה" },
-  "toastAddedToWhitelist": {
-    "message": "‏$1 נוסף לרשימה המאושרת. טען מחדש את הלשונית לשימוש ב-nostr."
+  "addAnotherConnection": {
+    "message": "הוסף חיבור נוסף"
   },
-  "toastAddDomainFailed": { "message": "הוספת הדומיין נכשלה" },
-  "toastRemovedFromWhitelist": { "message": "הוסר מהרשימה המאושרת" },
-  "toastRemoveFromWhitelistFailed": { "message": "הסרה מהרשימה המאושרת נכשלה" },
-  "signerKey": { "message": "מפתח החותם" },
-  "copyTitle": { "message": "העתק" },
-  "showQrTitle": { "message": "הצג קוד QR" },
-  "signerDescription": {
-    "message": "כל בקשות NIP-07 מדפי אינטרנט מועברות לחותם המרוחק הזה דרך NIP-46. אין מפתחות פרטיים המאוחסנים בתוסף."
+  "addToWhitelistButton": {
+    "message": "הוסף את $1 לרשימה המאושרת"
   },
-  "disconnect": { "message": "נתק" },
-  "disconnectAndRemoveProfile": { "message": "נתק והסר פרופיל" },
-  "logoutConfirmTitle": { "message": "לצאת לחלוטין?" },
+  "addToWhitelistTitle": {
+    "message": "הוסף את $1 לרשימה המאושרת"
+  },
+  "allowed": {
+    "message": "מותר"
+  },
+  "appSubtitle": {
+    "message": "חותם מרחוק NIP-07"
+  },
+  "cancel": {
+    "message": "ביטול"
+  },
+  "choiceOff": {
+    "message": "כבוי"
+  },
+  "choiceOn": {
+    "message": "פועל"
+  },
+  "close": {
+    "message": "סגור"
+  },
+  "connect": {
+    "message": "התחבר"
+  },
+  "connectViaBunkerUri": {
+    "message": "התחבר דרך Bunker URI"
+  },
+  "connectViaBunkerUriDesc": {
+    "message": "הדבק URI מסוג bunker:// מהחותם המרוחק שלך כדי להתחבר"
+  },
+  "connected": {
+    "message": "מחובר"
+  },
+  "connectedViaRelays": {
+    "message": "מחובר דרך:"
+  },
+  "connecting": {
+    "message": "מתחבר..."
+  },
+  "connectingToRelays": {
+    "message": "מתחבר אל:"
+  },
+  "copyTitle": {
+    "message": "העתק"
+  },
+  "copyUri": {
+    "message": "העתק URI"
+  },
+  "denied": {
+    "message": "נדחה"
+  },
+  "disconnect": {
+    "message": "נתק"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "נתק והסר פרופיל"
+  },
+  "errorConnectionFailed": {
+    "message": "החיבור נכשל"
+  },
+  "errorGenerateUri": {
+    "message": "יצירת URI לחיבור נכשלה"
+  },
+  "errorPasteUri": {
+    "message": "הדבק URI מסוג bunker:// למעלה"
+  },
+  "errorStartConnection": {
+    "message": "התחלת החיבור נכשלה"
+  },
+  "extDescription": {
+    "message": "חותם מרחוק NIP-07 דרך NIP-46 / Bunker46"
+  },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "fetchProfileFromNostr": {
+    "message": "‏אחזר מ-Nostr"
+  },
+  "getUriFromBunker46": {
+    "message": "קבל URI מ-Bunker46"
+  },
+  "loading": {
+    "message": "טוען…"
+  },
+  "logOut": {
+    "message": "יציאה"
+  },
   "logoutConfirmDescription": {
     "message": "פעולה זו תנתק מהחותם שלך ותמחק את כל ההרשאות ואת הרשימה המאושרת של מצב הפרטיות. יהיה עליך להתחבר מחדש ולאשר שוב אתרים."
   },
-  "cancel": { "message": "ביטול" },
-  "logOut": { "message": "יציאה" },
-  "connectViaBunkerUri": { "message": "התחבר דרך Bunker URI" },
-  "connectViaBunkerUriDesc": { "message": "הדבק URI מסוג bunker:// מהחותם המרוחק שלך כדי להתחבר" },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "מתחבר..." },
-  "connect": { "message": "התחבר" },
-  "separatorOr": { "message": "או" },
-  "getUriFromBunker46": { "message": "קבל URI מ-Bunker46" },
+  "logoutConfirmTitle": {
+    "message": "לצאת לחלוטין?"
+  },
+  "method_getPublicKey": {
+    "message": "קבל מפתח ציבורי"
+  },
+  "method_getRelays": {
+    "message": "קבל ממסרים"
+  },
+  "method_nip04_decrypt": {
+    "message": "‏NIP-04 פענוח"
+  },
+  "method_nip04_encrypt": {
+    "message": "‏NIP-04 הצפנה"
+  },
+  "method_nip44_decrypt": {
+    "message": "‏NIP-44 פענוח"
+  },
+  "method_nip44_encrypt": {
+    "message": "‏NIP-44 הצפנה"
+  },
+  "method_signEvent": {
+    "message": "חתום על אירוע"
+  },
+  "method_signEvent_kind": {
+    "message": "חתום על אירוע (סוג $1)"
+  },
+  "noDomainsMatch": {
+    "message": "אין דומיינים התואמים לחיפוש שלך"
+  },
+  "noPermissionsHint": {
+    "message": "כשאתרים יבקשו גישה לזהות Nostr שלך, הם יופיעו כאן."
+  },
+  "noPermissionsYet": {
+    "message": "אין הרשאות עדיין"
+  },
   "nostrConnectDesc": {
     "message": "התחבר דרך Nostrconnect: הצג QR ו-URI לסריקה עם אפליקציית הבנקר שלך."
   },
-  "showQrConnectionUri": { "message": "הצג QR ו-URI לחיבור" },
-  "settingsUseBunker46": { "message": "השתמש ב-Bunker46" },
-  "settingsUseBunker46Hint": { "message": "‏טפל בקישורי nostrconnect: והפנה למופע Bunker46 שלך." },
-  "settingsBunkerUrl": { "message": "Bunker46 URL" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "כתובת URL הבסיסית של מופע Bunker46 שלך" },
-  "settingsSpecifyNostrConnectRelays": { "message": "ציין ממסרי nostrconnect" },
-  "settingsSpecifyNostrConnectRelaysHint": {
-    "message": "הגדר כתובות URL מותאמות אישית של ממסרים עבור QR/URI של Nostrconnect."
+  "nostrConnectModalHint": {
+    "message": "סרוק עם אפליקציית הבנקר שלך או העתק את ה-URI"
   },
-  "settingsNostrConnectRelays": { "message": "ממסרי Nostr Connect" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
-  "settingsNostrConnectRelaysHint": {
-    "message": "כתובת URL אחת של ממסר בכל שורה (או מופרדות בפסיקים). משמש בעת יצירת QR/URI להתחברות דרך Nostrconnect."
+  "nostrConnectQrAlt": {
+    "message": "קוד QR של Nostrconnect"
   },
-  "choiceOn": { "message": "פועל" },
-  "choiceOff": { "message": "כבוי" },
-  "save": { "message": "שמור" },
-  "privacyMode": { "message": "מצב פרטיות" },
+  "offline": {
+    "message": "לא מקוון"
+  },
+  "openFullPage": {
+    "message": "פתח בלשונית חדשה לניהול אפשרויות"
+  },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "privacyMode": {
+    "message": "מצב פרטיות"
+  },
   "privacyModeHint": {
     "message": "‏חשוף את window.nostr רק בדומיינים המאושרים (לשונית הרשאות); מפחית טביעת אצבע דיגיטלית."
   },
   "privacyModeSitesHint": {
     "message": "אתרים אינם יכולים לזהות את התוסף, ולכן חלקם לא יציגו \"כניסה עם Nostr\" עד שתוסיף אותם בהרשאות."
   },
-  "showBadge": { "message": "הצג תג על סמל התוסף" },
-  "showBadgeHint": {
-    "message": "כשפועל, הסמל מציג את מספר ההרשאות שניתנו ללשונית הנוכחית (למשל 1, 2)."
+  "promptAllowAlways": {
+    "message": "אפשר תמיד"
   },
-  "addToWhitelistTitle": { "message": "הוסף את $1 לרשימה המאושרת" },
-  "addToWhitelistButton": { "message": "הוסף את $1 לרשימה המאושרת" },
-  "removeFromWhitelistTitle": { "message": "הסר את $1 מהרשימה המאושרת" },
-  "removeFromWhitelistButton": { "message": "הסר את $1 מהרשימה המאושרת" },
-  "searchDomainsPlaceholder": { "message": "חפש דומיינים..." },
-  "noPermissionsYet": { "message": "אין הרשאות עדיין" },
-  "noPermissionsHint": { "message": "כשאתרים יבקשו גישה לזהות Nostr שלך, הם יופיעו כאן." },
-  "noDomainsMatch": { "message": "אין דומיינים התואמים לחיפוש שלך" },
-  "revokeAllPermissionsTitle": { "message": "בטל את כל ההרשאות עבור דומיין זה" },
-  "whitelistedNoPermissions": { "message": "ברשימה המאושרת עבור nostr (אין הרשאות עדיין)" },
-  "allowed": { "message": "מותר" },
-  "denied": { "message": "נדחה" },
-  "revokeTitle": { "message": "בטל" },
-  "removeFromWhitelist": { "message": "הסר מהרשימה המאושרת" },
-  "qrScanToUse": { "message": "‏$1 (סרוק לשימוש)" },
-  "qrCodeAlt": { "message": "קוד QR" },
-  "close": { "message": "סגור" },
-  "nostrConnectModalHint": { "message": "סרוק עם אפליקציית הבנקר שלך או העתק את ה-URI" },
-  "nostrConnectQrAlt": { "message": "קוד QR של Nostrconnect" },
-  "copyUri": { "message": "העתק URI" },
-  "waitingForBunker": { "message": "ממתין לחיבור הבנקר…" },
-  "method_getPublicKey": { "message": "קבל מפתח ציבורי" },
-  "method_signEvent": { "message": "חתום על אירוע" },
-  "method_signEvent_kind": { "message": "חתום על אירוע (סוג $1)" },
-  "method_getRelays": { "message": "קבל ממסרים" },
-  "method_nip04_encrypt": { "message": "‏NIP-04 הצפנה" },
-  "method_nip04_decrypt": { "message": "‏NIP-04 פענוח" },
-  "method_nip44_encrypt": { "message": "‏NIP-44 הצפנה" },
-  "method_nip44_decrypt": { "message": "‏NIP-44 פענוח" },
-  "promptPermissionRequest": { "message": "בקשת הרשאה" },
-  "promptWantsAccess": { "message": "רוצה גישה לזהות Nostr שלך" },
-  "promptEventKind": { "message": "סוג אירוע $1" },
-  "promptViewRawMessage": { "message": "הצג הודעה גולמית" },
-  "promptHideRawMessage": { "message": "הסתר הודעה גולמית" },
-  "promptAllowAlways": { "message": "אפשר תמיד" },
-  "promptAllowAlwaysForKindHint": { "message": "חל על סוג אירוע זה בלבד" },
-  "promptAllowOnce": { "message": "אפשר פעם אחת" },
-  "promptDenyOnce": { "message": "דחה" },
-  "promptDenyAlways": { "message": "דחה תמיד" },
-  "settingsMultiProfile": { "message": "פרופילים מרובים" },
-  "settingsMultiProfileHint": { "message": "הצג מחליף פרופילים ואפשר הוספת חיבורים מרובים." },
-  "settingsMultiProfileDisabledHint": { "message": "הסר פרופילים נוספים לשימוש במצב פרופיל בודד." },
-  "addAnotherConnection": { "message": "הוסף חיבור נוסף" },
-  "removeProfile": { "message": "הסר פרופיל זה" },
-  "removeProfileConfirmTitle": { "message": "להסיר פרופיל?" },
-  "removeProfileConfirmDesc": {
-    "message": "פעולה זו תנתק ותמחק את כל ההרשאות וערכי הרשימה המאושרת עבור פרופיל זה."
+  "promptAllowAlwaysForKindHint": {
+    "message": "חל על סוג אירוע זה בלבד"
   },
-  "switchProfile": { "message": "החלף פרופיל" },
-  "toastProfileRemoved": { "message": "הפרופיל הוסר" },
-  "toastProfileRemoveFailed": { "message": "הסרת הפרופיל נכשלה" },
+  "promptAllowOnce": {
+    "message": "אפשר פעם אחת"
+  },
+  "promptDenyAlways": {
+    "message": "דחה תמיד"
+  },
+  "promptDenyOnce": {
+    "message": "דחה"
+  },
+  "promptEventKind": {
+    "message": "סוג אירוע $1"
+  },
+  "promptHideRawMessage": {
+    "message": "הסתר הודעה גולמית"
+  },
+  "promptPermissionRequest": {
+    "message": "בקשת הרשאה"
+  },
+  "promptViewRawMessage": {
+    "message": "הצג הודעה גולמית"
+  },
+  "promptWantsAccess": {
+    "message": "רוצה גישה לזהות Nostr שלך"
+  },
+  "qrCodeAlt": {
+    "message": "קוד QR"
+  },
+  "qrScanToUse": {
+    "message": "‏$1 (סרוק לשימוש)"
+  },
   "reconnectionFailedMessage": {
     "message": "לא ניתן לשחזר את החיבור. ייתכן שהבנקר ביטל את הגישה."
   },
-  "renameProfile": { "message": "שנה שם פרופיל" },
-  "renameProfileTitle": { "message": "שנה שם פרופיל" },
-  "renameProfileHint": { "message": "‏הגדר שם תצוגה או אחזר מ-Nostr (סוג 0)." },
-  "renameProfileNameLabel": { "message": "שם תצוגה" },
-  "renameProfileNamePlaceholder": { "message": "שם פרופיל" },
-  "fetchProfileFromNostr": { "message": "‏אחזר מ-Nostr" },
-  "toastProfileMetadataFetched": { "message": "פרטי הפרופיל אוחזרו" },
-  "toastProfileMetadataFetchFailed": { "message": "‏לא ניתן לאחזר פרופיל מ-Nostr" },
-  "toastProfileRenameFailed": { "message": "שינוי שם הפרופיל נכשל" },
-  "connectingToRelays": { "message": "מתחבר אל:" },
-  "connectedViaRelays": { "message": "מחובר דרך:" }
+  "relayNip42AuthFailedTitle": {
+    "message": "אימות ממסר NIP-42 נכשל או פג הזמן."
+  },
+  "relayNip42AuthPendingTitle": {
+    "message": "בודק אימות ממסר NIP-42…"
+  },
+  "relayNip42AuthSuccessTitle": {
+    "message": "אימות ממסר NIP-42 הצליח."
+  },
+  "relayNip42ChallengeOnlyTitle": {
+    "message": "הממסר שלח אתגר אימות; התחבר עם הפרופיל הזה כדי לאמת חתימה."
+  },
+  "removeFromWhitelist": {
+    "message": "הסר מהרשימה המאושרת"
+  },
+  "removeFromWhitelistButton": {
+    "message": "הסר את $1 מהרשימה המאושרת"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "הסר את $1 מהרשימה המאושרת"
+  },
+  "removeProfile": {
+    "message": "הסר פרופיל זה"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "פעולה זו תנתק ותמחק את כל ההרשאות וערכי הרשימה המאושרת עבור פרופיל זה."
+  },
+  "removeProfileConfirmTitle": {
+    "message": "להסיר פרופיל?"
+  },
+  "renameProfile": {
+    "message": "שנה שם פרופיל"
+  },
+  "renameProfileHint": {
+    "message": "‏הגדר שם תצוגה או אחזר מ-Nostr (סוג 0)."
+  },
+  "renameProfileNameLabel": {
+    "message": "שם תצוגה"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "שם פרופיל"
+  },
+  "renameProfileTitle": {
+    "message": "שנה שם פרופיל"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "בטל את כל ההרשאות עבור דומיין זה"
+  },
+  "revokeTitle": {
+    "message": "בטל"
+  },
+  "save": {
+    "message": "שמור"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "חפש דומיינים..."
+  },
+  "separatorOr": {
+    "message": "או"
+  },
+  "settingsBunkerUrl": {
+    "message": "Bunker46 URL"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "כתובת URL הבסיסית של מופע Bunker46 שלך"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsMultiProfile": {
+    "message": "פרופילים מרובים"
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "הסר פרופילים נוספים לשימוש במצב פרופיל בודד."
+  },
+  "settingsMultiProfileHint": {
+    "message": "הצג מחליף פרופילים ואפשר הוספת חיבורים מרובים."
+  },
+  "settingsNostrConnectRelays": {
+    "message": "ממסרי Nostr Connect"
+  },
+  "settingsNostrConnectRelaysHint": {
+    "message": "כתובת URL אחת של ממסר בכל שורה (או מופרדות בפסיקים). משמש בעת יצירת QR/URI להתחברות דרך Nostrconnect."
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "ציין ממסרי nostrconnect"
+  },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "הגדר כתובות URL מותאמות אישית של ממסרים עבור QR/URI של Nostrconnect."
+  },
+  "settingsUseBunker46": {
+    "message": "השתמש ב-Bunker46"
+  },
+  "settingsUseBunker46Hint": {
+    "message": "‏טפל בקישורי nostrconnect: והפנה למופע Bunker46 שלך."
+  },
+  "showBadge": {
+    "message": "הצג תג על סמל התוסף"
+  },
+  "showBadgeHint": {
+    "message": "כשפועל, הסמל מציג את מספר ההרשאות שניתנו ללשונית הנוכחית (למשל 1, 2)."
+  },
+  "showQrConnectionUri": {
+    "message": "הצג QR ו-URI לחיבור"
+  },
+  "showQrTitle": {
+    "message": "הצג קוד QR"
+  },
+  "signerDescription": {
+    "message": "כל בקשות NIP-07 מדפי אינטרנט מועברות לחותם המרוחק הזה דרך NIP-46. אין מפתחות פרטיים המאוחסנים בתוסף."
+  },
+  "signerKey": {
+    "message": "מפתח החותם"
+  },
+  "switchProfile": {
+    "message": "החלף פרופיל"
+  },
+  "tabConnection": {
+    "message": "חיבור"
+  },
+  "tabPermissions": {
+    "message": "הרשאות"
+  },
+  "tabSettings": {
+    "message": "הגדרות"
+  },
+  "toastAddDomainFailed": {
+    "message": "הוספת הדומיין נכשלה"
+  },
+  "toastAddedToWhitelist": {
+    "message": "‏$1 נוסף לרשימה המאושרת. טען מחדש את הלשונית לשימוש ב-nostr."
+  },
+  "toastBadgeHidden": {
+    "message": "התג מוסתר"
+  },
+  "toastBadgeShown": {
+    "message": "התג מוצג"
+  },
+  "toastCopied": {
+    "message": "הועתק ללוח"
+  },
+  "toastCopyFailed": {
+    "message": "ההעתקה נכשלה"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "הסרת הדומיין נכשלה"
+  },
+  "toastDomainRemoved": {
+    "message": "הרשאות הדומיין הוסרו"
+  },
+  "toastLoggedOut": {
+    "message": "יצאת מהמערכת"
+  },
+  "toastLogoutFailed": {
+    "message": "היציאה מהמערכת נכשלה"
+  },
+  "toastNoActiveTab": {
+    "message": "אין לשונית או כתובת URL פעילה"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "הסרת ההרשאה נכשלה"
+  },
+  "toastPermissionRemoved": {
+    "message": "ההרשאה הוסרה"
+  },
+  "toastPrivacyModeOff": {
+    "message": "מצב פרטיות כבוי"
+  },
+  "toastPrivacyModeOn": {
+    "message": "מצב פרטיות מופעל"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "‏לא ניתן לאחזר פרופיל מ-Nostr"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "פרטי הפרופיל אוחזרו"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "הסרת הפרופיל נכשלה"
+  },
+  "toastProfileRemoved": {
+    "message": "הפרופיל הוסר"
+  },
+  "toastProfileRenameFailed": {
+    "message": "שינוי שם הפרופיל נכשל"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "הסרה מהרשימה המאושרת נכשלה"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "הוסר מהרשימה המאושרת"
+  },
+  "toastSettingsSaved": {
+    "message": "ההגדרות נשמרו"
+  },
+  "waitingForBunker": {
+    "message": "ממתין לחיבור הבנקר…"
+  },
+  "whitelistedNoPermissions": {
+    "message": "ברשימה המאושרת עבור nostr (אין הרשאות עדיין)"
+  }
 }

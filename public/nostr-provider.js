@@ -12,10 +12,15 @@
   function send(method, params) {
     return new Promise(function (resolve, reject) {
       var id = Math.random().toString(36).slice(2) + Date.now();
+      var timer = setTimeout(function () {
+        window.removeEventListener('message', onMessage);
+        reject(new Error('NIP-07 request timeout'));
+      }, TIMEOUT_MS);
       function onMessage(e) {
         if (e.source !== window || e.data?.type !== RESPONSE_TYPE) return;
         var p = e.data.payload;
         if (!p || p.id !== id) return;
+        clearTimeout(timer);
         window.removeEventListener('message', onMessage);
         if (p.error) reject(new Error(p.error));
         else resolve(p.result);
@@ -26,10 +31,6 @@
           detail: { id: id, method: method, params: params || [] },
         })
       );
-      setTimeout(function () {
-        window.removeEventListener('message', onMessage);
-        reject(new Error('NIP-07 request timeout'));
-      }, TIMEOUT_MS);
     });
   }
 

@@ -8,6 +8,7 @@ import CardContent from '@/components/ui/CardContent.vue';
 import Input from '@/components/ui/Input.vue';
 import Separator from '@/components/ui/Separator.vue';
 import ProfileAvatar from '@/components/ui/ProfileAvatar.vue';
+import RelayProbeLeadingIcons from './RelayProbeLeadingIcons.vue';
 import {
   Link2,
   Loader2,
@@ -18,16 +19,16 @@ import {
   UserPlus,
   X,
   Unplug,
-  CheckCircle2,
   XCircle,
 } from 'lucide-vue-next';
 import { t } from '@/lib/i18n';
+import type { RelayUiProbeStatus } from '@/lib/relay-ui-probe';
 import type { ProfileSummary } from '../types';
 
 defineProps<{
   connectionStateLoaded: boolean;
   reconnectingRelaysList: string[];
-  relayStatuses: Record<string, 'connecting' | 'ok' | 'failed'>;
+  relayStatuses: Record<string, RelayUiProbeStatus>;
   addingNewProfile: boolean;
   useBunker46: boolean;
   connecting: boolean;
@@ -71,15 +72,7 @@ defineEmits<{
       <div v-if="reconnectingRelaysList.length" class="flex flex-col items-center gap-1 mt-1">
         <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
         <div v-for="relay in reconnectingRelaysList" :key="relay" class="flex items-center gap-1.5">
-          <Loader2
-            v-if="!relayStatuses[relay] || relayStatuses[relay] === 'connecting'"
-            class="size-3 shrink-0 animate-spin text-muted-foreground/50"
-          />
-          <CheckCircle2
-            v-else-if="relayStatuses[relay] === 'ok'"
-            class="size-3 shrink-0 text-green-500"
-          />
-          <XCircle v-else class="size-3 shrink-0 text-destructive" />
+          <RelayProbeLeadingIcons :status="relayStatuses[relay]" />
           <span class="text-xs font-mono text-muted-foreground/50 truncate max-w-[200px]">
             {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
           </span>
@@ -133,15 +126,7 @@ defineEmits<{
             >
               <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
               <div v-for="relay in connectingRelays" :key="relay" class="flex items-center gap-1.5">
-                <Loader2
-                  v-if="!relayStatuses[relay] || relayStatuses[relay] === 'connecting'"
-                  class="size-3 shrink-0 animate-spin text-muted-foreground/50"
-                />
-                <CheckCircle2
-                  v-else-if="relayStatuses[relay] === 'ok'"
-                  class="size-3 shrink-0 text-green-500"
-                />
-                <XCircle v-else class="size-3 shrink-0 text-destructive" />
+                <RelayProbeLeadingIcons :status="relayStatuses[relay]" />
                 <span class="text-xs font-mono text-muted-foreground/50 truncate max-w-[220px]">
                   {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
                 </span>
@@ -335,15 +320,7 @@ defineEmits<{
             >
               <span class="text-xs text-muted-foreground/60">{{ t('connectingToRelays') }}</span>
               <div v-for="relay in connectingRelays" :key="relay" class="flex items-center gap-1.5">
-                <Loader2
-                  v-if="!relayStatuses[relay] || relayStatuses[relay] === 'connecting'"
-                  class="size-3 shrink-0 animate-spin text-muted-foreground/50"
-                />
-                <CheckCircle2
-                  v-else-if="relayStatuses[relay] === 'ok'"
-                  class="size-3 shrink-0 text-green-500"
-                />
-                <XCircle v-else class="size-3 shrink-0 text-destructive" />
+                <RelayProbeLeadingIcons :status="relayStatuses[relay]" />
                 <span class="text-xs font-mono text-muted-foreground/50 truncate max-w-[220px]">
                   {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
                 </span>

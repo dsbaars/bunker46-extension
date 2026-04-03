@@ -1,126 +1,33 @@
 {
-  "extName": {
-    "message": "Bunker46"
+  "addAnotherConnection": {
+    "message": "Lisää toinen yhteys"
   },
-  "extDescription": {
-    "message": "Etä-NIP-07-allekirjoittaja NIP-46:n / Bunker46:n kautta"
+  "addToWhitelistButton": {
+    "message": "Lisää $1 sallittujen luetteloon"
+  },
+  "addToWhitelistTitle": {
+    "message": "Lisää $1 sallittujen luetteloon"
+  },
+  "allowed": {
+    "message": "Sallittu"
   },
   "appSubtitle": {
     "message": "Etä-NIP-07-allekirjoittaja"
   },
-  "openFullPage": {
-    "message": "Avaa uudessa välilehdessä asetusten hallintaa varten"
-  },
-  "connected": {
-    "message": "Yhdistetty"
-  },
-  "offline": {
-    "message": "Offline"
-  },
-  "loading": {
-    "message": "Ladataan…"
-  },
-  "tabConnection": {
-    "message": "Yhteys"
-  },
-  "tabPermissions": {
-    "message": "Luvat"
-  },
-  "tabSettings": {
-    "message": "Asetukset"
-  },
-  "errorPasteUri": {
-    "message": "Liitä bunker://-URI yllä olevaan kenttään"
-  },
-  "errorConnectionFailed": {
-    "message": "Yhteys epäonnistui"
-  },
-  "errorGenerateUri": {
-    "message": "Yhteys-URI:n luominen epäonnistui"
-  },
-  "errorStartConnection": {
-    "message": "Yhteyden aloittaminen epäonnistui"
-  },
-  "toastLoggedOut": {
-    "message": "Kirjauduttu ulos"
-  },
-  "toastLogoutFailed": {
-    "message": "Uloskirjautuminen epäonnistui"
-  },
-  "toastSettingsSaved": {
-    "message": "Asetukset tallennettu"
-  },
-  "toastPrivacyModeOn": {
-    "message": "Yksityisyystila käytössä"
-  },
-  "toastPrivacyModeOff": {
-    "message": "Yksityisyystila poistettu käytöstä"
-  },
-  "toastBadgeShown": {
-    "message": "Merkki näkyvissä"
-  },
-  "toastBadgeHidden": {
-    "message": "Merkki piilotettu"
-  },
-  "toastCopied": {
-    "message": "Kopioitu leikepöydälle"
-  },
-  "toastCopyFailed": {
-    "message": "Kopiointi epäonnistui"
-  },
-  "toastPermissionRemoved": {
-    "message": "Lupa poistettu"
-  },
-  "toastPermissionRemoveFailed": {
-    "message": "Luvan poistaminen epäonnistui"
-  },
-  "toastDomainRemoved": {
-    "message": "Verkkotunnuksen luvat poistettu"
-  },
-  "toastDomainRemoveFailed": {
-    "message": "Verkkotunnuksen poistaminen epäonnistui"
-  },
-  "toastNoActiveTab": {
-    "message": "Ei aktiivista välilehteä tai URL-osoitetta"
-  },
-  "toastAddedToWhitelist": {
-    "message": "$1 lisätty sallittujen luetteloon. Lataa välilehti uudelleen käyttääksesi Nostria."
-  },
-  "toastAddDomainFailed": {
-    "message": "Verkkotunnuksen lisääminen epäonnistui"
-  },
-  "toastRemovedFromWhitelist": {
-    "message": "Poistettu sallittujen luettelosta"
-  },
-  "toastRemoveFromWhitelistFailed": {
-    "message": "Poistaminen sallittujen luettelosta epäonnistui"
-  },
-  "signerKey": {
-    "message": "Allekirjoittajan avain"
-  },
-  "copyTitle": {
-    "message": "Kopioi"
-  },
-  "showQrTitle": {
-    "message": "Näytä QR-koodi"
-  },
-  "signerDescription": {
-    "message": "Kaikki verkkosivujen NIP-07-pyynnöt välitetään tälle etäallekirjoittajalle NIP-46:n kautta. Laajennukseen ei tallenneta yksityisiä avaimia."
-  },
-  "disconnect": {
-    "message": "Katkaise yhteys"
-  },
-  "logoutConfirmTitle": {
-    "message": "Kirjaudutaanko kokonaan ulos?"
-  },
-  "logoutConfirmDescription": {
-    "message": "Tämä katkaisee yhteyden allekirjoittajaan ja tyhjentää kaikki luvat sekä yksityisyystilan sallittujen luettelon. Sinun täytyy yhdistää uudelleen ja hyväksyä sivustot uudelleen."
-  },
   "cancel": {
     "message": "Peruuta"
   },
-  "logOut": {
-    "message": "Kirjaudu ulos"
+  "choiceOff": {
+    "message": "Ei käytössä"
+  },
+  "choiceOn": {
+    "message": "Käytössä"
+  },
+  "close": {
+    "message": "Sulje"
+  },
+  "connect": {
+    "message": "Yhdistä"
   },
   "connectViaBunkerUri": {
     "message": "Yhdistä Bunker-URI:n avulla"
@@ -128,65 +35,119 @@
   "connectViaBunkerUriDesc": {
     "message": "Liitä bunker://-URI etäallekirjoittajaltasi yhdistääksesi"
   },
-  "placeholderBunkerUri": {
-    "message": "bunker://..."
+  "connected": {
+    "message": "Yhdistetty"
+  },
+  "connectedViaRelays": {
+    "message": "Yhdistetty kautta:"
   },
   "connecting": {
     "message": "Yhdistetään..."
   },
-  "connect": {
-    "message": "Yhdistä"
+  "connectingToRelays": {
+    "message": "Yhdistetään:"
   },
-  "separatorOr": {
-    "message": "tai"
+  "copyTitle": {
+    "message": "Kopioi"
+  },
+  "copyUri": {
+    "message": "Kopioi URI"
+  },
+  "denied": {
+    "message": "Estetty"
+  },
+  "disconnect": {
+    "message": "Katkaise yhteys"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Katkaise yhteys ja poista profiili"
+  },
+  "errorConnectionFailed": {
+    "message": "Yhteys epäonnistui"
+  },
+  "errorGenerateUri": {
+    "message": "Yhteys-URI:n luominen epäonnistui"
+  },
+  "errorPasteUri": {
+    "message": "Liitä bunker://-URI yllä olevaan kenttään"
+  },
+  "errorStartConnection": {
+    "message": "Yhteyden aloittaminen epäonnistui"
+  },
+  "extDescription": {
+    "message": "Etä-NIP-07-allekirjoittaja NIP-46:n / Bunker46:n kautta"
+  },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Hae Nostrista"
   },
   "getUriFromBunker46": {
     "message": "Hae URI Bunker46:sta"
   },
+  "loading": {
+    "message": "Ladataan…"
+  },
+  "logOut": {
+    "message": "Kirjaudu ulos"
+  },
+  "logoutConfirmDescription": {
+    "message": "Tämä katkaisee yhteyden allekirjoittajaan ja tyhjentää kaikki luvat sekä yksityisyystilan sallittujen luettelon. Sinun täytyy yhdistää uudelleen ja hyväksyä sivustot uudelleen."
+  },
+  "logoutConfirmTitle": {
+    "message": "Kirjaudutaanko kokonaan ulos?"
+  },
+  "method_getPublicKey": {
+    "message": "Hae julkinen avain"
+  },
+  "method_getRelays": {
+    "message": "Hae välittäjät"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04-purku"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04-salaus"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44-purku"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44-salaus"
+  },
+  "method_signEvent": {
+    "message": "Allekirjoita tapahtuma"
+  },
+  "method_signEvent_kind": {
+    "message": "Allekirjoita tapahtuma (tyyppi $1)"
+  },
+  "noDomainsMatch": {
+    "message": "Mikään verkkotunnus ei vastaa hakua"
+  },
+  "noPermissionsHint": {
+    "message": "Kun sivustot pyytävät pääsyä Nostr-identiteettiisi, ne näkyvät täällä."
+  },
+  "noPermissionsYet": {
+    "message": "Ei lupia vielä"
+  },
   "nostrConnectDesc": {
     "message": "Yhdistä Nostrconnectin kautta: näytä QR-koodi ja URI, jonka bunker-sovelluksesi voi skannata."
   },
-  "showQrConnectionUri": {
-    "message": "Näytä QR-koodi ja yhteys-URI"
+  "nostrConnectModalHint": {
+    "message": "Skannaa bunker-sovelluksellasi tai kopioi URI"
   },
-  "settingsUseBunker46": {
-    "message": "Käytä Bunker46:ta"
+  "nostrConnectQrAlt": {
+    "message": "Nostrconnect QR-koodi"
   },
-  "settingsUseBunker46Hint": {
-    "message": "Käsittele nostrconnect:-linkit ja ohjaa Bunker46-instanssillesi."
+  "offline": {
+    "message": "Offline"
   },
-  "settingsBunkerUrl": {
-    "message": "Bunker46-URL"
+  "openFullPage": {
+    "message": "Avaa uudessa välilehdessä asetusten hallintaa varten"
   },
-  "settingsBunkerUrlPlaceholder": {
-    "message": "http://localhost:5173"
-  },
-  "settingsBunkerUrlHint": {
-    "message": "Bunker46-instanssisi perus-URL"
-  },
-  "settingsSpecifyNostrConnectRelays": {
-    "message": "Määritä Nostrconnect-välittäjät"
-  },
-  "settingsSpecifyNostrConnectRelaysHint": {
-    "message": "Aseta mukautetut välittäjä-URL:t Nostrconnect QR/URI:lle."
-  },
-  "settingsNostrConnectRelays": {
-    "message": "Nostr-yhteysvälittäjät"
-  },
-  "settingsNostrConnectRelaysPlaceholder": {
-    "message": "wss://relay.nsec.app"
-  },
-  "settingsNostrConnectRelaysHint": {
-    "message": "Yksi välittäjä-URL per rivi (tai pilkulla erotettu). Käytetään QR/URI:n luomiseen Nostrconnect-yhteyttä varten."
-  },
-  "choiceOn": {
-    "message": "Käytössä"
-  },
-  "choiceOff": {
-    "message": "Ei käytössä"
-  },
-  "save": {
-    "message": "Tallenna"
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
   },
   "privacyMode": {
     "message": "Yksityisyystila"
@@ -197,114 +158,6 @@
   "privacyModeSitesHint": {
     "message": "Sivustot eivät voi havaita laajennusta, joten jotkin eivät välttämättä näytä \"Kirjaudu Nostrilla\" ennen kuin lisäät ne Luvat-kohtaan."
   },
-  "showBadge": {
-    "message": "Näytä merkki laajennuksen kuvakkeessa"
-  },
-  "showBadgeHint": {
-    "message": "Kun käytössä, kuvake näyttää myönnettyjen lupien määrän nykyiselle välilehdelle (esim. 1, 2)."
-  },
-  "addToWhitelistTitle": {
-    "message": "Lisää $1 sallittujen luetteloon"
-  },
-  "addToWhitelistButton": {
-    "message": "Lisää $1 sallittujen luetteloon"
-  },
-  "removeFromWhitelistTitle": {
-    "message": "Poista $1 sallittujen luettelosta"
-  },
-  "removeFromWhitelistButton": {
-    "message": "Poista $1 sallittujen luettelosta"
-  },
-  "searchDomainsPlaceholder": {
-    "message": "Hae verkkotunnuksia..."
-  },
-  "noPermissionsYet": {
-    "message": "Ei lupia vielä"
-  },
-  "noPermissionsHint": {
-    "message": "Kun sivustot pyytävät pääsyä Nostr-identiteettiisi, ne näkyvät täällä."
-  },
-  "noDomainsMatch": {
-    "message": "Mikään verkkotunnus ei vastaa hakua"
-  },
-  "revokeAllPermissionsTitle": {
-    "message": "Peruuta kaikki luvat tälle verkkotunnukselle"
-  },
-  "whitelistedNoPermissions": {
-    "message": "Sallittujen luettelossa Nostrille (ei lupia vielä)"
-  },
-  "allowed": {
-    "message": "Sallittu"
-  },
-  "denied": {
-    "message": "Estetty"
-  },
-  "revokeTitle": {
-    "message": "Peruuta"
-  },
-  "removeFromWhitelist": {
-    "message": "Poista sallittujen luettelosta"
-  },
-  "qrScanToUse": {
-    "message": "$1 (skannaa käyttääksesi)"
-  },
-  "qrCodeAlt": {
-    "message": "QR-koodi"
-  },
-  "close": {
-    "message": "Sulje"
-  },
-  "nostrConnectModalHint": {
-    "message": "Skannaa bunker-sovelluksellasi tai kopioi URI"
-  },
-  "nostrConnectQrAlt": {
-    "message": "Nostrconnect QR-koodi"
-  },
-  "copyUri": {
-    "message": "Kopioi URI"
-  },
-  "waitingForBunker": {
-    "message": "Odotetaan bunkerin yhdistämistä…"
-  },
-  "method_getPublicKey": {
-    "message": "Hae julkinen avain"
-  },
-  "method_signEvent": {
-    "message": "Allekirjoita tapahtuma"
-  },
-  "method_signEvent_kind": {
-    "message": "Allekirjoita tapahtuma (tyyppi $1)"
-  },
-  "method_getRelays": {
-    "message": "Hae välittäjät"
-  },
-  "method_nip04_encrypt": {
-    "message": "NIP-04-salaus"
-  },
-  "method_nip04_decrypt": {
-    "message": "NIP-04-purku"
-  },
-  "method_nip44_encrypt": {
-    "message": "NIP-44-salaus"
-  },
-  "method_nip44_decrypt": {
-    "message": "NIP-44-purku"
-  },
-  "promptPermissionRequest": {
-    "message": "Lupapyyntö"
-  },
-  "promptWantsAccess": {
-    "message": "haluaa käyttää Nostr-identiteettiäsi"
-  },
-  "promptEventKind": {
-    "message": "Tapahtumatyyppi $1"
-  },
-  "promptViewRawMessage": {
-    "message": "Näytä raakadata"
-  },
-  "promptHideRawMessage": {
-    "message": "Piilota raakadata"
-  },
   "promptAllowAlways": {
     "message": "Salli aina"
   },
@@ -314,49 +167,67 @@
   "promptAllowOnce": {
     "message": "Salli kerran"
   },
-  "promptDenyOnce": {
-    "message": "Estä"
-  },
   "promptDenyAlways": {
     "message": "Estä aina"
   },
-  "settingsMultiProfile": {
-    "message": "Useita profiileja"
+  "promptDenyOnce": {
+    "message": "Estä"
   },
-  "settingsMultiProfileHint": {
-    "message": "Näytä profiilivalitsin ja salli useiden yhteyksien lisääminen."
+  "promptEventKind": {
+    "message": "Tapahtumatyyppi $1"
   },
-  "settingsMultiProfileDisabledHint": {
-    "message": "Poista ylimääräiset profiilit käyttääksesi yhden profiilin tilaa."
+  "promptHideRawMessage": {
+    "message": "Piilota raakadata"
   },
-  "addAnotherConnection": {
-    "message": "Lisää toinen yhteys"
+  "promptPermissionRequest": {
+    "message": "Lupapyyntö"
   },
-  "removeProfile": {
-    "message": "Poista tämä profiili"
+  "promptViewRawMessage": {
+    "message": "Näytä raakadata"
   },
-  "removeProfileConfirmTitle": {
-    "message": "Poista profiili?"
+  "promptWantsAccess": {
+    "message": "haluaa käyttää Nostr-identiteettiäsi"
   },
-  "removeProfileConfirmDesc": {
-    "message": "Tämä katkaisee yhteyden ja poistaa kaikki tämän profiilin käyttöoikeudet ja sallittujen listaukset."
+  "qrCodeAlt": {
+    "message": "QR-koodi"
   },
-  "switchProfile": {
-    "message": "Vaihda profiilia"
-  },
-  "toastProfileRemoved": {
-    "message": "Profiili poistettu"
-  },
-  "toastProfileRemoveFailed": {
-    "message": "Profiilin poistaminen epäonnistui"
+  "qrScanToUse": {
+    "message": "$1 (skannaa käyttääksesi)"
   },
   "reconnectionFailedMessage": {
     "message": "Yhteyttä ei voitu palauttaa. Bunker on ehkä peruuttanut käyttöoikeuden."
   },
-  "renameProfile": {
-    "message": "Nimeä profiili uudelleen"
+  "relayNip42AuthFailedTitle": {
+    "message": "NIP-42-releiden todennus epäonnistui tai aikakatkaistiin."
   },
-  "renameProfileTitle": {
+  "relayNip42AuthPendingTitle": {
+    "message": "Tarkistetaan NIP-42-releiden todennusta…"
+  },
+  "relayNip42AuthSuccessTitle": {
+    "message": "NIP-42-releiden todennus onnistui."
+  },
+  "relayNip42ChallengeOnlyTitle": {
+    "message": "Rele lähetti todennushaasteen; yhdistä tällä profiililla allekirjoituksen varmistamiseksi."
+  },
+  "removeFromWhitelist": {
+    "message": "Poista sallittujen luettelosta"
+  },
+  "removeFromWhitelistButton": {
+    "message": "Poista $1 sallittujen luettelosta"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "Poista $1 sallittujen luettelosta"
+  },
+  "removeProfile": {
+    "message": "Poista tämä profiili"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "Tämä katkaisee yhteyden ja poistaa kaikki tämän profiilin käyttöoikeudet ja sallittujen listaukset."
+  },
+  "removeProfileConfirmTitle": {
+    "message": "Poista profiili?"
+  },
+  "renameProfile": {
     "message": "Nimeä profiili uudelleen"
   },
   "renameProfileHint": {
@@ -368,25 +239,166 @@
   "renameProfileNamePlaceholder": {
     "message": "Profiilin nimi"
   },
-  "fetchProfileFromNostr": {
-    "message": "Hae Nostrista"
+  "renameProfileTitle": {
+    "message": "Nimeä profiili uudelleen"
   },
-  "toastProfileMetadataFetched": {
-    "message": "Profiilitiedot haettu"
+  "revokeAllPermissionsTitle": {
+    "message": "Peruuta kaikki luvat tälle verkkotunnukselle"
+  },
+  "revokeTitle": {
+    "message": "Peruuta"
+  },
+  "save": {
+    "message": "Tallenna"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Hae verkkotunnuksia..."
+  },
+  "separatorOr": {
+    "message": "tai"
+  },
+  "settingsBunkerUrl": {
+    "message": "Bunker46-URL"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "Bunker46-instanssisi perus-URL"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsMultiProfile": {
+    "message": "Useita profiileja"
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Poista ylimääräiset profiilit käyttääksesi yhden profiilin tilaa."
+  },
+  "settingsMultiProfileHint": {
+    "message": "Näytä profiilivalitsin ja salli useiden yhteyksien lisääminen."
+  },
+  "settingsNostrConnectRelays": {
+    "message": "Nostr-yhteysvälittäjät"
+  },
+  "settingsNostrConnectRelaysHint": {
+    "message": "Yksi välittäjä-URL per rivi (tai pilkulla erotettu). Käytetään QR/URI:n luomiseen Nostrconnect-yhteyttä varten."
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Määritä Nostrconnect-välittäjät"
+  },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Aseta mukautetut välittäjä-URL:t Nostrconnect QR/URI:lle."
+  },
+  "settingsUseBunker46": {
+    "message": "Käytä Bunker46:ta"
+  },
+  "settingsUseBunker46Hint": {
+    "message": "Käsittele nostrconnect:-linkit ja ohjaa Bunker46-instanssillesi."
+  },
+  "showBadge": {
+    "message": "Näytä merkki laajennuksen kuvakkeessa"
+  },
+  "showBadgeHint": {
+    "message": "Kun käytössä, kuvake näyttää myönnettyjen lupien määrän nykyiselle välilehdelle (esim. 1, 2)."
+  },
+  "showQrConnectionUri": {
+    "message": "Näytä QR-koodi ja yhteys-URI"
+  },
+  "showQrTitle": {
+    "message": "Näytä QR-koodi"
+  },
+  "signerDescription": {
+    "message": "Kaikki verkkosivujen NIP-07-pyynnöt välitetään tälle etäallekirjoittajalle NIP-46:n kautta. Laajennukseen ei tallenneta yksityisiä avaimia."
+  },
+  "signerKey": {
+    "message": "Allekirjoittajan avain"
+  },
+  "switchProfile": {
+    "message": "Vaihda profiilia"
+  },
+  "tabConnection": {
+    "message": "Yhteys"
+  },
+  "tabPermissions": {
+    "message": "Luvat"
+  },
+  "tabSettings": {
+    "message": "Asetukset"
+  },
+  "toastAddDomainFailed": {
+    "message": "Verkkotunnuksen lisääminen epäonnistui"
+  },
+  "toastAddedToWhitelist": {
+    "message": "$1 lisätty sallittujen luetteloon. Lataa välilehti uudelleen käyttääksesi Nostria."
+  },
+  "toastBadgeHidden": {
+    "message": "Merkki piilotettu"
+  },
+  "toastBadgeShown": {
+    "message": "Merkki näkyvissä"
+  },
+  "toastCopied": {
+    "message": "Kopioitu leikepöydälle"
+  },
+  "toastCopyFailed": {
+    "message": "Kopiointi epäonnistui"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Verkkotunnuksen poistaminen epäonnistui"
+  },
+  "toastDomainRemoved": {
+    "message": "Verkkotunnuksen luvat poistettu"
+  },
+  "toastLoggedOut": {
+    "message": "Kirjauduttu ulos"
+  },
+  "toastLogoutFailed": {
+    "message": "Uloskirjautuminen epäonnistui"
+  },
+  "toastNoActiveTab": {
+    "message": "Ei aktiivista välilehteä tai URL-osoitetta"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Luvan poistaminen epäonnistui"
+  },
+  "toastPermissionRemoved": {
+    "message": "Lupa poistettu"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Yksityisyystila poistettu käytöstä"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Yksityisyystila käytössä"
   },
   "toastProfileMetadataFetchFailed": {
     "message": "Profiilia ei voitu hakea Nostrista"
   },
+  "toastProfileMetadataFetched": {
+    "message": "Profiilitiedot haettu"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "Profiilin poistaminen epäonnistui"
+  },
+  "toastProfileRemoved": {
+    "message": "Profiili poistettu"
+  },
   "toastProfileRenameFailed": {
     "message": "Profiilin uudelleennimeäminen epäonnistui"
   },
-  "disconnectAndRemoveProfile": {
-    "message": "Katkaise yhteys ja poista profiili"
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Poistaminen sallittujen luettelosta epäonnistui"
   },
-  "connectingToRelays": {
-    "message": "Yhdistetään:"
+  "toastRemovedFromWhitelist": {
+    "message": "Poistettu sallittujen luettelosta"
   },
-  "connectedViaRelays": {
-    "message": "Yhdistetty kautta:"
+  "toastSettingsSaved": {
+    "message": "Asetukset tallennettu"
+  },
+  "waitingForBunker": {
+    "message": "Odotetaan bunkerin yhdistämistä…"
+  },
+  "whitelistedNoPermissions": {
+    "message": "Sallittujen luettelossa Nostrille (ei lupia vielä)"
   }
 }

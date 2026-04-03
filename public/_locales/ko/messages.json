@@ -1,126 +1,33 @@
 {
-  "extName": {
-    "message": "Bunker46"
+  "addAnotherConnection": {
+    "message": "다른 연결 추가"
   },
-  "extDescription": {
-    "message": "NIP-46 / Bunker46를 통한 NIP-07 원격 서명자"
+  "addToWhitelistButton": {
+    "message": "$1을(를) 화이트리스트에 추가"
+  },
+  "addToWhitelistTitle": {
+    "message": "$1을(를) 화이트리스트에 추가"
+  },
+  "allowed": {
+    "message": "허용됨"
   },
   "appSubtitle": {
     "message": "NIP-07 원격 서명자"
   },
-  "openFullPage": {
-    "message": "새 탭에서 열어 옵션 관리"
-  },
-  "connected": {
-    "message": "연결됨"
-  },
-  "offline": {
-    "message": "오프라인"
-  },
-  "loading": {
-    "message": "로딩 중…"
-  },
-  "tabConnection": {
-    "message": "연결"
-  },
-  "tabPermissions": {
-    "message": "권한"
-  },
-  "tabSettings": {
-    "message": "설정"
-  },
-  "errorPasteUri": {
-    "message": "위에 bunker:// URI를 붙여넣으세요"
-  },
-  "errorConnectionFailed": {
-    "message": "연결 실패"
-  },
-  "errorGenerateUri": {
-    "message": "연결 URI 생성 실패"
-  },
-  "errorStartConnection": {
-    "message": "연결 시작 실패"
-  },
-  "toastLoggedOut": {
-    "message": "로그아웃되었습니다"
-  },
-  "toastLogoutFailed": {
-    "message": "로그아웃 실패"
-  },
-  "toastSettingsSaved": {
-    "message": "설정이 저장되었습니다"
-  },
-  "toastPrivacyModeOn": {
-    "message": "개인정보 보호 모드 켜짐"
-  },
-  "toastPrivacyModeOff": {
-    "message": "개인정보 보호 모드 꺼짐"
-  },
-  "toastBadgeShown": {
-    "message": "배지가 표시됩니다"
-  },
-  "toastBadgeHidden": {
-    "message": "배지가 숨겨졌습니다"
-  },
-  "toastCopied": {
-    "message": "클립보드에 복사되었습니다"
-  },
-  "toastCopyFailed": {
-    "message": "복사 실패"
-  },
-  "toastPermissionRemoved": {
-    "message": "권한이 제거되었습니다"
-  },
-  "toastPermissionRemoveFailed": {
-    "message": "권한 제거 실패"
-  },
-  "toastDomainRemoved": {
-    "message": "도메인 권한이 제거되었습니다"
-  },
-  "toastDomainRemoveFailed": {
-    "message": "도메인 제거 실패"
-  },
-  "toastNoActiveTab": {
-    "message": "활성 탭 또는 URL이 없습니다"
-  },
-  "toastAddedToWhitelist": {
-    "message": "$1이(가) 화이트리스트에 추가되었습니다. Nostr를 사용하려면 탭을 새로고침하세요."
-  },
-  "toastAddDomainFailed": {
-    "message": "도메인 추가 실패"
-  },
-  "toastRemovedFromWhitelist": {
-    "message": "화이트리스트에서 제거되었습니다"
-  },
-  "toastRemoveFromWhitelistFailed": {
-    "message": "화이트리스트에서 제거 실패"
-  },
-  "signerKey": {
-    "message": "서명자 키"
-  },
-  "copyTitle": {
-    "message": "복사"
-  },
-  "showQrTitle": {
-    "message": "QR 코드 표시"
-  },
-  "signerDescription": {
-    "message": "웹 페이지의 모든 NIP-07 요청은 NIP-46을 통해 이 원격 서명자에게 전달됩니다. 확장 프로그램에는 개인 키가 저장되지 않습니다."
-  },
-  "disconnect": {
-    "message": "연결 해제"
-  },
-  "logoutConfirmTitle": {
-    "message": "완전히 로그아웃하시겠습니까?"
-  },
-  "logoutConfirmDescription": {
-    "message": "서명자 연결이 끊어지고 모든 권한과 개인정보 보호 모드 화이트리스트가 삭제됩니다. 다시 연결하고 사이트를 재승인해야 합니다."
-  },
   "cancel": {
     "message": "취소"
   },
-  "logOut": {
-    "message": "로그아웃"
+  "choiceOff": {
+    "message": "끄기"
+  },
+  "choiceOn": {
+    "message": "켜기"
+  },
+  "close": {
+    "message": "닫기"
+  },
+  "connect": {
+    "message": "연결"
   },
   "connectViaBunkerUri": {
     "message": "Bunker URI로 연결"
@@ -128,65 +35,119 @@
   "connectViaBunkerUriDesc": {
     "message": "원격 서명자의 bunker:// URI를 붙여넣어 연결하세요"
   },
-  "placeholderBunkerUri": {
-    "message": "bunker://..."
+  "connected": {
+    "message": "연결됨"
+  },
+  "connectedViaRelays": {
+    "message": "다음을 통해 연결됨:"
   },
   "connecting": {
     "message": "연결 중..."
   },
-  "connect": {
-    "message": "연결"
+  "connectingToRelays": {
+    "message": "연결 중:"
   },
-  "separatorOr": {
-    "message": "또는"
+  "copyTitle": {
+    "message": "복사"
+  },
+  "copyUri": {
+    "message": "URI 복사"
+  },
+  "denied": {
+    "message": "거부됨"
+  },
+  "disconnect": {
+    "message": "연결 해제"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "연결 해제 및 프로필 삭제"
+  },
+  "errorConnectionFailed": {
+    "message": "연결 실패"
+  },
+  "errorGenerateUri": {
+    "message": "연결 URI 생성 실패"
+  },
+  "errorPasteUri": {
+    "message": "위에 bunker:// URI를 붙여넣으세요"
+  },
+  "errorStartConnection": {
+    "message": "연결 시작 실패"
+  },
+  "extDescription": {
+    "message": "NIP-46 / Bunker46를 통한 NIP-07 원격 서명자"
+  },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Nostr에서 가져오기"
   },
   "getUriFromBunker46": {
     "message": "Bunker46에서 URI 가져오기"
   },
+  "loading": {
+    "message": "로딩 중…"
+  },
+  "logOut": {
+    "message": "로그아웃"
+  },
+  "logoutConfirmDescription": {
+    "message": "서명자 연결이 끊어지고 모든 권한과 개인정보 보호 모드 화이트리스트가 삭제됩니다. 다시 연결하고 사이트를 재승인해야 합니다."
+  },
+  "logoutConfirmTitle": {
+    "message": "완전히 로그아웃하시겠습니까?"
+  },
+  "method_getPublicKey": {
+    "message": "공개 키 가져오기"
+  },
+  "method_getRelays": {
+    "message": "릴레이 가져오기"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04 복호화"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04 암호화"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44 복호화"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44 암호화"
+  },
+  "method_signEvent": {
+    "message": "이벤트 서명"
+  },
+  "method_signEvent_kind": {
+    "message": "이벤트 서명 (종류 $1)"
+  },
+  "noDomainsMatch": {
+    "message": "검색과 일치하는 도메인이 없습니다"
+  },
+  "noPermissionsHint": {
+    "message": "웹사이트가 Nostr ID 접근을 요청하면 여기에 표시됩니다."
+  },
+  "noPermissionsYet": {
+    "message": "아직 권한이 없습니다"
+  },
   "nostrConnectDesc": {
     "message": "Nostrconnect를 통해 연결: 번커 앱이 스캔할 수 있는 QR 코드와 URI를 표시합니다."
   },
-  "showQrConnectionUri": {
-    "message": "QR 코드 및 연결 URI 표시"
+  "nostrConnectModalHint": {
+    "message": "번커 앱으로 스캔하거나 URI를 복사하세요"
   },
-  "settingsUseBunker46": {
-    "message": "Bunker46 사용"
+  "nostrConnectQrAlt": {
+    "message": "Nostrconnect QR 코드"
   },
-  "settingsUseBunker46Hint": {
-    "message": "nostrconnect: 링크를 처리하고 Bunker46 인스턴스로 리디렉션합니다."
+  "offline": {
+    "message": "오프라인"
   },
-  "settingsBunkerUrl": {
-    "message": "Bunker46 URL"
+  "openFullPage": {
+    "message": "새 탭에서 열어 옵션 관리"
   },
-  "settingsBunkerUrlPlaceholder": {
-    "message": "http://localhost:5173"
-  },
-  "settingsBunkerUrlHint": {
-    "message": "Bunker46 인스턴스의 기본 URL"
-  },
-  "settingsSpecifyNostrConnectRelays": {
-    "message": "Nostrconnect 릴레이 지정"
-  },
-  "settingsSpecifyNostrConnectRelaysHint": {
-    "message": "Nostrconnect QR/URI에 사용할 사용자 지정 릴레이 URL을 설정합니다."
-  },
-  "settingsNostrConnectRelays": {
-    "message": "Nostr 연결 릴레이"
-  },
-  "settingsNostrConnectRelaysPlaceholder": {
-    "message": "wss://relay.nsec.app"
-  },
-  "settingsNostrConnectRelaysHint": {
-    "message": "한 줄에 릴레이 URL 하나(또는 쉼표로 구분). Nostrconnect를 통한 연결용 QR/URI 생성 시 사용됩니다."
-  },
-  "choiceOn": {
-    "message": "켜기"
-  },
-  "choiceOff": {
-    "message": "끄기"
-  },
-  "save": {
-    "message": "저장"
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
   },
   "privacyMode": {
     "message": "개인정보 보호 모드"
@@ -197,114 +158,6 @@
   "privacyModeSitesHint": {
     "message": "사이트에서 확장 프로그램을 감지할 수 없으므로, 권한에서 추가하기 전까지 'Nostr로 로그인'이 표시되지 않을 수 있습니다."
   },
-  "showBadge": {
-    "message": "확장 프로그램 아이콘에 배지 표시"
-  },
-  "showBadgeHint": {
-    "message": "켜면 아이콘에 현재 탭에 부여된 권한 수를 표시합니다(예: 1, 2)."
-  },
-  "addToWhitelistTitle": {
-    "message": "$1을(를) 화이트리스트에 추가"
-  },
-  "addToWhitelistButton": {
-    "message": "$1을(를) 화이트리스트에 추가"
-  },
-  "removeFromWhitelistTitle": {
-    "message": "$1을(를) 화이트리스트에서 제거"
-  },
-  "removeFromWhitelistButton": {
-    "message": "$1을(를) 화이트리스트에서 제거"
-  },
-  "searchDomainsPlaceholder": {
-    "message": "도메인 검색..."
-  },
-  "noPermissionsYet": {
-    "message": "아직 권한이 없습니다"
-  },
-  "noPermissionsHint": {
-    "message": "웹사이트가 Nostr ID 접근을 요청하면 여기에 표시됩니다."
-  },
-  "noDomainsMatch": {
-    "message": "검색과 일치하는 도메인이 없습니다"
-  },
-  "revokeAllPermissionsTitle": {
-    "message": "이 도메인의 모든 권한 철회"
-  },
-  "whitelistedNoPermissions": {
-    "message": "Nostr용 화이트리스트 등록됨 (아직 권한 없음)"
-  },
-  "allowed": {
-    "message": "허용됨"
-  },
-  "denied": {
-    "message": "거부됨"
-  },
-  "revokeTitle": {
-    "message": "철회"
-  },
-  "removeFromWhitelist": {
-    "message": "화이트리스트에서 제거"
-  },
-  "qrScanToUse": {
-    "message": "$1 (사용하려면 스캔하세요)"
-  },
-  "qrCodeAlt": {
-    "message": "QR 코드"
-  },
-  "close": {
-    "message": "닫기"
-  },
-  "nostrConnectModalHint": {
-    "message": "번커 앱으로 스캔하거나 URI를 복사하세요"
-  },
-  "nostrConnectQrAlt": {
-    "message": "Nostrconnect QR 코드"
-  },
-  "copyUri": {
-    "message": "URI 복사"
-  },
-  "waitingForBunker": {
-    "message": "번커 연결을 기다리는 중…"
-  },
-  "method_getPublicKey": {
-    "message": "공개 키 가져오기"
-  },
-  "method_signEvent": {
-    "message": "이벤트 서명"
-  },
-  "method_signEvent_kind": {
-    "message": "이벤트 서명 (종류 $1)"
-  },
-  "method_getRelays": {
-    "message": "릴레이 가져오기"
-  },
-  "method_nip04_encrypt": {
-    "message": "NIP-04 암호화"
-  },
-  "method_nip04_decrypt": {
-    "message": "NIP-04 복호화"
-  },
-  "method_nip44_encrypt": {
-    "message": "NIP-44 암호화"
-  },
-  "method_nip44_decrypt": {
-    "message": "NIP-44 복호화"
-  },
-  "promptPermissionRequest": {
-    "message": "권한 요청"
-  },
-  "promptWantsAccess": {
-    "message": "귀하의 Nostr ID에 접근하려고 합니다"
-  },
-  "promptEventKind": {
-    "message": "이벤트 종류 $1"
-  },
-  "promptViewRawMessage": {
-    "message": "원시 메시지 보기"
-  },
-  "promptHideRawMessage": {
-    "message": "원시 메시지 숨기기"
-  },
   "promptAllowAlways": {
     "message": "항상 허용"
   },
@@ -314,49 +167,67 @@
   "promptAllowOnce": {
     "message": "한 번 허용"
   },
-  "promptDenyOnce": {
-    "message": "거부"
-  },
   "promptDenyAlways": {
     "message": "항상 거부"
   },
-  "settingsMultiProfile": {
-    "message": "여러 프로필"
+  "promptDenyOnce": {
+    "message": "거부"
   },
-  "settingsMultiProfileHint": {
-    "message": "프로필 전환기를 표시하고 여러 연결 추가를 허용합니다."
+  "promptEventKind": {
+    "message": "이벤트 종류 $1"
   },
-  "settingsMultiProfileDisabledHint": {
-    "message": "단일 프로필 모드를 사용하려면 추가 프로필을 삭제하세요."
+  "promptHideRawMessage": {
+    "message": "원시 메시지 숨기기"
   },
-  "addAnotherConnection": {
-    "message": "다른 연결 추가"
+  "promptPermissionRequest": {
+    "message": "권한 요청"
   },
-  "removeProfile": {
-    "message": "이 프로필 삭제"
+  "promptViewRawMessage": {
+    "message": "원시 메시지 보기"
   },
-  "removeProfileConfirmTitle": {
-    "message": "프로필을 삭제하시겠습니까?"
+  "promptWantsAccess": {
+    "message": "귀하의 Nostr ID에 접근하려고 합니다"
   },
-  "removeProfileConfirmDesc": {
-    "message": "이 프로필의 모든 권한과 화이트리스트 항목을 연결 해제하고 삭제합니다."
+  "qrCodeAlt": {
+    "message": "QR 코드"
   },
-  "switchProfile": {
-    "message": "프로필 전환"
-  },
-  "toastProfileRemoved": {
-    "message": "프로필이 삭제되었습니다"
-  },
-  "toastProfileRemoveFailed": {
-    "message": "프로필 삭제에 실패했습니다"
+  "qrScanToUse": {
+    "message": "$1 (사용하려면 스캔하세요)"
   },
   "reconnectionFailedMessage": {
     "message": "연결을 복원할 수 없습니다. 벙커가 액세스를 취소했을 수 있습니다."
   },
-  "renameProfile": {
-    "message": "프로필 이름 바꾸기"
+  "relayNip42AuthFailedTitle": {
+    "message": "NIP-42 릴레이 인증에 실패했거나 시간이 초과되었습니다."
   },
-  "renameProfileTitle": {
+  "relayNip42AuthPendingTitle": {
+    "message": "NIP-42 릴레이 인증 확인 중…"
+  },
+  "relayNip42AuthSuccessTitle": {
+    "message": "NIP-42 릴레이 인증에 성공했습니다."
+  },
+  "relayNip42ChallengeOnlyTitle": {
+    "message": "릴레이가 인증 챌린지를 보냈습니다. 이 프로필로 연결하여 서명을 확인하세요."
+  },
+  "removeFromWhitelist": {
+    "message": "화이트리스트에서 제거"
+  },
+  "removeFromWhitelistButton": {
+    "message": "$1을(를) 화이트리스트에서 제거"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "$1을(를) 화이트리스트에서 제거"
+  },
+  "removeProfile": {
+    "message": "이 프로필 삭제"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "이 프로필의 모든 권한과 화이트리스트 항목을 연결 해제하고 삭제합니다."
+  },
+  "removeProfileConfirmTitle": {
+    "message": "프로필을 삭제하시겠습니까?"
+  },
+  "renameProfile": {
     "message": "프로필 이름 바꾸기"
   },
   "renameProfileHint": {
@@ -368,25 +239,166 @@
   "renameProfileNamePlaceholder": {
     "message": "프로필 이름"
   },
-  "fetchProfileFromNostr": {
-    "message": "Nostr에서 가져오기"
+  "renameProfileTitle": {
+    "message": "프로필 이름 바꾸기"
   },
-  "toastProfileMetadataFetched": {
-    "message": "프로필 정보를 가져왔습니다"
+  "revokeAllPermissionsTitle": {
+    "message": "이 도메인의 모든 권한 철회"
+  },
+  "revokeTitle": {
+    "message": "철회"
+  },
+  "save": {
+    "message": "저장"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "도메인 검색..."
+  },
+  "separatorOr": {
+    "message": "또는"
+  },
+  "settingsBunkerUrl": {
+    "message": "Bunker46 URL"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "Bunker46 인스턴스의 기본 URL"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsMultiProfile": {
+    "message": "여러 프로필"
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "단일 프로필 모드를 사용하려면 추가 프로필을 삭제하세요."
+  },
+  "settingsMultiProfileHint": {
+    "message": "프로필 전환기를 표시하고 여러 연결 추가를 허용합니다."
+  },
+  "settingsNostrConnectRelays": {
+    "message": "Nostr 연결 릴레이"
+  },
+  "settingsNostrConnectRelaysHint": {
+    "message": "한 줄에 릴레이 URL 하나(또는 쉼표로 구분). Nostrconnect를 통한 연결용 QR/URI 생성 시 사용됩니다."
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Nostrconnect 릴레이 지정"
+  },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Nostrconnect QR/URI에 사용할 사용자 지정 릴레이 URL을 설정합니다."
+  },
+  "settingsUseBunker46": {
+    "message": "Bunker46 사용"
+  },
+  "settingsUseBunker46Hint": {
+    "message": "nostrconnect: 링크를 처리하고 Bunker46 인스턴스로 리디렉션합니다."
+  },
+  "showBadge": {
+    "message": "확장 프로그램 아이콘에 배지 표시"
+  },
+  "showBadgeHint": {
+    "message": "켜면 아이콘에 현재 탭에 부여된 권한 수를 표시합니다(예: 1, 2)."
+  },
+  "showQrConnectionUri": {
+    "message": "QR 코드 및 연결 URI 표시"
+  },
+  "showQrTitle": {
+    "message": "QR 코드 표시"
+  },
+  "signerDescription": {
+    "message": "웹 페이지의 모든 NIP-07 요청은 NIP-46을 통해 이 원격 서명자에게 전달됩니다. 확장 프로그램에는 개인 키가 저장되지 않습니다."
+  },
+  "signerKey": {
+    "message": "서명자 키"
+  },
+  "switchProfile": {
+    "message": "프로필 전환"
+  },
+  "tabConnection": {
+    "message": "연결"
+  },
+  "tabPermissions": {
+    "message": "권한"
+  },
+  "tabSettings": {
+    "message": "설정"
+  },
+  "toastAddDomainFailed": {
+    "message": "도메인 추가 실패"
+  },
+  "toastAddedToWhitelist": {
+    "message": "$1이(가) 화이트리스트에 추가되었습니다. Nostr를 사용하려면 탭을 새로고침하세요."
+  },
+  "toastBadgeHidden": {
+    "message": "배지가 숨겨졌습니다"
+  },
+  "toastBadgeShown": {
+    "message": "배지가 표시됩니다"
+  },
+  "toastCopied": {
+    "message": "클립보드에 복사되었습니다"
+  },
+  "toastCopyFailed": {
+    "message": "복사 실패"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "도메인 제거 실패"
+  },
+  "toastDomainRemoved": {
+    "message": "도메인 권한이 제거되었습니다"
+  },
+  "toastLoggedOut": {
+    "message": "로그아웃되었습니다"
+  },
+  "toastLogoutFailed": {
+    "message": "로그아웃 실패"
+  },
+  "toastNoActiveTab": {
+    "message": "활성 탭 또는 URL이 없습니다"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "권한 제거 실패"
+  },
+  "toastPermissionRemoved": {
+    "message": "권한이 제거되었습니다"
+  },
+  "toastPrivacyModeOff": {
+    "message": "개인정보 보호 모드 꺼짐"
+  },
+  "toastPrivacyModeOn": {
+    "message": "개인정보 보호 모드 켜짐"
   },
   "toastProfileMetadataFetchFailed": {
     "message": "Nostr에서 프로필을 가져올 수 없습니다"
   },
+  "toastProfileMetadataFetched": {
+    "message": "프로필 정보를 가져왔습니다"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "프로필 삭제에 실패했습니다"
+  },
+  "toastProfileRemoved": {
+    "message": "프로필이 삭제되었습니다"
+  },
   "toastProfileRenameFailed": {
     "message": "프로필 이름 바꾸기에 실패했습니다"
   },
-  "disconnectAndRemoveProfile": {
-    "message": "연결 해제 및 프로필 삭제"
+  "toastRemoveFromWhitelistFailed": {
+    "message": "화이트리스트에서 제거 실패"
   },
-  "connectingToRelays": {
-    "message": "연결 중:"
+  "toastRemovedFromWhitelist": {
+    "message": "화이트리스트에서 제거되었습니다"
   },
-  "connectedViaRelays": {
-    "message": "다음을 통해 연결됨:"
+  "toastSettingsSaved": {
+    "message": "설정이 저장되었습니다"
+  },
+  "waitingForBunker": {
+    "message": "번커 연결을 기다리는 중…"
+  },
+  "whitelistedNoPermissions": {
+    "message": "Nostr용 화이트리스트 등록됨 (아직 권한 없음)"
   }
 }

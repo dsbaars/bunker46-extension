@@ -1,6 +1,6 @@
 import { generateSecretKey, getPublicKey } from 'nostr-tools';
 import { normalizeURL } from 'nostr-tools/utils';
-import { ResilientPool } from '@/lib/resilient-pool';
+import { Nip42ResilientPool } from '@/lib/nip42-pool';
 import {
   BunkerSigner,
   createNostrConnectURI,
@@ -8,7 +8,12 @@ import {
   toBunkerURL,
 } from 'nostr-tools/nip46';
 import { bytesToHex } from '@/lib/hex';
-import { DEFAULT_NOSTRCONNECT_RELAYS, NIP46_APP_NAME } from '@/lib/constants';
+import {
+  DEFAULT_NOSTRCONNECT_RELAYS,
+  KIND0_FALLBACK_RELAYS,
+  NIP46_APP_NAME,
+  PURPLE_PAGES_RELAY,
+} from '@/lib/constants';
 import {
   checkPermission,
   setPermission,
@@ -39,6 +44,18 @@ import {
   profilesToSummaries,
 } from '@/lib/profiles';
 import type { Profile, Session } from '@/lib/profiles';
+import {
+  canUseNip46SecretForRelayProbe,
+  probeRelayAuthStatus,
+  type RelayAuthProbeResult,
+} from '@/lib/relay-auth-probe';
+import {
+  getRelayAuthProbeFromCache,
+  invalidateRelayAuthProbeCache,
+  relayAuthProbeCacheKey,
+  setRelayAuthProbeCache,
+} from '@/lib/relay-auth-probe-cache';
+import type { RelayUiProbeStatus } from '@/lib/relay-ui-probe';
 
 const STORAGE_KEY_NOSTRCONNECT_RELAYS = 'nostrConnectRelays';
 
@@ -86,6 +103,18 @@ let reconnectionFailedRelays: string[] = [];
 const pendingPermissions = new Map<string, PendingPermission>();
 /** Raw event payload for signEvent permission prompts (requestId -> event). Cleaned up on response. */
 const pendingRawEvents = new Map<string, unknown>();
+
+/** Close the current bunkerSigner (if any) and null it out. Best-effort, never throws. */
+async function closeBunkerSigner(): Promise<void> {
+  if (!bunkerSigner) return;
+  const old = bunkerSigner;
+  bunkerSigner = null;
+  try {
+    await old.close();
+  } catch {
+    /* ignore — relay may already be gone */
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Profile state management
@@ -234,9 +263,13 @@ const NIP65_FETCH_TIMEOUT_MS = 8_000;
 
 type RelayEntry = [string, { read: boolean; write: boolean }];
 
-async function fetchNip65RelayList(pubkey: string, relays: string[]): Promise<RelayEntry[] | null> {
+async function fetchNip65RelayList(
+  pubkey: string,
+  relays: string[],
+  nip46ClientSecret: Uint8Array
+): Promise<RelayEntry[] | null> {
   if (!relays.length) return null;
-  const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
+  const pool = new Nip42ResilientPool(nip46ClientSecret, { maxWaitForConnection: 10_000 });
   try {
     const event = await withTimeout(
       pool.get(
@@ -309,11 +342,13 @@ function probeRelays(relays: string[]): Promise<Map<string, boolean>> {
             };
 
             const timer = setTimeout(() => {
-              // Do NOT close the socket here — calling ws.close() while the
-              // WebSocket is still in CONNECTING state (readyState 0) produces
-              // a "WebSocket is closed before the connection is established"
-              // warning in the browser console. Just resolve and leave the
-              // socket to close on its own.
+              if (ws.readyState === WebSocket.OPEN) {
+                try {
+                  ws.close(1000, 'probe-timeout');
+                } catch {
+                  /* ignore */
+                }
+              }
               settle(true);
             }, RELAY_PROBE_TIMEOUT_MS);
 
@@ -439,7 +474,9 @@ function logBunkerFailure(phase: string, e: unknown, relays: string[]): void {
 const KIND0_FETCH_TIMEOUT_MS = 8_000;
 
 /**
- * Fetch kind 0 (metadata) for the signer pubkey from session relays.
+ * Fetch kind 0 (metadata) for the signer pubkey from session relays,
+ * {@link PURPLE_PAGES_RELAY}, then {@link KIND0_FALLBACK_RELAYS} (deduped).
+ * The pool queries in parallel; the first matching event wins.
  * Updates the profile's name and picture in storage. Fire-and-forget.
  */
 async function fetchKind0ForProfile(
@@ -447,15 +484,21 @@ async function fetchKind0ForProfile(
   pubkey: string,
   relays: string[]
 ): Promise<void> {
-  if (!relays.length) return;
-  const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
+  const relayList = normalizedRelayUrls([...relays, PURPLE_PAGES_RELAY, ...KIND0_FALLBACK_RELAYS]);
+  if (!relayList.length) return;
+  const profiles = await getProfiles();
+  const profile = profiles[profileId];
+  if (!profile) return;
+  const pool = new Nip42ResilientPool(getClientSecretBytes(profile), {
+    maxWaitForConnection: 10_000,
+  });
   try {
     const event = await withTimeout(
-      pool.get(relays, { kinds: [0], authors: [pubkey] }),
+      pool.get(relayList, { kinds: [0], authors: [pubkey] }),
       KIND0_FETCH_TIMEOUT_MS,
       'Kind 0 fetch timed out'
     );
-    pool.close(relays);
+    pool.close(relayList);
     if (!event?.content) return;
 
     const metadata = JSON.parse(event.content) as Record<string, unknown>;
@@ -492,7 +535,7 @@ async function fetchKind0ForProfile(
     }
   } catch {
     try {
-      pool.close(relays);
+      pool.close(relayList);
     } catch {
       /* ignore */
     }
@@ -529,7 +572,7 @@ async function reconnectFromSession(): Promise<boolean> {
       hasBunkerSecretInUri: Boolean(bp.secret),
     });
     const secret = getClientSecretBytes(activeProfile);
-    const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
+    const pool = new Nip42ResilientPool(secret, { maxWaitForConnection: 10_000 });
     const signer = BunkerSigner.fromBunker(secret, bp, { pool });
     await withTimeout(
       withRelayProbe(signer.connect(), bp.relays),
@@ -537,6 +580,7 @@ async function reconnectFromSession(): Promise<boolean> {
       'Reconnection timed out.'
     );
     bunkerSigner = signer;
+    invalidateRelayAuthProbeCache();
     console.info(BUNKER_LOG_PREFIX, 'reconnectFromSession: ok');
     return true;
   } catch (e) {
@@ -586,7 +630,7 @@ async function connectWithBunkerUri(
       clientSecretHex = activeProfile!.clientSecretHex;
     }
 
-    const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
+    const pool = new Nip42ResilientPool(clientSecretBytes, { maxWaitForConnection: 10_000 });
     const signer = BunkerSigner.fromBunker(clientSecretBytes, bp, { pool });
 
     console.info(BUNKER_LOG_PREFIX, 'connectWithBunkerUri: awaiting signer.connect()…');
@@ -611,10 +655,12 @@ async function connectWithBunkerUri(
     activeProfileId = profileId;
     activeProfile = profiles[profileId];
     await setActiveProfileId(profileId);
+    await closeBunkerSigner();
     bunkerSigner = signer;
     reconnectionFailed = false;
     reconnectingRelays = [];
     reconnectionFailedRelays = [];
+    invalidateRelayAuthProbeCache();
 
     void fetchKind0ForProfile(profileId, signerPubkey, bp.relays);
 
@@ -658,7 +704,7 @@ function startNostrConnectConnection(opts?: { asNewProfile?: boolean }): Promise
     }
 
     const clientPubkey = getPublicKey(clientSecretBytesVal);
-    const pool = new ResilientPool({ maxWaitForConnection: 10_000 });
+    const pool = new Nip42ResilientPool(clientSecretBytesVal, { maxWaitForConnection: 10_000 });
 
     const data = await chrome.storage.local.get(STORAGE_KEY_NOSTRCONNECT_RELAYS);
     const stored = data[STORAGE_KEY_NOSTRCONNECT_RELAYS] as string[] | undefined;
@@ -696,7 +742,9 @@ function startNostrConnectConnection(opts?: { asNewProfile?: boolean }): Promise
           await persistProfileSession(profileId, session);
         }
 
+        await closeBunkerSigner();
         bunkerSigner = signer;
+        invalidateRelayAuthProbeCache();
         void fetchKind0ForProfile(profileId, signerPubkey, signer.bp.relays);
       })
       .catch(() => {
@@ -807,6 +855,7 @@ const PRIVILEGED_MESSAGE_TYPES = new Set([
   'GET_PERMISSIONS',
   'REMOVE_PERMISSION',
   'REMOVE_DOMAIN_PERMISSIONS',
+  'RELAY_AUTH_PROBE',
 ]);
 
 function isExtensionPage(sender: { url?: string }): boolean {
@@ -816,7 +865,8 @@ function isExtensionPage(sender: { url?: string }): boolean {
 }
 
 function isPromptPage(sender: { url?: string }): boolean {
-  return Boolean(sender?.url?.includes('prompt.html'));
+  if (!sender?.url) return false;
+  return sender.url.startsWith(chrome.runtime.getURL('prompt.html'));
 }
 
 function validateNip04Nip44Params(params: unknown[]): params is [string, string] {
@@ -837,6 +887,7 @@ chrome.runtime.onMessage.addListener(
       profileId?: string;
       asNewProfile?: boolean;
       name?: string;
+      relays?: string[];
     },
     sender: { url?: string; tab?: { id?: number } },
     sendResponse: (response: unknown) => void
@@ -909,6 +960,39 @@ chrome.runtime.onMessage.addListener(
       }
 
       // --- Session / profile management ---
+      if (msg.type === 'RELAY_AUTH_PROBE' && Array.isArray(msg.relays)) {
+        await loadActiveProfileFromStorage();
+        const raw = msg.relays.filter(
+          (r): r is string => typeof r === 'string' && r.trim().length > 0
+        );
+        if (!raw.length) return { results: {} as Record<string, RelayUiProbeStatus> };
+
+        const secret =
+          activeProfile?.session?.relays?.length &&
+          canUseNip46SecretForRelayProbe(activeProfile.session.relays, raw)
+            ? getClientSecretBytes(activeProfile)
+            : null;
+
+        const usedSigning = Boolean(secret);
+        const cacheKey = relayAuthProbeCacheKey(activeProfileId ?? null, raw, usedSigning);
+        const cached = getRelayAuthProbeFromCache(cacheKey);
+        if (cached) return { results: cached };
+
+        const results: Record<string, RelayUiProbeStatus> = {};
+        await Promise.all(
+          raw.map(async (url) => {
+            try {
+              const r: RelayAuthProbeResult = await probeRelayAuthStatus(url, secret);
+              results[url] = r;
+            } catch {
+              results[url] = 'failed';
+            }
+          })
+        );
+        setRelayAuthProbeCache(cacheKey, results);
+        return { results };
+      }
+
       if (msg.type === 'GET_SESSION') {
         await loadActiveProfileFromStorage();
         if (reconnecting) {
@@ -993,15 +1077,9 @@ chrome.runtime.onMessage.addListener(
         const profiles = await getProfiles();
         if (!profiles[targetId]) return { success: false, error: 'Profile not found' };
 
-        // Close current signer
-        if (bunkerSigner) {
-          try {
-            await bunkerSigner.close();
-          } catch {
-            /* ignore */
-          }
-          bunkerSigner = null;
-        }
+        invalidateRelayAuthProbeCache();
+
+        await closeBunkerSigner();
 
         activeProfileId = targetId;
         activeProfile = profiles[targetId];
@@ -1039,17 +1117,11 @@ chrome.runtime.onMessage.addListener(
         const profiles = await getProfiles();
         if (!profiles[targetId]) return { success: false, error: 'Profile not found' };
 
+        invalidateRelayAuthProbeCache();
+
         const wasActive = targetId === activeProfileId;
 
-        // If removing active profile, disconnect
-        if (wasActive && bunkerSigner) {
-          try {
-            await bunkerSigner.close();
-          } catch {
-            /* ignore */
-          }
-          bunkerSigner = null;
-        }
+        if (wasActive) await closeBunkerSigner();
 
         // Remove profile and its data
         delete profiles[targetId];
@@ -1100,13 +1172,13 @@ chrome.runtime.onMessage.addListener(
       if (msg.type === 'FETCH_PROFILE_METADATA' && msg.profileId) {
         const profiles = await getProfiles();
         const profile = profiles[msg.profileId];
-        if (!profile?.session?.signerPubkey || !profile.session.relays?.length) {
-          return { success: false, error: 'Profile has no session or relays' };
+        if (!profile?.session?.signerPubkey) {
+          return { success: false, error: 'Profile has no signer pubkey' };
         }
         await fetchKind0ForProfile(
           msg.profileId,
           profile.session.signerPubkey,
-          profile.session.relays
+          profile.session.relays ?? []
         );
         const updated = await getProfiles();
         const p = updated[msg.profileId];
@@ -1168,22 +1240,15 @@ chrome.runtime.onMessage.addListener(
       }
 
       if (msg.type === 'DISCONNECT') {
-        if (bunkerSigner) {
-          try {
-            await bunkerSigner.close();
-          } catch {}
-        }
+        invalidateRelayAuthProbeCache();
+        await closeBunkerSigner();
         if (activeProfileId) await clearProfileSession(activeProfileId);
         return {};
       }
 
       if (msg.type === 'FULL_LOGOUT') {
-        if (bunkerSigner) {
-          try {
-            await bunkerSigner.close();
-          } catch {}
-        }
-        bunkerSigner = null;
+        invalidateRelayAuthProbeCache();
+        await closeBunkerSigner();
         reconnectionFailed = false;
         reconnectingRelays = [];
         reconnectionFailedRelays = [];
@@ -1251,7 +1316,13 @@ chrome.runtime.onMessage.addListener(
         if (msg.type === 'NIP07_GET_RELAYS') {
           const pubkey = await bunkerSigner.getPublicKey();
           const nip65 =
-            session.relays.length > 0 ? await fetchNip65RelayList(pubkey, session.relays) : null;
+            session.relays.length > 0
+              ? await fetchNip65RelayList(
+                  pubkey,
+                  session.relays,
+                  getClientSecretBytes(activeProfile)
+                )
+              : null;
           const list: RelayEntry[] =
             nip65 && nip65.length > 0
               ? nip65

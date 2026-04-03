@@ -388,5 +388,17 @@
   },
   "connectedViaRelays": {
     "message": "Connected via:"
+  },
+  "relayNip42AuthPendingTitle": {
+    "message": "Checking NIP-42 relay authentication…"
+  },
+  "relayNip42AuthSuccessTitle": {
+    "message": "NIP-42 relay authentication succeeded."
+  },
+  "relayNip42AuthFailedTitle": {
+    "message": "NIP-42 relay authentication failed or timed out."
+  },
+  "relayNip42ChallengeOnlyTitle": {
+    "message": "Relay sent an auth challenge; connect with this profile to verify signing."
   }
 }

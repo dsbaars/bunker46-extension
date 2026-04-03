@@ -1,162 +1,404 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "Người ký từ xa NIP-07 qua NIP-46 / Bunker46" },
-  "appSubtitle": { "message": "Người ký từ xa NIP-07" },
-  "openFullPage": { "message": "Mở trong tab mới để quản lý tùy chọn" },
-  "connected": { "message": "Đã kết nối" },
-  "offline": { "message": "Ngoại tuyến" },
-  "loading": { "message": "Đang tải…" },
-  "tabConnection": { "message": "Kết nối" },
-  "tabPermissions": { "message": "Quyền hạn" },
-  "tabSettings": { "message": "Cài đặt" },
-  "errorPasteUri": { "message": "Dán một URI bunker:// vào trên" },
-  "errorConnectionFailed": { "message": "Kết nối thất bại" },
-  "errorGenerateUri": { "message": "Không thể tạo URI kết nối" },
-  "errorStartConnection": { "message": "Không thể bắt đầu kết nối" },
-  "toastLoggedOut": { "message": "Đã đăng xuất" },
-  "toastLogoutFailed": { "message": "Đăng xuất thất bại" },
-  "toastSettingsSaved": { "message": "Đã lưu cài đặt" },
-  "toastPrivacyModeOn": { "message": "Chế độ riêng tư bật" },
-  "toastPrivacyModeOff": { "message": "Chế độ riêng tư tắt" },
-  "toastBadgeShown": { "message": "Đã hiện huy hiệu" },
-  "toastBadgeHidden": { "message": "Đã ẩn huy hiệu" },
-  "toastCopied": { "message": "Đã sao chép vào clipboard" },
-  "toastCopyFailed": { "message": "Sao chép thất bại" },
-  "toastPermissionRemoved": { "message": "Đã xóa quyền hạn" },
-  "toastPermissionRemoveFailed": { "message": "Không thể xóa quyền hạn" },
-  "toastDomainRemoved": { "message": "Đã xóa quyền hạn tên miền" },
-  "toastDomainRemoveFailed": { "message": "Không thể xóa tên miền" },
-  "toastNoActiveTab": { "message": "Không có tab hoặc URL nào đang hoạt động" },
-  "toastAddedToWhitelist": {
-    "message": "Đã thêm $1 vào danh sách trắng. Tải lại tab để sử dụng nostr."
+  "addAnotherConnection": {
+    "message": "Thêm kết nối khác"
   },
-  "toastAddDomainFailed": { "message": "Không thể thêm tên miền" },
-  "toastRemovedFromWhitelist": { "message": "Đã xóa khỏi danh sách trắng" },
-  "toastRemoveFromWhitelistFailed": { "message": "Không thể xóa khỏi danh sách trắng" },
-  "signerKey": { "message": "Khóa người ký" },
-  "copyTitle": { "message": "Sao chép" },
-  "showQrTitle": { "message": "Hiện mã QR" },
-  "signerDescription": {
-    "message": "Tất cả yêu cầu NIP-07 từ trang web được chuyển tiếp đến người ký từ xa này qua NIP-46. Không có khóa riêng tư nào được lưu trữ trong tiện ích mở rộng."
+  "addToWhitelistButton": {
+    "message": "Thêm $1 vào danh sách trắng"
   },
-  "disconnect": { "message": "Ngắt kết nối" },
-  "disconnectAndRemoveProfile": { "message": "Ngắt kết nối & xóa hồ sơ" },
-  "logoutConfirmTitle": { "message": "Đăng xuất hoàn toàn?" },
-  "logoutConfirmDescription": {
-    "message": "Thao tác này sẽ ngắt kết nối khỏi người ký của bạn và xóa tất cả quyền hạn cũng như danh sách trắng chế độ riêng tư. Bạn sẽ cần kết nối lại và cho phép lại các trang web."
+  "addToWhitelistTitle": {
+    "message": "Thêm $1 vào danh sách trắng"
   },
-  "cancel": { "message": "Hủy" },
-  "logOut": { "message": "Đăng xuất" },
-  "connectViaBunkerUri": { "message": "Kết nối qua Bunker URI" },
+  "allowed": {
+    "message": "Được phép"
+  },
+  "appSubtitle": {
+    "message": "Người ký từ xa NIP-07"
+  },
+  "cancel": {
+    "message": "Hủy"
+  },
+  "choiceOff": {
+    "message": "Tắt"
+  },
+  "choiceOn": {
+    "message": "Bật"
+  },
+  "close": {
+    "message": "Đóng"
+  },
+  "connect": {
+    "message": "Kết nối"
+  },
+  "connectViaBunkerUri": {
+    "message": "Kết nối qua Bunker URI"
+  },
   "connectViaBunkerUriDesc": {
     "message": "Dán một URI bunker:// từ người ký từ xa của bạn để kết nối"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "Đang kết nối..." },
-  "connect": { "message": "Kết nối" },
-  "separatorOr": { "message": "hoặc" },
-  "getUriFromBunker46": { "message": "Lấy URI từ Bunker46" },
+  "connected": {
+    "message": "Đã kết nối"
+  },
+  "connectedViaRelays": {
+    "message": "Đã kết nối qua:"
+  },
+  "connecting": {
+    "message": "Đang kết nối..."
+  },
+  "connectingToRelays": {
+    "message": "Đang kết nối tới:"
+  },
+  "copyTitle": {
+    "message": "Sao chép"
+  },
+  "copyUri": {
+    "message": "Sao chép URI"
+  },
+  "denied": {
+    "message": "Bị từ chối"
+  },
+  "disconnect": {
+    "message": "Ngắt kết nối"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Ngắt kết nối & xóa hồ sơ"
+  },
+  "errorConnectionFailed": {
+    "message": "Kết nối thất bại"
+  },
+  "errorGenerateUri": {
+    "message": "Không thể tạo URI kết nối"
+  },
+  "errorPasteUri": {
+    "message": "Dán một URI bunker:// vào trên"
+  },
+  "errorStartConnection": {
+    "message": "Không thể bắt đầu kết nối"
+  },
+  "extDescription": {
+    "message": "Người ký từ xa NIP-07 qua NIP-46 / Bunker46"
+  },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Lấy từ Nostr"
+  },
+  "getUriFromBunker46": {
+    "message": "Lấy URI từ Bunker46"
+  },
+  "loading": {
+    "message": "Đang tải…"
+  },
+  "logOut": {
+    "message": "Đăng xuất"
+  },
+  "logoutConfirmDescription": {
+    "message": "Thao tác này sẽ ngắt kết nối khỏi người ký của bạn và xóa tất cả quyền hạn cũng như danh sách trắng chế độ riêng tư. Bạn sẽ cần kết nối lại và cho phép lại các trang web."
+  },
+  "logoutConfirmTitle": {
+    "message": "Đăng xuất hoàn toàn?"
+  },
+  "method_getPublicKey": {
+    "message": "Lấy khóa công khai"
+  },
+  "method_getRelays": {
+    "message": "Lấy relay"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04 Giải mã"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04 Mã hóa"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44 Giải mã"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44 Mã hóa"
+  },
+  "method_signEvent": {
+    "message": "Ký sự kiện"
+  },
+  "method_signEvent_kind": {
+    "message": "Ký sự kiện (loại $1)"
+  },
+  "noDomainsMatch": {
+    "message": "Không có tên miền nào khớp với tìm kiếm của bạn"
+  },
+  "noPermissionsHint": {
+    "message": "Khi các trang web yêu cầu quyền truy cập vào danh tính Nostr của bạn, chúng sẽ xuất hiện ở đây."
+  },
+  "noPermissionsYet": {
+    "message": "Chưa có quyền hạn nào"
+  },
   "nostrConnectDesc": {
     "message": "Kết nối qua Nostrconnect: hiển thị mã QR và URI cho ứng dụng bunker của bạn quét."
   },
-  "showQrConnectionUri": { "message": "Hiện QR & URI kết nối" },
-  "settingsUseBunker46": { "message": "Dùng Bunker46" },
-  "settingsUseBunker46Hint": {
-    "message": "Xử lý liên kết nostrconnect: và chuyển hướng đến phiên bản Bunker46 của bạn."
+  "nostrConnectModalHint": {
+    "message": "Quét bằng ứng dụng bunker của bạn hoặc sao chép URI"
   },
-  "settingsBunkerUrl": { "message": "Bunker46 URL" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "URL cơ sở của phiên bản Bunker46 của bạn" },
-  "settingsSpecifyNostrConnectRelays": { "message": "Chỉ định relay nostrconnect" },
-  "settingsSpecifyNostrConnectRelaysHint": {
-    "message": "Đặt URL relay tùy chỉnh cho mã QR/URI Nostrconnect."
+  "nostrConnectQrAlt": {
+    "message": "Mã QR Nostrconnect"
   },
-  "settingsNostrConnectRelays": { "message": "Relay Nostr Connect" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
-  "settingsNostrConnectRelaysHint": {
-    "message": "Một URL relay mỗi dòng (hoặc cách nhau bằng dấu phẩy). Dùng khi tạo mã QR/URI để kết nối qua Nostrconnect."
+  "offline": {
+    "message": "Ngoại tuyến"
   },
-  "choiceOn": { "message": "Bật" },
-  "choiceOff": { "message": "Tắt" },
-  "save": { "message": "Lưu" },
-  "privacyMode": { "message": "Chế độ riêng tư" },
+  "openFullPage": {
+    "message": "Mở trong tab mới để quản lý tùy chọn"
+  },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "privacyMode": {
+    "message": "Chế độ riêng tư"
+  },
   "privacyModeHint": {
     "message": "Chỉ hiển thị window.nostr trên các tên miền trong danh sách trắng (tab Quyền hạn); giảm dấu vân tay kỹ thuật số."
   },
   "privacyModeSitesHint": {
     "message": "Các trang web không thể phát hiện tiện ích mở rộng, vì vậy một số có thể không hiển thị \"Đăng nhập bằng Nostr\" cho đến khi bạn thêm chúng vào Quyền hạn."
   },
-  "showBadge": { "message": "Hiển thị huy hiệu trên biểu tượng tiện ích mở rộng" },
-  "showBadgeHint": {
-    "message": "Khi bật, biểu tượng hiển thị số quyền hạn được cấp cho tab hiện tại (ví dụ: 1, 2)."
+  "promptAllowAlways": {
+    "message": "Luôn cho phép"
   },
-  "addToWhitelistTitle": { "message": "Thêm $1 vào danh sách trắng" },
-  "addToWhitelistButton": { "message": "Thêm $1 vào danh sách trắng" },
-  "removeFromWhitelistTitle": { "message": "Xóa $1 khỏi danh sách trắng" },
-  "removeFromWhitelistButton": { "message": "Xóa $1 khỏi danh sách trắng" },
-  "searchDomainsPlaceholder": { "message": "Tìm kiếm tên miền..." },
-  "noPermissionsYet": { "message": "Chưa có quyền hạn nào" },
-  "noPermissionsHint": {
-    "message": "Khi các trang web yêu cầu quyền truy cập vào danh tính Nostr của bạn, chúng sẽ xuất hiện ở đây."
+  "promptAllowAlwaysForKindHint": {
+    "message": "Chỉ áp dụng cho loại sự kiện này"
   },
-  "noDomainsMatch": { "message": "Không có tên miền nào khớp với tìm kiếm của bạn" },
-  "revokeAllPermissionsTitle": { "message": "Thu hồi tất cả quyền hạn của tên miền này" },
-  "whitelistedNoPermissions": { "message": "Trong danh sách trắng cho nostr (chưa có quyền hạn)" },
-  "allowed": { "message": "Được phép" },
-  "denied": { "message": "Bị từ chối" },
-  "revokeTitle": { "message": "Thu hồi" },
-  "removeFromWhitelist": { "message": "Xóa khỏi danh sách trắng" },
-  "qrScanToUse": { "message": "$1 (quét để sử dụng)" },
-  "qrCodeAlt": { "message": "Mã QR" },
-  "close": { "message": "Đóng" },
-  "nostrConnectModalHint": { "message": "Quét bằng ứng dụng bunker của bạn hoặc sao chép URI" },
-  "nostrConnectQrAlt": { "message": "Mã QR Nostrconnect" },
-  "copyUri": { "message": "Sao chép URI" },
-  "waitingForBunker": { "message": "Đang chờ bunker kết nối…" },
-  "method_getPublicKey": { "message": "Lấy khóa công khai" },
-  "method_signEvent": { "message": "Ký sự kiện" },
-  "method_signEvent_kind": { "message": "Ký sự kiện (loại $1)" },
-  "method_getRelays": { "message": "Lấy relay" },
-  "method_nip04_encrypt": { "message": "NIP-04 Mã hóa" },
-  "method_nip04_decrypt": { "message": "NIP-04 Giải mã" },
-  "method_nip44_encrypt": { "message": "NIP-44 Mã hóa" },
-  "method_nip44_decrypt": { "message": "NIP-44 Giải mã" },
-  "promptPermissionRequest": { "message": "Yêu cầu quyền hạn" },
-  "promptWantsAccess": { "message": "muốn truy cập danh tính Nostr của bạn" },
-  "promptEventKind": { "message": "Loại sự kiện $1" },
-  "promptViewRawMessage": { "message": "Xem tin nhắn thô" },
-  "promptHideRawMessage": { "message": "Ẩn tin nhắn thô" },
-  "promptAllowAlways": { "message": "Luôn cho phép" },
-  "promptAllowAlwaysForKindHint": { "message": "Chỉ áp dụng cho loại sự kiện này" },
-  "promptAllowOnce": { "message": "Cho phép một lần" },
-  "promptDenyOnce": { "message": "Từ chối" },
-  "promptDenyAlways": { "message": "Luôn từ chối" },
-  "settingsMultiProfile": { "message": "Nhiều hồ sơ" },
-  "settingsMultiProfileHint": {
-    "message": "Hiển thị bộ chuyển hồ sơ và cho phép thêm nhiều kết nối."
+  "promptAllowOnce": {
+    "message": "Cho phép một lần"
   },
-  "settingsMultiProfileDisabledHint": { "message": "Xóa các hồ sơ thêm để dùng chế độ một hồ sơ." },
-  "addAnotherConnection": { "message": "Thêm kết nối khác" },
-  "removeProfile": { "message": "Xóa hồ sơ này" },
-  "removeProfileConfirmTitle": { "message": "Xóa hồ sơ?" },
-  "removeProfileConfirmDesc": {
-    "message": "Thao tác này sẽ ngắt kết nối và xóa tất cả quyền hạn cũng như mục trong danh sách trắng của hồ sơ này."
+  "promptDenyAlways": {
+    "message": "Luôn từ chối"
   },
-  "switchProfile": { "message": "Chuyển hồ sơ" },
-  "toastProfileRemoved": { "message": "Đã xóa hồ sơ" },
-  "toastProfileRemoveFailed": { "message": "Không thể xóa hồ sơ" },
+  "promptDenyOnce": {
+    "message": "Từ chối"
+  },
+  "promptEventKind": {
+    "message": "Loại sự kiện $1"
+  },
+  "promptHideRawMessage": {
+    "message": "Ẩn tin nhắn thô"
+  },
+  "promptPermissionRequest": {
+    "message": "Yêu cầu quyền hạn"
+  },
+  "promptViewRawMessage": {
+    "message": "Xem tin nhắn thô"
+  },
+  "promptWantsAccess": {
+    "message": "muốn truy cập danh tính Nostr của bạn"
+  },
+  "qrCodeAlt": {
+    "message": "Mã QR"
+  },
+  "qrScanToUse": {
+    "message": "$1 (quét để sử dụng)"
+  },
   "reconnectionFailedMessage": {
     "message": "Không thể khôi phục kết nối. Bunker có thể đã thu hồi quyền truy cập."
   },
-  "renameProfile": { "message": "Đổi tên hồ sơ" },
-  "renameProfileTitle": { "message": "Đổi tên hồ sơ" },
-  "renameProfileHint": { "message": "Đặt tên hiển thị hoặc lấy từ Nostr (loại 0)." },
-  "renameProfileNameLabel": { "message": "Tên hiển thị" },
-  "renameProfileNamePlaceholder": { "message": "Tên hồ sơ" },
-  "fetchProfileFromNostr": { "message": "Lấy từ Nostr" },
-  "toastProfileMetadataFetched": { "message": "Đã lấy thông tin hồ sơ" },
-  "toastProfileMetadataFetchFailed": { "message": "Không thể lấy hồ sơ từ Nostr" },
-  "toastProfileRenameFailed": { "message": "Không thể đổi tên hồ sơ" },
-  "connectingToRelays": { "message": "Đang kết nối tới:" },
-  "connectedViaRelays": { "message": "Đã kết nối qua:" }
+  "relayNip42AuthFailedTitle": {
+    "message": "Xác thực relay NIP-42 thất bại hoặc hết thời gian."
+  },
+  "relayNip42AuthPendingTitle": {
+    "message": "Đang kiểm tra xác thực relay NIP-42…"
+  },
+  "relayNip42AuthSuccessTitle": {
+    "message": "Xác thực relay NIP-42 thành công."
+  },
+  "relayNip42ChallengeOnlyTitle": {
+    "message": "Relay đã gửi thử thách xác thực; kết nối bằng hồ sơ này để xác minh chữ ký."
+  },
+  "removeFromWhitelist": {
+    "message": "Xóa khỏi danh sách trắng"
+  },
+  "removeFromWhitelistButton": {
+    "message": "Xóa $1 khỏi danh sách trắng"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "Xóa $1 khỏi danh sách trắng"
+  },
+  "removeProfile": {
+    "message": "Xóa hồ sơ này"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "Thao tác này sẽ ngắt kết nối và xóa tất cả quyền hạn cũng như mục trong danh sách trắng của hồ sơ này."
+  },
+  "removeProfileConfirmTitle": {
+    "message": "Xóa hồ sơ?"
+  },
+  "renameProfile": {
+    "message": "Đổi tên hồ sơ"
+  },
+  "renameProfileHint": {
+    "message": "Đặt tên hiển thị hoặc lấy từ Nostr (loại 0)."
+  },
+  "renameProfileNameLabel": {
+    "message": "Tên hiển thị"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "Tên hồ sơ"
+  },
+  "renameProfileTitle": {
+    "message": "Đổi tên hồ sơ"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "Thu hồi tất cả quyền hạn của tên miền này"
+  },
+  "revokeTitle": {
+    "message": "Thu hồi"
+  },
+  "save": {
+    "message": "Lưu"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Tìm kiếm tên miền..."
+  },
+  "separatorOr": {
+    "message": "hoặc"
+  },
+  "settingsBunkerUrl": {
+    "message": "Bunker46 URL"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "URL cơ sở của phiên bản Bunker46 của bạn"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsMultiProfile": {
+    "message": "Nhiều hồ sơ"
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Xóa các hồ sơ thêm để dùng chế độ một hồ sơ."
+  },
+  "settingsMultiProfileHint": {
+    "message": "Hiển thị bộ chuyển hồ sơ và cho phép thêm nhiều kết nối."
+  },
+  "settingsNostrConnectRelays": {
+    "message": "Relay Nostr Connect"
+  },
+  "settingsNostrConnectRelaysHint": {
+    "message": "Một URL relay mỗi dòng (hoặc cách nhau bằng dấu phẩy). Dùng khi tạo mã QR/URI để kết nối qua Nostrconnect."
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Chỉ định relay nostrconnect"
+  },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Đặt URL relay tùy chỉnh cho mã QR/URI Nostrconnect."
+  },
+  "settingsUseBunker46": {
+    "message": "Dùng Bunker46"
+  },
+  "settingsUseBunker46Hint": {
+    "message": "Xử lý liên kết nostrconnect: và chuyển hướng đến phiên bản Bunker46 của bạn."
+  },
+  "showBadge": {
+    "message": "Hiển thị huy hiệu trên biểu tượng tiện ích mở rộng"
+  },
+  "showBadgeHint": {
+    "message": "Khi bật, biểu tượng hiển thị số quyền hạn được cấp cho tab hiện tại (ví dụ: 1, 2)."
+  },
+  "showQrConnectionUri": {
+    "message": "Hiện QR & URI kết nối"
+  },
+  "showQrTitle": {
+    "message": "Hiện mã QR"
+  },
+  "signerDescription": {
+    "message": "Tất cả yêu cầu NIP-07 từ trang web được chuyển tiếp đến người ký từ xa này qua NIP-46. Không có khóa riêng tư nào được lưu trữ trong tiện ích mở rộng."
+  },
+  "signerKey": {
+    "message": "Khóa người ký"
+  },
+  "switchProfile": {
+    "message": "Chuyển hồ sơ"
+  },
+  "tabConnection": {
+    "message": "Kết nối"
+  },
+  "tabPermissions": {
+    "message": "Quyền hạn"
+  },
+  "tabSettings": {
+    "message": "Cài đặt"
+  },
+  "toastAddDomainFailed": {
+    "message": "Không thể thêm tên miền"
+  },
+  "toastAddedToWhitelist": {
+    "message": "Đã thêm $1 vào danh sách trắng. Tải lại tab để sử dụng nostr."
+  },
+  "toastBadgeHidden": {
+    "message": "Đã ẩn huy hiệu"
+  },
+  "toastBadgeShown": {
+    "message": "Đã hiện huy hiệu"
+  },
+  "toastCopied": {
+    "message": "Đã sao chép vào clipboard"
+  },
+  "toastCopyFailed": {
+    "message": "Sao chép thất bại"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Không thể xóa tên miền"
+  },
+  "toastDomainRemoved": {
+    "message": "Đã xóa quyền hạn tên miền"
+  },
+  "toastLoggedOut": {
+    "message": "Đã đăng xuất"
+  },
+  "toastLogoutFailed": {
+    "message": "Đăng xuất thất bại"
+  },
+  "toastNoActiveTab": {
+    "message": "Không có tab hoặc URL nào đang hoạt động"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Không thể xóa quyền hạn"
+  },
+  "toastPermissionRemoved": {
+    "message": "Đã xóa quyền hạn"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Chế độ riêng tư tắt"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Chế độ riêng tư bật"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "Không thể lấy hồ sơ từ Nostr"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "Đã lấy thông tin hồ sơ"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "Không thể xóa hồ sơ"
+  },
+  "toastProfileRemoved": {
+    "message": "Đã xóa hồ sơ"
+  },
+  "toastProfileRenameFailed": {
+    "message": "Không thể đổi tên hồ sơ"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Không thể xóa khỏi danh sách trắng"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "Đã xóa khỏi danh sách trắng"
+  },
+  "toastSettingsSaved": {
+    "message": "Đã lưu cài đặt"
+  },
+  "waitingForBunker": {
+    "message": "Đang chờ bunker kết nối…"
+  },
+  "whitelistedNoPermissions": {
+    "message": "Trong danh sách trắng cho nostr (chưa có quyền hạn)"
+  }
 }

@@ -21,6 +21,14 @@ describe('hexToBytes', () => {
     expect(hexToBytes('')).toEqual(new Uint8Array(0));
   });
 
+  it('throws on odd-length hex string', () => {
+    expect(() => hexToBytes('abc')).toThrow('Invalid hex string');
+  });
+
+  it('throws on non-hex characters', () => {
+    expect(() => hexToBytes('zzzz')).toThrow('Invalid hex string');
+  });
+
   it('round-trips with bytesToHex', () => {
     const original = new Uint8Array([1, 2, 3, 254, 255]);
     const hex = bytesToHex(original);

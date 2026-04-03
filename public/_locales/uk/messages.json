@@ -1,126 +1,33 @@
 {
-  "extName": {
-    "message": "Bunker46"
+  "addAnotherConnection": {
+    "message": "Додати ще одне з'єднання"
   },
-  "extDescription": {
-    "message": "Віддалений підписант NIP-07 через NIP-46 / Bunker46"
+  "addToWhitelistButton": {
+    "message": "Додати $1 до білого списку"
+  },
+  "addToWhitelistTitle": {
+    "message": "Додати $1 до білого списку"
+  },
+  "allowed": {
+    "message": "Дозволено"
   },
   "appSubtitle": {
     "message": "Віддалений підписант NIP-07"
   },
-  "openFullPage": {
-    "message": "Відкрити в новій вкладці для керування налаштуваннями"
-  },
-  "connected": {
-    "message": "Підключено"
-  },
-  "offline": {
-    "message": "Не в мережі"
-  },
-  "loading": {
-    "message": "Завантаження…"
-  },
-  "tabConnection": {
-    "message": "Підключення"
-  },
-  "tabPermissions": {
-    "message": "Дозволи"
-  },
-  "tabSettings": {
-    "message": "Налаштування"
-  },
-  "errorPasteUri": {
-    "message": "Вставте URI bunker:// вище"
-  },
-  "errorConnectionFailed": {
-    "message": "Помилка підключення"
-  },
-  "errorGenerateUri": {
-    "message": "Не вдалося створити URI підключення"
-  },
-  "errorStartConnection": {
-    "message": "Не вдалося запустити підключення"
-  },
-  "toastLoggedOut": {
-    "message": "Вихід виконано"
-  },
-  "toastLogoutFailed": {
-    "message": "Помилка виходу"
-  },
-  "toastSettingsSaved": {
-    "message": "Налаштування збережено"
-  },
-  "toastPrivacyModeOn": {
-    "message": "Режим конфіденційності увімкнено"
-  },
-  "toastPrivacyModeOff": {
-    "message": "Режим конфіденційності вимкнено"
-  },
-  "toastBadgeShown": {
-    "message": "Значок відображається"
-  },
-  "toastBadgeHidden": {
-    "message": "Значок приховано"
-  },
-  "toastCopied": {
-    "message": "Скопійовано до буфера обміну"
-  },
-  "toastCopyFailed": {
-    "message": "Не вдалося скопіювати"
-  },
-  "toastPermissionRemoved": {
-    "message": "Дозвіл видалено"
-  },
-  "toastPermissionRemoveFailed": {
-    "message": "Не вдалося видалити дозвіл"
-  },
-  "toastDomainRemoved": {
-    "message": "Дозволи домену видалено"
-  },
-  "toastDomainRemoveFailed": {
-    "message": "Не вдалося видалити домен"
-  },
-  "toastNoActiveTab": {
-    "message": "Немає активної вкладки або URL"
-  },
-  "toastAddedToWhitelist": {
-    "message": "$1 додано до білого списку. Перезавантажте вкладку для використання Nostr."
-  },
-  "toastAddDomainFailed": {
-    "message": "Не вдалося додати домен"
-  },
-  "toastRemovedFromWhitelist": {
-    "message": "Видалено з білого списку"
-  },
-  "toastRemoveFromWhitelistFailed": {
-    "message": "Не вдалося видалити з білого списку"
-  },
-  "signerKey": {
-    "message": "Ключ підписанта"
-  },
-  "copyTitle": {
-    "message": "Копіювати"
-  },
-  "showQrTitle": {
-    "message": "Показати QR-код"
-  },
-  "signerDescription": {
-    "message": "Усі запити NIP-07 від веб-сторінок перенаправляються до цього віддаленого підписанта через NIP-46. Приватні ключі не зберігаються в розширенні."
-  },
-  "disconnect": {
-    "message": "Відключити"
-  },
-  "logoutConfirmTitle": {
-    "message": "Повністю вийти?"
-  },
-  "logoutConfirmDescription": {
-    "message": "Це відключить вашого підписанта та очистить усі дозволи і білий список режиму конфіденційності. Вам потрібно буде перепідключитися та повторно дозволити сайти."
-  },
   "cancel": {
     "message": "Скасувати"
   },
-  "logOut": {
-    "message": "Вийти"
+  "choiceOff": {
+    "message": "Вимк"
+  },
+  "choiceOn": {
+    "message": "Увімк"
+  },
+  "close": {
+    "message": "Закрити"
+  },
+  "connect": {
+    "message": "Підключити"
   },
   "connectViaBunkerUri": {
     "message": "Підключити через URI Bunker"
@@ -128,65 +35,119 @@
   "connectViaBunkerUriDesc": {
     "message": "Вставте URI bunker:// від вашого віддаленого підписанта для підключення"
   },
-  "placeholderBunkerUri": {
-    "message": "bunker://..."
+  "connected": {
+    "message": "Підключено"
+  },
+  "connectedViaRelays": {
+    "message": "Підключено через:"
   },
   "connecting": {
     "message": "Підключення..."
   },
-  "connect": {
-    "message": "Підключити"
+  "connectingToRelays": {
+    "message": "Підключення до:"
   },
-  "separatorOr": {
-    "message": "або"
+  "copyTitle": {
+    "message": "Копіювати"
+  },
+  "copyUri": {
+    "message": "Копіювати URI"
+  },
+  "denied": {
+    "message": "Заборонено"
+  },
+  "disconnect": {
+    "message": "Відключити"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Відключити та видалити профіль"
+  },
+  "errorConnectionFailed": {
+    "message": "Помилка підключення"
+  },
+  "errorGenerateUri": {
+    "message": "Не вдалося створити URI підключення"
+  },
+  "errorPasteUri": {
+    "message": "Вставте URI bunker:// вище"
+  },
+  "errorStartConnection": {
+    "message": "Не вдалося запустити підключення"
+  },
+  "extDescription": {
+    "message": "Віддалений підписант NIP-07 через NIP-46 / Bunker46"
+  },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Отримати з Nostr"
   },
   "getUriFromBunker46": {
     "message": "Отримати URI з Bunker46"
   },
+  "loading": {
+    "message": "Завантаження…"
+  },
+  "logOut": {
+    "message": "Вийти"
+  },
+  "logoutConfirmDescription": {
+    "message": "Це відключить вашого підписанта та очистить усі дозволи і білий список режиму конфіденційності. Вам потрібно буде перепідключитися та повторно дозволити сайти."
+  },
+  "logoutConfirmTitle": {
+    "message": "Повністю вийти?"
+  },
+  "method_getPublicKey": {
+    "message": "Отримати публічний ключ"
+  },
+  "method_getRelays": {
+    "message": "Отримати ретранслятори"
+  },
+  "method_nip04_decrypt": {
+    "message": "Дешифрування NIP-04"
+  },
+  "method_nip04_encrypt": {
+    "message": "Шифрування NIP-04"
+  },
+  "method_nip44_decrypt": {
+    "message": "Дешифрування NIP-44"
+  },
+  "method_nip44_encrypt": {
+    "message": "Шифрування NIP-44"
+  },
+  "method_signEvent": {
+    "message": "Підписати подію"
+  },
+  "method_signEvent_kind": {
+    "message": "Підписати подію (тип $1)"
+  },
+  "noDomainsMatch": {
+    "message": "Жоден домен не відповідає запиту"
+  },
+  "noPermissionsHint": {
+    "message": "Коли сайти запитають доступ до вашої ідентичності Nostr, вони з'являться тут."
+  },
+  "noPermissionsYet": {
+    "message": "Дозволів поки немає"
+  },
   "nostrConnectDesc": {
     "message": "Підключення через Nostrconnect: відображає QR-код та URI для сканування вашим додатком bunker."
   },
-  "showQrConnectionUri": {
-    "message": "Показати QR та URI підключення"
+  "nostrConnectModalHint": {
+    "message": "Відскануйте додатком bunker або скопіюйте URI"
   },
-  "settingsUseBunker46": {
-    "message": "Використовувати Bunker46"
+  "nostrConnectQrAlt": {
+    "message": "QR-код Nostrconnect"
   },
-  "settingsUseBunker46Hint": {
-    "message": "Обробляти посилання nostrconnect: та перенаправляти до вашого екземпляра Bunker46."
+  "offline": {
+    "message": "Не в мережі"
   },
-  "settingsBunkerUrl": {
-    "message": "URL Bunker46"
+  "openFullPage": {
+    "message": "Відкрити в новій вкладці для керування налаштуваннями"
   },
-  "settingsBunkerUrlPlaceholder": {
-    "message": "http://localhost:5173"
-  },
-  "settingsBunkerUrlHint": {
-    "message": "Базовий URL вашого екземпляра Bunker46"
-  },
-  "settingsSpecifyNostrConnectRelays": {
-    "message": "Вказати ретранслятори Nostrconnect"
-  },
-  "settingsSpecifyNostrConnectRelaysHint": {
-    "message": "Задати власні URL ретрансляторів для QR/URI Nostrconnect."
-  },
-  "settingsNostrConnectRelays": {
-    "message": "Ретранслятори підключення Nostr"
-  },
-  "settingsNostrConnectRelaysPlaceholder": {
-    "message": "wss://relay.nsec.app"
-  },
-  "settingsNostrConnectRelaysHint": {
-    "message": "Один URL ретранслятора на рядок (або через кому). Використовуються при створенні QR/URI для підключення через Nostrconnect."
-  },
-  "choiceOn": {
-    "message": "Увімк"
-  },
-  "choiceOff": {
-    "message": "Вимк"
-  },
-  "save": {
-    "message": "Зберегти"
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
   },
   "privacyMode": {
     "message": "Режим конфіденційності"
@@ -197,114 +158,6 @@
   "privacyModeSitesHint": {
     "message": "Сайти не можуть виявити розширення, тому деякі можуть не показувати «Увійти через Nostr», поки ви не додасте їх у Дозволи."
   },
-  "showBadge": {
-    "message": "Показувати значок на іконці розширення"
-  },
-  "showBadgeHint": {
-    "message": "Коли увімкнено, іконка показує кількість наданих дозволів для поточної вкладки (напр. 1, 2)."
-  },
-  "addToWhitelistTitle": {
-    "message": "Додати $1 до білого списку"
-  },
-  "addToWhitelistButton": {
-    "message": "Додати $1 до білого списку"
-  },
-  "removeFromWhitelistTitle": {
-    "message": "Видалити $1 з білого списку"
-  },
-  "removeFromWhitelistButton": {
-    "message": "Видалити $1 з білого списку"
-  },
-  "searchDomainsPlaceholder": {
-    "message": "Пошук доменів..."
-  },
-  "noPermissionsYet": {
-    "message": "Дозволів поки немає"
-  },
-  "noPermissionsHint": {
-    "message": "Коли сайти запитають доступ до вашої ідентичності Nostr, вони з'являться тут."
-  },
-  "noDomainsMatch": {
-    "message": "Жоден домен не відповідає запиту"
-  },
-  "revokeAllPermissionsTitle": {
-    "message": "Відкликати всі дозволи для цього домену"
-  },
-  "whitelistedNoPermissions": {
-    "message": "У білому списку для Nostr (дозволів поки немає)"
-  },
-  "allowed": {
-    "message": "Дозволено"
-  },
-  "denied": {
-    "message": "Заборонено"
-  },
-  "revokeTitle": {
-    "message": "Відкликати"
-  },
-  "removeFromWhitelist": {
-    "message": "Видалити з білого списку"
-  },
-  "qrScanToUse": {
-    "message": "$1 (відскануйте для використання)"
-  },
-  "qrCodeAlt": {
-    "message": "QR-код"
-  },
-  "close": {
-    "message": "Закрити"
-  },
-  "nostrConnectModalHint": {
-    "message": "Відскануйте додатком bunker або скопіюйте URI"
-  },
-  "nostrConnectQrAlt": {
-    "message": "QR-код Nostrconnect"
-  },
-  "copyUri": {
-    "message": "Копіювати URI"
-  },
-  "waitingForBunker": {
-    "message": "Очікування підключення bunker…"
-  },
-  "method_getPublicKey": {
-    "message": "Отримати публічний ключ"
-  },
-  "method_signEvent": {
-    "message": "Підписати подію"
-  },
-  "method_signEvent_kind": {
-    "message": "Підписати подію (тип $1)"
-  },
-  "method_getRelays": {
-    "message": "Отримати ретранслятори"
-  },
-  "method_nip04_encrypt": {
-    "message": "Шифрування NIP-04"
-  },
-  "method_nip04_decrypt": {
-    "message": "Дешифрування NIP-04"
-  },
-  "method_nip44_encrypt": {
-    "message": "Шифрування NIP-44"
-  },
-  "method_nip44_decrypt": {
-    "message": "Дешифрування NIP-44"
-  },
-  "promptPermissionRequest": {
-    "message": "Запит дозволу"
-  },
-  "promptWantsAccess": {
-    "message": "хоче отримати доступ до вашої ідентичності Nostr"
-  },
-  "promptEventKind": {
-    "message": "Тип події $1"
-  },
-  "promptViewRawMessage": {
-    "message": "Переглянути вихідне повідомлення"
-  },
-  "promptHideRawMessage": {
-    "message": "Приховати вихідне повідомлення"
-  },
   "promptAllowAlways": {
     "message": "Дозволити завжди"
   },
@@ -314,49 +167,67 @@
   "promptAllowOnce": {
     "message": "Дозволити один раз"
   },
-  "promptDenyOnce": {
-    "message": "Заборонити"
-  },
   "promptDenyAlways": {
     "message": "Заборонити завжди"
   },
-  "settingsMultiProfile": {
-    "message": "Кілька профілів"
+  "promptDenyOnce": {
+    "message": "Заборонити"
   },
-  "settingsMultiProfileHint": {
-    "message": "Показати перемикач профілів і дозволити додавати кілька з'єднань."
+  "promptEventKind": {
+    "message": "Тип події $1"
   },
-  "settingsMultiProfileDisabledHint": {
-    "message": "Видаліть зайві профілі для використання режиму одного профілю."
+  "promptHideRawMessage": {
+    "message": "Приховати вихідне повідомлення"
   },
-  "addAnotherConnection": {
-    "message": "Додати ще одне з'єднання"
+  "promptPermissionRequest": {
+    "message": "Запит дозволу"
   },
-  "removeProfile": {
-    "message": "Видалити цей профіль"
+  "promptViewRawMessage": {
+    "message": "Переглянути вихідне повідомлення"
   },
-  "removeProfileConfirmTitle": {
-    "message": "Видалити профіль?"
+  "promptWantsAccess": {
+    "message": "хоче отримати доступ до вашої ідентичності Nostr"
   },
-  "removeProfileConfirmDesc": {
-    "message": "Це від'єднає та видалить усі дозволи й записи білого списку для цього профілю."
+  "qrCodeAlt": {
+    "message": "QR-код"
   },
-  "switchProfile": {
-    "message": "Перемкнути профіль"
-  },
-  "toastProfileRemoved": {
-    "message": "Профіль видалено"
-  },
-  "toastProfileRemoveFailed": {
-    "message": "Не вдалося видалити профіль"
+  "qrScanToUse": {
+    "message": "$1 (відскануйте для використання)"
   },
   "reconnectionFailedMessage": {
     "message": "Не вдалося відновити з'єднання. Можливо, бункер відкликав доступ."
   },
-  "renameProfile": {
-    "message": "Перейменувати профіль"
+  "relayNip42AuthFailedTitle": {
+    "message": "NIP-42 автентифікація на реле не вдалася або час вичерпано."
   },
-  "renameProfileTitle": {
+  "relayNip42AuthPendingTitle": {
+    "message": "Перевірка NIP-42 автентифікації на реле…"
+  },
+  "relayNip42AuthSuccessTitle": {
+    "message": "NIP-42 автентифікація на реле успішна."
+  },
+  "relayNip42ChallengeOnlyTitle": {
+    "message": "Реле надіслало запит автентифікації; підключіться з цим профілем, щоб перевірити підпис."
+  },
+  "removeFromWhitelist": {
+    "message": "Видалити з білого списку"
+  },
+  "removeFromWhitelistButton": {
+    "message": "Видалити $1 з білого списку"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "Видалити $1 з білого списку"
+  },
+  "removeProfile": {
+    "message": "Видалити цей профіль"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "Це від'єднає та видалить усі дозволи й записи білого списку для цього профілю."
+  },
+  "removeProfileConfirmTitle": {
+    "message": "Видалити профіль?"
+  },
+  "renameProfile": {
     "message": "Перейменувати профіль"
   },
   "renameProfileHint": {
@@ -368,25 +239,166 @@
   "renameProfileNamePlaceholder": {
     "message": "Назва профілю"
   },
-  "fetchProfileFromNostr": {
-    "message": "Отримати з Nostr"
+  "renameProfileTitle": {
+    "message": "Перейменувати профіль"
   },
-  "toastProfileMetadataFetched": {
-    "message": "Дані профілю отримано"
+  "revokeAllPermissionsTitle": {
+    "message": "Відкликати всі дозволи для цього домену"
+  },
+  "revokeTitle": {
+    "message": "Відкликати"
+  },
+  "save": {
+    "message": "Зберегти"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Пошук доменів..."
+  },
+  "separatorOr": {
+    "message": "або"
+  },
+  "settingsBunkerUrl": {
+    "message": "URL Bunker46"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "Базовий URL вашого екземпляра Bunker46"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsMultiProfile": {
+    "message": "Кілька профілів"
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Видаліть зайві профілі для використання режиму одного профілю."
+  },
+  "settingsMultiProfileHint": {
+    "message": "Показати перемикач профілів і дозволити додавати кілька з'єднань."
+  },
+  "settingsNostrConnectRelays": {
+    "message": "Ретранслятори підключення Nostr"
+  },
+  "settingsNostrConnectRelaysHint": {
+    "message": "Один URL ретранслятора на рядок (або через кому). Використовуються при створенні QR/URI для підключення через Nostrconnect."
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Вказати ретранслятори Nostrconnect"
+  },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Задати власні URL ретрансляторів для QR/URI Nostrconnect."
+  },
+  "settingsUseBunker46": {
+    "message": "Використовувати Bunker46"
+  },
+  "settingsUseBunker46Hint": {
+    "message": "Обробляти посилання nostrconnect: та перенаправляти до вашого екземпляра Bunker46."
+  },
+  "showBadge": {
+    "message": "Показувати значок на іконці розширення"
+  },
+  "showBadgeHint": {
+    "message": "Коли увімкнено, іконка показує кількість наданих дозволів для поточної вкладки (напр. 1, 2)."
+  },
+  "showQrConnectionUri": {
+    "message": "Показати QR та URI підключення"
+  },
+  "showQrTitle": {
+    "message": "Показати QR-код"
+  },
+  "signerDescription": {
+    "message": "Усі запити NIP-07 від веб-сторінок перенаправляються до цього віддаленого підписанта через NIP-46. Приватні ключі не зберігаються в розширенні."
+  },
+  "signerKey": {
+    "message": "Ключ підписанта"
+  },
+  "switchProfile": {
+    "message": "Перемкнути профіль"
+  },
+  "tabConnection": {
+    "message": "Підключення"
+  },
+  "tabPermissions": {
+    "message": "Дозволи"
+  },
+  "tabSettings": {
+    "message": "Налаштування"
+  },
+  "toastAddDomainFailed": {
+    "message": "Не вдалося додати домен"
+  },
+  "toastAddedToWhitelist": {
+    "message": "$1 додано до білого списку. Перезавантажте вкладку для використання Nostr."
+  },
+  "toastBadgeHidden": {
+    "message": "Значок приховано"
+  },
+  "toastBadgeShown": {
+    "message": "Значок відображається"
+  },
+  "toastCopied": {
+    "message": "Скопійовано до буфера обміну"
+  },
+  "toastCopyFailed": {
+    "message": "Не вдалося скопіювати"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Не вдалося видалити домен"
+  },
+  "toastDomainRemoved": {
+    "message": "Дозволи домену видалено"
+  },
+  "toastLoggedOut": {
+    "message": "Вихід виконано"
+  },
+  "toastLogoutFailed": {
+    "message": "Помилка виходу"
+  },
+  "toastNoActiveTab": {
+    "message": "Немає активної вкладки або URL"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Не вдалося видалити дозвіл"
+  },
+  "toastPermissionRemoved": {
+    "message": "Дозвіл видалено"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Режим конфіденційності вимкнено"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Режим конфіденційності увімкнено"
   },
   "toastProfileMetadataFetchFailed": {
     "message": "Не вдалося отримати профіль з Nostr"
   },
+  "toastProfileMetadataFetched": {
+    "message": "Дані профілю отримано"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "Не вдалося видалити профіль"
+  },
+  "toastProfileRemoved": {
+    "message": "Профіль видалено"
+  },
   "toastProfileRenameFailed": {
     "message": "Не вдалося перейменувати профіль"
   },
-  "disconnectAndRemoveProfile": {
-    "message": "Відключити та видалити профіль"
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Не вдалося видалити з білого списку"
   },
-  "connectingToRelays": {
-    "message": "Підключення до:"
+  "toastRemovedFromWhitelist": {
+    "message": "Видалено з білого списку"
   },
-  "connectedViaRelays": {
-    "message": "Підключено через:"
+  "toastSettingsSaved": {
+    "message": "Налаштування збережено"
+  },
+  "waitingForBunker": {
+    "message": "Очікування підключення bunker…"
+  },
+  "whitelistedNoPermissions": {
+    "message": "У білому списку для Nostr (дозволів поки немає)"
   }
 }

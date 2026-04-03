@@ -1,164 +1,404 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "NIP-07 отдалечен подписващ чрез NIP-46 / Bunker46" },
-  "appSubtitle": { "message": "NIP-07 Отдалечен подписващ" },
-  "openFullPage": { "message": "Отвори в нов таб за управление на настройките" },
-  "connected": { "message": "Свързан" },
-  "offline": { "message": "Офлайн" },
-  "loading": { "message": "Зареждане…" },
-  "tabConnection": { "message": "Връзка" },
-  "tabPermissions": { "message": "Разрешения" },
-  "tabSettings": { "message": "Настройки" },
-  "errorPasteUri": { "message": "Поставете bunker:// URI по-горе" },
-  "errorConnectionFailed": { "message": "Връзката е неуспешна" },
-  "errorGenerateUri": { "message": "Неуспешно генериране на URI за връзка" },
-  "errorStartConnection": { "message": "Неуспешно стартиране на връзката" },
-  "toastLoggedOut": { "message": "Излязохте от профила" },
-  "toastLogoutFailed": { "message": "Изходът е неуспешен" },
-  "toastSettingsSaved": { "message": "Настройките са запазени" },
-  "toastPrivacyModeOn": { "message": "Режимът за поверителност е включен" },
-  "toastPrivacyModeOff": { "message": "Режимът за поверителност е изключен" },
-  "toastBadgeShown": { "message": "Значката е показана" },
-  "toastBadgeHidden": { "message": "Значката е скрита" },
-  "toastCopied": { "message": "Копирано в клипборда" },
-  "toastCopyFailed": { "message": "Копирането е неуспешно" },
-  "toastPermissionRemoved": { "message": "Разрешението е премахнато" },
-  "toastPermissionRemoveFailed": { "message": "Неуспешно премахване на разрешение" },
-  "toastDomainRemoved": { "message": "Разрешенията за домейна са премахнати" },
-  "toastDomainRemoveFailed": { "message": "Неуспешно премахване на домейна" },
-  "toastNoActiveTab": { "message": "Няма активен таб или URL" },
-  "toastAddedToWhitelist": {
-    "message": "Добавен $1 в белия списък. Презаредете таба, за да използвате nostr."
+  "addAnotherConnection": {
+    "message": "Добави друга връзка"
   },
-  "toastAddDomainFailed": { "message": "Неуспешно добавяне на домейн" },
-  "toastRemovedFromWhitelist": { "message": "Премахнато от белия списък" },
-  "toastRemoveFromWhitelistFailed": { "message": "Неуспешно премахване от белия списък" },
-  "signerKey": { "message": "Ключ на подписващия" },
-  "copyTitle": { "message": "Копиране" },
-  "showQrTitle": { "message": "Покажи QR код" },
-  "signerDescription": {
-    "message": "Всички NIP-07 заявки от уеб страници се препращат към този отдалечен подписващ чрез NIP-46. В разширението не се съхраняват частни ключове."
+  "addToWhitelistButton": {
+    "message": "Добави $1 в белия списък"
   },
-  "disconnect": { "message": "Прекъсни връзката" },
-  "disconnectAndRemoveProfile": { "message": "Прекъсни и премахни профил" },
-  "logoutConfirmTitle": { "message": "Изход от профила?" },
-  "logoutConfirmDescription": {
-    "message": "Това ще прекъсне връзката с вашия подписващ и ще изчисти всички разрешения и белия списък за поверителност. Ще трябва да се свържете отново и да разрешите сайтовете."
+  "addToWhitelistTitle": {
+    "message": "Добави $1 в белия списък"
   },
-  "cancel": { "message": "Отказ" },
-  "logOut": { "message": "Изход" },
-  "connectViaBunkerUri": { "message": "Свързване чрез Bunker URI" },
+  "allowed": {
+    "message": "Разрешено"
+  },
+  "appSubtitle": {
+    "message": "NIP-07 Отдалечен подписващ"
+  },
+  "cancel": {
+    "message": "Отказ"
+  },
+  "choiceOff": {
+    "message": "Изключено"
+  },
+  "choiceOn": {
+    "message": "Включено"
+  },
+  "close": {
+    "message": "Затвори"
+  },
+  "connect": {
+    "message": "Свързване"
+  },
+  "connectViaBunkerUri": {
+    "message": "Свързване чрез Bunker URI"
+  },
   "connectViaBunkerUriDesc": {
     "message": "Поставете bunker:// URI от вашия отдалечен подписващ за свързване"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "Свързване..." },
-  "connect": { "message": "Свързване" },
-  "separatorOr": { "message": "или" },
-  "getUriFromBunker46": { "message": "Вземи URI от Bunker46" },
+  "connected": {
+    "message": "Свързан"
+  },
+  "connectedViaRelays": {
+    "message": "Свързан чрез:"
+  },
+  "connecting": {
+    "message": "Свързване..."
+  },
+  "connectingToRelays": {
+    "message": "Свързване към:"
+  },
+  "copyTitle": {
+    "message": "Копиране"
+  },
+  "copyUri": {
+    "message": "Копирай URI"
+  },
+  "denied": {
+    "message": "Отказано"
+  },
+  "disconnect": {
+    "message": "Прекъсни връзката"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Прекъсни и премахни профил"
+  },
+  "errorConnectionFailed": {
+    "message": "Връзката е неуспешна"
+  },
+  "errorGenerateUri": {
+    "message": "Неуспешно генериране на URI за връзка"
+  },
+  "errorPasteUri": {
+    "message": "Поставете bunker:// URI по-горе"
+  },
+  "errorStartConnection": {
+    "message": "Неуспешно стартиране на връзката"
+  },
+  "extDescription": {
+    "message": "NIP-07 отдалечен подписващ чрез NIP-46 / Bunker46"
+  },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Вземи от Nostr"
+  },
+  "getUriFromBunker46": {
+    "message": "Вземи URI от Bunker46"
+  },
+  "loading": {
+    "message": "Зареждане…"
+  },
+  "logOut": {
+    "message": "Изход"
+  },
+  "logoutConfirmDescription": {
+    "message": "Това ще прекъсне връзката с вашия подписващ и ще изчисти всички разрешения и белия списък за поверителност. Ще трябва да се свържете отново и да разрешите сайтовете."
+  },
+  "logoutConfirmTitle": {
+    "message": "Изход от профила?"
+  },
+  "method_getPublicKey": {
+    "message": "Вземи публичен ключ"
+  },
+  "method_getRelays": {
+    "message": "Вземи релета"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04 Дешифриране"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04 Шифриране"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44 Дешифриране"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44 Шифриране"
+  },
+  "method_signEvent": {
+    "message": "Подпиши събитие"
+  },
+  "method_signEvent_kind": {
+    "message": "Подпиши събитие (вид $1)"
+  },
+  "noDomainsMatch": {
+    "message": "Няма домейни, съответстващи на търсенето"
+  },
+  "noPermissionsHint": {
+    "message": "Когато уебсайтове поискат достъп до вашата Nostr самоличност, ще ги видите тук."
+  },
+  "noPermissionsYet": {
+    "message": "Все още няма разрешения"
+  },
   "nostrConnectDesc": {
     "message": "Свързване чрез Nostrconnect: показване на QR и URI за сканиране от вашето приложение."
   },
-  "showQrConnectionUri": { "message": "Покажи QR и URI за връзка" },
-  "settingsUseBunker46": { "message": "Използвай Bunker46" },
-  "settingsUseBunker46Hint": {
-    "message": "Обработвай nostrconnect: връзки и пренасочвай към вашия Bunker46 екземпляр."
+  "nostrConnectModalHint": {
+    "message": "Сканирайте с вашето приложение или копирайте URI"
   },
-  "settingsBunkerUrl": { "message": "URL на Bunker46" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "Базовият URL на вашия Bunker46 екземпляр" },
-  "settingsSpecifyNostrConnectRelays": { "message": "Задай Nostrconnect релета" },
-  "settingsSpecifyNostrConnectRelaysHint": {
-    "message": "Задайте персонализирани URL-та на релета за Nostrconnect QR/URI."
+  "nostrConnectQrAlt": {
+    "message": "Nostrconnect QR код"
   },
-  "settingsNostrConnectRelays": { "message": "Релета за Nostr Connect" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
-  "settingsNostrConnectRelaysHint": {
-    "message": "Едно URL на реле на ред (или разделени със запетая). Използва се при генериране на QR/URI за свързване чрез Nostrconnect."
+  "offline": {
+    "message": "Офлайн"
   },
-  "choiceOn": { "message": "Включено" },
-  "choiceOff": { "message": "Изключено" },
-  "save": { "message": "Запази" },
-  "privacyMode": { "message": "Режим на поверителност" },
+  "openFullPage": {
+    "message": "Отвори в нов таб за управление на настройките"
+  },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "privacyMode": {
+    "message": "Режим на поверителност"
+  },
   "privacyModeHint": {
     "message": "Излагайте window.nostr само на домейни от белия списък (таб Разрешения); намалява пръстовия отпечатък."
   },
   "privacyModeSitesHint": {
     "message": "Сайтовете не могат да открият разширението, затова някои може да не показват \"Влез с Nostr\", докато не ги добавите в Разрешения."
   },
-  "showBadge": { "message": "Покажи значка на иконата на разширението" },
-  "showBadgeHint": {
-    "message": "Когато е включено, иконата показва броя на предоставените разрешения за текущия таб (напр. 1, 2)."
+  "promptAllowAlways": {
+    "message": "Позволи винаги"
   },
-  "addToWhitelistTitle": { "message": "Добави $1 в белия списък" },
-  "addToWhitelistButton": { "message": "Добави $1 в белия списък" },
-  "removeFromWhitelistTitle": { "message": "Премахни $1 от белия списък" },
-  "removeFromWhitelistButton": { "message": "Премахни $1 от белия списък" },
-  "searchDomainsPlaceholder": { "message": "Търсене на домейни..." },
-  "noPermissionsYet": { "message": "Все още няма разрешения" },
-  "noPermissionsHint": {
-    "message": "Когато уебсайтове поискат достъп до вашата Nostr самоличност, ще ги видите тук."
+  "promptAllowAlwaysForKindHint": {
+    "message": "Прилага се само за този вид събитие"
   },
-  "noDomainsMatch": { "message": "Няма домейни, съответстващи на търсенето" },
-  "revokeAllPermissionsTitle": { "message": "Отмени всички разрешения за този домейн" },
-  "whitelistedNoPermissions": { "message": "В белия списък за nostr (все още без разрешения)" },
-  "allowed": { "message": "Разрешено" },
-  "denied": { "message": "Отказано" },
-  "revokeTitle": { "message": "Отмени" },
-  "removeFromWhitelist": { "message": "Премахни от белия списък" },
-  "qrScanToUse": { "message": "$1 (сканирайте за използване)" },
-  "qrCodeAlt": { "message": "QR код" },
-  "close": { "message": "Затвори" },
-  "nostrConnectModalHint": { "message": "Сканирайте с вашето приложение или копирайте URI" },
-  "nostrConnectQrAlt": { "message": "Nostrconnect QR код" },
-  "copyUri": { "message": "Копирай URI" },
-  "waitingForBunker": { "message": "Изчакване на bunker за свързване…" },
-  "method_getPublicKey": { "message": "Вземи публичен ключ" },
-  "method_signEvent": { "message": "Подпиши събитие" },
-  "method_signEvent_kind": { "message": "Подпиши събитие (вид $1)" },
-  "method_getRelays": { "message": "Вземи релета" },
-  "method_nip04_encrypt": { "message": "NIP-04 Шифриране" },
-  "method_nip04_decrypt": { "message": "NIP-04 Дешифриране" },
-  "method_nip44_encrypt": { "message": "NIP-44 Шифриране" },
-  "method_nip44_decrypt": { "message": "NIP-44 Дешифриране" },
-  "promptPermissionRequest": { "message": "Заявка за разрешение" },
-  "promptWantsAccess": { "message": "иска достъп до вашата Nostr самоличност" },
-  "promptEventKind": { "message": "Вид събитие $1" },
-  "promptViewRawMessage": { "message": "Виж необработеното съобщение" },
-  "promptHideRawMessage": { "message": "Скрий необработеното съобщение" },
-  "promptAllowAlways": { "message": "Позволи винаги" },
-  "promptAllowAlwaysForKindHint": { "message": "Прилага се само за този вид събитие" },
-  "promptAllowOnce": { "message": "Позволи веднъж" },
-  "promptDenyOnce": { "message": "Откажи" },
-  "promptDenyAlways": { "message": "Откажи винаги" },
-  "settingsMultiProfile": { "message": "Множество профили" },
-  "settingsMultiProfileHint": {
-    "message": "Показвай превключвател на профили и позволявай добавяне на множество връзки."
+  "promptAllowOnce": {
+    "message": "Позволи веднъж"
+  },
+  "promptDenyAlways": {
+    "message": "Откажи винаги"
+  },
+  "promptDenyOnce": {
+    "message": "Откажи"
+  },
+  "promptEventKind": {
+    "message": "Вид събитие $1"
+  },
+  "promptHideRawMessage": {
+    "message": "Скрий необработеното съобщение"
+  },
+  "promptPermissionRequest": {
+    "message": "Заявка за разрешение"
+  },
+  "promptViewRawMessage": {
+    "message": "Виж необработеното съобщение"
+  },
+  "promptWantsAccess": {
+    "message": "иска достъп до вашата Nostr самоличност"
+  },
+  "qrCodeAlt": {
+    "message": "QR код"
+  },
+  "qrScanToUse": {
+    "message": "$1 (сканирайте за използване)"
+  },
+  "reconnectionFailedMessage": {
+    "message": "Връзката не можа да бъде възстановена. Bunker може да е отменил достъпа."
+  },
+  "relayNip42AuthFailedTitle": {
+    "message": "NIP-42 удостоверяването на релето неуспя или изтече времето."
+  },
+  "relayNip42AuthPendingTitle": {
+    "message": "Проверка на NIP-42 удостоверяване на релето…"
+  },
+  "relayNip42AuthSuccessTitle": {
+    "message": "NIP-42 удостоверяването на релето бе успешно."
+  },
+  "relayNip42ChallengeOnlyTitle": {
+    "message": "Релето изпрати предизвикателство за удостоверяване; свържете се с този профил, за да проверите подписването."
+  },
+  "removeFromWhitelist": {
+    "message": "Премахни от белия списък"
+  },
+  "removeFromWhitelistButton": {
+    "message": "Премахни $1 от белия списък"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "Премахни $1 от белия списък"
+  },
+  "removeProfile": {
+    "message": "Премахни този профил"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "Това ще прекъсне връзката и ще изчисти всички разрешения и записи в белия списък за този профил."
+  },
+  "removeProfileConfirmTitle": {
+    "message": "Премахни профил?"
+  },
+  "renameProfile": {
+    "message": "Преименувай профил"
+  },
+  "renameProfileHint": {
+    "message": "Задайте показвано име или го вземете от Nostr (вид 0)."
+  },
+  "renameProfileNameLabel": {
+    "message": "Показвано име"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "Име на профила"
+  },
+  "renameProfileTitle": {
+    "message": "Преименуване на профил"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "Отмени всички разрешения за този домейн"
+  },
+  "revokeTitle": {
+    "message": "Отмени"
+  },
+  "save": {
+    "message": "Запази"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Търсене на домейни..."
+  },
+  "separatorOr": {
+    "message": "или"
+  },
+  "settingsBunkerUrl": {
+    "message": "URL на Bunker46"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "Базовият URL на вашия Bunker46 екземпляр"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsMultiProfile": {
+    "message": "Множество профили"
   },
   "settingsMultiProfileDisabledHint": {
     "message": "Премахнете допълнителните профили, за да използвате режим с един профил."
   },
-  "addAnotherConnection": { "message": "Добави друга връзка" },
-  "removeProfile": { "message": "Премахни този профил" },
-  "removeProfileConfirmTitle": { "message": "Премахни профил?" },
-  "removeProfileConfirmDesc": {
-    "message": "Това ще прекъсне връзката и ще изчисти всички разрешения и записи в белия списък за този профил."
+  "settingsMultiProfileHint": {
+    "message": "Показвай превключвател на профили и позволявай добавяне на множество връзки."
   },
-  "switchProfile": { "message": "Смени профил" },
-  "toastProfileRemoved": { "message": "Профилът е премахнат" },
-  "toastProfileRemoveFailed": { "message": "Неуспешно премахване на профил" },
-  "reconnectionFailedMessage": {
-    "message": "Връзката не можа да бъде възстановена. Bunker може да е отменил достъпа."
+  "settingsNostrConnectRelays": {
+    "message": "Релета за Nostr Connect"
   },
-  "renameProfile": { "message": "Преименувай профил" },
-  "renameProfileTitle": { "message": "Преименуване на профил" },
-  "renameProfileHint": { "message": "Задайте показвано име или го вземете от Nostr (вид 0)." },
-  "renameProfileNameLabel": { "message": "Показвано име" },
-  "renameProfileNamePlaceholder": { "message": "Име на профила" },
-  "fetchProfileFromNostr": { "message": "Вземи от Nostr" },
-  "toastProfileMetadataFetched": { "message": "Информацията за профила е взета" },
-  "toastProfileMetadataFetchFailed": { "message": "Неуспешно вземане на профил от Nostr" },
-  "toastProfileRenameFailed": { "message": "Неуспешно преименуване на профила" },
-  "connectingToRelays": { "message": "Свързване към:" },
-  "connectedViaRelays": { "message": "Свързан чрез:" }
+  "settingsNostrConnectRelaysHint": {
+    "message": "Едно URL на реле на ред (или разделени със запетая). Използва се при генериране на QR/URI за свързване чрез Nostrconnect."
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Задай Nostrconnect релета"
+  },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Задайте персонализирани URL-та на релета за Nostrconnect QR/URI."
+  },
+  "settingsUseBunker46": {
+    "message": "Използвай Bunker46"
+  },
+  "settingsUseBunker46Hint": {
+    "message": "Обработвай nostrconnect: връзки и пренасочвай към вашия Bunker46 екземпляр."
+  },
+  "showBadge": {
+    "message": "Покажи значка на иконата на разширението"
+  },
+  "showBadgeHint": {
+    "message": "Когато е включено, иконата показва броя на предоставените разрешения за текущия таб (напр. 1, 2)."
+  },
+  "showQrConnectionUri": {
+    "message": "Покажи QR и URI за връзка"
+  },
+  "showQrTitle": {
+    "message": "Покажи QR код"
+  },
+  "signerDescription": {
+    "message": "Всички NIP-07 заявки от уеб страници се препращат към този отдалечен подписващ чрез NIP-46. В разширението не се съхраняват частни ключове."
+  },
+  "signerKey": {
+    "message": "Ключ на подписващия"
+  },
+  "switchProfile": {
+    "message": "Смени профил"
+  },
+  "tabConnection": {
+    "message": "Връзка"
+  },
+  "tabPermissions": {
+    "message": "Разрешения"
+  },
+  "tabSettings": {
+    "message": "Настройки"
+  },
+  "toastAddDomainFailed": {
+    "message": "Неуспешно добавяне на домейн"
+  },
+  "toastAddedToWhitelist": {
+    "message": "Добавен $1 в белия списък. Презаредете таба, за да използвате nostr."
+  },
+  "toastBadgeHidden": {
+    "message": "Значката е скрита"
+  },
+  "toastBadgeShown": {
+    "message": "Значката е показана"
+  },
+  "toastCopied": {
+    "message": "Копирано в клипборда"
+  },
+  "toastCopyFailed": {
+    "message": "Копирането е неуспешно"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Неуспешно премахване на домейна"
+  },
+  "toastDomainRemoved": {
+    "message": "Разрешенията за домейна са премахнати"
+  },
+  "toastLoggedOut": {
+    "message": "Излязохте от профила"
+  },
+  "toastLogoutFailed": {
+    "message": "Изходът е неуспешен"
+  },
+  "toastNoActiveTab": {
+    "message": "Няма активен таб или URL"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Неуспешно премахване на разрешение"
+  },
+  "toastPermissionRemoved": {
+    "message": "Разрешението е премахнато"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Режимът за поверителност е изключен"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Режимът за поверителност е включен"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "Неуспешно вземане на профил от Nostr"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "Информацията за профила е взета"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "Неуспешно премахване на профил"
+  },
+  "toastProfileRemoved": {
+    "message": "Профилът е премахнат"
+  },
+  "toastProfileRenameFailed": {
+    "message": "Неуспешно преименуване на профила"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Неуспешно премахване от белия списък"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "Премахнато от белия списък"
+  },
+  "toastSettingsSaved": {
+    "message": "Настройките са запазени"
+  },
+  "waitingForBunker": {
+    "message": "Изчакване на bunker за свързване…"
+  },
+  "whitelistedNoPermissions": {
+    "message": "В белия списък за nostr (все още без разрешения)"
+  }
 }

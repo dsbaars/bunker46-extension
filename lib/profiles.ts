@@ -132,10 +132,15 @@ export async function migrateToProfiles(): Promise<void> {
   }
 
   await chrome.storage.local.set(toWrite);
-  await chrome.storage.local.remove([
-    LEGACY_KEY_SESSION,
-    LEGACY_KEY_CLIENT_SECRET,
-    LEGACY_KEY_DOMAIN_POLICIES,
-    LEGACY_KEY_WHITELIST,
-  ]);
+
+  // Verify the write landed before removing legacy keys to avoid data loss.
+  const verify = await chrome.storage.local.get(STORAGE_KEY_PROFILES);
+  if (verify[STORAGE_KEY_PROFILES] !== undefined) {
+    await chrome.storage.local.remove([
+      LEGACY_KEY_SESSION,
+      LEGACY_KEY_CLIENT_SECRET,
+      LEGACY_KEY_DOMAIN_POLICIES,
+      LEGACY_KEY_WHITELIST,
+    ]);
+  }
 }

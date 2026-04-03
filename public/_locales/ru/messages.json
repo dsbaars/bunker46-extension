@@ -1,126 +1,33 @@
 {
-  "extName": {
-    "message": "Bunker46"
+  "addAnotherConnection": {
+    "message": "Добавить ещё одно подключение"
   },
-  "extDescription": {
-    "message": "Удалённый подписант NIP-07 через NIP-46 / Bunker46"
+  "addToWhitelistButton": {
+    "message": "Добавить $1 в белый список"
+  },
+  "addToWhitelistTitle": {
+    "message": "Добавить $1 в белый список"
+  },
+  "allowed": {
+    "message": "Разрешено"
   },
   "appSubtitle": {
     "message": "Удалённый подписант NIP-07"
   },
-  "openFullPage": {
-    "message": "Открыть в новой вкладке для управления настройками"
-  },
-  "connected": {
-    "message": "Подключено"
-  },
-  "offline": {
-    "message": "Не в сети"
-  },
-  "loading": {
-    "message": "Загрузка…"
-  },
-  "tabConnection": {
-    "message": "Подключение"
-  },
-  "tabPermissions": {
-    "message": "Разрешения"
-  },
-  "tabSettings": {
-    "message": "Настройки"
-  },
-  "errorPasteUri": {
-    "message": "Вставьте URI bunker:// выше"
-  },
-  "errorConnectionFailed": {
-    "message": "Ошибка подключения"
-  },
-  "errorGenerateUri": {
-    "message": "Не удалось создать URI подключения"
-  },
-  "errorStartConnection": {
-    "message": "Не удалось запустить подключение"
-  },
-  "toastLoggedOut": {
-    "message": "Выход выполнен"
-  },
-  "toastLogoutFailed": {
-    "message": "Ошибка выхода"
-  },
-  "toastSettingsSaved": {
-    "message": "Настройки сохранены"
-  },
-  "toastPrivacyModeOn": {
-    "message": "Режим конфиденциальности включён"
-  },
-  "toastPrivacyModeOff": {
-    "message": "Режим конфиденциальности выключен"
-  },
-  "toastBadgeShown": {
-    "message": "Значок отображается"
-  },
-  "toastBadgeHidden": {
-    "message": "Значок скрыт"
-  },
-  "toastCopied": {
-    "message": "Скопировано в буфер обмена"
-  },
-  "toastCopyFailed": {
-    "message": "Не удалось скопировать"
-  },
-  "toastPermissionRemoved": {
-    "message": "Разрешение удалено"
-  },
-  "toastPermissionRemoveFailed": {
-    "message": "Не удалось удалить разрешение"
-  },
-  "toastDomainRemoved": {
-    "message": "Разрешения домена удалены"
-  },
-  "toastDomainRemoveFailed": {
-    "message": "Не удалось удалить домен"
-  },
-  "toastNoActiveTab": {
-    "message": "Нет активной вкладки или URL"
-  },
-  "toastAddedToWhitelist": {
-    "message": "$1 добавлен в белый список. Перезагрузите вкладку для использования Nostr."
-  },
-  "toastAddDomainFailed": {
-    "message": "Не удалось добавить домен"
-  },
-  "toastRemovedFromWhitelist": {
-    "message": "Удалено из белого списка"
-  },
-  "toastRemoveFromWhitelistFailed": {
-    "message": "Не удалось удалить из белого списка"
-  },
-  "signerKey": {
-    "message": "Ключ подписанта"
-  },
-  "copyTitle": {
-    "message": "Копировать"
-  },
-  "showQrTitle": {
-    "message": "Показать QR-код"
-  },
-  "signerDescription": {
-    "message": "Все запросы NIP-07 от веб-страниц перенаправляются к этому удалённому подписанту через NIP-46. Приватные ключи не хранятся в расширении."
-  },
-  "disconnect": {
-    "message": "Отключить"
-  },
-  "logoutConfirmTitle": {
-    "message": "Полностью выйти?"
-  },
-  "logoutConfirmDescription": {
-    "message": "Это отключит вашего подписанта и очистит все разрешения и белый список режима конфиденциальности. Вам нужно будет переподключиться и повторно разрешить сайты."
-  },
   "cancel": {
     "message": "Отмена"
   },
-  "logOut": {
-    "message": "Выйти"
+  "choiceOff": {
+    "message": "Выкл"
+  },
+  "choiceOn": {
+    "message": "Вкл"
+  },
+  "close": {
+    "message": "Закрыть"
+  },
+  "connect": {
+    "message": "Подключить"
   },
   "connectViaBunkerUri": {
     "message": "Подключить через URI Bunker"
@@ -128,65 +35,119 @@
   "connectViaBunkerUriDesc": {
     "message": "Вставьте URI bunker:// из вашего удалённого подписанта для подключения"
   },
-  "placeholderBunkerUri": {
-    "message": "bunker://..."
+  "connected": {
+    "message": "Подключено"
+  },
+  "connectedViaRelays": {
+    "message": "Подключено через:"
   },
   "connecting": {
     "message": "Подключение..."
   },
-  "connect": {
-    "message": "Подключить"
+  "connectingToRelays": {
+    "message": "Подключение к:"
   },
-  "separatorOr": {
-    "message": "или"
+  "copyTitle": {
+    "message": "Копировать"
+  },
+  "copyUri": {
+    "message": "Копировать URI"
+  },
+  "denied": {
+    "message": "Запрещено"
+  },
+  "disconnect": {
+    "message": "Отключить"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Отключить и удалить профиль"
+  },
+  "errorConnectionFailed": {
+    "message": "Ошибка подключения"
+  },
+  "errorGenerateUri": {
+    "message": "Не удалось создать URI подключения"
+  },
+  "errorPasteUri": {
+    "message": "Вставьте URI bunker:// выше"
+  },
+  "errorStartConnection": {
+    "message": "Не удалось запустить подключение"
+  },
+  "extDescription": {
+    "message": "Удалённый подписант NIP-07 через NIP-46 / Bunker46"
+  },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Получить из Nostr"
   },
   "getUriFromBunker46": {
     "message": "Получить URI из Bunker46"
   },
+  "loading": {
+    "message": "Загрузка…"
+  },
+  "logOut": {
+    "message": "Выйти"
+  },
+  "logoutConfirmDescription": {
+    "message": "Это отключит вашего подписанта и очистит все разрешения и белый список режима конфиденциальности. Вам нужно будет переподключиться и повторно разрешить сайты."
+  },
+  "logoutConfirmTitle": {
+    "message": "Полностью выйти?"
+  },
+  "method_getPublicKey": {
+    "message": "Получить публичный ключ"
+  },
+  "method_getRelays": {
+    "message": "Получить ретрансляторы"
+  },
+  "method_nip04_decrypt": {
+    "message": "Дешифрование NIP-04"
+  },
+  "method_nip04_encrypt": {
+    "message": "Шифрование NIP-04"
+  },
+  "method_nip44_decrypt": {
+    "message": "Дешифрование NIP-44"
+  },
+  "method_nip44_encrypt": {
+    "message": "Шифрование NIP-44"
+  },
+  "method_signEvent": {
+    "message": "Подписать событие"
+  },
+  "method_signEvent_kind": {
+    "message": "Подписать событие (тип $1)"
+  },
+  "noDomainsMatch": {
+    "message": "Ни один домен не соответствует запросу"
+  },
+  "noPermissionsHint": {
+    "message": "Когда сайты запросят доступ к вашей идентичности Nostr, они появятся здесь."
+  },
+  "noPermissionsYet": {
+    "message": "Разрешений пока нет"
+  },
   "nostrConnectDesc": {
     "message": "Подключение через Nostrconnect: отображает QR-код и URI для сканирования вашим приложением bunker."
   },
-  "showQrConnectionUri": {
-    "message": "Показать QR и URI подключения"
+  "nostrConnectModalHint": {
+    "message": "Отсканируйте приложением bunker или скопируйте URI"
   },
-  "settingsUseBunker46": {
-    "message": "Использовать Bunker46"
+  "nostrConnectQrAlt": {
+    "message": "QR-код Nostrconnect"
   },
-  "settingsUseBunker46Hint": {
-    "message": "Обрабатывать ссылки nostrconnect: и перенаправлять на ваш экземпляр Bunker46."
+  "offline": {
+    "message": "Не в сети"
   },
-  "settingsBunkerUrl": {
-    "message": "URL Bunker46"
+  "openFullPage": {
+    "message": "Открыть в новой вкладке для управления настройками"
   },
-  "settingsBunkerUrlPlaceholder": {
-    "message": "http://localhost:5173"
-  },
-  "settingsBunkerUrlHint": {
-    "message": "Базовый URL вашего экземпляра Bunker46"
-  },
-  "settingsSpecifyNostrConnectRelays": {
-    "message": "Указать ретрансляторы Nostrconnect"
-  },
-  "settingsSpecifyNostrConnectRelaysHint": {
-    "message": "Задать пользовательские URL ретрансляторов для QR/URI Nostrconnect."
-  },
-  "settingsNostrConnectRelays": {
-    "message": "Ретрансляторы подключения Nostr"
-  },
-  "settingsNostrConnectRelaysPlaceholder": {
-    "message": "wss://relay.nsec.app"
-  },
-  "settingsNostrConnectRelaysHint": {
-    "message": "Один URL ретранслятора на строку (или через запятую). Используются при создании QR/URI для подключения через Nostrconnect."
-  },
-  "choiceOn": {
-    "message": "Вкл"
-  },
-  "choiceOff": {
-    "message": "Выкл"
-  },
-  "save": {
-    "message": "Сохранить"
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
   },
   "privacyMode": {
     "message": "Режим конфиденциальности"
@@ -197,114 +158,6 @@
   "privacyModeSitesHint": {
     "message": "Сайты не могут обнаружить расширение, поэтому некоторые могут не показывать «Войти через Nostr», пока вы не добавите их в Разрешения."
   },
-  "showBadge": {
-    "message": "Показывать значок на иконке расширения"
-  },
-  "showBadgeHint": {
-    "message": "При включении иконка показывает количество выданных разрешений для текущей вкладки (напр. 1, 2)."
-  },
-  "addToWhitelistTitle": {
-    "message": "Добавить $1 в белый список"
-  },
-  "addToWhitelistButton": {
-    "message": "Добавить $1 в белый список"
-  },
-  "removeFromWhitelistTitle": {
-    "message": "Удалить $1 из белого списка"
-  },
-  "removeFromWhitelistButton": {
-    "message": "Удалить $1 из белого списка"
-  },
-  "searchDomainsPlaceholder": {
-    "message": "Поиск доменов..."
-  },
-  "noPermissionsYet": {
-    "message": "Разрешений пока нет"
-  },
-  "noPermissionsHint": {
-    "message": "Когда сайты запросят доступ к вашей идентичности Nostr, они появятся здесь."
-  },
-  "noDomainsMatch": {
-    "message": "Ни один домен не соответствует запросу"
-  },
-  "revokeAllPermissionsTitle": {
-    "message": "Отозвать все разрешения для этого домена"
-  },
-  "whitelistedNoPermissions": {
-    "message": "В белом списке для Nostr (разрешений пока нет)"
-  },
-  "allowed": {
-    "message": "Разрешено"
-  },
-  "denied": {
-    "message": "Запрещено"
-  },
-  "revokeTitle": {
-    "message": "Отозвать"
-  },
-  "removeFromWhitelist": {
-    "message": "Удалить из белого списка"
-  },
-  "qrScanToUse": {
-    "message": "$1 (отсканируйте для использования)"
-  },
-  "qrCodeAlt": {
-    "message": "QR-код"
-  },
-  "close": {
-    "message": "Закрыть"
-  },
-  "nostrConnectModalHint": {
-    "message": "Отсканируйте приложением bunker или скопируйте URI"
-  },
-  "nostrConnectQrAlt": {
-    "message": "QR-код Nostrconnect"
-  },
-  "copyUri": {
-    "message": "Копировать URI"
-  },
-  "waitingForBunker": {
-    "message": "Ожидание подключения bunker…"
-  },
-  "method_getPublicKey": {
-    "message": "Получить публичный ключ"
-  },
-  "method_signEvent": {
-    "message": "Подписать событие"
-  },
-  "method_signEvent_kind": {
-    "message": "Подписать событие (тип $1)"
-  },
-  "method_getRelays": {
-    "message": "Получить ретрансляторы"
-  },
-  "method_nip04_encrypt": {
-    "message": "Шифрование NIP-04"
-  },
-  "method_nip04_decrypt": {
-    "message": "Дешифрование NIP-04"
-  },
-  "method_nip44_encrypt": {
-    "message": "Шифрование NIP-44"
-  },
-  "method_nip44_decrypt": {
-    "message": "Дешифрование NIP-44"
-  },
-  "promptPermissionRequest": {
-    "message": "Запрос разрешения"
-  },
-  "promptWantsAccess": {
-    "message": "хочет получить доступ к вашей идентичности Nostr"
-  },
-  "promptEventKind": {
-    "message": "Тип события $1"
-  },
-  "promptViewRawMessage": {
-    "message": "Показать исходное сообщение"
-  },
-  "promptHideRawMessage": {
-    "message": "Скрыть исходное сообщение"
-  },
   "promptAllowAlways": {
     "message": "Разрешить всегда"
   },
@@ -314,49 +167,67 @@
   "promptAllowOnce": {
     "message": "Разрешить один раз"
   },
-  "promptDenyOnce": {
-    "message": "Запретить"
-  },
   "promptDenyAlways": {
     "message": "Запретить всегда"
   },
-  "settingsMultiProfile": {
-    "message": "Несколько профилей"
+  "promptDenyOnce": {
+    "message": "Запретить"
   },
-  "settingsMultiProfileHint": {
-    "message": "Показывать переключатель профиля и разрешить добавление нескольких подключений."
+  "promptEventKind": {
+    "message": "Тип события $1"
   },
-  "settingsMultiProfileDisabledHint": {
-    "message": "Удалите дополнительные профили, чтобы использовать режим одного профиля."
+  "promptHideRawMessage": {
+    "message": "Скрыть исходное сообщение"
   },
-  "addAnotherConnection": {
-    "message": "Добавить ещё одно подключение"
+  "promptPermissionRequest": {
+    "message": "Запрос разрешения"
   },
-  "removeProfile": {
-    "message": "Удалить этот профиль"
+  "promptViewRawMessage": {
+    "message": "Показать исходное сообщение"
   },
-  "removeProfileConfirmTitle": {
-    "message": "Удалить профиль?"
+  "promptWantsAccess": {
+    "message": "хочет получить доступ к вашей идентичности Nostr"
   },
-  "removeProfileConfirmDesc": {
-    "message": "Это отключит и удалит все разрешения и записи белого списка для этого профиля."
+  "qrCodeAlt": {
+    "message": "QR-код"
   },
-  "switchProfile": {
-    "message": "Переключить профиль"
-  },
-  "toastProfileRemoved": {
-    "message": "Профиль удалён"
-  },
-  "toastProfileRemoveFailed": {
-    "message": "Не удалось удалить профиль"
+  "qrScanToUse": {
+    "message": "$1 (отсканируйте для использования)"
   },
   "reconnectionFailedMessage": {
     "message": "Не удалось восстановить соединение. Возможно, бункер отозвал доступ."
   },
-  "renameProfile": {
-    "message": "Переименовать профиль"
+  "relayNip42AuthFailedTitle": {
+    "message": "NIP-42 аутентификация на реле не удалась или истекло время ожидания."
   },
-  "renameProfileTitle": {
+  "relayNip42AuthPendingTitle": {
+    "message": "Проверка NIP-42 аутентификации на реле…"
+  },
+  "relayNip42AuthSuccessTitle": {
+    "message": "NIP-42 аутентификация на реле выполнена успешно."
+  },
+  "relayNip42ChallengeOnlyTitle": {
+    "message": "Реле отправило запрос аутентификации; подключитесь с этим профилем, чтобы проверить подпись."
+  },
+  "removeFromWhitelist": {
+    "message": "Удалить из белого списка"
+  },
+  "removeFromWhitelistButton": {
+    "message": "Удалить $1 из белого списка"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "Удалить $1 из белого списка"
+  },
+  "removeProfile": {
+    "message": "Удалить этот профиль"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "Это отключит и удалит все разрешения и записи белого списка для этого профиля."
+  },
+  "removeProfileConfirmTitle": {
+    "message": "Удалить профиль?"
+  },
+  "renameProfile": {
     "message": "Переименовать профиль"
   },
   "renameProfileHint": {
@@ -368,25 +239,166 @@
   "renameProfileNamePlaceholder": {
     "message": "Имя профиля"
   },
-  "fetchProfileFromNostr": {
-    "message": "Получить из Nostr"
+  "renameProfileTitle": {
+    "message": "Переименовать профиль"
   },
-  "toastProfileMetadataFetched": {
-    "message": "Данные профиля получены"
+  "revokeAllPermissionsTitle": {
+    "message": "Отозвать все разрешения для этого домена"
+  },
+  "revokeTitle": {
+    "message": "Отозвать"
+  },
+  "save": {
+    "message": "Сохранить"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Поиск доменов..."
+  },
+  "separatorOr": {
+    "message": "или"
+  },
+  "settingsBunkerUrl": {
+    "message": "URL Bunker46"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "Базовый URL вашего экземпляра Bunker46"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsMultiProfile": {
+    "message": "Несколько профилей"
+  },
+  "settingsMultiProfileDisabledHint": {
+    "message": "Удалите дополнительные профили, чтобы использовать режим одного профиля."
+  },
+  "settingsMultiProfileHint": {
+    "message": "Показывать переключатель профиля и разрешить добавление нескольких подключений."
+  },
+  "settingsNostrConnectRelays": {
+    "message": "Ретрансляторы подключения Nostr"
+  },
+  "settingsNostrConnectRelaysHint": {
+    "message": "Один URL ретранслятора на строку (или через запятую). Используются при создании QR/URI для подключения через Nostrconnect."
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Указать ретрансляторы Nostrconnect"
+  },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Задать пользовательские URL ретрансляторов для QR/URI Nostrconnect."
+  },
+  "settingsUseBunker46": {
+    "message": "Использовать Bunker46"
+  },
+  "settingsUseBunker46Hint": {
+    "message": "Обрабатывать ссылки nostrconnect: и перенаправлять на ваш экземпляр Bunker46."
+  },
+  "showBadge": {
+    "message": "Показывать значок на иконке расширения"
+  },
+  "showBadgeHint": {
+    "message": "При включении иконка показывает количество выданных разрешений для текущей вкладки (напр. 1, 2)."
+  },
+  "showQrConnectionUri": {
+    "message": "Показать QR и URI подключения"
+  },
+  "showQrTitle": {
+    "message": "Показать QR-код"
+  },
+  "signerDescription": {
+    "message": "Все запросы NIP-07 от веб-страниц перенаправляются к этому удалённому подписанту через NIP-46. Приватные ключи не хранятся в расширении."
+  },
+  "signerKey": {
+    "message": "Ключ подписанта"
+  },
+  "switchProfile": {
+    "message": "Переключить профиль"
+  },
+  "tabConnection": {
+    "message": "Подключение"
+  },
+  "tabPermissions": {
+    "message": "Разрешения"
+  },
+  "tabSettings": {
+    "message": "Настройки"
+  },
+  "toastAddDomainFailed": {
+    "message": "Не удалось добавить домен"
+  },
+  "toastAddedToWhitelist": {
+    "message": "$1 добавлен в белый список. Перезагрузите вкладку для использования Nostr."
+  },
+  "toastBadgeHidden": {
+    "message": "Значок скрыт"
+  },
+  "toastBadgeShown": {
+    "message": "Значок отображается"
+  },
+  "toastCopied": {
+    "message": "Скопировано в буфер обмена"
+  },
+  "toastCopyFailed": {
+    "message": "Не удалось скопировать"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Не удалось удалить домен"
+  },
+  "toastDomainRemoved": {
+    "message": "Разрешения домена удалены"
+  },
+  "toastLoggedOut": {
+    "message": "Выход выполнен"
+  },
+  "toastLogoutFailed": {
+    "message": "Ошибка выхода"
+  },
+  "toastNoActiveTab": {
+    "message": "Нет активной вкладки или URL"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Не удалось удалить разрешение"
+  },
+  "toastPermissionRemoved": {
+    "message": "Разрешение удалено"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Режим конфиденциальности выключен"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Режим конфиденциальности включён"
   },
   "toastProfileMetadataFetchFailed": {
     "message": "Не удалось получить профиль из Nostr"
   },
+  "toastProfileMetadataFetched": {
+    "message": "Данные профиля получены"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "Не удалось удалить профиль"
+  },
+  "toastProfileRemoved": {
+    "message": "Профиль удалён"
+  },
   "toastProfileRenameFailed": {
     "message": "Не удалось переименовать профиль"
   },
-  "disconnectAndRemoveProfile": {
-    "message": "Отключить и удалить профиль"
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Не удалось удалить из белого списка"
   },
-  "connectingToRelays": {
-    "message": "Подключение к:"
+  "toastRemovedFromWhitelist": {
+    "message": "Удалено из белого списка"
   },
-  "connectedViaRelays": {
-    "message": "Подключено через:"
+  "toastSettingsSaved": {
+    "message": "Настройки сохранены"
+  },
+  "waitingForBunker": {
+    "message": "Ожидание подключения bunker…"
+  },
+  "whitelistedNoPermissions": {
+    "message": "В белом списке для Nostr (разрешений пока нет)"
   }
 }

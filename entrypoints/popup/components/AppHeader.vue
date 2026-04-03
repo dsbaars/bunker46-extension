@@ -4,6 +4,8 @@ import Badge from '@/components/ui/Badge.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
 import { Maximize2 } from 'lucide-vue-next';
 import { t } from '@/lib/i18n';
+import type { RelayUiProbeStatus } from '@/lib/relay-ui-probe';
+import RelayProbeLeadingIcons from './RelayProbeLeadingIcons.vue';
 
 defineProps<{
   extensionIconUrl: string;
@@ -11,6 +13,7 @@ defineProps<{
   connected: boolean;
   reconnecting: boolean;
   signerRelays: string[];
+  relayStatuses: Record<string, RelayUiProbeStatus>;
 }>();
 
 defineEmits<{
@@ -58,8 +61,13 @@ defineEmits<{
         <template #content>
           <p class="mb-1.5 font-medium text-muted-foreground">{{ t('connectedViaRelays') }}</p>
           <div class="flex flex-col gap-0.5">
-            <p v-for="relay in signerRelays" :key="relay" class="font-mono text-foreground">
-              {{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}
+            <p
+              v-for="relay in signerRelays"
+              :key="relay"
+              class="flex items-center gap-1.5 font-mono text-foreground"
+            >
+              <RelayProbeLeadingIcons :status="relayStatuses[relay]" />
+              <span>{{ relay.replace(/^wss?:\/\//, '').replace(/\/$/, '') }}</span>
             </p>
           </div>
         </template>

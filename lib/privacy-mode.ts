@@ -21,10 +21,15 @@ export async function getNostrWhitelist(profileId?: string): Promise<string[]> {
   return Array.isArray(list) ? list : [];
 }
 
+function isValidHost(host: string): boolean {
+  if (!host || host.length > 253) return false;
+  return !/[\s<>"']/.test(host);
+}
+
 export async function addToNostrWhitelist(host: string, profileId?: string): Promise<void> {
   const list = await getNostrWhitelist(profileId);
   const normalized = host.trim().toLowerCase();
-  if (!normalized || list.includes(normalized)) return;
+  if (!normalized || !isValidHost(normalized) || list.includes(normalized)) return;
   await chrome.storage.local.set({
     [whitelistKey(profileId)]: [...list, normalized].sort(),
   });

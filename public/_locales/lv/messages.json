@@ -1,164 +1,404 @@
 {
-  "extName": { "message": "Bunker46" },
-  "extDescription": { "message": "NIP-07 attālinātais parakstītājs caur NIP-46 / Bunker46" },
-  "appSubtitle": { "message": "NIP-07 Attālinātais Parakstītājs" },
-  "openFullPage": { "message": "Atvērt jaunā cilnē opciju pārvaldībai" },
-  "connected": { "message": "Savienots" },
-  "offline": { "message": "Bezsaistē" },
-  "loading": { "message": "Ielādē…" },
-  "tabConnection": { "message": "Savienojums" },
-  "tabPermissions": { "message": "Atļaujas" },
-  "tabSettings": { "message": "Iestatījumi" },
-  "errorPasteUri": { "message": "Ielīmējiet bunker:// URI augstāk" },
-  "errorConnectionFailed": { "message": "Savienojums neizdevās" },
-  "errorGenerateUri": { "message": "Neizdevās ģenerēt savienojuma URI" },
-  "errorStartConnection": { "message": "Neizdevās sākt savienojumu" },
-  "toastLoggedOut": { "message": "Izrakstīties" },
-  "toastLogoutFailed": { "message": "Izrakstīšanās neizdevās" },
-  "toastSettingsSaved": { "message": "Iestatījumi saglabāti" },
-  "toastPrivacyModeOn": { "message": "Privātuma režīms ieslēgts" },
-  "toastPrivacyModeOff": { "message": "Privātuma režīms izslēgts" },
-  "toastBadgeShown": { "message": "Nozīmīte redzama" },
-  "toastBadgeHidden": { "message": "Nozīmīte paslēpta" },
-  "toastCopied": { "message": "Nokopēts starpliktuvē" },
-  "toastCopyFailed": { "message": "Kopēšana neizdevās" },
-  "toastPermissionRemoved": { "message": "Atļauja noņemta" },
-  "toastPermissionRemoveFailed": { "message": "Neizdevās noņemt atļauju" },
-  "toastDomainRemoved": { "message": "Domēna atļaujas noņemtas" },
-  "toastDomainRemoveFailed": { "message": "Neizdevās noņemt domēnu" },
-  "toastNoActiveTab": { "message": "Nav aktīvas cilnes vai URL" },
-  "toastAddedToWhitelist": {
-    "message": "$1 pievienots baltajam sarakstam. Pārlādējiet cilni, lai izmantotu nostr."
+  "addAnotherConnection": {
+    "message": "Pievienot citu savienojumu"
   },
-  "toastAddDomainFailed": { "message": "Neizdevās pievienot domēnu" },
-  "toastRemovedFromWhitelist": { "message": "Noņemts no baltā saraksta" },
-  "toastRemoveFromWhitelistFailed": { "message": "Neizdevās noņemt no baltā saraksta" },
-  "signerKey": { "message": "Parakstītāja atslēga" },
-  "copyTitle": { "message": "Kopēt" },
-  "showQrTitle": { "message": "Parādīt QR kodu" },
-  "signerDescription": {
-    "message": "Visi NIP-07 pieprasījumi no tīmekļa lapām tiek pārsūtīti šim attālinātajam parakstītājam caur NIP-46. Paplašinājumā netiek glabātas privātās atslēgas."
+  "addToWhitelistButton": {
+    "message": "Pievienot $1 baltajam sarakstam"
   },
-  "disconnect": { "message": "Atvienot" },
-  "disconnectAndRemoveProfile": { "message": "Atvienot un noņemt profilu" },
-  "logoutConfirmTitle": { "message": "Pilnībā izrakstīties?" },
-  "logoutConfirmDescription": {
-    "message": "Tas atvienot jūsu parakstītāju un notīrīs visas atļaujas un privātuma režīma balto sarakstu. Jums būs atkārtoti jāpievieno un jāatļauj vietnes."
+  "addToWhitelistTitle": {
+    "message": "Pievienot $1 baltajam sarakstam"
   },
-  "cancel": { "message": "Atcelt" },
-  "logOut": { "message": "Izrakstīties" },
-  "connectViaBunkerUri": { "message": "Savienoties ar Bunker URI" },
+  "allowed": {
+    "message": "Atļauts"
+  },
+  "appSubtitle": {
+    "message": "NIP-07 Attālinātais Parakstītājs"
+  },
+  "cancel": {
+    "message": "Atcelt"
+  },
+  "choiceOff": {
+    "message": "Izslēgts"
+  },
+  "choiceOn": {
+    "message": "Ieslēgts"
+  },
+  "close": {
+    "message": "Aizvērt"
+  },
+  "connect": {
+    "message": "Savienot"
+  },
+  "connectViaBunkerUri": {
+    "message": "Savienoties ar Bunker URI"
+  },
   "connectViaBunkerUriDesc": {
     "message": "Ielīmējiet bunker:// URI no sava attālinātā parakstītāja savienošanai"
   },
-  "placeholderBunkerUri": { "message": "bunker://..." },
-  "connecting": { "message": "Savienojas..." },
-  "connect": { "message": "Savienot" },
-  "separatorOr": { "message": "vai" },
-  "getUriFromBunker46": { "message": "Iegūt URI no Bunker46" },
+  "connected": {
+    "message": "Savienots"
+  },
+  "connectedViaRelays": {
+    "message": "Savienots caur:"
+  },
+  "connecting": {
+    "message": "Savienojas..."
+  },
+  "connectingToRelays": {
+    "message": "Savienojas ar:"
+  },
+  "copyTitle": {
+    "message": "Kopēt"
+  },
+  "copyUri": {
+    "message": "Kopēt URI"
+  },
+  "denied": {
+    "message": "Liegts"
+  },
+  "disconnect": {
+    "message": "Atvienot"
+  },
+  "disconnectAndRemoveProfile": {
+    "message": "Atvienot un noņemt profilu"
+  },
+  "errorConnectionFailed": {
+    "message": "Savienojums neizdevās"
+  },
+  "errorGenerateUri": {
+    "message": "Neizdevās ģenerēt savienojuma URI"
+  },
+  "errorPasteUri": {
+    "message": "Ielīmējiet bunker:// URI augstāk"
+  },
+  "errorStartConnection": {
+    "message": "Neizdevās sākt savienojumu"
+  },
+  "extDescription": {
+    "message": "NIP-07 attālinātais parakstītājs caur NIP-46 / Bunker46"
+  },
+  "extName": {
+    "message": "Bunker46"
+  },
+  "fetchProfileFromNostr": {
+    "message": "Iegūt no Nostr"
+  },
+  "getUriFromBunker46": {
+    "message": "Iegūt URI no Bunker46"
+  },
+  "loading": {
+    "message": "Ielādē…"
+  },
+  "logOut": {
+    "message": "Izrakstīties"
+  },
+  "logoutConfirmDescription": {
+    "message": "Tas atvienot jūsu parakstītāju un notīrīs visas atļaujas un privātuma režīma balto sarakstu. Jums būs atkārtoti jāpievieno un jāatļauj vietnes."
+  },
+  "logoutConfirmTitle": {
+    "message": "Pilnībā izrakstīties?"
+  },
+  "method_getPublicKey": {
+    "message": "Iegūt publisko atslēgu"
+  },
+  "method_getRelays": {
+    "message": "Iegūt starpniekus"
+  },
+  "method_nip04_decrypt": {
+    "message": "NIP-04 Atšifrēšana"
+  },
+  "method_nip04_encrypt": {
+    "message": "NIP-04 Šifrēšana"
+  },
+  "method_nip44_decrypt": {
+    "message": "NIP-44 Atšifrēšana"
+  },
+  "method_nip44_encrypt": {
+    "message": "NIP-44 Šifrēšana"
+  },
+  "method_signEvent": {
+    "message": "Parakstīt notikumu"
+  },
+  "method_signEvent_kind": {
+    "message": "Parakstīt notikumu (tips $1)"
+  },
+  "noDomainsMatch": {
+    "message": "Neviens domēns neatbilst jūsu meklēšanai"
+  },
+  "noPermissionsHint": {
+    "message": "Kad vietnes pieprasīs piekļuvi jūsu Nostr identitātei, jūs tās redzēsiet šeit."
+  },
+  "noPermissionsYet": {
+    "message": "Pagaidām nav atļauju"
+  },
   "nostrConnectDesc": {
     "message": "Savienoties caur Nostrconnect: parādīt QR un URI skenēšanai ar jūsu bunker lietotni."
   },
-  "showQrConnectionUri": { "message": "Parādīt QR un savienojuma URI" },
-  "settingsUseBunker46": { "message": "Izmantot Bunker46" },
-  "settingsUseBunker46Hint": {
-    "message": "Apstrādāt nostrconnect: saites un novirzīt uz jūsu Bunker46 instanci."
+  "nostrConnectModalHint": {
+    "message": "Skenēt ar bunker lietotni vai kopēt URI"
   },
-  "settingsBunkerUrl": { "message": "Bunker46 URL" },
-  "settingsBunkerUrlPlaceholder": { "message": "http://localhost:5173" },
-  "settingsBunkerUrlHint": { "message": "Jūsu Bunker46 instances pamata URL" },
-  "settingsSpecifyNostrConnectRelays": { "message": "Norādīt Nostrconnect starpniekus" },
-  "settingsSpecifyNostrConnectRelaysHint": {
-    "message": "Iestatīt pielāgotus starpnieku URL Nostrconnect QR/URI."
+  "nostrConnectQrAlt": {
+    "message": "Nostrconnect QR kods"
   },
-  "settingsNostrConnectRelays": { "message": "Nostr Connect starpnieki" },
-  "settingsNostrConnectRelaysPlaceholder": { "message": "wss://relay.nsec.app" },
-  "settingsNostrConnectRelaysHint": {
-    "message": "Viens starpnieka URL katrā rindā (vai ar komatu atdalīts). Izmanto, ģenerējot QR/URI savienošanai caur Nostrconnect."
+  "offline": {
+    "message": "Bezsaistē"
   },
-  "choiceOn": { "message": "Ieslēgts" },
-  "choiceOff": { "message": "Izslēgts" },
-  "save": { "message": "Saglabāt" },
-  "privacyMode": { "message": "Privātuma režīms" },
+  "openFullPage": {
+    "message": "Atvērt jaunā cilnē opciju pārvaldībai"
+  },
+  "placeholderBunkerUri": {
+    "message": "bunker://..."
+  },
+  "privacyMode": {
+    "message": "Privātuma režīms"
+  },
   "privacyModeHint": {
     "message": "Atklāt window.nostr tikai baltajā sarakstā esošiem domēniem (cilne Atļaujas); samazina digitālo nospiedumu."
   },
   "privacyModeSitesHint": {
     "message": "Vietnes nevar atklāt paplašinājumu, tāpēc dažas var nerādīt \"Pierakstīties ar Nostr\", kamēr nepievienosiet tās Atļaujās."
   },
-  "showBadge": { "message": "Parādīt nozīmīti uz paplašinājuma ikonas" },
-  "showBadgeHint": {
-    "message": "Ja ieslēgts, ikona parāda piešķirto atļauju skaitu pašreizējai cilnei (piem. 1, 2)."
+  "promptAllowAlways": {
+    "message": "Vienmēr atļaut"
   },
-  "addToWhitelistTitle": { "message": "Pievienot $1 baltajam sarakstam" },
-  "addToWhitelistButton": { "message": "Pievienot $1 baltajam sarakstam" },
-  "removeFromWhitelistTitle": { "message": "Noņemt $1 no baltā saraksta" },
-  "removeFromWhitelistButton": { "message": "Noņemt $1 no baltā saraksta" },
-  "searchDomainsPlaceholder": { "message": "Meklēt domēnus..." },
-  "noPermissionsYet": { "message": "Pagaidām nav atļauju" },
-  "noPermissionsHint": {
-    "message": "Kad vietnes pieprasīs piekļuvi jūsu Nostr identitātei, jūs tās redzēsiet šeit."
+  "promptAllowAlwaysForKindHint": {
+    "message": "Attiecas tikai uz šo notikuma tipu"
   },
-  "noDomainsMatch": { "message": "Neviens domēns neatbilst jūsu meklēšanai" },
-  "revokeAllPermissionsTitle": { "message": "Atsaukt visas atļaujas šim domēnam" },
-  "whitelistedNoPermissions": { "message": "Baltajā sarakstā nostr (pagaidām nav atļauju)" },
-  "allowed": { "message": "Atļauts" },
-  "denied": { "message": "Liegts" },
-  "revokeTitle": { "message": "Atsaukt" },
-  "removeFromWhitelist": { "message": "Noņemt no baltā saraksta" },
-  "qrScanToUse": { "message": "$1 (skenēt, lai izmantotu)" },
-  "qrCodeAlt": { "message": "QR kods" },
-  "close": { "message": "Aizvērt" },
-  "nostrConnectModalHint": { "message": "Skenēt ar bunker lietotni vai kopēt URI" },
-  "nostrConnectQrAlt": { "message": "Nostrconnect QR kods" },
-  "copyUri": { "message": "Kopēt URI" },
-  "waitingForBunker": { "message": "Gaida bunker savienojumu…" },
-  "method_getPublicKey": { "message": "Iegūt publisko atslēgu" },
-  "method_signEvent": { "message": "Parakstīt notikumu" },
-  "method_signEvent_kind": { "message": "Parakstīt notikumu (tips $1)" },
-  "method_getRelays": { "message": "Iegūt starpniekus" },
-  "method_nip04_encrypt": { "message": "NIP-04 Šifrēšana" },
-  "method_nip04_decrypt": { "message": "NIP-04 Atšifrēšana" },
-  "method_nip44_encrypt": { "message": "NIP-44 Šifrēšana" },
-  "method_nip44_decrypt": { "message": "NIP-44 Atšifrēšana" },
-  "promptPermissionRequest": { "message": "Atļaujas pieprasījums" },
-  "promptWantsAccess": { "message": "vēlas piekļūt jūsu Nostr identitātei" },
-  "promptEventKind": { "message": "Notikuma tips $1" },
-  "promptViewRawMessage": { "message": "Skatīt neapstrādātu ziņojumu" },
-  "promptHideRawMessage": { "message": "Paslēpt neapstrādātu ziņojumu" },
-  "promptAllowAlways": { "message": "Vienmēr atļaut" },
-  "promptAllowAlwaysForKindHint": { "message": "Attiecas tikai uz šo notikuma tipu" },
-  "promptAllowOnce": { "message": "Atļaut vienu reizi" },
-  "promptDenyOnce": { "message": "Liegt" },
-  "promptDenyAlways": { "message": "Vienmēr liegt" },
-  "settingsMultiProfile": { "message": "Vairāki profili" },
-  "settingsMultiProfileHint": {
-    "message": "Rādīt profilu pārslēdzēju un atļaut pievienot vairākus savienojumus."
+  "promptAllowOnce": {
+    "message": "Atļaut vienu reizi"
+  },
+  "promptDenyAlways": {
+    "message": "Vienmēr liegt"
+  },
+  "promptDenyOnce": {
+    "message": "Liegt"
+  },
+  "promptEventKind": {
+    "message": "Notikuma tips $1"
+  },
+  "promptHideRawMessage": {
+    "message": "Paslēpt neapstrādātu ziņojumu"
+  },
+  "promptPermissionRequest": {
+    "message": "Atļaujas pieprasījums"
+  },
+  "promptViewRawMessage": {
+    "message": "Skatīt neapstrādātu ziņojumu"
+  },
+  "promptWantsAccess": {
+    "message": "vēlas piekļūt jūsu Nostr identitātei"
+  },
+  "qrCodeAlt": {
+    "message": "QR kods"
+  },
+  "qrScanToUse": {
+    "message": "$1 (skenēt, lai izmantotu)"
+  },
+  "reconnectionFailedMessage": {
+    "message": "Savienojumu neizdevās atjaunot. Bunker, iespējams, ir atsaucis piekļuvi."
+  },
+  "relayNip42AuthFailedTitle": {
+    "message": "NIP-42 releja autentifikācija neizdevās vai beidzās laiks."
+  },
+  "relayNip42AuthPendingTitle": {
+    "message": "Notiek NIP-42 releja autentifikācijas pārbaude…"
+  },
+  "relayNip42AuthSuccessTitle": {
+    "message": "NIP-42 releja autentifikācija izdevās."
+  },
+  "relayNip42ChallengeOnlyTitle": {
+    "message": "Relejs nosūtīja autentifikācijas izaicinājumu; izmantojiet šo profilu, lai pārbaudītu parakstu."
+  },
+  "removeFromWhitelist": {
+    "message": "Noņemt no baltā saraksta"
+  },
+  "removeFromWhitelistButton": {
+    "message": "Noņemt $1 no baltā saraksta"
+  },
+  "removeFromWhitelistTitle": {
+    "message": "Noņemt $1 no baltā saraksta"
+  },
+  "removeProfile": {
+    "message": "Noņemt šo profilu"
+  },
+  "removeProfileConfirmDesc": {
+    "message": "Tas atvienots un notīrīs visas atļaujas un baltā saraksta ierakstus šim profilam."
+  },
+  "removeProfileConfirmTitle": {
+    "message": "Noņemt profilu?"
+  },
+  "renameProfile": {
+    "message": "Pārsaukt profilu"
+  },
+  "renameProfileHint": {
+    "message": "Iestatīt parādāmo nosaukumu vai iegūt to no Nostr (tips 0)."
+  },
+  "renameProfileNameLabel": {
+    "message": "Parādāmais nosaukums"
+  },
+  "renameProfileNamePlaceholder": {
+    "message": "Profila nosaukums"
+  },
+  "renameProfileTitle": {
+    "message": "Profila pārsaukšana"
+  },
+  "revokeAllPermissionsTitle": {
+    "message": "Atsaukt visas atļaujas šim domēnam"
+  },
+  "revokeTitle": {
+    "message": "Atsaukt"
+  },
+  "save": {
+    "message": "Saglabāt"
+  },
+  "searchDomainsPlaceholder": {
+    "message": "Meklēt domēnus..."
+  },
+  "separatorOr": {
+    "message": "vai"
+  },
+  "settingsBunkerUrl": {
+    "message": "Bunker46 URL"
+  },
+  "settingsBunkerUrlHint": {
+    "message": "Jūsu Bunker46 instances pamata URL"
+  },
+  "settingsBunkerUrlPlaceholder": {
+    "message": "http://localhost:5173"
+  },
+  "settingsMultiProfile": {
+    "message": "Vairāki profili"
   },
   "settingsMultiProfileDisabledHint": {
     "message": "Noņemiet papildu profilus, lai izmantotu viena profila režīmu."
   },
-  "addAnotherConnection": { "message": "Pievienot citu savienojumu" },
-  "removeProfile": { "message": "Noņemt šo profilu" },
-  "removeProfileConfirmTitle": { "message": "Noņemt profilu?" },
-  "removeProfileConfirmDesc": {
-    "message": "Tas atvienots un notīrīs visas atļaujas un baltā saraksta ierakstus šim profilam."
+  "settingsMultiProfileHint": {
+    "message": "Rādīt profilu pārslēdzēju un atļaut pievienot vairākus savienojumus."
   },
-  "switchProfile": { "message": "Pārslēgt profilu" },
-  "toastProfileRemoved": { "message": "Profils noņemts" },
-  "toastProfileRemoveFailed": { "message": "Neizdevās noņemt profilu" },
-  "reconnectionFailedMessage": {
-    "message": "Savienojumu neizdevās atjaunot. Bunker, iespējams, ir atsaucis piekļuvi."
+  "settingsNostrConnectRelays": {
+    "message": "Nostr Connect starpnieki"
   },
-  "renameProfile": { "message": "Pārsaukt profilu" },
-  "renameProfileTitle": { "message": "Profila pārsaukšana" },
-  "renameProfileHint": { "message": "Iestatīt parādāmo nosaukumu vai iegūt to no Nostr (tips 0)." },
-  "renameProfileNameLabel": { "message": "Parādāmais nosaukums" },
-  "renameProfileNamePlaceholder": { "message": "Profila nosaukums" },
-  "fetchProfileFromNostr": { "message": "Iegūt no Nostr" },
-  "toastProfileMetadataFetched": { "message": "Profila informācija iegūta" },
-  "toastProfileMetadataFetchFailed": { "message": "Neizdevās iegūt profilu no Nostr" },
-  "toastProfileRenameFailed": { "message": "Profila pārsaukšana neizdevās" },
-  "connectingToRelays": { "message": "Savienojas ar:" },
-  "connectedViaRelays": { "message": "Savienots caur:" }
+  "settingsNostrConnectRelaysHint": {
+    "message": "Viens starpnieka URL katrā rindā (vai ar komatu atdalīts). Izmanto, ģenerējot QR/URI savienošanai caur Nostrconnect."
+  },
+  "settingsNostrConnectRelaysPlaceholder": {
+    "message": "wss://relay.nsec.app"
+  },
+  "settingsSpecifyNostrConnectRelays": {
+    "message": "Norādīt Nostrconnect starpniekus"
+  },
+  "settingsSpecifyNostrConnectRelaysHint": {
+    "message": "Iestatīt pielāgotus starpnieku URL Nostrconnect QR/URI."
+  },
+  "settingsUseBunker46": {
+    "message": "Izmantot Bunker46"
+  },
+  "settingsUseBunker46Hint": {
+    "message": "Apstrādāt nostrconnect: saites un novirzīt uz jūsu Bunker46 instanci."
+  },
+  "showBadge": {
+    "message": "Parādīt nozīmīti uz paplašinājuma ikonas"
+  },
+  "showBadgeHint": {
+    "message": "Ja ieslēgts, ikona parāda piešķirto atļauju skaitu pašreizējai cilnei (piem. 1, 2)."
+  },
+  "showQrConnectionUri": {
+    "message": "Parādīt QR un savienojuma URI"
+  },
+  "showQrTitle": {
+    "message": "Parādīt QR kodu"
+  },
+  "signerDescription": {
+    "message": "Visi NIP-07 pieprasījumi no tīmekļa lapām tiek pārsūtīti šim attālinātajam parakstītājam caur NIP-46. Paplašinājumā netiek glabātas privātās atslēgas."
+  },
+  "signerKey": {
+    "message": "Parakstītāja atslēga"
+  },
+  "switchProfile": {
+    "message": "Pārslēgt profilu"
+  },
+  "tabConnection": {
+    "message": "Savienojums"
+  },
+  "tabPermissions": {
+    "message": "Atļaujas"
+  },
+  "tabSettings": {
+    "message": "Iestatījumi"
+  },
+  "toastAddDomainFailed": {
+    "message": "Neizdevās pievienot domēnu"
+  },
+  "toastAddedToWhitelist": {
+    "message": "$1 pievienots baltajam sarakstam. Pārlādējiet cilni, lai izmantotu nostr."
+  },
+  "toastBadgeHidden": {
+    "message": "Nozīmīte paslēpta"
+  },
+  "toastBadgeShown": {
+    "message": "Nozīmīte redzama"
+  },
+  "toastCopied": {
+    "message": "Nokopēts starpliktuvē"
+  },
+  "toastCopyFailed": {
+    "message": "Kopēšana neizdevās"
+  },
+  "toastDomainRemoveFailed": {
+    "message": "Neizdevās noņemt domēnu"
+  },
+  "toastDomainRemoved": {
+    "message": "Domēna atļaujas noņemtas"
+  },
+  "toastLoggedOut": {
+    "message": "Izrakstīties"
+  },
+  "toastLogoutFailed": {
+    "message": "Izrakstīšanās neizdevās"
+  },
+  "toastNoActiveTab": {
+    "message": "Nav aktīvas cilnes vai URL"
+  },
+  "toastPermissionRemoveFailed": {
+    "message": "Neizdevās noņemt atļauju"
+  },
+  "toastPermissionRemoved": {
+    "message": "Atļauja noņemta"
+  },
+  "toastPrivacyModeOff": {
+    "message": "Privātuma režīms izslēgts"
+  },
+  "toastPrivacyModeOn": {
+    "message": "Privātuma režīms ieslēgts"
+  },
+  "toastProfileMetadataFetchFailed": {
+    "message": "Neizdevās iegūt profilu no Nostr"
+  },
+  "toastProfileMetadataFetched": {
+    "message": "Profila informācija iegūta"
+  },
+  "toastProfileRemoveFailed": {
+    "message": "Neizdevās noņemt profilu"
+  },
+  "toastProfileRemoved": {
+    "message": "Profils noņemts"
+  },
+  "toastProfileRenameFailed": {
+    "message": "Profila pārsaukšana neizdevās"
+  },
+  "toastRemoveFromWhitelistFailed": {
+    "message": "Neizdevās noņemt no baltā saraksta"
+  },
+  "toastRemovedFromWhitelist": {
+    "message": "Noņemts no baltā saraksta"
+  },
+  "toastSettingsSaved": {
+    "message": "Iestatījumi saglabāti"
+  },
+  "waitingForBunker": {
+    "message": "Gaida bunker savienojumu…"
+  },
+  "whitelistedNoPermissions": {
+    "message": "Baltajā sarakstā nostr (pagaidām nav atļauju)"
+  }
 }
