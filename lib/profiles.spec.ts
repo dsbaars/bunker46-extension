@@ -9,6 +9,8 @@ import {
   migrateToProfiles,
   generateNewClientSecret,
   getClientSecretBytes,
+  stripBunkerUriSecret,
+  stripStoredBunkerSecrets,
 } from './profiles';
 import type { Profile, Session } from './profiles';
 
@@ -146,6 +148,82 @@ describe('profiles', () => {
       expect(profiles).not.toHaveProperty('x'); // no new profile from legacy
       const stored = await fakeBrowser.storage.local.get('nip46_session');
       expect(stored.nip46_session).toBeDefined(); // legacy left intact (migration skipped)
+    });
+  });
+
+  describe('stripBunkerUriSecret', () => {
+    const PUBKEY = 'a'.repeat(64);
+
+    it('removes the secret and keeps the rest', () => {
+      const out = stripBunkerUriSecret(
+        `bunker://${PUBKEY}?relay=wss%3A%2F%2Fr.example&secret=topsecret`
+      );
+      expect(out).not.toContain('topsecret');
+      expect(out).not.toContain('secret');
+      expect(out).toContain(PUBKEY);
+      expect(out).toContain('relay=wss');
+    });
+
+    it('keeps every relay', () => {
+      const out = stripBunkerUriSecret(
+        `bunker://${PUBKEY}?relay=wss%3A%2F%2Fa&relay=wss%3A%2F%2Fb&secret=x`
+      );
+      expect(new URL(out).searchParams.getAll('relay')).toEqual(['wss://a', 'wss://b']);
+    });
+
+    it('preserves the remote signer pubkey verbatim', () => {
+      const mixedCase = 'A'.repeat(32) + 'b'.repeat(32);
+      const out = stripBunkerUriSecret(`bunker://${mixedCase}?relay=wss%3A%2F%2Fr&secret=x`);
+      expect(new URL(out).hostname).toBe(mixedCase);
+    });
+
+    it('is a no-op when there is no secret', () => {
+      const uri = `bunker://${PUBKEY}?relay=wss%3A%2F%2Fr.example`;
+      expect(stripBunkerUriSecret(uri)).toBe(uri);
+    });
+
+    it('returns unparseable input unchanged', () => {
+      expect(stripBunkerUriSecret('not a uri')).toBe('not a uri');
+    });
+  });
+
+  describe('stripStoredBunkerSecrets', () => {
+    const PUBKEY = 'b'.repeat(64);
+
+    it('cleans up secrets stored by earlier versions', async () => {
+      const { hex } = generateNewClientSecret();
+      const session: Session = {
+        signerPubkey: 'user-pubkey',
+        relays: ['wss://r.example'],
+        bunkerUri: `bunker://${PUBKEY}?relay=wss%3A%2F%2Fr.example&secret=leftover`,
+      };
+      await saveProfiles({ p1: { id: 'p1', clientSecretHex: hex, session } });
+
+      await stripStoredBunkerSecrets();
+
+      const uri = (await getProfiles()).p1!.session!.bunkerUri!;
+      expect(uri).not.toContain('leftover');
+      // The remote signer pubkey must survive — reconnect cannot reconstruct it.
+      expect(uri).toContain(PUBKEY);
+    });
+
+    it('leaves profiles without a session or secret alone', async () => {
+      const { hex } = generateNewClientSecret();
+      const clean = `bunker://${PUBKEY}?relay=wss%3A%2F%2Fr.example`;
+      await saveProfiles({
+        p1: { id: 'p1', clientSecretHex: hex },
+        p2: {
+          id: 'p2',
+          clientSecretHex: hex,
+          session: { signerPubkey: 'x', relays: ['wss://r.example'], bunkerUri: clean },
+        },
+      });
+
+      await stripStoredBunkerSecrets();
+
+      const profiles = await getProfiles();
+      expect(profiles.p1!.session).toBeUndefined();
+      expect(profiles.p2!.session!.bunkerUri).toBe(clean);
     });
   });
 });

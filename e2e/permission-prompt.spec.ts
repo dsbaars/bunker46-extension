@@ -58,12 +58,12 @@ function signRequests(n: number): StubRequest[] {
   }));
 }
 
-async function sentDecision(page: Page): Promise<{ decision?: string; skipped?: string[] }> {
+async function sentDecision(page: Page): Promise<{ decision?: string; approved?: string[] }> {
   return page.evaluate(() => {
     const sent = (window as unknown as { __sent: { type: string }[] }).__sent;
     return (sent.find((m) => m.type === 'PERMISSION_RESPONSE') ?? {}) as {
       decision?: string;
-      skipped?: string[];
+      approved?: string[];
     };
   });
 }
@@ -101,7 +101,10 @@ test('a group shows its size and applies one decision to all of it', async ({
   await page.getByRole('button', { name: 'Allow Once', exact: true }).click();
   await expect
     .poll(() => sentDecision(page))
-    .toMatchObject({ decision: 'allow_once', skipped: [] });
+    .toMatchObject({
+      decision: 'allow_once',
+      approved: ['req-1', 'req-2', 'req-3', 'req-4', 'req-5'],
+    });
 });
 
 test('the pager steps through the events of a group', async ({ page, extensionId }) => {
@@ -142,9 +145,10 @@ test('a skipped request is reported back and can be put back', async ({ page, ex
   await page.getByRole('button', { name: 'Skip', exact: true }).click();
   await page.getByRole('button', { name: 'Allow Once', exact: true }).click();
 
+  // Only the requests the user left in the batch are reported as approved.
   await expect
     .poll(() => sentDecision(page))
-    .toMatchObject({ decision: 'allow_once', skipped: ['req-2'] });
+    .toMatchObject({ decision: 'allow_once', approved: ['req-1', 'req-3'] });
 });
 
 test('a group without reviewable content shows the count but no pager', async ({
@@ -166,7 +170,7 @@ test('a group without reviewable content shows the count but no pager', async ({
   await expect(page.getByRole('button', { name: 'View raw message' })).toHaveCount(0);
 });
 
-test('a request joining the group updates the prompt', async ({ page, extensionId }) => {
+test('the group is frozen once the prompt is on screen', async ({ page, extensionId }) => {
   await openPrompt(page, extensionId, {
     method: 'signEvent',
     eventKind: 22242,
@@ -174,29 +178,15 @@ test('a request joining the group updates the prompt', async ({ page, extensionI
   });
   await expect(page.getByText('2 requests')).toBeVisible();
 
-  // Background pushes an update; the prompt re-reads the group.
-  await page.evaluate(() => {
-    const w = window as unknown as {
-      __sent: unknown[];
-      __listeners: ((msg: unknown) => void)[];
-    };
-    const runtime = chrome.runtime as unknown as { sendMessage: (m: unknown) => Promise<unknown> };
-    runtime.sendMessage = async (msg: unknown) => {
-      w.__sent.push(msg);
-      if ((msg as { type: string }).type === 'GET_PERMISSION_GROUP') {
-        return {
-          requests: [1, 2, 3, 4].map((i) => ({
-            requestId: `req-${i}`,
-            event: { kind: 22242, content: `request ${i}`, tags: [], created_at: 1700000000 },
-          })),
-        };
-      }
-      return {};
-    };
-    for (const fn of w.__listeners) {
-      fn({ type: 'PERMISSION_GROUP_UPDATED', groupKey: 'client.test|signEvent:22242' });
-    }
-  });
+  // Requests arriving after the prompt opened get their own group, so the prompt has
+  // nothing to subscribe to and can never grow under the user's cursor.
+  const listenerCount = await page.evaluate(
+    () => (window as unknown as { __listeners: unknown[] }).__listeners.length
+  );
+  expect(listenerCount).toBe(0);
 
-  await expect(page.getByText('4 requests')).toBeVisible();
+  await page.getByRole('button', { name: 'Allow Once', exact: true }).click();
+  await expect
+    .poll(() => sentDecision(page))
+    .toMatchObject({ decision: 'allow_once', approved: ['req-1', 'req-2'] });
 });

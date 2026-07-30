@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted, computed, nextTick, watch } from 'vue';
+import { ref, onMounted, computed, nextTick, watch } from 'vue';
 import Button from '@/components/ui/Button.vue';
 import Badge from '@/components/ui/Badge.vue';
 import Separator from '@/components/ui/Separator.vue';
@@ -17,7 +17,6 @@ import { tokenizeJson } from '@/lib/json-highlight';
 
 type GroupedRequest = { requestId: string; event: unknown };
 
-const groupKey = ref('');
 const host = ref('');
 const method = ref('');
 const eventKind = ref<number | null>(null);
@@ -50,41 +49,44 @@ const rawEventJson = computed(() => {
 });
 const rawEventTokens = computed(() => (rawEventJson.value ? tokenizeJson(rawEventJson.value) : []));
 
-async function loadGroup(): Promise<void> {
+/**
+ * The group is frozen by the background once this window opens, so a single successful
+ * load is authoritative. Retry once: an empty list would deny every request.
+ */
+async function loadGroup(retries = 1): Promise<void> {
   try {
     const res = await chrome.runtime.sendMessage({ type: 'GET_PERMISSION_GROUP' });
     const list = Array.isArray(res?.requests) ? (res.requests as GroupedRequest[]) : [];
+    if (!list.length && retries > 0) {
+      await new Promise((r) => setTimeout(r, 150));
+      return loadGroup(retries - 1);
+    }
     requests.value = list;
     if (pageIndex.value > list.length - 1) pageIndex.value = Math.max(0, list.length - 1);
     skipped.value = skipped.value.filter((id) => list.some((r) => r.requestId === id));
   } catch {
+    if (retries > 0) {
+      await new Promise((r) => setTimeout(r, 150));
+      return loadGroup(retries - 1);
+    }
     /* background may be restarting; keep whatever is on screen */
   }
 }
 
-/** Requests can still join this group while the prompt is open. */
-function onBackgroundMessage(msg: { type?: string; groupKey?: string }): void {
-  if (msg?.type === 'PERMISSION_GROUP_UPDATED' && msg.groupKey === groupKey.value) void loadGroup();
-}
-
 onMounted(async () => {
+  // The background reads this window's groupKey from its own URL; the prompt never
+  // sends it back.
   const params = new URLSearchParams(window.location.search);
-  groupKey.value = params.get('groupKey') ?? '';
   host.value = params.get('host') ?? 'unknown';
   method.value = params.get('method') ?? 'unknown';
 
   const kindParam = params.get('eventKind');
   if (kindParam) eventKind.value = parseInt(kindParam, 10);
 
-  chrome.runtime.onMessage.addListener(onBackgroundMessage);
   await loadGroup();
 
   await nextTick();
   resizeWindowToContent();
-});
-
-onUnmounted(() => {
-  chrome.runtime.onMessage.removeListener(onBackgroundMessage);
 });
 
 /** Resize the prompt window to fit content (no scrollbar). */
@@ -122,10 +124,16 @@ function toggleSkip(): void {
 function respond(decision: string) {
   if (decided.value) return;
   decided.value = true;
+  // Send what was actually shown and not skipped. The background denies anything in the
+  // group that is missing from this list, so a decision can never cover more than the
+  // user saw.
+  const approved = requests.value
+    .map((r) => r.requestId)
+    .filter((id) => !skipped.value.includes(id));
   chrome.runtime.sendMessage({
     type: 'PERMISSION_RESPONSE',
     decision,
-    skipped: skipped.value,
+    approved,
   });
   setTimeout(() => window.close(), 100);
 }
@@ -147,7 +155,14 @@ function respond(decision: string) {
         class="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-card border border-border w-full justify-center min-h-0"
       >
         <Globe class="size-4 text-muted-foreground shrink-0" />
-        <span class="text-sm font-medium truncate">{{ host }}</span>
+        <!--
+          Never truncate: everything that identifies a host lives in its suffix, so an
+          ellipsis at the end hides the registrable domain. Long hosts wrap and the
+          window grows instead.
+        -->
+        <span class="text-sm font-medium min-w-0 break-all text-center" :title="host">{{
+          host
+        }}</span>
       </div>
 
       <p class="text-xs text-muted-foreground text-center">{{ t('promptWantsAccess') }}</p>

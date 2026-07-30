@@ -35,6 +35,7 @@ import {
   deleteProfileWhitelist,
 } from '@/lib/privacy-mode';
 import type { NIP07SignEventInput } from '@/lib/nip07/types';
+import { isValidNostrConnectUri } from '@/lib/nostrconnect';
 import {
   migrateToProfiles,
   getProfiles,
@@ -44,6 +45,8 @@ import {
   generateNewClientSecret,
   getClientSecretBytes,
   profilesToSummaries,
+  stripBunkerUriSecret,
+  stripStoredBunkerSecrets,
 } from '@/lib/profiles';
 import type { Profile, Session } from '@/lib/profiles';
 import {
@@ -75,7 +78,12 @@ function validateSignEventInput(event: unknown): event is NIP07SignEventInput {
   if (!event || typeof event !== 'object') return false;
   const e = event as Record<string, unknown>;
   return (
+    // Must be a non-negative integer: the kind selects the permission scope, and a
+    // missing or fractional kind falls back to the blanket `signEvent` rule that
+    // covers every kind.
     typeof e.kind === 'number' &&
+    Number.isInteger(e.kind) &&
+    e.kind >= 0 &&
     typeof e.content === 'string' &&
     Array.isArray(e.tags) &&
     typeof e.created_at === 'number'
@@ -99,10 +107,11 @@ let reconnectionFailed = false;
 let reconnectionFailedRelays: string[] = [];
 /** Groups concurrent permission requests and shows them one prompt window at a time. */
 const permissionQueue = new PermissionQueue({
-  checkPermission: (host, method, eventKind) =>
-    checkPermission(host, method, eventKind, activeProfileId ?? undefined),
+  // The profile comes from the group, not from the current global: the user may have
+  // switched profiles since the request was queued.
+  checkPermission: (host, method, eventKind, profileId) =>
+    checkPermission(host, method, eventKind, profileId),
   openPrompt: openPermissionPrompt,
-  onGroupUpdated: (group) => void notifyPromptGroupUpdated(group),
 });
 
 /** Close the current bunkerSigner (if any) and null it out. Best-effort, never throws. */
@@ -270,7 +279,8 @@ async function fetchNip65RelayList(
   nip46ClientSecret: Uint8Array
 ): Promise<RelayEntry[] | null> {
   if (!relays.length) return null;
-  const pool = new Nip42ResilientPool(nip46ClientSecret, { maxWaitForConnection: 10_000 });
+  // Session relays only — they are the ones the bunker connection already authenticates to.
+  const pool = new Nip42ResilientPool(nip46ClientSecret, relays, { maxWaitForConnection: 10_000 });
   try {
     const event = await withTimeout(
       pool.get(
@@ -490,7 +500,10 @@ async function fetchKind0ForProfile(
   const profiles = await getProfiles();
   const profile = profiles[profileId];
   if (!profile) return;
-  const pool = new Nip42ResilientPool(getClientSecretBytes(profile), {
+  // Queried across session + public directory relays, but only the session relays may
+  // receive a NIP-42 signature: kind 0 is public, and the hardcoded relays are ones the
+  // user never chose.
+  const pool = new Nip42ResilientPool(getClientSecretBytes(profile), relays, {
     maxWaitForConnection: 10_000,
   });
   try {
@@ -573,7 +586,7 @@ async function reconnectFromSession(): Promise<boolean> {
       hasBunkerSecretInUri: Boolean(bp.secret),
     });
     const secret = getClientSecretBytes(activeProfile);
-    const pool = new Nip42ResilientPool(secret, { maxWaitForConnection: 10_000 });
+    const pool = new Nip42ResilientPool(secret, bp.relays, { maxWaitForConnection: 10_000 });
     const signer = BunkerSigner.fromBunker(secret, bp, { pool });
     await withTimeout(
       withRelayProbe(signer.connect(), bp.relays),
@@ -631,7 +644,9 @@ async function connectWithBunkerUri(
       clientSecretHex = activeProfile!.clientSecretHex;
     }
 
-    const pool = new Nip42ResilientPool(clientSecretBytes, { maxWaitForConnection: 10_000 });
+    const pool = new Nip42ResilientPool(clientSecretBytes, bp.relays, {
+      maxWaitForConnection: 10_000,
+    });
     const signer = BunkerSigner.fromBunker(clientSecretBytes, bp, { pool });
 
     console.info(BUNKER_LOG_PREFIX, 'connectWithBunkerUri: awaiting signer.connect()…');
@@ -643,7 +658,12 @@ async function connectWithBunkerUri(
     console.info(BUNKER_LOG_PREFIX, 'connectWithBunkerUri: connect RPC ok, fetching public key…');
 
     const signerPubkey = await signer.getPublicKey();
-    const session: Session = { signerPubkey, relays: bp.relays, bunkerUri: uri };
+    // The one-time connect secret has served its purpose; never persist it.
+    const session: Session = {
+      signerPubkey,
+      relays: bp.relays,
+      bunkerUri: stripBunkerUriSecret(uri),
+    };
 
     const profiles = await getProfiles();
     const existing = profiles[profileId];
@@ -710,7 +730,6 @@ function startNostrConnectConnection(opts?: { asNewProfile?: boolean }): Promise
     }
 
     const clientPubkey = getPublicKey(clientSecretBytesVal);
-    const pool = new Nip42ResilientPool(clientSecretBytesVal, { maxWaitForConnection: 10_000 });
 
     const data = await chrome.storage.local.get(STORAGE_KEY_NOSTRCONNECT_RELAYS);
     const stored = data[STORAGE_KEY_NOSTRCONNECT_RELAYS] as string[] | undefined;
@@ -718,6 +737,11 @@ function startNostrConnectConnection(opts?: { asNewProfile?: boolean }): Promise
       Array.isArray(stored) && stored.length > 0
         ? stored.map((r) => String(r).trim()).filter((r) => r.length > 0)
         : DEFAULT_NOSTRCONNECT_RELAYS;
+
+    // Built after the relay list is known: only these relays may receive a NIP-42 signature.
+    const pool = new Nip42ResilientPool(clientSecretBytesVal, relays, {
+      maxWaitForConnection: 10_000,
+    });
 
     const oneTimeSecret = randomNostrConnectSecret();
     const uri = createNostrConnectURI({
@@ -734,7 +758,8 @@ function startNostrConnectConnection(opts?: { asNewProfile?: boolean }): Promise
         const session: Session = {
           signerPubkey,
           relays: signer.bp.relays,
-          bunkerUri: toBunkerURL(signer.bp),
+          // toBunkerURL() embeds bp.secret; the one-time token is not persisted.
+          bunkerUri: stripBunkerUriSecret(toBunkerURL(signer.bp)),
         };
 
         if (createNew) {
@@ -803,19 +828,11 @@ async function openPermissionPrompt(group: PermissionGroup): Promise<number> {
   return win.id;
 }
 
-/** Tell an open prompt that a request joined its group, so it can refresh its count. */
-async function notifyPromptGroupUpdated(group: PermissionGroup): Promise<void> {
-  try {
-    await chrome.runtime.sendMessage({ type: 'PERMISSION_GROUP_UPDATED', groupKey: group.key });
-  } catch {
-    /* prompt may have closed already */
-  }
-}
-
 async function enforcePermission(
   senderUrl: string | undefined,
   msgType: string,
-  params?: unknown[]
+  params: unknown[] | undefined,
+  profileId: string | null
 ): Promise<{ allowed: boolean; error?: string }> {
   const method = NIP07_METHOD_MAP[msgType];
   if (!method) return { allowed: true };
@@ -829,9 +846,18 @@ async function enforcePermission(
     return { allowed: false, error: 'Invalid origin' };
   }
 
-  const kind =
-    method === 'signEvent' ? (params?.[0] as { kind?: number } | undefined)?.kind : undefined;
-  const decision = await checkPermission(host, method, kind, activeProfileId ?? undefined);
+  let kind: number | undefined;
+  if (method === 'signEvent') {
+    // The kind selects the permission scope. Without a valid one the request would be
+    // scoped to the blanket `signEvent` rule, and the prompt would not name a kind.
+    const rawKind = (params?.[0] as { kind?: unknown } | undefined)?.kind;
+    if (typeof rawKind !== 'number' || !Number.isInteger(rawKind) || rawKind < 0) {
+      return { allowed: false, error: 'Invalid event: kind must be a non-negative integer' };
+    }
+    kind = rawKind;
+  }
+
+  const decision = await checkPermission(host, method, kind, profileId ?? undefined);
   if (decision === 'allow') return { allowed: true };
   if (decision === 'deny') return { allowed: false, error: 'Permission denied' };
 
@@ -840,6 +866,7 @@ async function enforcePermission(
     method,
     eventKind: kind,
     rawEvent: method === 'signEvent' ? params?.[0] : undefined,
+    profileId: profileId ?? undefined,
   });
   return allowed ? { allowed: true } : { allowed: false, error: 'Permission denied' };
 }
@@ -905,8 +932,7 @@ chrome.runtime.onMessage.addListener(
       method?: string;
       params?: unknown[];
       host?: string;
-      groupKey?: string;
-      skipped?: unknown;
+      approved?: unknown;
       decision?: string;
       enabled?: boolean;
       profileId?: string;
@@ -935,24 +961,34 @@ chrome.runtime.onMessage.addListener(
         const group = permissionQueue.getGroup(groupKey);
         if (!group) return {};
 
-        const skipped = Array.isArray(msg.skipped)
-          ? msg.skipped.filter((id): id is string => typeof id === 'string')
+        // The requests the prompt actually showed and the user did not skip. Anything
+        // else in the group is denied, so a stale or half-loaded prompt fails closed.
+        const approved = Array.isArray(msg.approved)
+          ? msg.approved.filter((id): id is string => typeof id === 'string')
           : [];
 
         // Store the rule before resolving: the next group in the queue is re-checked
         // against stored permissions and may no longer need a prompt.
-        if (msg.decision === 'allow_always' || msg.decision === 'deny_always') {
+        // A prompt may only ever create a kind-scoped signEvent rule — the bare
+        // `signEvent` key is the fallback for *every* kind and exists only for installs
+        // that predate per-kind permissions.
+        const isBareSignEvent = group.method === 'signEvent' && group.eventKind === undefined;
+        if (
+          (msg.decision === 'allow_always' || msg.decision === 'deny_always') &&
+          !isBareSignEvent
+        ) {
           await setPermission(
             group.host,
             group.method,
             msg.decision === 'allow_always' ? 'allow' : 'deny',
             group.method === 'signEvent' ? group.eventKind : undefined,
-            activeProfileId ?? undefined
+            // The profile the requests were made under, not whichever is active now.
+            group.profileId
           );
           void updateBadgeForTabsWithHost(group.host);
         }
 
-        permissionQueue.resolve(groupKey, msg.decision, skipped);
+        permissionQueue.resolve(groupKey, msg.decision, approved);
         return {};
       }
 
@@ -1229,6 +1265,7 @@ chrome.runtime.onMessage.addListener(
 
       // Open nostrconnect URI in Bunker46 (only when "Use bunker46" is enabled)
       if (msg.type === 'OPEN_NOSTRCONNECT_URI' && msg.uri) {
+        if (!isValidNostrConnectUri(msg.uri)) return { error: 'Invalid nostrconnect URI' };
         const data = await chrome.storage.local.get(['useBunker46', 'bunker46BaseUrl']);
         if (data.useBunker46 !== true) return {};
         const baseUrl = (data.bunker46BaseUrl as string) || 'http://localhost:5173';
@@ -1297,58 +1334,82 @@ chrome.runtime.onMessage.addListener(
           return { error: 'Not connected to signer. Connect in the extension popup.' };
         }
 
-        const permResult = await enforcePermission(sender.url, msg.type, msg.params);
-        if (!permResult.allowed) {
-          return { error: permResult.error ?? 'Permission denied' };
-        }
+        // Snapshot the identity this request is decided for. activeProfile,
+        // activeProfileId and bunkerSigner are module globals that SWITCH_PROFILE can
+        // replace while the permission prompt is open.
+        const reqProfile = activeProfile;
+        const reqSession = activeProfile.session;
+        const reqProfileId = activeProfileId;
 
-        if (msg.type === 'NIP07_GET_PUBLIC_KEY') {
-          const pubkey = await bunkerSigner.getPublicKey();
-          return { result: pubkey };
-        }
-
+        // Validate before the permission decision, not after: an event without a valid
+        // `kind` would otherwise be scoped to the blanket `signEvent` rule.
+        let signEventInput: NIP07SignEventInput | null = null;
         if (msg.type === 'NIP07_SIGN_EVENT') {
           const rawEvent = msg.params?.[0];
           if (!validateSignEventInput(rawEvent)) {
             return {
               error:
-                'Invalid event: must have kind (number), content (string), tags (string[][]), created_at (number)',
+                'Invalid event: must have kind (non-negative integer), content (string), tags (array), created_at (number)',
             };
           }
-          const event = await bunkerSigner.signEvent(rawEvent);
+          signEventInput = rawEvent;
+        }
+
+        const permResult = await enforcePermission(sender.url, msg.type, msg.params, reqProfileId);
+        if (!permResult.allowed) {
+          return { error: permResult.error ?? 'Permission denied' };
+        }
+
+        // Signing now would use a different identity than the one the user approved for.
+        if (activeProfileId !== reqProfileId) {
+          return { error: 'Active profile changed while this request was pending. Try again.' };
+        }
+        // Same profile, so same identity — but a reconnect may have swapped in a fresh
+        // signer while the prompt was open. Read it once, after the profile check.
+        const reqSigner = bunkerSigner;
+        if (!reqSigner) {
+          return { error: 'Not connected to signer. Connect in the extension popup.' };
+        }
+
+        if (msg.type === 'NIP07_GET_PUBLIC_KEY') {
+          const pubkey = await reqSigner.getPublicKey();
+          return { result: pubkey };
+        }
+
+        if (msg.type === 'NIP07_SIGN_EVENT' && signEventInput) {
+          const event = await reqSigner.signEvent(signEventInput);
           return { result: event };
         }
 
-        const session = activeProfile.session;
         if (msg.type === 'NIP07_GET_RELAYS') {
-          const pubkey = await bunkerSigner.getPublicKey();
+          const pubkey = await reqSigner.getPublicKey();
           const nip65 =
-            session.relays.length > 0
+            reqSession.relays.length > 0
               ? await fetchNip65RelayList(
                   pubkey,
-                  session.relays,
-                  getClientSecretBytes(activeProfile)
+                  reqSession.relays,
+                  getClientSecretBytes(reqProfile)
                 )
               : null;
           const list: RelayEntry[] =
             nip65 && nip65.length > 0
               ? nip65
-              : session.relays.map((r) => [r, { read: true, write: true }] as RelayEntry);
+              : reqSession.relays.map((r) => [r, { read: true, write: true }] as RelayEntry);
           return { result: list };
         }
 
         const nip44Params = msg.params ?? [];
         if (msg.type === 'NIP04_ENCRYPT' && validateNip04Nip44Params(nip44Params)) {
-          return { result: await bunkerSigner.nip04Encrypt(nip44Params[0], nip44Params[1]) };
+          return { result: await reqSigner.nip04Encrypt(nip44Params[0], nip44Params[1]) };
         }
         if (msg.type === 'NIP04_DECRYPT' && validateNip04Nip44Params(nip44Params)) {
-          return { result: await bunkerSigner.nip04Decrypt(nip44Params[0], nip44Params[1]) };
+          return { result: await reqSigner.nip04Decrypt(nip44Params[0], nip44Params[1]) };
         }
         if (msg.type === 'NIP44_ENCRYPT' && validateNip04Nip44Params(nip44Params)) {
-          return { result: await bunkerSigner.nip44Encrypt(nip44Params[0], nip44Params[1]) };
+          return { result: await reqSigner.nip44Encrypt(nip44Params[0], nip44Params[1]) };
         }
         if (msg.type === 'NIP44_DECRYPT' && validateNip04Nip44Params(nip44Params)) {
-          return { result: await bunkerSigner.nip44Decrypt(nip44Params[0], nip44Params[1]) };
+          return { result: await reqSigner.nip44Decrypt(nip44Params[0], nip44Params[1]) };
         }
 
         if (
@@ -1373,6 +1434,8 @@ chrome.windows.onRemoved.addListener((windowId: number) => {
 export default defineBackground(async () => {
   // Run migration (idempotent) before anything else
   await migrateToProfiles();
+  // Clean up one-time connect secrets stored by earlier versions (idempotent).
+  await stripStoredBunkerSecrets();
 
   // Load active profile and attempt reconnect
   await loadActiveProfileFromStorage();

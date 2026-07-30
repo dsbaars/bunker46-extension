@@ -10,14 +10,12 @@ import type { PermissionDecision } from '@/lib/permissions';
 type Harness = {
   queue: PermissionQueue;
   opened: PermissionGroup[];
-  updated: PermissionGroup[];
   stored: Map<string, PermissionDecision>;
   openPrompt: ReturnType<typeof vi.fn>;
 };
 
 function makeQueue(overrides: { openPrompt?: (group: PermissionGroup) => Promise<number> } = {}) {
   const opened: PermissionGroup[] = [];
-  const updated: PermissionGroup[] = [];
   const stored = new Map<string, PermissionDecision>();
   let nextWindowId = 1;
   let nextRequestId = 1;
@@ -29,15 +27,19 @@ function makeQueue(overrides: { openPrompt?: (group: PermissionGroup) => Promise
   });
 
   const queue = new PermissionQueue({
-    checkPermission: async (host, method, eventKind) =>
-      stored.get(groupKeyFor(host, method, eventKind)) ?? null,
+    checkPermission: async (host, method, eventKind, profileId) =>
+      stored.get(groupKeyFor(host, method, eventKind, profileId)) ?? null,
     openPrompt,
-    onGroupUpdated: (group) => updated.push(group),
     createRequestId: () => `req-${nextRequestId++}`,
     collectMs: 200,
   });
 
-  return { queue, opened, updated, stored, openPrompt } satisfies Harness;
+  return { queue, opened, stored, openPrompt } satisfies Harness;
+}
+
+/** Every request in the group, as the prompt would report it after showing them all. */
+function allIds(group: PermissionGroup): string[] {
+  return group.requests.map((r) => r.requestId);
 }
 
 /** Let the collect window elapse and every queued microtask settle. */
@@ -55,10 +57,17 @@ describe('permission queue', () => {
   });
 
   it('groups requests on the permission scope', () => {
-    expect(groupKeyFor('a.com', 'signEvent', 22242)).toBe('a.com|signEvent:22242');
+    expect(groupKeyFor('a.com', 'signEvent', 22242)).toBe('|a.com|signEvent:22242');
     expect(groupKeyFor('a.com', 'signEvent', 1)).not.toBe(groupKeyFor('a.com', 'signEvent', 22242));
-    expect(groupKeyFor('a.com', 'nip44_decrypt')).toBe('a.com|nip44_decrypt');
+    expect(groupKeyFor('a.com', 'nip44_decrypt')).toBe('|a.com|nip44_decrypt');
     expect(groupKeyFor('a.com', 'nip44_decrypt')).not.toBe(groupKeyFor('b.com', 'nip44_decrypt'));
+  });
+
+  it('keeps profiles in separate groups', () => {
+    expect(groupKeyFor('a.com', 'signEvent', 1, 'p1')).toBe('p1|a.com|signEvent:1');
+    expect(groupKeyFor('a.com', 'signEvent', 1, 'p1')).not.toBe(
+      groupKeyFor('a.com', 'signEvent', 1, 'p2')
+    );
   });
 
   it('opens one prompt for a burst of identical requests', async () => {
@@ -72,7 +81,7 @@ describe('permission queue', () => {
     expect(opened).toHaveLength(1);
     expect(opened[0]!.requests).toHaveLength(5);
 
-    queue.resolve(opened[0]!.key, 'allow_once');
+    queue.resolve(opened[0]!.key, 'allow_once', allIds(opened[0]!));
     await expect(Promise.all(pending)).resolves.toEqual([true, true, true, true, true]);
   });
 
@@ -86,7 +95,7 @@ describe('permission queue', () => {
     expect(opened).toHaveLength(1);
     expect(opened[0]!.eventKind).toBe(22242);
 
-    queue.resolve(opened[0]!.key, 'allow_once');
+    queue.resolve(opened[0]!.key, 'allow_once', allIds(opened[0]!));
     await settle(0);
 
     expect(opened).toHaveLength(2);
@@ -95,6 +104,27 @@ describe('permission queue', () => {
     queue.resolve(opened[1]!.key, 'deny_once');
     await expect(auth).resolves.toBe(true);
     await expect(note).resolves.toBe(false);
+  });
+
+  it('keeps requests from different profiles in separate prompts', async () => {
+    const { queue, opened } = makeQueue();
+
+    const a = queue.request({ host: 'a.com', method: 'getPublicKey', profileId: 'p1' });
+    const b = queue.request({ host: 'a.com', method: 'getPublicKey', profileId: 'p2' });
+    await settle();
+
+    expect(opened).toHaveLength(1);
+    expect(opened[0]!.profileId).toBe('p1');
+
+    queue.resolve(opened[0]!.key, 'allow_once', allIds(opened[0]!));
+    await settle(0);
+
+    expect(opened).toHaveLength(2);
+    expect(opened[1]!.profileId).toBe('p2');
+
+    queue.resolve(opened[1]!.key, 'deny_once');
+    await expect(a).resolves.toBe(true);
+    await expect(b).resolves.toBe(false);
   });
 
   it('shows one prompt at a time and re-checks stored rules before the next one', async () => {
@@ -107,8 +137,8 @@ describe('permission queue', () => {
     expect(opened).toHaveLength(1);
 
     // User picked "Allow Always" on the first group; a rule now covers the second.
-    stored.set('a.com|nip44_decrypt', 'allow');
-    queue.resolve(opened[0]!.key, 'allow_always');
+    stored.set('|a.com|nip44_decrypt', 'allow');
+    queue.resolve(opened[0]!.key, 'allow_always', allIds(opened[0]!));
     await settle(0);
 
     expect(opened).toHaveLength(1);
@@ -116,25 +146,49 @@ describe('permission queue', () => {
     await expect(decrypting).resolves.toBe(true);
   });
 
-  it('lets late requests join the prompt that is already open', async () => {
-    const { queue, opened, updated } = makeQueue();
+  it('never lets a request join the prompt that is already open', async () => {
+    const { queue, opened } = makeQueue();
+
+    const first = queue.request({ host: 'a.com', method: 'nip44_decrypt' });
+    await settle();
+    expect(opened).toHaveLength(1);
+    expect(opened[0]!.requests).toHaveLength(1);
+
+    // Arrives while the user is looking at the prompt: must not be covered by it.
+    const late = queue.request({ host: 'a.com', method: 'nip44_decrypt' });
+    await settle();
+
+    expect(opened[0]!.requests).toHaveLength(1);
+
+    queue.resolve(opened[0]!.key, 'allow_once', allIds(opened[0]!));
+    await settle();
+
+    await expect(first).resolves.toBe(true);
+
+    // The straggler gets its own prompt rather than riding along on the first decision.
+    expect(opened).toHaveLength(2);
+    queue.resolve(opened[1]!.key, 'deny_once');
+    await expect(late).resolves.toBe(false);
+  });
+
+  it('absorbs stragglers silently once a rule is stored', async () => {
+    const { queue, opened, stored } = makeQueue();
 
     const first = queue.request({ host: 'a.com', method: 'nip44_decrypt' });
     await settle();
     expect(opened).toHaveLength(1);
 
     const late = queue.request({ host: 'a.com', method: 'nip44_decrypt' });
-    await settle(0);
 
-    expect(opened).toHaveLength(1);
-    expect(updated).toHaveLength(1);
-    expect(updated[0]!.requests).toHaveLength(2);
+    stored.set('|a.com|nip44_decrypt', 'allow');
+    queue.resolve(opened[0]!.key, 'allow_always', allIds(opened[0]!));
+    await settle();
 
-    queue.resolve(opened[0]!.key, 'allow_once');
     await expect(Promise.all([first, late])).resolves.toEqual([true, true]);
+    expect(opened).toHaveLength(1);
   });
 
-  it('denies skipped requests while allowing the rest of the group', async () => {
+  it('denies requests missing from the approved list', async () => {
     const { queue, opened } = makeQueue();
 
     const pending = [1, 2, 3].map((i) =>
@@ -143,9 +197,30 @@ describe('permission queue', () => {
     await settle();
 
     const group = opened[0]!;
-    queue.resolve(group.key, 'allow_once', [group.requests[1]!.requestId]);
+    const approved = allIds(group).filter((id) => id !== group.requests[1]!.requestId);
+    queue.resolve(group.key, 'allow_once', approved);
 
     await expect(Promise.all(pending)).resolves.toEqual([true, false, true]);
+  });
+
+  it('denies the whole group when the prompt reports nothing approved', async () => {
+    const { queue, opened } = makeQueue();
+
+    const pending = [1, 2].map(() => queue.request({ host: 'a.com', method: 'getPublicKey' }));
+    await settle();
+
+    queue.resolve(opened[0]!.key, 'allow_once');
+    await expect(Promise.all(pending)).resolves.toEqual([false, false]);
+  });
+
+  it('ignores approved ids that are not in the group', async () => {
+    const { queue, opened } = makeQueue();
+
+    const pending = queue.request({ host: 'a.com', method: 'getPublicKey' });
+    await settle();
+
+    queue.resolve(opened[0]!.key, 'allow_once', ['not-a-real-id']);
+    await expect(pending).resolves.toBe(false);
   });
 
   it('denies the whole group when the prompt window is closed', async () => {
@@ -155,13 +230,13 @@ describe('permission queue', () => {
     await settle();
 
     const closed = queue.handleWindowClosed(opened[0]!.windowId!);
-    expect(closed?.key).toBe('a.com|getPublicKey');
+    expect(closed?.key).toBe('|a.com|getPublicKey');
     await expect(Promise.all(pending)).resolves.toEqual([false, false]);
   });
 
   it('never prompts for a scope that already has a stored rule', async () => {
     const { queue, opened, stored } = makeQueue();
-    stored.set('a.com|signEvent:1', 'deny');
+    stored.set('|a.com|signEvent:1', 'deny');
 
     const denied = queue.request({ host: 'a.com', method: 'signEvent', eventKind: 1 });
     await settle();
@@ -187,8 +262,23 @@ describe('permission queue', () => {
     const pending = queue.request({ host: 'a.com', method: 'getPublicKey' });
     await settle();
 
-    expect(queue.resolve(opened[0]!.key, 'allow_once')).not.toBeNull();
-    expect(queue.resolve(opened[0]!.key, 'allow_once')).toBeNull();
+    const group = opened[0]!;
+    expect(queue.resolve(group.key, 'allow_once', allIds(group))).not.toBeNull();
+    expect(queue.resolve(group.key, 'allow_once', allIds(group))).toBeNull();
+    await expect(pending).resolves.toBe(true);
+  });
+
+  it('only exposes the group that is on screen', async () => {
+    const { queue, opened } = makeQueue();
+
+    const pending = queue.request({ host: 'a.com', method: 'getPublicKey' });
+    await settle();
+
+    const group = opened[0]!;
+    expect(queue.getGroup(group.key)).toBe(group);
+
+    queue.resolve(group.key, 'allow_once', allIds(group));
+    expect(queue.getGroup(group.key)).toBeUndefined();
     await expect(pending).resolves.toBe(true);
   });
 
@@ -202,7 +292,7 @@ describe('permission queue', () => {
     for (let i = 0; i < hosts.length; i++) {
       expect(opened).toHaveLength(i + 1);
       expect(opened[i]!.host).toBe(hosts[i]);
-      queue.resolve(opened[i]!.key, 'allow_once');
+      queue.resolve(opened[i]!.key, 'allow_once', allIds(opened[i]!));
       await settle(0);
     }
 

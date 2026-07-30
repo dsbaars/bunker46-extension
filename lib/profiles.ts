@@ -4,7 +4,12 @@ import { bytesToHex, hexToBytes } from '@/lib/hex';
 export type Session = {
   signerPubkey: string;
   relays: string[];
-  /** Optional: original bunker URI for reconnection (may include one-time secret). */
+  /**
+   * Bunker URI for reconnection, always stored without its `secret`.
+   *
+   * Kept because it carries the *remote signer's* pubkey, which can differ from
+   * `signerPubkey` (the user's) and cannot be reconstructed from the rest of the session.
+   */
   bunkerUri?: string;
 };
 
@@ -58,6 +63,47 @@ export async function setActiveProfileId(id: string | null): Promise<void> {
   } else {
     await chrome.storage.local.set({ [STORAGE_KEY_ACTIVE_PROFILE_ID]: id });
   }
+}
+
+/**
+ * Drop the `secret` from a bunker URI before it is stored.
+ *
+ * The secret is a one-time connect token: the bunker authorizes the client pubkey on first
+ * connect, and `reconnectFromSession()` never sends it again. Keeping it on disk only widens
+ * what an attacker with filesystem access to the browser profile walks away with.
+ *
+ * Returns the input unchanged when it cannot be parsed — nothing can be stripped from a URI
+ * we cannot read, and it would have failed to reconnect anyway.
+ */
+export function stripBunkerUriSecret(uri: string): string {
+  try {
+    const parsed = new URL(uri.trim());
+    if (!parsed.searchParams.has('secret')) return uri;
+    parsed.searchParams.delete('secret');
+    return parsed.toString();
+  } catch {
+    return uri;
+  }
+}
+
+/**
+ * One-time sweep for installs that stored a bunker URI before {@link stripBunkerUriSecret}
+ * existed. Idempotent, and only writes when something actually changed.
+ */
+export async function stripStoredBunkerSecrets(): Promise<void> {
+  const profiles = await getProfiles();
+  let changed = false;
+
+  for (const [id, profile] of Object.entries(profiles)) {
+    const uri = profile.session?.bunkerUri;
+    if (!uri) continue;
+    const stripped = stripBunkerUriSecret(uri);
+    if (stripped === uri) continue;
+    profiles[id] = { ...profile, session: { ...profile.session!, bunkerUri: stripped } };
+    changed = true;
+  }
+
+  if (changed) await saveProfiles(profiles);
 }
 
 /** Generate a brand-new client keypair for a profile. */

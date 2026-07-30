@@ -10,9 +10,13 @@ import type { PermissionDecision } from '@/lib/permissions';
  * stored rule uses — so a group can never mix, say, kind 1 with kind 22242, and
  * a single decision is never broader than the "Allow Always" offered next to it.
  *
- * Only one group is on screen at a time; the next one is re-checked against
- * stored permissions before it opens, so a rule saved in the previous prompt
- * silently covers the requests waiting behind it.
+ * A group is frozen the moment its prompt opens: requests arriving afterwards
+ * start a fresh group instead of joining the one on screen, so a decision can
+ * only ever apply to what the user was actually shown. Stragglers behind an
+ * "Allow Always" are absorbed silently anyway, because the next group is
+ * re-checked against stored permissions before it opens.
+ *
+ * Only one group is on screen at a time.
  */
 
 /** Decision as sent by the prompt window. */
@@ -37,11 +41,13 @@ export type QueuedRequest = {
 };
 
 export type PermissionGroup = {
-  /** `${host}|${methodKey(method, eventKind)}` — identical to the stored permission scope. */
+  /** `${profileId}|${host}|${methodKey(method, eventKind)}` — the stored permission scope. */
   key: string;
   host: string;
   method: string;
   eventKind?: number;
+  /** Profile the requests were made under. A rule from this group is stored for it alone. */
+  profileId?: string;
   requests: QueuedRequest[];
   /** Prompt window currently showing this group, or null while it is queued. */
   windowId: number | null;
@@ -52,12 +58,11 @@ export type PermissionQueueDeps = {
   checkPermission: (
     host: string,
     method: string,
-    eventKind?: number
+    eventKind?: number,
+    profileId?: string
   ) => Promise<PermissionDecision | null>;
   /** Open the prompt window for a group and resolve with its window id. */
   openPrompt: (group: PermissionGroup) => Promise<number>;
-  /** Called when a request joins the group that is already on screen. */
-  onGroupUpdated?: (group: PermissionGroup) => void;
   createRequestId?: () => string;
   /** Window in which requests are collected before the prompt opens (ms). */
   collectMs?: number;
@@ -66,8 +71,13 @@ export type PermissionQueueDeps = {
 /** Requests arriving within this window end up in the same prompt. */
 export const PERMISSION_COLLECT_MS = 200;
 
-export function groupKeyFor(host: string, method: string, eventKind?: number): string {
-  return `${host}|${methodKey(method, eventKind)}`;
+export function groupKeyFor(
+  host: string,
+  method: string,
+  eventKind?: number,
+  profileId?: string
+): string {
+  return `${profileId ?? ''}|${host}|${methodKey(method, eventKind)}`;
 }
 
 function defaultRequestId(): string {
@@ -80,7 +90,8 @@ export class PermissionQueue {
   private readonly createRequestId: () => string;
   /** Insertion-ordered, so groups are prompted first-in-first-out. */
   private readonly groups = new Map<string, PermissionGroup>();
-  private activeKey: string | null = null;
+  /** The frozen group currently on screen. Never accepts new requests. */
+  private active: PermissionGroup | null = null;
   private collectTimer: ReturnType<typeof setTimeout> | null = null;
   private pumping = false;
 
@@ -96,8 +107,11 @@ export class PermissionQueue {
     method: string;
     eventKind?: number;
     rawEvent?: unknown;
+    profileId?: string;
   }): Promise<boolean> {
-    const key = groupKeyFor(input.host, input.method, input.eventKind);
+    const key = groupKeyFor(input.host, input.method, input.eventKind, input.profileId);
+    // Only pending groups are joinable — never `this.active`, which the user is
+    // looking at right now.
     let group = this.groups.get(key);
     if (!group) {
       group = {
@@ -105,6 +119,7 @@ export class PermissionQueue {
         host: input.host,
         method: input.method,
         eventKind: input.eventKind,
+        profileId: input.profileId,
         requests: [],
         windowId: null,
       };
@@ -117,52 +132,54 @@ export class PermissionQueue {
       target.requests.push({ requestId, rawEvent: input.rawEvent, resolve });
     });
 
-    if (this.activeKey === key) this.deps.onGroupUpdated?.(target);
-    else this.schedulePump();
-
+    this.schedulePump();
     return promise;
   }
 
+  /** The group a prompt window is showing. Pending groups are not visible to the prompt. */
   getGroup(key: string): PermissionGroup | undefined {
-    return this.groups.get(key);
+    return this.active?.key === key ? this.active : undefined;
   }
 
-  /** Apply a prompt decision to a whole group. Returns the group, or null if it is already gone. */
+  /**
+   * Apply a prompt decision to the group on screen. `approvedRequestIds` are the requests
+   * the prompt actually displayed and the user did not skip; anything else is denied, so an
+   * incomplete or stale prompt fails closed. Returns the group, or null if it is already gone.
+   */
   resolve(
     key: string,
     decision: PromptDecision,
-    skippedRequestIds: readonly string[] = []
+    approvedRequestIds: readonly string[] = []
   ): PermissionGroup | null {
-    const group = this.groups.get(key);
-    if (!group) return null;
+    const group = this.active;
+    if (!group || group.key !== key) return null;
 
     const allowed = decision === 'allow_always' || decision === 'allow_once';
-    this.finish(group, allowed, new Set(skippedRequestIds));
+    this.finish(group, allowed, new Set(approvedRequestIds));
     void this.pump();
     return group;
   }
 
   /** Closing the prompt window denies the whole group, as closing a single prompt always did. */
   handleWindowClosed(windowId: number): PermissionGroup | null {
-    for (const group of this.groups.values()) {
-      if (group.windowId !== windowId) continue;
-      this.finish(group, false);
-      void this.pump();
-      return group;
-    }
-    return null;
+    const group = this.active;
+    if (!group || group.windowId !== windowId) return null;
+    this.finish(group, false);
+    void this.pump();
+    return group;
   }
 
-  private finish(group: PermissionGroup, allowed: boolean, skipped?: Set<string>): void {
-    this.groups.delete(group.key);
-    if (this.activeKey === group.key) this.activeKey = null;
+  private finish(group: PermissionGroup, allowed: boolean, approved?: Set<string>): void {
+    // A newer pending group may already own this key; only drop our own entry.
+    if (this.groups.get(group.key) === group) this.groups.delete(group.key);
+    if (this.active === group) this.active = null;
     for (const request of group.requests) {
-      request.resolve(allowed && !skipped?.has(request.requestId));
+      request.resolve(allowed && (approved === undefined || approved.has(request.requestId)));
     }
   }
 
   private schedulePump(): void {
-    if (this.activeKey !== null || this.collectTimer !== null || this.pumping) return;
+    if (this.active !== null || this.collectTimer !== null || this.pumping) return;
     this.collectTimer = setTimeout(() => {
       this.collectTimer = null;
       void this.pump();
@@ -170,7 +187,7 @@ export class PermissionQueue {
   }
 
   private async pump(): Promise<void> {
-    if (this.pumping || this.activeKey !== null) return;
+    if (this.pumping || this.active !== null) return;
     this.pumping = true;
     try {
       for (;;) {
@@ -178,7 +195,12 @@ export class PermissionQueue {
         if (!group) break;
 
         // A rule saved in an earlier prompt may already cover this group.
-        const stored = await this.deps.checkPermission(group.host, group.method, group.eventKind);
+        const stored = await this.deps.checkPermission(
+          group.host,
+          group.method,
+          group.eventKind,
+          group.profileId
+        );
         if (stored === 'allow' || stored === 'deny') {
           this.finish(group, stored === 'allow');
           continue;
@@ -192,8 +214,11 @@ export class PermissionQueue {
           continue;
         }
 
+        // Freeze: the group leaves the pending map, so later requests for the same
+        // scope collect into a fresh group instead of this one.
+        this.groups.delete(group.key);
         group.windowId = windowId;
-        this.activeKey = group.key;
+        this.active = group;
         break;
       }
     } finally {

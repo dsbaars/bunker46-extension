@@ -94,7 +94,7 @@ defineEmits<{
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2 min-w-0">
               <Globe class="size-3.5 text-muted-foreground shrink-0" />
-              <span class="text-sm font-medium truncate">{{ host }}</span>
+              <span class="text-sm font-medium truncate" :title="host">{{ host }}</span>
             </div>
             <Button
               v-if="permissions[host] && Object.keys(permissions[host]).length > 0"

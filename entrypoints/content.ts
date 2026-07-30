@@ -40,6 +40,9 @@ export default defineContentScript({
     document.addEventListener(
       'click',
       (e: MouseEvent) => {
+        // Real user gestures only: a page can dispatch a synthetic click on a hidden
+        // anchor and would otherwise get a nostrconnect handoff with no interaction.
+        if (!e.isTrusted) return;
         const anchor = (e.target as Element)?.closest?.('a');
         if (!anchor?.href) return;
         try {
