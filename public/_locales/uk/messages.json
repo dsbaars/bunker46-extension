@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Заборонити завжди"
   },
+  "promptRequestCount": {
+    "message": "запитів: $1"
+  },
+  "promptRequestPager": {
+    "message": "Запит $1 з $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Попередній запит"
+  },
+  "promptNextRequest": {
+    "message": "Наступний запит"
+  },
+  "promptSkipRequest": {
+    "message": "Пропустити"
+  },
+  "promptIncludeRequest": {
+    "message": "Повернути"
+  },
+  "promptAppliesToGroup": {
+    "message": "Застосовується до всіх показаних тут запитів"
+  },
+  "promptSkippedNote": {
+    "message": "Пропущені запити буде відхилено"
+  },
   "promptDenyOnce": {
     "message": "Заборонити"
   },

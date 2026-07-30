@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Neka alltid"
   },
+  "promptRequestCount": {
+    "message": "$1 förfrågningar"
+  },
+  "promptRequestPager": {
+    "message": "Förfrågan $1 av $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Föregående förfrågan"
+  },
+  "promptNextRequest": {
+    "message": "Nästa förfrågan"
+  },
+  "promptSkipRequest": {
+    "message": "Hoppa över"
+  },
+  "promptIncludeRequest": {
+    "message": "Inkludera"
+  },
+  "promptAppliesToGroup": {
+    "message": "Gäller alla förfrågningar som visas här"
+  },
+  "promptSkippedNote": {
+    "message": "Överhoppade förfrågningar nekas"
+  },
   "promptDenyOnce": {
     "message": "Neka"
   },

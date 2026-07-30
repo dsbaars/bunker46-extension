@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Hafna alltaf"
   },
+  "promptRequestCount": {
+    "message": "$1 beiðnir"
+  },
+  "promptRequestPager": {
+    "message": "Beiðni $1 af $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Fyrri beiðni"
+  },
+  "promptNextRequest": {
+    "message": "Næsta beiðni"
+  },
+  "promptSkipRequest": {
+    "message": "Sleppa"
+  },
+  "promptIncludeRequest": {
+    "message": "Taka með"
+  },
+  "promptAppliesToGroup": {
+    "message": "Gildir um allar beiðnir sem sýndar eru hér"
+  },
+  "promptSkippedNote": {
+    "message": "Beiðnum sem sleppt er verður hafnað"
+  },
   "promptDenyOnce": {
     "message": "Hafna"
   },

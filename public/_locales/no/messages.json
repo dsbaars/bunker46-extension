@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Avvis alltid"
   },
+  "promptRequestCount": {
+    "message": "$1 forespørsler"
+  },
+  "promptRequestPager": {
+    "message": "Forespørsel $1 av $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Forrige forespørsel"
+  },
+  "promptNextRequest": {
+    "message": "Neste forespørsel"
+  },
+  "promptSkipRequest": {
+    "message": "Hopp over"
+  },
+  "promptIncludeRequest": {
+    "message": "Inkluder"
+  },
+  "promptAppliesToGroup": {
+    "message": "Gjelder alle forespørsler som vises her"
+  },
+  "promptSkippedNote": {
+    "message": "Forespørsler som hoppes over, avvises"
+  },
   "promptDenyOnce": {
     "message": "Avvis"
   },

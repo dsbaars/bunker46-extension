@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Estä aina"
   },
+  "promptRequestCount": {
+    "message": "$1 pyyntöä"
+  },
+  "promptRequestPager": {
+    "message": "Pyyntö $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Edellinen pyyntö"
+  },
+  "promptNextRequest": {
+    "message": "Seuraava pyyntö"
+  },
+  "promptSkipRequest": {
+    "message": "Ohita"
+  },
+  "promptIncludeRequest": {
+    "message": "Sisällytä"
+  },
+  "promptAppliesToGroup": {
+    "message": "Koskee kaikkia tässä näkyviä pyyntöjä"
+  },
+  "promptSkippedNote": {
+    "message": "Ohitetut pyynnöt hylätään"
+  },
   "promptDenyOnce": {
     "message": "Estä"
   },

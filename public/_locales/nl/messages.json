@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Altijd weigeren"
   },
+  "promptRequestCount": {
+    "message": "$1 verzoeken"
+  },
+  "promptRequestPager": {
+    "message": "Verzoek $1 van $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Vorig verzoek"
+  },
+  "promptNextRequest": {
+    "message": "Volgend verzoek"
+  },
+  "promptSkipRequest": {
+    "message": "Overslaan"
+  },
+  "promptIncludeRequest": {
+    "message": "Terugzetten"
+  },
+  "promptAppliesToGroup": {
+    "message": "Geldt voor alle hier getoonde verzoeken"
+  },
+  "promptSkippedNote": {
+    "message": "Overgeslagen verzoeken worden geweigerd"
+  },
   "promptDenyOnce": {
     "message": "Weigeren"
   },

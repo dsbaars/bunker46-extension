@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Visada atmesti"
   },
+  "promptRequestCount": {
+    "message": "užklausų: $1"
+  },
+  "promptRequestPager": {
+    "message": "Užklausa $1 iš $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Ankstesnė užklausa"
+  },
+  "promptNextRequest": {
+    "message": "Kita užklausa"
+  },
+  "promptSkipRequest": {
+    "message": "Praleisti"
+  },
+  "promptIncludeRequest": {
+    "message": "Įtraukti"
+  },
+  "promptAppliesToGroup": {
+    "message": "Taikoma visoms čia rodomoms užklausoms"
+  },
+  "promptSkippedNote": {
+    "message": "Praleistos užklausos bus atmestos"
+  },
   "promptDenyOnce": {
     "message": "Atmesti"
   },

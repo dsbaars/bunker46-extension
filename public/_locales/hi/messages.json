@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "हमेशा अस्वीकार करें"
   },
+  "promptRequestCount": {
+    "message": "$1 अनुरोध"
+  },
+  "promptRequestPager": {
+    "message": "अनुरोध $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "पिछला अनुरोध"
+  },
+  "promptNextRequest": {
+    "message": "अगला अनुरोध"
+  },
+  "promptSkipRequest": {
+    "message": "छोड़ें"
+  },
+  "promptIncludeRequest": {
+    "message": "शामिल करें"
+  },
+  "promptAppliesToGroup": {
+    "message": "यहाँ दिखाए गए सभी अनुरोधों पर लागू होता है"
+  },
+  "promptSkippedNote": {
+    "message": "छोड़े गए अनुरोध अस्वीकार कर दिए जाएंगे"
+  },
   "promptDenyOnce": {
     "message": "अस्वीकार करें"
   },

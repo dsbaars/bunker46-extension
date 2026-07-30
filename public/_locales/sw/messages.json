@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Kataa Daima"
   },
+  "promptRequestCount": {
+    "message": "Maombi $1"
+  },
+  "promptRequestPager": {
+    "message": "Ombi $1 kati ya $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Ombi lililotangulia"
+  },
+  "promptNextRequest": {
+    "message": "Ombi linalofuata"
+  },
+  "promptSkipRequest": {
+    "message": "Ruka"
+  },
+  "promptIncludeRequest": {
+    "message": "Jumuisha"
+  },
+  "promptAppliesToGroup": {
+    "message": "Inatumika kwa maombi yote yanayoonyeshwa hapa"
+  },
+  "promptSkippedNote": {
+    "message": "Maombi yaliyorukwa yatakataliwa"
+  },
   "promptDenyOnce": {
     "message": "Kataa"
   },

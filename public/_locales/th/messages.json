@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "ปฏิเสธเสมอ"
   },
+  "promptRequestCount": {
+    "message": "$1 คำขอ"
+  },
+  "promptRequestPager": {
+    "message": "คำขอที่ $1 จาก $2"
+  },
+  "promptPreviousRequest": {
+    "message": "คำขอก่อนหน้า"
+  },
+  "promptNextRequest": {
+    "message": "คำขอถัดไป"
+  },
+  "promptSkipRequest": {
+    "message": "ข้าม"
+  },
+  "promptIncludeRequest": {
+    "message": "รวม"
+  },
+  "promptAppliesToGroup": {
+    "message": "มีผลกับคำขอทั้งหมดที่แสดงที่นี่"
+  },
+  "promptSkippedNote": {
+    "message": "คำขอที่ข้ามจะถูกปฏิเสธ"
+  },
   "promptDenyOnce": {
     "message": "ปฏิเสธ"
   },

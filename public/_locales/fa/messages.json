@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "همیشه رد کردن"
   },
+  "promptRequestCount": {
+    "message": "$1 درخواست"
+  },
+  "promptRequestPager": {
+    "message": "درخواست $1 از $2"
+  },
+  "promptPreviousRequest": {
+    "message": "درخواست قبلی"
+  },
+  "promptNextRequest": {
+    "message": "درخواست بعدی"
+  },
+  "promptSkipRequest": {
+    "message": "صرف‌نظر"
+  },
+  "promptIncludeRequest": {
+    "message": "افزودن"
+  },
+  "promptAppliesToGroup": {
+    "message": "برای همه درخواست‌های نمایش‌داده‌شده در اینجا اعمال می‌شود"
+  },
+  "promptSkippedNote": {
+    "message": "درخواست‌های صرف‌نظرشده رد خواهند شد"
+  },
   "promptDenyOnce": {
     "message": "رد کردن"
   },

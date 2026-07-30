@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "সবসময় প্রত্যাখ্যান করুন"
   },
+  "promptRequestCount": {
+    "message": "$1টি অনুরোধ"
+  },
+  "promptRequestPager": {
+    "message": "অনুরোধ $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "আগের অনুরোধ"
+  },
+  "promptNextRequest": {
+    "message": "পরের অনুরোধ"
+  },
+  "promptSkipRequest": {
+    "message": "এড়িয়ে যান"
+  },
+  "promptIncludeRequest": {
+    "message": "অন্তর্ভুক্ত করুন"
+  },
+  "promptAppliesToGroup": {
+    "message": "এখানে দেখানো সব অনুরোধের ক্ষেত্রে প্রযোজ্য"
+  },
+  "promptSkippedNote": {
+    "message": "এড়িয়ে যাওয়া অনুরোধগুলি প্রত্যাখ্যান করা হবে"
+  },
   "promptDenyOnce": {
     "message": "প্রত্যাখ্যান করুন"
   },

@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Keela alati"
   },
+  "promptRequestCount": {
+    "message": "$1 päringut"
+  },
+  "promptRequestPager": {
+    "message": "Päring $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Eelmine päring"
+  },
+  "promptNextRequest": {
+    "message": "Järgmine päring"
+  },
+  "promptSkipRequest": {
+    "message": "Jäta vahele"
+  },
+  "promptIncludeRequest": {
+    "message": "Kaasa"
+  },
+  "promptAppliesToGroup": {
+    "message": "Kehtib kõigi siin kuvatud päringute kohta"
+  },
+  "promptSkippedNote": {
+    "message": "Vahelejäetud päringud lükatakse tagasi"
+  },
   "promptDenyOnce": {
     "message": "Keela"
   },

@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Afvis altid"
   },
+  "promptRequestCount": {
+    "message": "$1 anmodninger"
+  },
+  "promptRequestPager": {
+    "message": "Anmodning $1 af $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Forrige anmodning"
+  },
+  "promptNextRequest": {
+    "message": "Næste anmodning"
+  },
+  "promptSkipRequest": {
+    "message": "Spring over"
+  },
+  "promptIncludeRequest": {
+    "message": "Inkludér"
+  },
+  "promptAppliesToGroup": {
+    "message": "Gælder alle anmodninger, der vises her"
+  },
+  "promptSkippedNote": {
+    "message": "Oversprungne anmodninger afvises"
+  },
   "promptDenyOnce": {
     "message": "Afvis"
   },

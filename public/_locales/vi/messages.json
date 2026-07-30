@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Luôn từ chối"
   },
+  "promptRequestCount": {
+    "message": "$1 yêu cầu"
+  },
+  "promptRequestPager": {
+    "message": "Yêu cầu $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Yêu cầu trước"
+  },
+  "promptNextRequest": {
+    "message": "Yêu cầu tiếp theo"
+  },
+  "promptSkipRequest": {
+    "message": "Bỏ qua"
+  },
+  "promptIncludeRequest": {
+    "message": "Đưa vào"
+  },
+  "promptAppliesToGroup": {
+    "message": "Áp dụng cho tất cả yêu cầu hiển thị ở đây"
+  },
+  "promptSkippedNote": {
+    "message": "Các yêu cầu bị bỏ qua sẽ bị từ chối"
+  },
   "promptDenyOnce": {
     "message": "Từ chối"
   },

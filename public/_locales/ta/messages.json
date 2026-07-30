@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "எப்போதும் மறு"
   },
+  "promptRequestCount": {
+    "message": "$1 கோரிக்கைகள்"
+  },
+  "promptRequestPager": {
+    "message": "கோரிக்கை $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "முந்தைய கோரிக்கை"
+  },
+  "promptNextRequest": {
+    "message": "அடுத்த கோரிக்கை"
+  },
+  "promptSkipRequest": {
+    "message": "தவிர்"
+  },
+  "promptIncludeRequest": {
+    "message": "சேர்"
+  },
+  "promptAppliesToGroup": {
+    "message": "இங்கு காட்டப்படும் அனைத்து கோரிக்கைகளுக்கும் பொருந்தும்"
+  },
+  "promptSkippedNote": {
+    "message": "தவிர்க்கப்பட்ட கோரிக்கைகள் நிராகரிக்கப்படும்"
+  },
   "promptDenyOnce": {
     "message": "மறு"
   },

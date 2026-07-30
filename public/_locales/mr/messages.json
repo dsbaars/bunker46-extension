@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "नेहमी नाकारा"
   },
+  "promptRequestCount": {
+    "message": "$1 विनंत्या"
+  },
+  "promptRequestPager": {
+    "message": "विनंती $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "मागील विनंती"
+  },
+  "promptNextRequest": {
+    "message": "पुढील विनंती"
+  },
+  "promptSkipRequest": {
+    "message": "वगळा"
+  },
+  "promptIncludeRequest": {
+    "message": "समाविष्ट करा"
+  },
+  "promptAppliesToGroup": {
+    "message": "येथे दाखवलेल्या सर्व विनंत्यांना लागू होते"
+  },
+  "promptSkippedNote": {
+    "message": "वगळलेल्या विनंत्या नाकारल्या जातील"
+  },
   "promptDenyOnce": {
     "message": "नाकारा"
   },

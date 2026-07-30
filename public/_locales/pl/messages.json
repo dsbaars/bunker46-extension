@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Zawsze blokuj"
   },
+  "promptRequestCount": {
+    "message": "żądań: $1"
+  },
+  "promptRequestPager": {
+    "message": "Żądanie $1 z $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Poprzednie żądanie"
+  },
+  "promptNextRequest": {
+    "message": "Następne żądanie"
+  },
+  "promptSkipRequest": {
+    "message": "Pomiń"
+  },
+  "promptIncludeRequest": {
+    "message": "Przywróć"
+  },
+  "promptAppliesToGroup": {
+    "message": "Dotyczy wszystkich pokazanych tu żądań"
+  },
+  "promptSkippedNote": {
+    "message": "Pominięte żądania zostaną odrzucone"
+  },
   "promptDenyOnce": {
     "message": "Zablokuj"
   },

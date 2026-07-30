@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "ఎల్లప్పుడూ నిరాకరించు"
   },
+  "promptRequestCount": {
+    "message": "$1 అభ్యర్థనలు"
+  },
+  "promptRequestPager": {
+    "message": "అభ్యర్థన $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "మునుపటి అభ్యర్థన"
+  },
+  "promptNextRequest": {
+    "message": "తదుపరి అభ్యర్థన"
+  },
+  "promptSkipRequest": {
+    "message": "దాటవేయి"
+  },
+  "promptIncludeRequest": {
+    "message": "చేర్చు"
+  },
+  "promptAppliesToGroup": {
+    "message": "ఇక్కడ చూపిన అన్ని అభ్యర్థనలకు వర్తిస్తుంది"
+  },
+  "promptSkippedNote": {
+    "message": "దాటవేసిన అభ్యర్థనలు తిరస్కరించబడతాయి"
+  },
   "promptDenyOnce": {
     "message": "నిరాకరించు"
   },

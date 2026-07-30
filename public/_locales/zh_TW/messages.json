@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "永遠拒絕"
   },
+  "promptRequestCount": {
+    "message": "$1 個請求"
+  },
+  "promptRequestPager": {
+    "message": "第 $1 / $2 個請求"
+  },
+  "promptPreviousRequest": {
+    "message": "上一個請求"
+  },
+  "promptNextRequest": {
+    "message": "下一個請求"
+  },
+  "promptSkipRequest": {
+    "message": "略過"
+  },
+  "promptIncludeRequest": {
+    "message": "包含"
+  },
+  "promptAppliesToGroup": {
+    "message": "適用於此處顯示的所有請求"
+  },
+  "promptSkippedNote": {
+    "message": "略過的請求將被拒絕"
+  },
   "promptDenyOnce": {
     "message": "拒絕"
   },

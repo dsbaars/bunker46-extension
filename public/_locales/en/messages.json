@@ -323,6 +323,30 @@
   "promptDenyAlways": {
     "message": "Deny Always"
   },
+  "promptRequestCount": {
+    "message": "$1 requests"
+  },
+  "promptRequestPager": {
+    "message": "Request $1 of $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Previous request"
+  },
+  "promptNextRequest": {
+    "message": "Next request"
+  },
+  "promptSkipRequest": {
+    "message": "Skip"
+  },
+  "promptIncludeRequest": {
+    "message": "Include"
+  },
+  "promptAppliesToGroup": {
+    "message": "Applies to all requests shown here"
+  },
+  "promptSkippedNote": {
+    "message": "Skipped requests will be denied"
+  },
   "settingsMultiProfile": {
     "message": "Multiple profiles"
   },

@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Selalu Tolak"
   },
+  "promptRequestCount": {
+    "message": "$1 permintaan"
+  },
+  "promptRequestPager": {
+    "message": "Permintaan $1 dari $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Permintaan sebelumnya"
+  },
+  "promptNextRequest": {
+    "message": "Permintaan berikutnya"
+  },
+  "promptSkipRequest": {
+    "message": "Lewati"
+  },
+  "promptIncludeRequest": {
+    "message": "Sertakan"
+  },
+  "promptAppliesToGroup": {
+    "message": "Berlaku untuk semua permintaan yang ditampilkan di sini"
+  },
+  "promptSkippedNote": {
+    "message": "Permintaan yang dilewati akan ditolak"
+  },
   "promptDenyOnce": {
     "message": "Tolak"
   },

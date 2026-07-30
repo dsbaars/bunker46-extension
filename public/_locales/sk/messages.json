@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Vždy zamietnuť"
   },
+  "promptRequestCount": {
+    "message": "požiadaviek: $1"
+  },
+  "promptRequestPager": {
+    "message": "Požiadavka $1 z $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Predchádzajúca požiadavka"
+  },
+  "promptNextRequest": {
+    "message": "Ďalšia požiadavka"
+  },
+  "promptSkipRequest": {
+    "message": "Preskočiť"
+  },
+  "promptIncludeRequest": {
+    "message": "Vrátiť"
+  },
+  "promptAppliesToGroup": {
+    "message": "Platí pre všetky tu zobrazené požiadavky"
+  },
+  "promptSkippedNote": {
+    "message": "Preskočené požiadavky budú zamietnuté"
+  },
   "promptDenyOnce": {
     "message": "Zamietnuť"
   },

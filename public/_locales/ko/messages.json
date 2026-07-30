@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "항상 거부"
   },
+  "promptRequestCount": {
+    "message": "요청 $1개"
+  },
+  "promptRequestPager": {
+    "message": "요청 $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "이전 요청"
+  },
+  "promptNextRequest": {
+    "message": "다음 요청"
+  },
+  "promptSkipRequest": {
+    "message": "건너뛰기"
+  },
+  "promptIncludeRequest": {
+    "message": "포함"
+  },
+  "promptAppliesToGroup": {
+    "message": "여기에 표시된 모든 요청에 적용됩니다"
+  },
+  "promptSkippedNote": {
+    "message": "건너뛴 요청은 거부됩니다"
+  },
   "promptDenyOnce": {
     "message": "거부"
   },

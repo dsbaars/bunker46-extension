@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Negar Sempre"
   },
+  "promptRequestCount": {
+    "message": "$1 solicitações"
+  },
+  "promptRequestPager": {
+    "message": "Solicitação $1 de $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Solicitação anterior"
+  },
+  "promptNextRequest": {
+    "message": "Próxima solicitação"
+  },
+  "promptSkipRequest": {
+    "message": "Ignorar"
+  },
+  "promptIncludeRequest": {
+    "message": "Incluir"
+  },
+  "promptAppliesToGroup": {
+    "message": "Aplica-se a todas as solicitações mostradas aqui"
+  },
+  "promptSkippedNote": {
+    "message": "As solicitações ignoradas serão negadas"
+  },
   "promptDenyOnce": {
     "message": "Negar"
   },

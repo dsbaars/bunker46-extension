@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "常に拒否"
   },
+  "promptRequestCount": {
+    "message": "$1 件のリクエスト"
+  },
+  "promptRequestPager": {
+    "message": "リクエスト $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "前のリクエスト"
+  },
+  "promptNextRequest": {
+    "message": "次のリクエスト"
+  },
+  "promptSkipRequest": {
+    "message": "スキップ"
+  },
+  "promptIncludeRequest": {
+    "message": "含める"
+  },
+  "promptAppliesToGroup": {
+    "message": "ここに表示されているすべてのリクエストに適用されます"
+  },
+  "promptSkippedNote": {
+    "message": "スキップしたリクエストは拒否されます"
+  },
   "promptDenyOnce": {
     "message": "拒否"
   },

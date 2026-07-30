@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Mindig megtagadás"
   },
+  "promptRequestCount": {
+    "message": "$1 kérés"
+  },
+  "promptRequestPager": {
+    "message": "Kérés $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Előző kérés"
+  },
+  "promptNextRequest": {
+    "message": "Következő kérés"
+  },
+  "promptSkipRequest": {
+    "message": "Kihagyás"
+  },
+  "promptIncludeRequest": {
+    "message": "Visszavétel"
+  },
+  "promptAppliesToGroup": {
+    "message": "Az itt megjelenített összes kérésre vonatkozik"
+  },
+  "promptSkippedNote": {
+    "message": "A kihagyott kérések elutasításra kerülnek"
+  },
   "promptDenyOnce": {
     "message": "Megtagadás"
   },

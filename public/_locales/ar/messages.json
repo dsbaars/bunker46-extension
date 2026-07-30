@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "الرفض دائماً"
   },
+  "promptRequestCount": {
+    "message": "$1 طلبات"
+  },
+  "promptRequestPager": {
+    "message": "الطلب $1 من $2"
+  },
+  "promptPreviousRequest": {
+    "message": "الطلب السابق"
+  },
+  "promptNextRequest": {
+    "message": "الطلب التالي"
+  },
+  "promptSkipRequest": {
+    "message": "تخطي"
+  },
+  "promptIncludeRequest": {
+    "message": "تضمين"
+  },
+  "promptAppliesToGroup": {
+    "message": "ينطبق على جميع الطلبات المعروضة هنا"
+  },
+  "promptSkippedNote": {
+    "message": "سيتم رفض الطلبات المتخطاة"
+  },
   "promptDenyOnce": {
     "message": "رفض"
   },

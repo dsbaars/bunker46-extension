@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "ہمیشہ انکار کریں"
   },
+  "promptRequestCount": {
+    "message": "$1 درخواستیں"
+  },
+  "promptRequestPager": {
+    "message": "درخواست $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "پچھلی درخواست"
+  },
+  "promptNextRequest": {
+    "message": "اگلی درخواست"
+  },
+  "promptSkipRequest": {
+    "message": "چھوڑیں"
+  },
+  "promptIncludeRequest": {
+    "message": "شامل کریں"
+  },
+  "promptAppliesToGroup": {
+    "message": "یہاں دکھائی گئی تمام درخواستوں پر لاگو ہوتا ہے"
+  },
+  "promptSkippedNote": {
+    "message": "چھوڑی گئی درخواستیں مسترد کر دی جائیں گی"
+  },
   "promptDenyOnce": {
     "message": "انکار کریں"
   },

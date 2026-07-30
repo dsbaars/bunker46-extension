@@ -29,7 +29,7 @@
 | Background     | `entrypoints/background.ts`    | Service worker: session, NIP-46 signer, permission checks, message router. Uses `defineBackground(async () => { ... })` for init; `chrome.runtime.onMessage.addListener` registered at top level.              |
 | Content script | `entrypoints/content.ts`       | `defineContentScript({ matches: ['<all_urls>'], runAt: 'document_start' })`. Injects `nostr-provider.js` via `<script src="...">`, bridges `nip07-request` to background, handles `nostrconnect:` link clicks. |
 | Popup UI       | `entrypoints/popup/`           | Vue 3 SPA: connection, permissions, settings; reads/writes `chrome.storage.local` and sends many message types to background.                                                                                  |
-| Prompt UI      | `entrypoints/prompt/`          | Vue 3: permission prompt; reads `requestId`/`host`/`method` from URL (set by background), sends `PERMISSION_RESPONSE` and `GET_RAW_EVENT`.                                                                     |
+| Prompt UI      | `entrypoints/prompt/`          | Vue 3: permission prompt; reads `groupKey`/`host`/`method` from URL (set by background), sends `PERMISSION_RESPONSE` and `GET_PERMISSION_GROUP`.                                                               |
 | Redirect       | `entrypoints/redirect/main.ts` | Extension page: reads `?uri=` (or `?nostrconnect=`), loads `bunker46BaseUrl` from storage, redirects to `{baseUrl}/connections?import={uri}`.                                                                  |
 
 **Unlisted / lib:**
@@ -86,6 +86,8 @@
 
 **PERMISSION_RESPONSE:**  
 Host and method are taken from `sender.url` (prompt page’s URL, which the background set when opening the prompt). So `allow_always` / `deny_always` apply to the host/method in that URL; no forgery from the page. **GET_RAW_EVENT:** Any extension context can send `GET_RAW_EVENT` with a `requestId`; if an attacker could predict or obtain a valid `requestId`, they could read a pending sign event (sensitive). `requestId` is `Math.random().toString(36).slice(2) + Date.now()` — moderate entropy.
+
+> _Since this assessment:_ `GET_RAW_EVENT` no longer exists. Its replacement, `GET_PERMISSION_GROUP`, is restricted to the prompt page and takes no id from the message — the background derives the permission group from the prompt window's own URL, as it already did for `PERMISSION_RESPONSE`. There is no guessable identifier left to send.
 
 ### 2.4 WXT-Specific
 

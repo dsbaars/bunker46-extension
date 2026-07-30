@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Откажи винаги"
   },
+  "promptRequestCount": {
+    "message": "заявки: $1"
+  },
+  "promptRequestPager": {
+    "message": "Заявка $1 от $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Предишна заявка"
+  },
+  "promptNextRequest": {
+    "message": "Следваща заявка"
+  },
+  "promptSkipRequest": {
+    "message": "Пропускане"
+  },
+  "promptIncludeRequest": {
+    "message": "Връщане"
+  },
+  "promptAppliesToGroup": {
+    "message": "Прилага се за всички показани тук заявки"
+  },
+  "promptSkippedNote": {
+    "message": "Пропуснатите заявки ще бъдат отхвърлени"
+  },
   "promptDenyOnce": {
     "message": "Откажи"
   },

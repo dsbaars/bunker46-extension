@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Her Zaman Reddet"
   },
+  "promptRequestCount": {
+    "message": "$1 istek"
+  },
+  "promptRequestPager": {
+    "message": "İstek $1 / $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Önceki istek"
+  },
+  "promptNextRequest": {
+    "message": "Sonraki istek"
+  },
+  "promptSkipRequest": {
+    "message": "Atla"
+  },
+  "promptIncludeRequest": {
+    "message": "Dahil et"
+  },
+  "promptAppliesToGroup": {
+    "message": "Burada gösterilen tüm istekler için geçerlidir"
+  },
+  "promptSkippedNote": {
+    "message": "Atlanan istekler reddedilecek"
+  },
   "promptDenyOnce": {
     "message": "Reddet"
   },

@@ -48,7 +48,11 @@ function isSafeMethodKey(key: string): boolean {
   return false;
 }
 
-function methodKey(method: string, kind?: number): string {
+/**
+ * Storage/grouping key for a permission scope: "signEvent:<kind>" for a kind-specific
+ * signEvent, the bare method name otherwise.
+ */
+export function methodKey(method: string, kind?: number): string {
   if (method.startsWith('signEvent:') && /^signEvent:\d+$/.test(method)) return method;
   if (method === 'signEvent' && kind !== undefined) return `signEvent:${kind}`;
   return method;

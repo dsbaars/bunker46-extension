@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "始终拒绝"
   },
+  "promptRequestCount": {
+    "message": "$1 个请求"
+  },
+  "promptRequestPager": {
+    "message": "第 $1 / $2 个请求"
+  },
+  "promptPreviousRequest": {
+    "message": "上一个请求"
+  },
+  "promptNextRequest": {
+    "message": "下一个请求"
+  },
+  "promptSkipRequest": {
+    "message": "跳过"
+  },
+  "promptIncludeRequest": {
+    "message": "包含"
+  },
+  "promptAppliesToGroup": {
+    "message": "适用于此处显示的所有请求"
+  },
+  "promptSkippedNote": {
+    "message": "跳过的请求将被拒绝"
+  },
   "promptDenyOnce": {
     "message": "拒绝"
   },

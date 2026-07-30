@@ -24,6 +24,8 @@ import {
   deleteProfilePermissions,
 } from '@/lib/permissions';
 import type { DomainPolicies } from '@/lib/permissions';
+import { PermissionQueue, isPromptDecision } from '@/lib/permission-queue';
+import type { PermissionGroup } from '@/lib/permission-queue';
 import {
   shouldExposeNostrForHost,
   addToNostrWhitelist,
@@ -58,11 +60,6 @@ import {
 import type { RelayUiProbeStatus } from '@/lib/relay-ui-probe';
 
 const STORAGE_KEY_NOSTRCONNECT_RELAYS = 'nostrConnectRelays';
-
-type PendingPermission = {
-  resolve: (allowed: boolean) => void;
-  windowId: number;
-};
 
 const NIP07_METHOD_MAP: Record<string, string> = {
   NIP07_GET_PUBLIC_KEY: 'getPublicKey',
@@ -100,9 +97,13 @@ let reconnectingRelays: string[] = [];
 let reconnectionFailed = false;
 /** Relays that were tried in the last failed reconnect attempt. */
 let reconnectionFailedRelays: string[] = [];
-const pendingPermissions = new Map<string, PendingPermission>();
-/** Raw event payload for signEvent permission prompts (requestId -> event). Cleaned up on response. */
-const pendingRawEvents = new Map<string, unknown>();
+/** Groups concurrent permission requests and shows them one prompt window at a time. */
+const permissionQueue = new PermissionQueue({
+  checkPermission: (host, method, eventKind) =>
+    checkPermission(host, method, eventKind, activeProfileId ?? undefined),
+  openPrompt: openPermissionPrompt,
+  onGroupUpdated: (group) => void notifyPromptGroupUpdated(group),
+});
 
 /** Close the current bunkerSigner (if any) and null it out. Best-effort, never throws. */
 async function closeBunkerSigner(): Promise<void> {
@@ -765,20 +766,14 @@ function startNostrConnectConnection(opts?: { asNewProfile?: boolean }): Promise
 // Permission enforcement
 // ---------------------------------------------------------------------------
 
-async function requestPermission(
-  host: string,
-  method: string,
-  params?: unknown[]
-): Promise<boolean> {
-  const requestId = Math.random().toString(36).slice(2) + Date.now();
-
-  const qs = new URLSearchParams({ requestId, host, method });
-
-  if (method === 'signEvent' && params?.[0]) {
-    const evt = params[0] as { kind?: number };
-    if (evt.kind !== undefined) qs.set('eventKind', String(evt.kind));
-    pendingRawEvents.set(requestId, params[0]);
-  }
+/** Opens the prompt window for a group of requests. Resolves with the window id. */
+async function openPermissionPrompt(group: PermissionGroup): Promise<number> {
+  const qs = new URLSearchParams({
+    groupKey: group.key,
+    host: group.host,
+    method: group.method,
+  });
+  if (group.eventKind !== undefined) qs.set('eventKind', String(group.eventKind));
 
   const promptUrl = chrome.runtime.getURL(`prompt.html?${qs.toString()}`);
 
@@ -804,9 +799,17 @@ async function requestPermission(
     focused: true,
   });
 
-  return new Promise<boolean>((resolve) => {
-    pendingPermissions.set(requestId, { resolve, windowId: win.id! });
-  });
+  if (win.id == null) throw new Error('Could not open permission prompt');
+  return win.id;
+}
+
+/** Tell an open prompt that a request joined its group, so it can refresh its count. */
+async function notifyPromptGroupUpdated(group: PermissionGroup): Promise<void> {
+  try {
+    await chrome.runtime.sendMessage({ type: 'PERMISSION_GROUP_UPDATED', groupKey: group.key });
+  } catch {
+    /* prompt may have closed already */
+  }
 }
 
 async function enforcePermission(
@@ -832,7 +835,12 @@ async function enforcePermission(
   if (decision === 'allow') return { allowed: true };
   if (decision === 'deny') return { allowed: false, error: 'Permission denied' };
 
-  const allowed = await requestPermission(host, method, params);
+  const allowed = await permissionQueue.request({
+    host,
+    method,
+    eventKind: kind,
+    rawEvent: method === 'signEvent' ? params?.[0] : undefined,
+  });
   return allowed ? { allowed: true } : { allowed: false, error: 'Permission denied' };
 }
 
@@ -857,7 +865,7 @@ const PRIVILEGED_MESSAGE_TYPES = new Set([
   'SET_SHOW_NOSTR_BADGE',
   'DISCONNECT',
   'FULL_LOGOUT',
-  'GET_RAW_EVENT',
+  'GET_PERMISSION_GROUP',
   'GET_PERMISSIONS',
   'REMOVE_PERMISSION',
   'REMOVE_DOMAIN_PERMISSIONS',
@@ -875,6 +883,16 @@ function isPromptPage(sender: { url?: string }): boolean {
   return sender.url.startsWith(chrome.runtime.getURL('prompt.html'));
 }
 
+/** Permission group a prompt window belongs to, read from its own URL (not from the message). */
+function promptGroupKeyFromSender(sender: { url?: string }): string | null {
+  if (!sender?.url) return null;
+  try {
+    return new URL(sender.url).searchParams.get('groupKey');
+  } catch {
+    return null;
+  }
+}
+
 function validateNip04Nip44Params(params: unknown[]): params is [string, string] {
   return params.length >= 2 && typeof params[0] === 'string' && typeof params[1] === 'string';
 }
@@ -887,7 +905,8 @@ chrome.runtime.onMessage.addListener(
       method?: string;
       params?: unknown[];
       host?: string;
-      requestId?: string;
+      groupKey?: string;
+      skipped?: unknown;
       decision?: string;
       enabled?: boolean;
       profileId?: string;
@@ -901,7 +920,7 @@ chrome.runtime.onMessage.addListener(
     (async () => {
       // Restrict privileged messages to extension pages only (defense-in-depth).
       if (PRIVILEGED_MESSAGE_TYPES.has(msg.type)) {
-        if (msg.type === 'GET_RAW_EVENT') {
+        if (msg.type === 'GET_PERMISSION_GROUP' || msg.type === 'PERMISSION_RESPONSE') {
           if (!isPromptPage(sender)) return { error: 'Unauthorized' };
         } else if (!isExtensionPage(sender)) {
           return { error: 'Unauthorized' };
@@ -909,59 +928,31 @@ chrome.runtime.onMessage.addListener(
       }
 
       // --- Prompt window responses ---
-      if (msg.type === 'PERMISSION_RESPONSE' && msg.requestId && msg.decision) {
-        const pending = pendingPermissions.get(msg.requestId);
-        if (!pending) return {};
-        pendingRawEvents.delete(msg.requestId);
-        pendingPermissions.delete(msg.requestId);
+      if (msg.type === 'PERMISSION_RESPONSE' && isPromptDecision(msg.decision)) {
+        // The group key comes from the prompt window's own URL, not from the message body.
+        const groupKey = promptGroupKeyFromSender(sender);
+        if (!groupKey) return {};
+        const group = permissionQueue.getGroup(groupKey);
+        if (!group) return {};
 
-        let host = '';
-        let method = '';
-        let eventKind: number | undefined;
-        if (sender?.url) {
-          try {
-            const params = new URL(sender.url).searchParams;
-            host = params.get('host') ?? '';
-            method = params.get('method') ?? '';
-            const kindParam = params.get('eventKind');
-            if (kindParam !== null && kindParam !== '') {
-              const n = parseInt(kindParam, 10);
-              if (!Number.isNaN(n) && n >= 0) eventKind = n;
-            }
-          } catch {
-            /* ignore */
-          }
+        const skipped = Array.isArray(msg.skipped)
+          ? msg.skipped.filter((id): id is string => typeof id === 'string')
+          : [];
+
+        // Store the rule before resolving: the next group in the queue is re-checked
+        // against stored permissions and may no longer need a prompt.
+        if (msg.decision === 'allow_always' || msg.decision === 'deny_always') {
+          await setPermission(
+            group.host,
+            group.method,
+            msg.decision === 'allow_always' ? 'allow' : 'deny',
+            group.method === 'signEvent' ? group.eventKind : undefined,
+            activeProfileId ?? undefined
+          );
+          void updateBadgeForTabsWithHost(group.host);
         }
 
-        const profileId = activeProfileId ?? undefined;
-
-        if (msg.decision === 'allow_always') {
-          if (host && method)
-            await setPermission(
-              host,
-              method,
-              'allow',
-              method === 'signEvent' ? eventKind : undefined,
-              profileId
-            );
-          if (host) void updateBadgeForTabsWithHost(host);
-          pending.resolve(true);
-        } else if (msg.decision === 'deny_always') {
-          if (host && method)
-            await setPermission(
-              host,
-              method,
-              'deny',
-              method === 'signEvent' ? eventKind : undefined,
-              profileId
-            );
-          if (host) void updateBadgeForTabsWithHost(host);
-          pending.resolve(false);
-        } else if (msg.decision === 'allow_once') {
-          pending.resolve(true);
-        } else {
-          pending.resolve(false);
-        }
+        permissionQueue.resolve(groupKey, msg.decision, skipped);
         return {};
       }
 
@@ -1268,8 +1259,16 @@ chrome.runtime.onMessage.addListener(
         return {};
       }
 
-      if (msg.type === 'GET_RAW_EVENT' && msg.requestId) {
-        return { event: pendingRawEvents.get(msg.requestId) ?? null };
+      if (msg.type === 'GET_PERMISSION_GROUP') {
+        const groupKey = promptGroupKeyFromSender(sender);
+        const group = groupKey ? permissionQueue.getGroup(groupKey) : undefined;
+        if (!group) return { requests: [] };
+        return {
+          requests: group.requests.map((r) => ({
+            requestId: r.requestId,
+            event: r.rawEvent ?? null,
+          })),
+        };
       }
 
       if (msg.type === 'GET_PERMISSIONS') {
@@ -1368,13 +1367,7 @@ chrome.runtime.onMessage.addListener(
 );
 
 chrome.windows.onRemoved.addListener((windowId: number) => {
-  for (const [requestId, pending] of pendingPermissions) {
-    if (pending.windowId === windowId) {
-      pendingRawEvents.delete(requestId);
-      pending.resolve(false);
-      pendingPermissions.delete(requestId);
-    }
-  }
+  permissionQueue.handleWindowClosed(windowId);
 });
 
 export default defineBackground(async () => {

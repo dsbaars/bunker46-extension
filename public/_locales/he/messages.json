@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "דחה תמיד"
   },
+  "promptRequestCount": {
+    "message": "$1 בקשות"
+  },
+  "promptRequestPager": {
+    "message": "בקשה $1 מתוך $2"
+  },
+  "promptPreviousRequest": {
+    "message": "הבקשה הקודמת"
+  },
+  "promptNextRequest": {
+    "message": "הבקשה הבאה"
+  },
+  "promptSkipRequest": {
+    "message": "דלג"
+  },
+  "promptIncludeRequest": {
+    "message": "כלול"
+  },
+  "promptAppliesToGroup": {
+    "message": "חל על כל הבקשות המוצגות כאן"
+  },
+  "promptSkippedNote": {
+    "message": "בקשות שדולגו יידחו"
+  },
   "promptDenyOnce": {
     "message": "דחה"
   },

@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Vienmēr liegt"
   },
+  "promptRequestCount": {
+    "message": "pieprasījumi: $1"
+  },
+  "promptRequestPager": {
+    "message": "Pieprasījums $1 no $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Iepriekšējais pieprasījums"
+  },
+  "promptNextRequest": {
+    "message": "Nākamais pieprasījums"
+  },
+  "promptSkipRequest": {
+    "message": "Izlaist"
+  },
+  "promptIncludeRequest": {
+    "message": "Iekļaut"
+  },
+  "promptAppliesToGroup": {
+    "message": "Attiecas uz visiem šeit rādītajiem pieprasījumiem"
+  },
+  "promptSkippedNote": {
+    "message": "Izlaistie pieprasījumi tiks noraidīti"
+  },
   "promptDenyOnce": {
     "message": "Liegt"
   },

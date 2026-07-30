@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Запретить всегда"
   },
+  "promptRequestCount": {
+    "message": "запросов: $1"
+  },
+  "promptRequestPager": {
+    "message": "Запрос $1 из $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Предыдущий запрос"
+  },
+  "promptNextRequest": {
+    "message": "Следующий запрос"
+  },
+  "promptSkipRequest": {
+    "message": "Пропустить"
+  },
+  "promptIncludeRequest": {
+    "message": "Вернуть"
+  },
+  "promptAppliesToGroup": {
+    "message": "Применяется ко всем показанным здесь запросам"
+  },
+  "promptSkippedNote": {
+    "message": "Пропущенные запросы будут отклонены"
+  },
   "promptDenyOnce": {
     "message": "Запретить"
   },

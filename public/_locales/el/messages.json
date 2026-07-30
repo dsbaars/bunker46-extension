@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Να απαγορεύεται πάντα"
   },
+  "promptRequestCount": {
+    "message": "$1 αιτήματα"
+  },
+  "promptRequestPager": {
+    "message": "Αίτημα $1 από $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Προηγούμενο αίτημα"
+  },
+  "promptNextRequest": {
+    "message": "Επόμενο αίτημα"
+  },
+  "promptSkipRequest": {
+    "message": "Παράλειψη"
+  },
+  "promptIncludeRequest": {
+    "message": "Συμπερίληψη"
+  },
+  "promptAppliesToGroup": {
+    "message": "Ισχύει για όλα τα αιτήματα που εμφανίζονται εδώ"
+  },
+  "promptSkippedNote": {
+    "message": "Τα αιτήματα που παραλείφθηκαν θα απορριφθούν"
+  },
   "promptDenyOnce": {
     "message": "Άρνηση"
   },

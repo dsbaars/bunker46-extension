@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Vedno zavrni"
   },
+  "promptRequestCount": {
+    "message": "zahtev: $1"
+  },
+  "promptRequestPager": {
+    "message": "Zahteva $1 od $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Prejšnja zahteva"
+  },
+  "promptNextRequest": {
+    "message": "Naslednja zahteva"
+  },
+  "promptSkipRequest": {
+    "message": "Preskoči"
+  },
+  "promptIncludeRequest": {
+    "message": "Vrni"
+  },
+  "promptAppliesToGroup": {
+    "message": "Velja za vse tukaj prikazane zahteve"
+  },
+  "promptSkippedNote": {
+    "message": "Preskočene zahteve bodo zavrnjene"
+  },
   "promptDenyOnce": {
     "message": "Zavrni"
   },

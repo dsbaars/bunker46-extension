@@ -170,6 +170,30 @@
   "promptDenyAlways": {
     "message": "Refuză întotdeauna"
   },
+  "promptRequestCount": {
+    "message": "$1 cereri"
+  },
+  "promptRequestPager": {
+    "message": "Cererea $1 din $2"
+  },
+  "promptPreviousRequest": {
+    "message": "Cererea anterioară"
+  },
+  "promptNextRequest": {
+    "message": "Cererea următoare"
+  },
+  "promptSkipRequest": {
+    "message": "Omite"
+  },
+  "promptIncludeRequest": {
+    "message": "Include"
+  },
+  "promptAppliesToGroup": {
+    "message": "Se aplică tuturor cererilor afișate aici"
+  },
+  "promptSkippedNote": {
+    "message": "Cererile omise vor fi respinse"
+  },
   "promptDenyOnce": {
     "message": "Refuzare"
   },

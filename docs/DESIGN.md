@@ -86,10 +86,21 @@ When a website calls `window.nostr` methods, the extension checks per-domain per
 3. Content script forwards the request to the background service worker
 4. Background extracts the hostname from `sender.url`
 5. Background checks stored permissions via `checkPermission(host, method)`
-6. If no policy exists: opens a prompt window via `chrome.windows.create`
-7. User decides: Allow Always, Allow Once, Deny, or Deny Always
-8. "Always" decisions are persisted to `chrome.storage.local`
-9. The original request is resolved or rejected based on the decision
+6. If no policy exists: the request joins a group in `lib/permission-queue.ts`, keyed on its
+   permission scope (`host` + `signEvent:<kind>` or `host` + method)
+7. After a short collection window, one prompt window opens for that group via
+   `chrome.windows.create`; requests arriving later join the open prompt
+8. User decides: Allow Always, Allow Once, Deny, or Deny Always
+9. "Always" decisions are persisted to `chrome.storage.local`
+10. Every request in the group is resolved or rejected based on that decision, minus any the
+    user skipped in the prompt
+11. The next queued group is re-checked against stored permissions before it gets a prompt, so a
+    rule saved in step 9 silently covers the requests waiting behind it
+
+Only one prompt window is open at a time. Clients often fire a burst of identical requests right
+after login (e.g. one NIP-42 auth signature per relay); grouping on the permission scope means such
+a burst is one prompt rather than one window per request, and a grouped decision is never broader
+than the "Allow Always" offered in the same window.
 
 ### Permission storage
 
@@ -111,8 +122,15 @@ A 400x380px popup window centered on the last focused browser window. Shows:
 - Shield icon + "Permission Request" heading
 - The requesting domain prominently displayed
 - The requested method (and event kind for signEvent)
-- Four decision buttons: Allow Always, Allow Once, Deny, Deny Always
-- Closing the window without a decision = deny once
+- A badge with the request count when the prompt covers more than one request
+- Four decision buttons: Allow Always, Allow Once, Deny, Deny Always — they act on the whole group
+- Closing the window without a decision = deny once, for the whole group
+
+For grouped `signEvent` requests a pager (`Request 3 of 7`) steps through the individual events, so
+each one can be inspected in the raw message viewer before deciding. `Skip` takes the current
+request out of the batch — it is denied while the rest of the group follows the decision. Groups
+without reviewable content (decrypt, `getPublicKey`) show the count but no pager: their requests
+carry nothing that tells them apart.
 
 ### Permission management
 
