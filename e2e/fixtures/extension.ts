@@ -28,7 +28,7 @@ export async function launchExtensionWithLocale(
   if (!serviceWorker) {
     serviceWorker = await context.waitForEvent('serviceworker');
   }
-  const extensionId = serviceWorker.url().split('/')[2];
+  const extensionId = serviceWorker.url().split('/')[2]!;
   return { context, extensionId };
 }
 
@@ -56,7 +56,7 @@ export const test = base.extend<{
     if (!serviceWorker) {
       serviceWorker = await context.waitForEvent('serviceworker');
     }
-    const extensionId = serviceWorker.url().split('/')[2];
+    const extensionId = serviceWorker.url().split('/')[2]!;
     await use(extensionId);
   },
 });

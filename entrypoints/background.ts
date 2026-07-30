@@ -645,15 +645,20 @@ async function connectWithBunkerUri(
     const session: Session = { signerPubkey, relays: bp.relays, bunkerUri: uri };
 
     const profiles = await getProfiles();
-    if (createNew) {
-      profiles[profileId] = { id: profileId, clientSecretHex, session };
-    } else {
-      profiles[profileId] = { ...profiles[profileId], session };
-    }
+    const existing = profiles[profileId];
+    const updated: Profile = createNew
+      ? { id: profileId, clientSecretHex, session }
+      : {
+          ...existing,
+          id: existing?.id ?? profileId,
+          clientSecretHex: existing?.clientSecretHex ?? clientSecretHex,
+          session,
+        };
+    profiles[profileId] = updated;
     await saveProfiles(profiles);
 
     activeProfileId = profileId;
-    activeProfile = profiles[profileId];
+    activeProfile = updated;
     await setActiveProfileId(profileId);
     await closeBunkerSigner();
     bunkerSigner = signer;
@@ -733,10 +738,11 @@ function startNostrConnectConnection(opts?: { asNewProfile?: boolean }): Promise
 
         if (createNew) {
           const profiles = await getProfiles();
-          profiles[profileId] = { id: profileId, clientSecretHex, session };
+          const created: Profile = { id: profileId, clientSecretHex, session };
+          profiles[profileId] = created;
           await saveProfiles(profiles);
           activeProfileId = profileId;
-          activeProfile = profiles[profileId];
+          activeProfile = created;
           await setActiveProfileId(profileId);
         } else {
           await persistProfileSession(profileId, session);
@@ -1134,9 +1140,9 @@ chrome.runtime.onMessage.addListener(
         if (wasActive) {
           // Switch to another profile if available
           const remaining = Object.keys(profiles);
-          newActiveId = remaining.length > 0 ? remaining[0] : null;
+          newActiveId = remaining[0] ?? null;
           activeProfileId = newActiveId;
-          activeProfile = newActiveId ? profiles[newActiveId] : null;
+          activeProfile = newActiveId ? (profiles[newActiveId] ?? null) : null;
           await setActiveProfileId(newActiveId);
 
           // Reconnect if new active profile has session
@@ -1157,14 +1163,16 @@ chrome.runtime.onMessage.addListener(
 
       if (msg.type === 'RENAME_PROFILE' && msg.profileId && typeof msg.name === 'string') {
         const profiles = await getProfiles();
-        if (!profiles[msg.profileId]) return { success: false, error: 'Profile not found' };
-        profiles[msg.profileId] = {
-          ...profiles[msg.profileId],
+        const existing = profiles[msg.profileId];
+        if (!existing) return { success: false, error: 'Profile not found' };
+        const renamed: Profile = {
+          ...existing,
           name: msg.name.trim() || undefined,
         };
+        profiles[msg.profileId] = renamed;
         await saveProfiles(profiles);
         if (msg.profileId === activeProfileId) {
-          activeProfile = profiles[msg.profileId];
+          activeProfile = renamed;
         }
         return { success: true };
       }

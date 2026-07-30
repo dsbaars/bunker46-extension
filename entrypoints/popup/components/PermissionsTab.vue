@@ -5,7 +5,7 @@ import CardHeader from '@/components/ui/CardHeader.vue';
 import CardContent from '@/components/ui/CardContent.vue';
 import Input from '@/components/ui/Input.vue';
 import Badge from '@/components/ui/Badge.vue';
-import { Globe, Plus, Search, ShieldCheck, Trash2 } from 'lucide-vue-next';
+import { Globe, Plus, Search, ShieldCheck, Trash2 } from '@lucide/vue';
 import { t } from '@/lib/i18n';
 import type { DomainPolicies } from '../types';
 

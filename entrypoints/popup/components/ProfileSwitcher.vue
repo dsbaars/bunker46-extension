@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Button from '@/components/ui/Button.vue';
 import ProfileAvatar from '@/components/ui/ProfileAvatar.vue';
-import { ChevronDown, Pencil, UserPlus } from 'lucide-vue-next';
+import { ChevronDown, Pencil, UserPlus } from '@lucide/vue';
 import { t } from '@/lib/i18n';
 import type { ProfileSummary } from '../types';
 

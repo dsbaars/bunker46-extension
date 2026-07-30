@@ -171,7 +171,7 @@ function profileDisplayName(p: ProfileSummary): string {
 function cyclePubkeyFormat() {
   const order: PubkeyFormat[] = ['npub', 'hex', 'nprofile'];
   const i = order.indexOf(pubkeyDisplayMode.value);
-  pubkeyDisplayMode.value = order[(i + 1) % order.length];
+  pubkeyDisplayMode.value = order[(i + 1) % order.length]!;
 }
 
 // ---------------------------------------------------------------------------

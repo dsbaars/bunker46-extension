@@ -22,14 +22,14 @@ export class Nip42ResilientPool extends ResilientPool {
     this.signAuth = sign;
   }
 
-  subscribe(relays: string[], filter: Filter, params?: SubscribeManyParams): SubCloser {
+  override subscribe(relays: string[], filter: Filter, params?: SubscribeManyParams): SubCloser {
     return super.subscribe(relays, filter, {
       ...params,
       onauth: params?.onauth ?? this.signAuth,
     });
   }
 
-  publish(
+  override publish(
     relays: string[],
     event: Event,
     params?: {
@@ -44,7 +44,7 @@ export class Nip42ResilientPool extends ResilientPool {
     });
   }
 
-  async publishResilient(
+  override async publishResilient(
     relays: string[],
     event: Event,
     params?: {

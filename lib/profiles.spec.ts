@@ -32,11 +32,12 @@ describe('profiles', () => {
     };
     await saveProfiles({ 'test-id': profile });
     const loaded = await getProfiles();
-    expect(loaded['test-id']).toBeDefined();
-    expect(loaded['test-id'].id).toBe('test-id');
-    expect(loaded['test-id'].name).toBe('Test');
-    expect(loaded['test-id'].clientSecretHex).toBe(hex);
-    expect(loaded['test-id'].session?.signerPubkey).toBe('abc');
+    const saved = loaded['test-id'];
+    expect(saved).toBeDefined();
+    expect(saved!.id).toBe('test-id');
+    expect(saved!.name).toBe('Test');
+    expect(saved!.clientSecretHex).toBe(hex);
+    expect(saved!.session?.signerPubkey).toBe('abc');
   });
 
   it('getActiveProfileId returns null initially', async () => {
@@ -115,7 +116,7 @@ describe('profiles', () => {
       const profiles = await getProfiles();
       const ids = Object.keys(profiles);
       expect(ids).toHaveLength(1);
-      const profile = profiles[ids[0]!];
+      const profile = profiles[ids[0]!]!;
       expect(profile.clientSecretHex).toBe(legacySecret);
       expect(profile.session).toEqual(legacySession);
       expect(await getActiveProfileId()).toBe(ids[0]);

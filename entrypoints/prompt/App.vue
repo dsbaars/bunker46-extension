@@ -2,7 +2,7 @@
 import { ref, onMounted, computed, nextTick, watch } from 'vue';
 import Button from '@/components/ui/Button.vue';
 import Separator from '@/components/ui/Separator.vue';
-import { ShieldAlert, Globe, FileSignature, ChevronDown, ChevronUp } from 'lucide-vue-next';
+import { ShieldAlert, Globe, FileSignature, ChevronDown, ChevronUp } from '@lucide/vue';
 import { t, getMethodLabel } from '@/lib/i18n';
 import { tokenizeJson } from '@/lib/json-highlight';
 

@@ -20,7 +20,7 @@ import {
   X,
   Unplug,
   XCircle,
-} from 'lucide-vue-next';
+} from '@lucide/vue';
 import { t } from '@/lib/i18n';
 import type { RelayUiProbeStatus } from '@/lib/relay-ui-probe';
 import type { ProfileSummary } from '../types';

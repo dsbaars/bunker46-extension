@@ -3,11 +3,7 @@ import { finalizeEvent } from 'nostr-tools/pure';
 import { normalizeURL } from 'nostr-tools/utils';
 
 export type RelayAuthProbeResult =
-  | 'ok'
-  | 'failed'
-  | 'nip42_ok'
-  | 'nip42_failed'
-  | 'nip42_challenge_only';
+  'ok' | 'failed' | 'nip42_ok' | 'nip42_failed' | 'nip42_challenge_only';
 
 const CONNECT_MS = 10_000;
 const NO_AUTH_AFTER_OPEN_MS = 2_000;

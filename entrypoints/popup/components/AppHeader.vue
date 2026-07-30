@@ -2,7 +2,7 @@
 import Button from '@/components/ui/Button.vue';
 import Badge from '@/components/ui/Badge.vue';
 import Tooltip from '@/components/ui/Tooltip.vue';
-import { Maximize2 } from 'lucide-vue-next';
+import { Maximize2 } from '@lucide/vue';
 import { t } from '@/lib/i18n';
 import type { RelayUiProbeStatus } from '@/lib/relay-ui-probe';
 import RelayProbeLeadingIcons from './RelayProbeLeadingIcons.vue';

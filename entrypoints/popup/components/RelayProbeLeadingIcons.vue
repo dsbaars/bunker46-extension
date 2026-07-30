@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Loader2, CheckCircle2, XCircle, Lock } from 'lucide-vue-next';
+import { Loader2, CheckCircle2, XCircle, Lock } from '@lucide/vue';
 import { t } from '@/lib/i18n';
 import type { RelayUiProbeStatus } from '@/lib/relay-ui-probe';
 

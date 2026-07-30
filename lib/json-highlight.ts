@@ -63,7 +63,8 @@ export function tokenizeJson(json: string): JsonToken[] {
 
     const lit = LITERAL.exec(rest);
     if (lit) {
-      const val = lit[1];
+      // group 1 always participates when LITERAL matches
+      const val = lit[1]!;
       const type: JsonTokenType = val === 'null' ? 'null' : 'boolean';
       tokens.push({ type, text: val });
       i += val.length;

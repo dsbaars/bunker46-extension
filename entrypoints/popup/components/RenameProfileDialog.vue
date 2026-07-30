@@ -2,7 +2,7 @@
 import Button from '@/components/ui/Button.vue';
 import Input from '@/components/ui/Input.vue';
 import Label from '@/components/ui/Label.vue';
-import { Download, Loader2 } from 'lucide-vue-next';
+import { Download, Loader2 } from '@lucide/vue';
 import {
   DialogClose,
   DialogContent,

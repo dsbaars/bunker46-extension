@@ -68,7 +68,7 @@ export class ResilientPool extends AbstractSimplePool {
    * Override subscribeMap to use Promise.allSettled instead of Promise.all.
    * This allows the subscription to proceed even if some relays fail to connect.
    */
-  subscribeMap(
+  override subscribeMap(
     requests: { url: string; filter: Filter }[],
     params: SubscribeManyParams
   ): SubCloser {
@@ -130,7 +130,14 @@ export class ResilientPool extends AbstractSimplePool {
         closesReceived.filter((_, idx) => connectedIndexes.has(idx) && closesReceived[idx])
           .length === connectedIndexes.size
       ) {
-        params.onclose?.(closesReceived.filter((_, idx) => connectedIndexes.has(idx)));
+        params.onclose?.(
+          closesReceived
+            .map((closeReason, idx) => ({
+              url: normalizeURL(groupedRequests[idx]!.url),
+              reason: closeReason,
+            }))
+            .filter((_, idx) => connectedIndexes.has(idx))
+        );
         handleClose = () => {};
       }
     };
@@ -221,7 +228,9 @@ export class ResilientPool extends AbstractSimplePool {
           // Close any successful subscriptions
           subs.forEach((sub) => sub.close(errorMsg));
           // Trigger onclose with error
-          params.onclose?.(failedRelays.map((url) => `${normalizeURL(url)}: connection failed`));
+          params.onclose?.(
+            failedRelays.map((url) => ({ url: normalizeURL(url), reason: 'connection failed' }))
+          );
           // Don't throw - just signal failure through callbacks
           // The subscription will be empty but won't cause unhandled rejections
         }
@@ -250,7 +259,7 @@ export class ResilientPool extends AbstractSimplePool {
    * Override publish to tolerate partial failures.
    * Returns promises that resolve if at least minSuccessfulRelays succeed.
    */
-  publish(
+  override publish(
     relays: string[],
     event: Event,
     params?: {
@@ -326,7 +335,8 @@ export class ResilientPool extends AbstractSimplePool {
     const failed: Array<{ url: string; error: string }> = [];
 
     results.forEach((result, i) => {
-      const url = normalizedUrls[i];
+      // publish() maps over these same normalizedUrls, so the indexes line up
+      const url = normalizedUrls[i]!;
       if (result.status === 'fulfilled') {
         successful.push(url);
       } else {
